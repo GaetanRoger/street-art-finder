@@ -7,7 +7,20 @@ export const artists: Artist[] = [
         name: 'Ememem',
         text: 'Street artist from Lyon, they fill ground holes with beautiful floor tiles mosaics patterns.',
         website: 'https://www.ememem-flacking.net/',
-        pieces: []
+        pieces: [],
+        images: {
+            horizontal: '/assets/dev/hfdmsfdmdflmdf.jpg'
+        }
+    },
+    {
+        objectID: 'luiqmshdsqd',
+        name: 'Other',
+        text: 'Another street artist that everyone loves.',
+        website: 'example.com',
+        pieces: [],
+        images: {
+            horizontal: '/assets/dev/jqsdmldsqljmsdq.jpg'
+        }
     }
 ];
 
@@ -29,7 +42,7 @@ export const pieces: Piece[] = [
             accessible: true
         },
         images: {
-            main: 'dev/hfdmsfdmdflmdf.png',
+            main: '/assets/dev/hfdmsfdmdflmdf.jpg',
             others: []
         }
     }

@@ -22,3 +22,6 @@
 ></app-flat-card-with-image>
 
 <mat-divider></mat-divider>
+
+<app-artist-preview *ngFor="let artist of artists | async" [artist]="artist">
+</app-artist-preview>

@@ -1,0 +1,30 @@
+.artist-card {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #f6f6f6;
+    margin-top: 5px;
+}
+
+.artist-card h4 {
+    font-weight: normal;
+    background-color: #F2994A;
+    color: white;
+    padding: 5px;
+    font-size: 24px;
+    margin: 0;
+}
+
+p {
+    margin-top: 5px;
+    font-size: 14px;
+    padding-left: 5%;
+    padding-right: 5%;
+    color: #212121;
+    opacity: 0.9;
+}
+
+.image {
+    height: 100px;
+    background-position: center;
+    background-size: cover;
+}

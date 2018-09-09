@@ -9,4 +9,8 @@ export interface Artist extends ArtistPreview {
     text: string;
     website: string;
     pieces: Piece[];
+    images: {
+        horizontal: string;
+        vertical?: string;
+    };
 }
