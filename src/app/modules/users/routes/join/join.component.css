@@ -1,0 +1,28 @@
+.title {
+    background-color: #f6f6f6;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+form, .title {
+    padding-right: 5%;
+    padding-left: 5%;
+    margin-bottom: 10px;
+}
+h1 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 0;
+}
+p {
+    font-size: 16px;
+    color: rgba(21,21, 21, 0.9);
+    margin-bottom: 0;
+}
+mat-form-field {
+    width: 100%;
+}
+.submit-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

@@ -8,9 +8,14 @@ import {MatToolbarModule} from '@angular/material';
 
 const routes: Route[] = [
     {
+        path: 'users',
+        loadChildren: 'src/app/modules/users/users.module#UsersModule'
+    },
+    {
         path: '',
         loadChildren: 'src/app/modules/public/public.module#PublicModule'
-    }
+    },
+
 ];
 
 @NgModule({

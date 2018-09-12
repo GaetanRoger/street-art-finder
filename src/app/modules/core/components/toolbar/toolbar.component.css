@@ -6,6 +6,8 @@
     background-position: center;
     background-size: cover;
     color: white;
+    z-index: 999;
+    overflow: scroll;
 }
 
 .back-arrow {

@@ -1,6 +1,7 @@
 <app-toolbar
     title="Street Art Finder"
     [showSearchButton]="true"
+    (searchKeyUp)="setFilter($event.target.value)"
 ></app-toolbar>
 
 
@@ -8,12 +9,13 @@
         title="See them for real"
         text="Sign up to create your own unique route"
         primaryButtonText="Join now"
+        [primaryButtonRouterLink]="['users', 'join']"
         secondaryButtonText="Learn more"
-        [primaryButtonRouterLink]="hehe"
+        secondaryButtonRouterLink="lean-more"
         image="/assets/images/paper-map-low.jpg"
 ></app-flat-card-with-image>
 
 <mat-divider></mat-divider>
 
-<app-artist-preview *ngFor="let artist of artists | async" [artist]="artist">
+<app-artist-preview *ngFor="let artist of filterArtists(artists | async)" [artist]="artist">
 </app-artist-preview>

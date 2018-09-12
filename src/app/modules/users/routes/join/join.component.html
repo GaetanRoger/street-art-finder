@@ -1,0 +1,29 @@
+<app-toolbar
+        title="Join us!"
+        [showBackButton]="true"
+        [showSearchButton]="false"
+></app-toolbar>
+
+<div class="title">
+    <h1>One more step</h1>
+    <p>We won't ask you much</p>
+</div>
+<form [formGroup]="joinFormGroup">
+    <mat-form-field color="accent">
+        <input matInput type="email" placeholder="Enter your e-mail address..." formControlName="email"/>
+        <mat-error *ngIf="email.errors?.email">This e-mail is invalid</mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent">
+        <input matInput type="password" placeholder="Choose a password..." formControlName="password"/>
+        <mat-error *ngIf="password.errors?.minlength as minlength">Password is too short
+            ({{minlength.actualLength}}/{{minlength.requiredLength}})
+        </mat-error>
+    </mat-form-field>
+    <div class="submit-button-container">
+        <button mat-raised-button  routerLink="/users/login">I'm already registered</button>
+        <button mat-raised-button color="accent" type="button" (click)="submit()"
+                [disabled]="joinFormGroup.invalid">
+            GO!
+        </button>
+    </div>
+</form>
