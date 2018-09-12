@@ -1,12 +1,20 @@
 <div class="join-now-card">
-    <div class="left-image" style="{{backgroundImageProperty}}">
+    <div class="left-image" [style]="backgroundImageProperty">
     </div>
     <div class="right-text">
         <h4>{{title}}</h4>
         <p>{{text}}</p>
         <div class="buttons">
-            <button mat-raised-button color="accent" routerLink="{{primaryButtonLink}}">{{primaryButtonText}}</button>
-            <button mat-button routerLink="{{secondaryButtonLink}}">{{secondaryButtonText}}</button>
+            <button mat-raised-button
+                    color="accent"
+                    routerLink="{{primaryButtonLink}}"
+                    *ngIf="primaryButtonText"
+            >{{primaryButtonText}}</button>
+            <button mat-button
+                    color="accent"
+                    routerLink="{{secondaryButtonLink}}"
+                    *ngIf="secondaryButtonText"
+            >{{secondaryButtonText}}</button>
         </div>
     </div>
 </div>

@@ -1,0 +1,15 @@
+<mat-toolbar class="mat-elevation-z2 toolbar" [style]="backgroundImage">
+    <mat-toolbar-row>
+        <button mat-icon-button *ngIf="showBackButton" (click)="goBack()" class="back-arrow">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span>{{title}}</span>
+        <span class="toolbar-spacer"></span>
+        <button mat-icon-button *ngIf="showSearchButton">
+            <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>

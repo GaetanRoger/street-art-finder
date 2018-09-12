@@ -9,7 +9,14 @@ export const artists: Artist[] = [
         website: 'https://www.ememem-flacking.net/',
         pieces: [],
         images: {
-            horizontal: '/assets/dev/hfdmsfdmdflmdf.jpg'
+            horizontal: {
+                normal: '/assets/dev/hfdmsfdmdflmdf.jpg',
+                low: '/assets/dev/hfdmsfdmdflmdf-low.jpg'
+            },
+            vertical: {
+                normal: '/assets/dev/mhsfdmhsfdmhsfdms.jpg',
+                low: '/assets/dev/mhsfdmhsfdmhsfdms-low.jpg'
+            }
         }
     },
     {
@@ -19,7 +26,10 @@ export const artists: Artist[] = [
         website: 'example.com',
         pieces: [],
         images: {
-            horizontal: '/assets/dev/jqsdmldsqljmsdq.jpg'
+            horizontal: {
+                normal: '/assets/dev/jqsdmldsqljmsdq.jpg',
+                low: '/assets/dev/jqsdmldsqljmsdq-low.jpg',
+            }
         }
     }
 ];
@@ -42,7 +52,34 @@ export const pieces: Piece[] = [
             accessible: true
         },
         images: {
-            main: '/assets/dev/hfdmsfdmdflmdf.jpg',
+            main: {
+                normal: '/assets/dev/kkfkjdjdflsd.jpg',
+                low: '/assets/dev/kkfkjdjdflsd-low.jpg',
+            },
+            others: []
+        }
+    },
+    {
+        objectID: 'hfsdiofsdjifsdpsf',
+        name: 'Old Schooled Colored',
+        text: 'A nice old school colored design',
+        location: {
+            getLongitude: () => 45.776944444444446,
+            getLatitude: () => 4.845277777777778
+        },
+        addedOn: new Date(),
+        artist: {
+            objectID: 'hfdmsfdmdflmdf',
+            name: 'Ememem',
+        },
+        tags: {
+            accessible: true
+        },
+        images: {
+            main: {
+                normal: '/assets/dev/moqugshdmqihdmdisq.jpg',
+                low: '/assets/dev/moqugshdmqihdmdisq-low.jpg',
+            },
             others: []
         }
     }

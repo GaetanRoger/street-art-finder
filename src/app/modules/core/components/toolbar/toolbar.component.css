@@ -1,0 +1,13 @@
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.toolbar {
+    background-position: center;
+    background-size: cover;
+    color: white;
+}
+
+.back-arrow {
+    margin-right: 5px;
+}

@@ -1,5 +1,6 @@
 import {ObjectIDable} from './object-idable';
 import {Piece} from './piece';
+import {Image} from './image';
 
 export interface ArtistPreview extends ObjectIDable {
     name: string;
@@ -10,7 +11,7 @@ export interface Artist extends ArtistPreview {
     website: string;
     pieces: Piece[];
     images: {
-        horizontal: string;
-        vertical?: string;
+        horizontal: Image;
+        vertical?: Image;
     };
 }

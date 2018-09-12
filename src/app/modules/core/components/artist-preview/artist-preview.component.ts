@@ -16,7 +16,7 @@ export class ArtistPreviewComponent implements OnInit {
 
   ngOnInit() {
     this.image = this.sanatizer.bypassSecurityTrustStyle(
-        'background-image: url("' + this.artist.images.horizontal + '");'
+        'background-image: url("' + this.artist.images.horizontal.low + '");'
     );
   }
 

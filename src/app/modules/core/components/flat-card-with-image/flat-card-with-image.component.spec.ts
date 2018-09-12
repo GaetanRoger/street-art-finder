@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FlatCardWithImageComponent } from './flat-card-with-image.component';
+import {ComponentsLibraryModule} from '../../../components-library/components-library.module';
 
 describe('FlatCardWithImageComponent', () => {
   let component: FlatCardWithImageComponent;
@@ -8,7 +9,8 @@ describe('FlatCardWithImageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FlatCardWithImageComponent ]
+      declarations: [ FlatCardWithImageComponent ],
+        imports: [ComponentsLibraryModule]
     })
     .compileComponents();
   }));

@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-flat-card-with-image',
@@ -14,15 +15,16 @@ export class FlatCardWithImageComponent implements OnInit {
     @Input() primaryButtonLink: string;
     @Input() secondaryButtonLink: string;
 
-    backgroundImageProperty: string;
+    backgroundImageProperty: SafeValue;
 
 
-    constructor() {
+    constructor(private readonly sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
-        this.backgroundImageProperty = 'background: url("'
-            + this.image + '");';
+        this.backgroundImageProperty = this.sanitizer.bypassSecurityTrustStyle(
+            `background-image: url("${this.image}");`
+        );
     }
 
 }

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArtistPreviewComponent } from './artist-preview.component';
+import {ComponentsLibraryModule} from '../../../components-library/components-library.module';
 
 describe('ArtistPreviewComponent', () => {
   let component: ArtistPreviewComponent;
@@ -8,7 +9,8 @@ describe('ArtistPreviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArtistPreviewComponent ]
+      declarations: [ ArtistPreviewComponent ],
+        imports: [ComponentsLibraryModule]
     })
     .compileComponents();
   }));

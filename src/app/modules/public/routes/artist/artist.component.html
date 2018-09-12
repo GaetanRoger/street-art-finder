@@ -1,0 +1,26 @@
+<app-toolbar
+        title="Street Art Finder"
+        [showSearchButton]="true"
+        [showBackButton]="true"
+        [image]="(artist$ | async)?.images.horizontal.low"
+></app-toolbar>
+
+<div *ngIf="artist$ | async as artist">
+    <app-flat-card-with-image
+            [title]="artist.name"
+            [text]="artist.text"
+            [image]="artist.images.vertical.low"
+    ></app-flat-card-with-image>
+
+    <div *ngFor="let piece of artist.pieces" class="piece">
+        <img [src]="piece.images.main.low" class="image"/>
+        <div class="name-blur"></div>
+        <div class="name">
+            <p>{{ piece.name}}</p>
+        </div>
+    </div>
+
+</div>
+<div *ngIf="!(artist$ | async)">
+    <mat-spinner></mat-spinner>
+</div>
