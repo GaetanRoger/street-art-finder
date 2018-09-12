@@ -5,16 +5,44 @@
         <h4>{{title}}</h4>
         <p>{{text}}</p>
         <div class="buttons">
-            <button mat-raised-button
-                    color="accent"
-                    routerLink="{{primaryButtonLink}}"
-                    *ngIf="primaryButtonText"
-            >{{primaryButtonText}}</button>
-            <button mat-button
-                    color="accent"
-                    routerLink="{{secondaryButtonLink}}"
-                    *ngIf="secondaryButtonText"
-            >{{secondaryButtonText}}</button>
+            <!-- IF a text is provided for the primary button -->
+            <div *ngIf="primaryButtonText">
+                <!-- IF the primary button is a router link -->
+                <button
+                        *ngIf="primaryButtonRouterLink"
+                        mat-raised-button
+                        color="accent"
+                        [routerLink]="primaryButtonRouterLink">
+                    {{primaryButtonText}}
+                </button>
+                <!-- ELSE IF the primary button is an external link -->
+                <a mat-raised-button
+                   color="accent"
+                   [href]="primaryButtonExternalLink"
+                   *ngIf="primaryButtonExternalLink"
+                >
+                    {{primaryButtonText}}
+                </a>
+            </div>
+            <!-- IF a text is provided for the secondary button -->
+            <div *ngIf="secondaryButtonText">
+                <!-- IF the secondary button is a router link -->
+                <button
+                        *ngIf="secondaryButtonRouterLink"
+                        mat-button
+                        color="accent"
+                        [routerLink]="secondaryButtonRouterLink">
+                    {{secondaryButtonText}}
+                </button>
+                <!-- ELSE IF the secondary button is an external link -->
+                <a mat-button
+                   color="accent"
+                   [href]="secondaryButtonExternalLink"
+                   *ngIf="secondaryButtonExternalLink"
+                >
+                    {{secondaryButtonText}}
+                </a>
+            </div>
         </div>
     </div>
 </div>

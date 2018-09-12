@@ -12,8 +12,10 @@ export class FlatCardWithImageComponent implements OnInit {
     @Input() image: string;
     @Input() primaryButtonText: string;
     @Input() secondaryButtonText: string;
-    @Input() primaryButtonLink: string;
-    @Input() secondaryButtonLink: string;
+    @Input() primaryButtonRouterLink: string;
+    @Input() secondaryButtonRouterLink: string;
+    @Input() primaryButtonExternalLink: string;
+    @Input() secondaryButtonExternalLink: string;
 
     backgroundImageProperty: SafeValue;
 

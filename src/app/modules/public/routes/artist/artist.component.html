@@ -11,6 +11,8 @@
             [title]="artist.name"
             [text]="artist.text"
             [image]="artist.images.vertical ? artist.images.vertical.low : artist.images.horizontal.low"
+            secondaryButtonText="Visit website"
+            [secondaryButtonExternalLink]="artist.website"
     ></app-flat-card-with-image>
 
     <div *ngFor="let piece of filterPieces(artist.pieces)" class="piece">
