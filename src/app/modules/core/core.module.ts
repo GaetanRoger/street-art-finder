@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import { ArtistPreviewComponent } from './components/artist-preview/artist-preview.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
     imports: [
@@ -16,12 +17,14 @@ import {ComponentsLibraryModule} from '../components-library/components-library.
     declarations: [
         FlatCardWithImageComponent,
         ArtistPreviewComponent,
-        ToolbarComponent
+        ToolbarComponent,
+        LoadingSpinnerComponent
     ],
     exports: [
         FlatCardWithImageComponent,
         ArtistPreviewComponent,
-        ToolbarComponent
+        ToolbarComponent,
+        LoadingSpinnerComponent
     ]
 })
 export class CoreModule {

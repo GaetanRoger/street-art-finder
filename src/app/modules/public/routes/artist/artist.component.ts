@@ -20,7 +20,7 @@ export class ArtistComponent implements OnInit {
     ngOnInit() {
         this.artist$ = this.route.params.pipe(
             map(p => p.id),
-            delay(1000),
+            delay(500),
             flatMap(a => this.artistService.find(a, true))
         );
     }

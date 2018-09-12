@@ -1,0 +1,12 @@
+.container {
+    margin: 40% auto auto;
+}
+mat-spinner, .text {
+    margin: auto;
+}
+
+.text {
+    text-align: center;
+    margin-top: 10px;
+    color: rgba(21, 21, 21, 0.9);
+}

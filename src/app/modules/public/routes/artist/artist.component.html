@@ -1,11 +1,11 @@
-<app-toolbar
-        title="Street Art Finder"
-        [showSearchButton]="true"
-        [showBackButton]="true"
-        [image]="(artist$ | async)?.images.horizontal.low"
-></app-toolbar>
-
 <div *ngIf="artist$ | async as artist">
+    <app-toolbar
+            title="Street Art Finder"
+            [showSearchButton]="true"
+            [showBackButton]="true"
+            [image]="artist.images.horizontal.low"
+    ></app-toolbar>
+
     <app-flat-card-with-image
             [title]="artist.name"
             [text]="artist.text"
@@ -21,6 +21,5 @@
     </div>
 
 </div>
-<div *ngIf="!(artist$ | async)">
-    <mat-spinner></mat-spinner>
-</div>
+<app-loading-spinner *ngIf="!(artist$ | async)" text="Chargement de l'artiste...">
+</app-loading-spinner>
