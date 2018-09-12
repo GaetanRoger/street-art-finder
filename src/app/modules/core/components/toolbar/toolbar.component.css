@@ -11,3 +11,10 @@
 .back-arrow {
     margin-right: 5px;
 }
+
+.search-row {
+    background-color: rgba(21,21,21,0.5);
+}
+.search-field {
+    width: 100%;
+}

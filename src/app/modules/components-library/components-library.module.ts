@@ -3,8 +3,8 @@ import {CommonModule} from '@angular/common';
 import {
     MatButtonModule,
     MatCardModule,
-    MatDividerModule,
-    MatIconModule,
+    MatDividerModule, MatFormFieldModule,
+    MatIconModule, MatInputModule,
     MatProgressSpinnerModule,
     MatToolbarModule
 } from '@angular/material';
@@ -17,7 +17,9 @@ import {
         MatIconModule,
         MatCardModule,
         MatDividerModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatInputModule
     ],
     declarations: [],
     exports: [
@@ -26,7 +28,9 @@ import {
         MatIconModule,
         MatCardModule,
         MatDividerModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatInputModule
     ]
 })
 export class ComponentsLibraryModule {

@@ -31,6 +31,19 @@ export const artists: Artist[] = [
                 low: '/assets/dev/jqsdmldsqljmsdq-low.jpg',
             }
         }
+    },
+    {
+        objectID: 'khgfdsfghjkl',
+        name: 'Misc',
+        text: 'A third artist every one loves.',
+        website: 'example.com',
+        pieces: [],
+        images: {
+            horizontal: {
+                normal: '/assets/dev/kjhgfdfvghjkl.jpg',
+                low: '/assets/dev/kjhgfdfvghjkl-low.jpg',
+            }
+        }
     }
 ];
 
@@ -79,6 +92,30 @@ export const pieces: Piece[] = [
             main: {
                 normal: '/assets/dev/moqugshdmqihdmdisq.jpg',
                 low: '/assets/dev/moqugshdmqihdmdisq-low.jpg',
+            },
+            others: []
+        }
+    },
+    {
+        objectID: 'hfsdiofdsqdsddqssdjifsdpsf',
+        name: 'Dear',
+        text: 'Dear dear',
+        location: {
+            getLongitude: () => 45.769444444444446,
+            getLatitude: () => 4.832222222222222
+        },
+        addedOn: new Date(),
+        artist: {
+            objectID: 'khgfdsfghjkl',
+            name: 'Misc',
+        },
+        tags: {
+            accessible: true
+        },
+        images: {
+            main: {
+                normal: '/assets/dev/ouygutfguhiopigjhklm.jpg',
+                low: '/assets/dev/ouygutfguhiopigjhklm-low.jpg',
             },
             others: []
         }

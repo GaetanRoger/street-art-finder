@@ -1,15 +1,32 @@
 <mat-toolbar class="mat-elevation-z2 toolbar" [style]="backgroundImage">
-    <mat-toolbar-row>
+    <mat-toolbar-row *ngIf="!showSearchBar">
         <button mat-icon-button *ngIf="showBackButton" (click)="goBack()" class="back-arrow">
             <mat-icon>arrow_back</mat-icon>
         </button>
         <span>{{title}}</span>
         <span class="toolbar-spacer"></span>
-        <button mat-icon-button *ngIf="showSearchButton">
+        <button mat-icon-button *ngIf="showSearchButton" (click)="toggleSearch()">
             <mat-icon>search</mat-icon>
         </button>
         <button mat-icon-button>
             <mat-icon>more_vert</mat-icon>
         </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="showSearchBar" class="search-row">
+        <button mat-icon-button (click)="toggleSearch()" class="back-arrow">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-form-field class="search-field" floatLabel="never">
+            <input matInput #searchInput placeholder="Search..."
+                   (keydown)="searchKeyDown.emit($event)"
+                   (keyup)="searchKeyUp.emit($event)"
+                   (change)="searchChange.emit($event.target.value)"
+                   autofocus
+            />
+            <button mat-icon-button matSuffix (click)="emitSearchChange(searchInput.value)">
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+
     </mat-toolbar-row>
 </mat-toolbar>

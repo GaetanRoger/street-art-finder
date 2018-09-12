@@ -12,6 +12,6 @@ export class PieceService {
     }
 
     findAll(artistId: string): Observable<Piece[]> {
-        return of(pieces);
+        return of(pieces.filter(p => p.artist.objectID === artistId));
     }
 }

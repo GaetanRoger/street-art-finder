@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 import {Location} from '@angular/common';
 
@@ -29,6 +29,12 @@ export class ToolbarComponent implements OnChanges {
      */
     @Input() showBackButton = false;
 
+    @Output() searchChange: EventEmitter<string> = new EventEmitter();
+
+    @Output() searchKeyDown: EventEmitter<KeyboardEvent> = new EventEmitter();
+
+    @Output() searchKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter();
+
     /**
      * Default color to be used if no background image is supplied.
      */
@@ -38,6 +44,10 @@ export class ToolbarComponent implements OnChanges {
      * Safe value of the CSS property to display the provided background image or color.
      */
     backgroundImage: SafeValue;
+    /**
+     * True to display search text box, false to hide it.
+     */
+    showSearchBar: boolean;
 
     constructor(private readonly sanitizer: DomSanitizer,
                 private readonly location: Location) {
@@ -51,6 +61,10 @@ export class ToolbarComponent implements OnChanges {
         this.location.back();
     }
 
+    toggleSearch(): void {
+        this.showSearchBar = !this.showSearchBar;
+    }
+
     /**
      * Generate the background CSS property with the image or the default color.
      */
@@ -60,5 +74,9 @@ export class ToolbarComponent implements OnChanges {
         return this.image
             ? `background-image: ${linearGradient}, url("${this.image}");`
             : `background-color: ${this.DEFAULT_BACKGROUND_COLOR};`;
+    }
+
+    emitSearchChange(event: string) {
+        this.searchChange.emit(event);
     }
 }

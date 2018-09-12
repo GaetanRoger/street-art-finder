@@ -1,23 +1,30 @@
 <div *ngIf="artist$ | async as artist">
     <app-toolbar
-            title="Street Art Finder"
+            [title]="artist.name"
             [showSearchButton]="true"
             [showBackButton]="true"
             [image]="artist.images.horizontal.low"
+            (searchKeyUp)="setFilter($event.target.value)"
     ></app-toolbar>
 
     <app-flat-card-with-image
             [title]="artist.name"
             [text]="artist.text"
-            [image]="artist.images.vertical.low"
+            [image]="artist.images.vertical ? artist.images.vertical.low : artist.images.horizontal.low"
     ></app-flat-card-with-image>
 
-    <div *ngFor="let piece of artist.pieces" class="piece">
+    <div *ngFor="let piece of filterPieces(artist.pieces)" class="piece">
         <img [src]="piece.images.main.low" class="image"/>
         <div class="name-blur"></div>
         <div class="name">
             <p>{{ piece.name}}</p>
         </div>
+    </div>
+    <div *ngIf="artist.pieces.length > 0 && filterPieces(artist.pieces).length === 0">
+        No pieces were found with your filter.
+    </div>
+    <div *ngIf="artist.pieces.length === 0">
+        No pieces were yet uploaded.
     </div>
 
 </div>

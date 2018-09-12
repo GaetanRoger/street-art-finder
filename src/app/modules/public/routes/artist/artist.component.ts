@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {delay, flatMap, map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Artist} from '../../../core/types/artist';
+import {Piece} from '../../../core/types/piece';
 
 @Component({
     selector: 'app-artist',
@@ -12,6 +13,7 @@ import {Artist} from '../../../core/types/artist';
 })
 export class ArtistComponent implements OnInit {
     artist$: Observable<Artist>;
+    filter = '';
 
     constructor(private readonly route: ActivatedRoute,
                 private readonly artistService: ArtistService) {
@@ -25,4 +27,21 @@ export class ArtistComponent implements OnInit {
         );
     }
 
+    setFilter(filter: string) {
+        this.filter = filter
+            ? this.transformForFilter(filter)
+            : '';
+    }
+
+    filterPieces(pieces: Piece[]): Piece[] {
+        return pieces
+            ? pieces.filter(p => this.transformForFilter(p.name).includes(this.filter))
+            : [];
+    }
+
+    private transformForFilter(str: string): string {
+        return str
+            ? str.toLocaleLowerCase().replace(' ', '')
+            : str;
+    }
 }
