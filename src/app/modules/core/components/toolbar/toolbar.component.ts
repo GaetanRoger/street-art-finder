@@ -29,6 +29,13 @@ export class ToolbarComponent implements OnChanges {
      */
     @Input() showBackButton = false;
 
+    @Input() menuItems: {
+        text: string;
+        icon?: string;
+        routerLink: string | string[];
+        disabled?: boolean;
+    }[] = [];
+
     @Output() searchChange: EventEmitter<string> = new EventEmitter();
 
     @Output() searchKeyDown: EventEmitter<KeyboardEvent> = new EventEmitter();

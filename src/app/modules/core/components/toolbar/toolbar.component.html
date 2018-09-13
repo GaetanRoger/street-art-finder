@@ -8,9 +8,19 @@
         <button mat-icon-button *ngIf="showSearchButton" (click)="toggleSearch()">
             <mat-icon>search</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="menuItems && menuItems.length > 0">
             <mat-icon>more_vert</mat-icon>
         </button>
+        <mat-menu #menu="matMenu" >
+            <button mat-menu-item
+                    *ngFor="let item of menuItems"
+                    [routerLink]="item.routerLink"
+                    [disabled]="item.disabled">
+                <mat-icon *ngIf="item.icon">{{item.icon}}</mat-icon>
+                <span>{{item.text}}</span>
+            </button>
+        </mat-menu>
+
     </mat-toolbar-row>
     <mat-toolbar-row *ngIf="showSearchBar" class="search-row">
         <button mat-icon-button (click)="toggleSearch()" class="back-arrow">

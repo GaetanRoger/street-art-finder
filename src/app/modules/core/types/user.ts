@@ -3,12 +3,8 @@ export interface UserPreview {
     email: string;
 }
 
-export interface UserMetadata {
-    creationTime: Date;
-    lastSignInTime: Date;
-}
-
 export interface User extends UserPreview {
     emailVerified: boolean;
-    metadata: UserMetadata;
+    lastLoginAt: string;
+    createdAt: string;
 }

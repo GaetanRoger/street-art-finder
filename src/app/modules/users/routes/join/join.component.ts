@@ -1,14 +1,15 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserCredentials} from '../../../core/types/user-credentials';
 import {UserService} from '../../../core/services/user/user.service';
 import {Router} from '@angular/router';
+import {take} from 'rxjs/operators';
 
 @Component({
     selector: 'app-join',
     templateUrl: './join.component.html',
     styleUrls: ['./join.component.css']
 })
-export class JoinComponent {
+export class JoinComponent implements OnInit {
     registering = false;
     registeringFailedMessage: string;
 
@@ -16,10 +17,21 @@ export class JoinComponent {
                 private readonly router: Router) {
     }
 
+    ngOnInit(): void {
+        this.userService.isLoggedIn()
+            .pipe(take(1))
+            .subscribe(b => {
+                if (b) {
+                    this.router.navigate(['/dashboard'], {skipLocationChange: true});
+                }
+            });
+    }
+
+
     formSubmitted(value: UserCredentials): void {
         this.registering = true;
         this.userService.register(value)
-            .then(r => this.router.navigate(['dashboard']))
+            .then(_ => this.router.navigate(['dashboard']))
             .catch(e => this.manageRegisterError(e));
     }
 

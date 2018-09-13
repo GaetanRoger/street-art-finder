@@ -6,15 +6,18 @@ import {Route, RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
+import {AuthGuard} from './modules/core/guards/auth.guard';
+import {AngularFireAuthModule} from 'angularfire2/auth';
 
 const routes: Route[] = [
     {
-        path: 'users',
-        loadChildren: 'src/app/modules/users/users.module#UsersModule'
+        path: 'dashboard',
+        canActivate: [AuthGuard],
+        loadChildren: 'src/app/modules/dashboard/dashboard.module#DashboardModule'
     },
     {
-        path: 'dashboard',
-        loadChildren: 'src/app/modules/dashboard/dashboard.module#DashboardModule'
+        path: 'users',
+        loadChildren: 'src/app/modules/users/users.module#UsersModule'
     },
     {
         path: '',
@@ -31,7 +34,8 @@ const routes: Route[] = [
         BrowserModule,
         RouterModule.forRoot(routes),
         BrowserAnimationsModule,
-        AngularFireModule.initializeApp(environment.firebase)
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule
     ],
     providers: [],
     bootstrap: [AppComponent]

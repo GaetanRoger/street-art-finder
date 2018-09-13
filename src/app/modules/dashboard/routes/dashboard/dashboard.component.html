@@ -1,1 +1,6 @@
-{{user$ | async | json}}
+<app-toolbar
+        title="Dashboard"
+        [showSearchButton]="true"
+        [showBackButton]="true"
+        [menuItems]="[{text: 'Logout', routerLink: ['/users', 'logout']}]"
+></app-toolbar>

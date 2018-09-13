@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 import {Observable} from 'rxjs';
 import {Artist} from '../../../core/types/artist';
+import {UserService} from '../../../core/services/user/user.service';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
     selector: 'app-home',
@@ -12,11 +14,25 @@ export class HomeComponent implements OnInit {
     artists: Observable<Artist[]>;
     filter = '';
 
-    constructor(private readonly artistService: ArtistService) {
+    primaryButtonText$: Observable<string>;
+    primaryButtonRouterLink$: Observable<string>;
+    loggedIn$: Observable<boolean>;
+
+    constructor(private readonly artistService: ArtistService,
+                private readonly userService: UserService) {
     }
 
     ngOnInit() {
         this.artists = this.artistService.findAll();
+
+        this.loggedIn$ = this.userService.isLoggedIn()
+            .pipe(startWith(false));
+        this.primaryButtonText$ = this.loggedIn$.pipe(
+            map(l => l ? 'Dashboard' : 'Join now')
+        );
+        this.primaryButtonRouterLink$ = this.loggedIn$.pipe(
+            map(l => l ? 'dashboard' : 'users/join')
+        );
     }
 
     filterArtists(artists: Artist[]): Artist[] {

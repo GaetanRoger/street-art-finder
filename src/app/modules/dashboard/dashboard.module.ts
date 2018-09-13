@@ -6,6 +6,7 @@ import {CoreModule} from '../core/core.module';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import {DashboardComponent} from './routes/dashboard/dashboard.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
+import {UserService} from '../core/services/user/user.service';
 
 const routes: Route[] = [
     {
@@ -23,7 +24,8 @@ const routes: Route[] = [
         ComponentsLibraryModule,
         AngularFireAuthModule
     ],
-    declarations: [DashboardComponent]
+    declarations: [DashboardComponent],
+    providers: [UserService]
 })
 export class DashboardModule {
 }

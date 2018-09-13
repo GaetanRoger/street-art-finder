@@ -1,0 +1,22 @@
+<app-toolbar
+        title="Login"
+        [showBackButton]="true"
+        [showSearchButton]="false"
+></app-toolbar>
+
+<div class="title">
+  <h1>Welcome back</h1>
+  <p>Glad to see you here</p>
+</div>
+<div class="form-container">
+  <app-login-form
+          emailPlaceholder="Enter your e-mail address..."
+          passwordPlaceholder="Enter your password..."
+          secondaryButtonText="I don't have an account"
+          secondaryButtonRouterLink="/users/join"
+          class="form"
+          [disabled]="login"
+          [errorMessage]="loginFailedMessage"
+          (formSubmitted)="formSubmitted($event)"
+  ></app-login-form>
+</div>

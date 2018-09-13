@@ -4,7 +4,7 @@ import {
     MatButtonModule,
     MatCardModule, MatChipsModule,
     MatDividerModule, MatFormFieldModule,
-    MatIconModule, MatInputModule,
+    MatIconModule, MatInputModule, MatMenuModule,
     MatProgressSpinnerModule,
     MatToolbarModule
 } from '@angular/material';
@@ -20,7 +20,8 @@ import {
         MatProgressSpinnerModule,
         MatFormFieldModule,
         MatInputModule,
-        MatChipsModule
+        MatChipsModule,
+        MatMenuModule
     ],
     declarations: [],
     exports: [
@@ -32,7 +33,8 @@ import {
         MatProgressSpinnerModule,
         MatFormFieldModule,
         MatInputModule,
-        MatChipsModule
+        MatChipsModule,
+        MatMenuModule
     ]
 })
 export class ComponentsLibraryModule {
