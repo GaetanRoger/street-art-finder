@@ -19,7 +19,7 @@ export class JoinComponent {
     formSubmitted(value: UserCredentials): void {
         this.registering = true;
         this.userService.register(value)
-            .then(r => this.router.navigate(['']))
+            .then(r => this.router.navigate(['dashboard']))
             .catch(e => this.manageRegisterError(e));
     }
 

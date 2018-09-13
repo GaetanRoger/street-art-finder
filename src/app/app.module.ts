@@ -3,13 +3,18 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {Route, RouterModule} from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatToolbarModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularFireModule} from 'angularfire2';
+import {environment} from '../environments/environment';
 
 const routes: Route[] = [
     {
         path: 'users',
         loadChildren: 'src/app/modules/users/users.module#UsersModule'
+    },
+    {
+        path: 'dashboard',
+        loadChildren: 'src/app/modules/dashboard/dashboard.module#DashboardModule'
     },
     {
         path: '',
@@ -26,6 +31,7 @@ const routes: Route[] = [
         BrowserModule,
         RouterModule.forRoot(routes),
         BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebase)
     ],
     providers: [],
     bootstrap: [AppComponent]
