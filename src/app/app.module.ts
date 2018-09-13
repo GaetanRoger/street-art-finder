@@ -8,6 +8,7 @@ import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
 import {AuthGuard} from './modules/core/guards/auth.guard';
 import {AngularFireAuthModule} from 'angularfire2/auth';
+import {CoreModule} from './modules/core/core.module';
 
 const routes: Route[] = [
     {
@@ -35,7 +36,7 @@ const routes: Route[] = [
         RouterModule.forRoot(routes),
         BrowserAnimationsModule,
         AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule
+        CoreModule
     ],
     providers: [],
     bootstrap: [AppComponent]

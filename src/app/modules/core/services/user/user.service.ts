@@ -18,7 +18,9 @@ export class UserService {
     }
 
     login(userCredentials: UserCredentials) {
-        return this.auth.auth.signInWithEmailAndPassword(userCredentials.email, userCredentials.password);
+        return this.auth.auth
+            .signInWithEmailAndPassword(userCredentials.email, userCredentials.password)
+            .then(c => console.log(c.user.uid));
     }
 
     isLoggedIn(): Observable<boolean> {

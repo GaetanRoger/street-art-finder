@@ -8,13 +8,15 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
+import {AngularFirestoreModule} from 'angularfire2/firestore';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         ComponentsLibraryModule,
-        AngularFireAuthModule
+        AngularFireAuthModule,
+        AngularFirestoreModule
     ],
     declarations: [
         FlatCardWithImageComponent,
@@ -23,6 +25,8 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
         LoadingSpinnerComponent
     ],
     exports: [
+        AngularFireAuthModule,
+        AngularFirestoreModule,
         FlatCardWithImageComponent,
         ArtistPreviewComponent,
         ToolbarComponent,

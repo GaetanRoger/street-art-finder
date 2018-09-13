@@ -19,3 +19,6 @@
 
 <app-artist-preview *ngFor="let artist of filterArtists(artists | async)" [artist]="artist">
 </app-artist-preview>
+<app-loading-spinner *ngIf="loadingArtists$ | async"
+text="Chargement des artistes..."
+></app-loading-spinner>

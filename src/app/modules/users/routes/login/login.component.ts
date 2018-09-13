@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../core/services/user/user.service';
 import {Router} from '@angular/router';
 import {UserCredentials} from '../../../core/types/user-credentials';
-import {take} from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -19,7 +18,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.userService.isLoggedIn()
-            .pipe(take(1))
             .subscribe(b => {
                 if (b) {
                     this.router.navigate(['/dashboard'], {skipLocationChange: true});
@@ -34,7 +32,6 @@ export class LoginComponent implements OnInit {
         this.userService.login(value)
             .then(_ => {
                 console.log('user', _);
-                // this.router.navigate(['/dashboard']);
             })
             .catch(e => this.manageRegisterError(e));
     }

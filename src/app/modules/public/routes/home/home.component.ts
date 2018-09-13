@@ -12,6 +12,7 @@ import {map, startWith} from 'rxjs/operators';
 })
 export class HomeComponent implements OnInit {
     artists: Observable<Artist[]>;
+    loadingArtists$: Observable<boolean>;
     filter = '';
 
     primaryButtonText$: Observable<string>;
@@ -24,6 +25,10 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.artists = this.artistService.findAll();
+        this.loadingArtists$ = this.artists.pipe(
+            startWith([]),
+            map(a => !a || a.length === 0)
+        );
 
         this.loggedIn$ = this.userService.isLoggedIn()
             .pipe(startWith(false));

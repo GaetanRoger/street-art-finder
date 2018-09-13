@@ -54,7 +54,7 @@ export const pieces: Piece[] = [
         text: 'A nice black and white design.',
         location: {
             getLongitude: () => 45.774027777777775,
-            getLatitude: () => 4.849794444444444
+                getLatitude: () => 4.849794444444444
         },
         addedOn: new Date(),
         artist: {
