@@ -1,47 +1,46 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {UserCredentials} from '../../../core/types/user-credentials';
+import {UserService} from '../../../core/services/user/user.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-join',
     templateUrl: './join.component.html',
     styleUrls: ['./join.component.css']
 })
-export class JoinComponent implements OnInit {
-    joinFormGroup: FormGroup;
+export class JoinComponent {
+    registering = false;
+    registeringFailedMessage: string;
 
-    constructor(private readonly fb: FormBuilder) {
+    constructor(private readonly userService: UserService,
+                private readonly router: Router) {
     }
 
-    get email(): FormControl {
-        return this.joinFormGroup.get('email') as FormControl;
+    formSubmitted(value: UserCredentials): void {
+        this.registering = true;
+        this.userService.register(value)
+            .then(r => this.router.navigate(['']))
+            .catch(e => this.manageRegisterError(e));
     }
 
-    get password(): FormControl {
-        return this.joinFormGroup.get('password') as FormControl;
-    }
-
-    ngOnInit() {
-        this.joinFormGroup = this.fb.group({
-            email: this.buildEmailControl(),
-            password: this.buildPasswordControl()
-        });
-    }
-
-    submit(): void {
-
-    }
-
-    private buildEmailControl(): FormControl {
-        return this.fb.control('', [
-            Validators.required,
-            Validators.email
-        ]);
-    }
-
-    private buildPasswordControl() {
-        return this.fb.control('', [
-            Validators.required,
-            Validators.minLength(5)]
-        );
+    private manageRegisterError(error: { code: string; }): void {
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                this.registeringFailedMessage = 'This email address is already in use.';
+                break;
+            case 'auth/invalid-email':
+                this.registeringFailedMessage = 'This email address is invalid.';
+                break;
+            case 'auth/operation-not-allowed':
+                this.registeringFailedMessage = 'Sorry, joining is closed for now; retry later.';
+                break;
+            case 'auth/weak-password':
+                this.registeringFailedMessage = 'Your password is too weak!';
+                break;
+            default:
+                this.registeringFailedMessage = 'An error occurred, please try again.';
+                break;
+        }
+        this.registering = false;
     }
 }

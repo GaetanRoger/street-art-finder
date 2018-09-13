@@ -5,6 +5,7 @@ import {CoreModule} from '../core/core.module';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import { JoinComponent } from './routes/join/join.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { LoginFormComponent } from './shared/login-form/login-form.component';
 
 const routes: Route[] = [
     {
@@ -21,7 +22,7 @@ const routes: Route[] = [
         CoreModule,
         ComponentsLibraryModule
     ],
-    declarations: [JoinComponent]
+    declarations: [JoinComponent, LoginFormComponent]
 })
 export class UsersModule {
 }

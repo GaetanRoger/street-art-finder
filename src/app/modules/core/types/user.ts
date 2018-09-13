@@ -1,9 +1,14 @@
-import {ObjectIDable} from './object-idable';
+export interface UserPreview {
+    uid: string;
+    email: string;
+}
 
-export interface UserPreview extends ObjectIDable {
-    name: string;
+export interface UserMetadata {
+    creationTime: Date;
+    lastSignInTime: Date;
 }
 
 export interface User extends UserPreview {
-    email: string;
+    emailVerified: boolean;
+    metadata: UserMetadata;
 }

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     MatButtonModule,
-    MatCardModule,
+    MatCardModule, MatChipsModule,
     MatDividerModule, MatFormFieldModule,
     MatIconModule, MatInputModule,
     MatProgressSpinnerModule,
@@ -19,7 +19,8 @@ import {
         MatDividerModule,
         MatProgressSpinnerModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatChipsModule
     ],
     declarations: [],
     exports: [
@@ -30,7 +31,8 @@ import {
         MatDividerModule,
         MatProgressSpinnerModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatChipsModule
     ]
 })
 export class ComponentsLibraryModule {

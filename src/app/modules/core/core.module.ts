@@ -7,12 +7,14 @@ import { ArtistPreviewComponent } from './components/artist-preview/artist-previ
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import {AngularFireAuthModule} from 'angularfire2/auth';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
-        ComponentsLibraryModule
+        ComponentsLibraryModule,
+        AngularFireAuthModule
     ],
     declarations: [
         FlatCardWithImageComponent,

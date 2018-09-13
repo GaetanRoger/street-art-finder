@@ -1,0 +1,21 @@
+mat-form-field {
+    width: 100%;
+}
+.submit-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.error-chip {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
