@@ -7,6 +7,7 @@ import {ComponentsLibraryModule} from '../components-library/components-library.
 import {DashboardComponent} from './routes/dashboard/dashboard.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from '../core/services/user/user.service';
+import { ArtistProgressionComponent } from './routes/dashboard/artist-progression/artist-progression.component';
 
 const routes: Route[] = [
     {
@@ -23,7 +24,7 @@ const routes: Route[] = [
         CoreModule,
         ComponentsLibraryModule,
     ],
-    declarations: [DashboardComponent],
+    declarations: [DashboardComponent, ArtistProgressionComponent],
     providers: []
 })
 export class DashboardModule {

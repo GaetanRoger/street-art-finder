@@ -1,0 +1,5 @@
+<div class="artist-card mat-elevation-z1" [style]="backgroundImage">
+  <mat-card-title>{{progression.artist.name}}</mat-card-title>
+  <mat-progress-bar [value]="(progression.score * 100) / progression.maxScore"></mat-progress-bar>
+  <div class="progression-values">{{progression.score}} / {{progression.maxScore}}</div>
+</div>
