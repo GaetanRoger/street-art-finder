@@ -1,8 +1,8 @@
 import * as functions from 'firebase-functions';
-import {Collections} from './collections.enum';
+import {Collections} from '../collections.enum';
 import * as admin from 'firebase-admin';
 
-export const updateArtistNameOnPiecesFunction = functions.firestore
+export const updateArtistNameOnUsersArtistsFunction = functions.firestore
     .document(`${Collections.artists}/{artistId}`)
     .onUpdate((change, context) => {
         const oldName = change.before.data().name;
@@ -15,11 +15,11 @@ export const updateArtistNameOnPiecesFunction = functions.firestore
         const batch = admin.firestore().batch();
 
         return admin.firestore()
-            .collection(Collections.pieces)
+            .collection(Collections.users_artists)
             .where('artist.objectID', '==', artistId)
             .get()
-            .then(pieces => {
-                pieces.forEach(ua => {
+            .then(users_artists => {
+                users_artists.forEach(ua => {
                     batch.update(ua.ref, {['artist.name']: newName});
                 });
 

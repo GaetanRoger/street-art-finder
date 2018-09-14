@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import {Collections} from './collections.enum';
+import {Collections} from '../collections.enum';
 
 
 export const incrementMaxScoreOnUsersArtistsFunction = functions.firestore

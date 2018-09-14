@@ -1,8 +1,8 @@
 import * as admin from 'firebase-admin';
-import {decrementPiecesCountOnArtistFunction, incrementPiecesCountOnArtistFunction} from './firestore/artistPiecesCount';
-import {decrementMaxScoreOnUsersArtistsFunction, incrementMaxScoreOnUsersArtistsFunction} from './firestore/usersArtistsMaxScore';
-import {updateArtistNameOnPiecesFunction} from './firestore/piecesArtistName';
-import {updateArtistNameOnUsersArtistsFunction} from './firestore/usersArtistsArtistName';
+import {decrementPiecesCountOnArtistFunction, incrementPiecesCountOnArtistFunction} from './firestore/pieces/piecesCountOnArtist';
+import {decrementMaxScoreOnUsersArtistsFunction, incrementMaxScoreOnUsersArtistsFunction} from './firestore/pieces/maxScoreOnUsersArtists';
+import {updateArtistNameOnPiecesFunction} from './firestore/artists/updateArtistNameOnPieces';
+import {updateArtistNameOnUsersArtistsFunction} from './firestore/artists/updateArtistNameOnUsersArtists';
 
 admin.initializeApp();
 
