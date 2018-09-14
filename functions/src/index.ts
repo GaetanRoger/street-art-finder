@@ -3,6 +3,7 @@ import {decrementPiecesCountOnArtistFunction, incrementPiecesCountOnArtistFuncti
 import {decrementMaxScoreOnUsersArtistsFunction, incrementMaxScoreOnUsersArtistsFunction} from './firestore/pieces/maxScoreOnUsersArtists';
 import {updateArtistNameOnPiecesFunction} from './firestore/artists/updateArtistNameOnPieces';
 import {updateArtistNameOnUsersArtistsFunction} from './firestore/artists/updateArtistNameOnUsersArtists';
+import {updateArtistImagesOnUsersArtistsFunction} from './firestore/artists/updateArtistImagesOnUsersArtists';
 
 admin.initializeApp();
 
@@ -12,3 +13,4 @@ export const incrementMaxScoreOnUsersArtists = incrementMaxScoreOnUsersArtistsFu
 export const decrementMaxScoreOnUsersArtists = decrementMaxScoreOnUsersArtistsFunction;
 export const updateArtistNameOnPieces = updateArtistNameOnPiecesFunction;
 export const updateArtistNameOnUsersArtists = updateArtistNameOnUsersArtistsFunction;
+export const updateArtistImagesOnUsersArtists = updateArtistImagesOnUsersArtistsFunction;
