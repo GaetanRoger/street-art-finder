@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../core/services/user/user.service';
 import {Observable} from 'rxjs';
-import {User} from '../../../core/types/user';
-import {map} from 'rxjs/operators';
+import {UserArtistProgressionService} from '../../../core/services/user-artist-progression.service';
+import {UserArtistProgression} from '../../../core/types/user-artist-progression';
 
 @Component({
     selector: 'app-dashboard',
@@ -10,14 +10,16 @@ import {map} from 'rxjs/operators';
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+    progression$: Observable<UserArtistProgression[]>;
 
-    d$: Observable<User>;
 
-    constructor(private readonly userService: UserService) {
+    constructor(private readonly userArtistProgression: UserArtistProgressionService,
+                private readonly userService: UserService) {
     }
 
     ngOnInit() {
-        this.d$ = this.userService.user();
+        const user$ = this.userService.user();
+        this.progression$ = this.userArtistProgression.artistsProgression(user$);
     }
 
 }

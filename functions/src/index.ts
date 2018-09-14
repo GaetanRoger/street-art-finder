@@ -1,8 +1,14 @@
-import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import {decrementPiecesCountOnArtistFunction, incrementPiecesCountOnArtistFunction} from './firestore/artistPiecesCount';
+import {decrementMaxScoreOnUsersArtistsFunction, incrementMaxScoreOnUsersArtistsFunction} from './firestore/usersArtistsMaxScore';
+import {updateArtistNameOnPiecesFunction} from './firestore/piecesArtistName';
+import {updateArtistNameOnUsersArtistsFunction} from './firestore/usersArtistsArtistName';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+admin.initializeApp();
+
+export const incrementPiecesCountOnArtist = incrementPiecesCountOnArtistFunction;
+export const decrementPiecesCountOnArtist = decrementPiecesCountOnArtistFunction;
+export const incrementMaxScoreOnUsersArtists = incrementMaxScoreOnUsersArtistsFunction;
+export const decrementMaxScoreOnUsersArtists = decrementMaxScoreOnUsersArtistsFunction;
+export const updateArtistNameOnPieces = updateArtistNameOnPiecesFunction;
+export const updateArtistNameOnUsersArtists = updateArtistNameOnUsersArtistsFunction;

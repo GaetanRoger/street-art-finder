@@ -4,3 +4,9 @@
         [showBackButton]="true"
         [menuItems]="[{text: 'Logout', routerLink: ['/users', 'logout']}]"
 ></app-toolbar>
+
+<div *ngFor="let progression of progression$ | async">
+    {{progression.artist.name}}
+    {{progression.score}}
+    {{progression.maxScore}}
+</div>
