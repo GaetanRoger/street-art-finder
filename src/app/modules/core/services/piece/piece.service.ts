@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Piece} from '../../types/piece';
-import {pieces} from '../../dev-data/dev-data';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {ObjectIDInjecterService} from '../objectid-injecter/object-i-d-injecter.service';
 
 @Injectable({

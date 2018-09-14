@@ -6,6 +6,8 @@ import {CoreModule} from '../core/core.module';
 import {NotFoundComponent} from './routes/not-found/not-found.component';
 import {ArtistComponent} from './routes/artist/artist.component';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
+import {PieceComponent} from './routes/artist/piece/piece.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 const routes: Route[] = [
     {
@@ -27,9 +29,16 @@ const routes: Route[] = [
         CommonModule,
         RouterModule.forChild(routes),
         CoreModule,
-        ComponentsLibraryModule
+        ComponentsLibraryModule,
+        LeafletModule
     ],
-    declarations: [HomeComponent, NotFoundComponent, ArtistComponent]
+    declarations: [
+        HomeComponent,
+        NotFoundComponent,
+        ArtistComponent,
+        PieceComponent
+    ],
+    entryComponents: [PieceComponent]
 })
 export class PublicModule {
 }

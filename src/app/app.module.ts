@@ -9,6 +9,8 @@ import {environment} from '../environments/environment';
 import {AuthGuard} from './modules/core/guards/auth.guard';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {CoreModule} from './modules/core/core.module';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {Icon, icon, Marker} from 'leaflet';
 
 const routes: Route[] = [
     {
@@ -36,10 +38,20 @@ const routes: Route[] = [
         RouterModule.forRoot(routes),
         BrowserAnimationsModule,
         AngularFireModule.initializeApp(environment.firebase),
-        CoreModule
+        CoreModule,
+        LeafletModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    // Override default Icons
+    private defaultIcon: Icon = icon({
+        iconUrl: 'assets/leaflet/marker-icon.png',
+        shadowUrl: 'assets/leaflet/marker-shadow.png',
+        iconAnchor: [12, 40]
+    });
+    constructor() {
+        Marker.prototype.options.icon = this.defaultIcon;
+    }
 }

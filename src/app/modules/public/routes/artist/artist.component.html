@@ -15,20 +15,28 @@
             [secondaryButtonExternalLink]="artist.website"
     ></app-flat-card-with-image>
 
-    <div *ngFor="let piece of filterPieces(artist.pieces)" class="piece">
-        <img [src]="piece.images.main.low" class="image"/>
-        <div class="name-blur"></div>
-        <div class="name">
-            <p>{{ piece.name}}</p>
+    <div *ngIf="pieces$ | async as pieces">
+        <div *ngFor="let piece of filterPieces(pieces$ | async)" (click)="openPieceDialog(piece)" class="piece">
+            <img [src]="piece.images.main.low" class="image"/>
+            <div class="name-blur"></div>
+            <div class="name">
+                <p>{{ piece.name}}</p>
+            </div>
         </div>
-    </div>
-    <div *ngIf="artist.pieces.length > 0 && filterPieces(artist.pieces).length === 0">
-        No pieces were found with your filter.
-    </div>
-    <div *ngIf="artist.pieces.length === 0">
-        No pieces were yet uploaded.
+        <div *ngIf="pieces.length > 0 && filterPieces(pieces).length === 0">
+            No pieces were found with your filter.
+        </div>
+        <div *ngIf="pieces.length === 0">
+            No pieces were yet uploaded.
+        </div>
     </div>
 
 </div>
-<app-loading-spinner *ngIf="!(artist$ | async)" text="Chargement de l'artiste...">
-</app-loading-spinner>
+<div *ngIf="!(artist$ | async)">
+    <app-toolbar
+            title="Chargement"
+            [showBackButton]="true"
+    ></app-toolbar>
+    <app-loading-spinner text="Chargement de l'artiste...">
+    </app-loading-spinner>
+</div>

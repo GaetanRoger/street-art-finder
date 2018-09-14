@@ -8,7 +8,7 @@ export interface Piece extends ObjectIDable {
     name: string;
     location: Geopoint;
     text: string;
-    addedOn: Date;
+    addedOn: {toDate: () => Date};
     artist: ArtistPreview;
     images: {
         main: Image;

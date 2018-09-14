@@ -31,7 +31,7 @@ export class UserService {
 
     user(): Observable<User> {
         return this.auth.user.pipe(
-            map(u => u.toJSON()),
+            map(u => u ? u.toJSON() : null),
             map(j => j as User)
         );
     }

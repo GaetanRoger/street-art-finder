@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Artist} from '../../types/artist';
-import {combineLatest, forkJoin, Observable} from 'rxjs';
-import {artists} from '../../dev-data/dev-data';
+import {combineLatest, Observable} from 'rxjs';
 import {PieceService} from '../piece/piece.service';
-import {map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Piece} from '../../types/piece';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ObjectIDInjecterService} from '../objectid-injecter/object-i-d-injecter.service';
@@ -52,7 +51,7 @@ export class ArtistService {
                 map(([artist, pieces]) => {
                     artist.pieces = pieces;
                     return artist;
-                })
+                }),
             );
     }
 }

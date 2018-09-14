@@ -1,4 +1,4 @@
 export interface Geopoint {
-    getLatitude: () => number;
-    getLongitude: () => number;
+    latitude: number;
+    longitude: number;
 }

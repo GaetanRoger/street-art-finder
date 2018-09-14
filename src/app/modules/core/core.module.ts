@@ -16,7 +16,7 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
         RouterModule,
         ComponentsLibraryModule,
         AngularFireAuthModule,
-        AngularFirestoreModule
+        AngularFirestoreModule.enablePersistence()
     ],
     declarations: [
         FlatCardWithImageComponent,

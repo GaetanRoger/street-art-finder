@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     MatButtonModule,
-    MatCardModule, MatChipsModule,
+    MatCardModule, MatChipsModule, MatDialogModule,
     MatDividerModule, MatFormFieldModule,
     MatIconModule, MatInputModule, MatMenuModule,
     MatProgressSpinnerModule,
@@ -34,7 +34,8 @@ import {
         MatFormFieldModule,
         MatInputModule,
         MatChipsModule,
-        MatMenuModule
+        MatMenuModule,
+        MatDialogModule
     ]
 })
 export class ComponentsLibraryModule {

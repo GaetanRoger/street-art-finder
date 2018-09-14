@@ -22,10 +22,9 @@ const routes: Route[] = [
         RouterModule.forChild(routes),
         CoreModule,
         ComponentsLibraryModule,
-        AngularFireAuthModule
     ],
     declarations: [DashboardComponent],
-    providers: [UserService]
+    providers: []
 })
 export class DashboardModule {
 }

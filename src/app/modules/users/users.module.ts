@@ -33,10 +33,9 @@ const routes: Route[] = [
         RouterModule.forChild(routes),
         CoreModule,
         ComponentsLibraryModule,
-
     ],
     declarations: [JoinComponent, LoginFormComponent, LoginComponent, LogoutComponent],
-    providers: [UserService]
+    providers: []
 })
 export class UsersModule {
 }
