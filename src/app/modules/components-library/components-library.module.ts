@@ -5,7 +5,7 @@ import {
     MatCardModule, MatChipsModule, MatDialogModule,
     MatDividerModule, MatFormFieldModule,
     MatIconModule, MatInputModule, MatMenuModule, MatProgressBarModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule, MatTabsModule,
     MatToolbarModule
 } from '@angular/material';
 
@@ -21,7 +21,8 @@ import {
         MatFormFieldModule,
         MatInputModule,
         MatChipsModule,
-        MatMenuModule
+        MatMenuModule,
+        MatTabsModule
     ],
     declarations: [],
     exports: [
@@ -36,7 +37,8 @@ import {
         MatChipsModule,
         MatMenuModule,
         MatDialogModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        MatTabsModule
     ]
 })
 export class ComponentsLibraryModule {

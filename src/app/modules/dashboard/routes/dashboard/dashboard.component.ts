@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../core/services/user/user.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {UserArtistProgressionService} from '../../../core/services/user-artist-progression.service';
 import {UserArtistProgression} from '../../../core/types/user-artist-progression';
+import {MatTabChangeEvent} from '@angular/material';
 
 @Component({
     selector: 'app-dashboard',
@@ -12,6 +13,8 @@ import {UserArtistProgression} from '../../../core/types/user-artist-progression
 export class DashboardComponent implements OnInit {
     progression$: Observable<UserArtistProgression[]>;
 
+    mapTabBehaviourSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
 
     constructor(private readonly userArtistProgression: UserArtistProgressionService,
                 private readonly userService: UserService) {
@@ -20,6 +23,11 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         const user$ = this.userService.user();
         this.progression$ = this.userArtistProgression.artistsProgression(user$);
+    }
+
+    tabChanged(e: MatTabChangeEvent): void {
+        const tab1selected = e.index === 1;
+        this.mapTabBehaviourSubject.next(tab1selected);
     }
 
 }

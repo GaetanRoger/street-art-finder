@@ -8,6 +8,8 @@ import {DashboardComponent} from './routes/dashboard/dashboard.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from '../core/services/user/user.service';
 import { ArtistProgressionComponent } from './routes/dashboard/artist-progression/artist-progression.component';
+import { AllComponent } from './routes/dashboard/all/all.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 const routes: Route[] = [
     {
@@ -23,8 +25,9 @@ const routes: Route[] = [
         RouterModule.forChild(routes),
         CoreModule,
         ComponentsLibraryModule,
+        LeafletModule
     ],
-    declarations: [DashboardComponent, ArtistProgressionComponent],
+    declarations: [DashboardComponent, ArtistProgressionComponent, AllComponent],
     providers: []
 })
 export class DashboardModule {

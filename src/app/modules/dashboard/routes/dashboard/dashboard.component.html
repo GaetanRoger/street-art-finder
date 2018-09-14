@@ -4,6 +4,15 @@
         [showBackButton]="true"
         [menuItems]="[{text: 'Logout', routerLink: ['/users', 'logout']}]"
 ></app-toolbar>
+<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" (selectedTabChange)="tabChanged($event)">
+    <mat-tab label="PROGRESSION">
+        <app-artist-progression *ngFor="let progression of progression$ | async" [progression]="progression">
+        </app-artist-progression>
+    </mat-tab>
+    <mat-tab label="ALL" >
+        <app-all [selected]="mapTabBehaviourSubject"></app-all>
+    </mat-tab>
+    <mat-tab label="DISCOVER"> Content 3 </mat-tab>
+</mat-tab-group>
 
-<app-artist-progression *ngFor="let progression of progression$ | async" [progression]="progression">
-</app-artist-progression>
+
