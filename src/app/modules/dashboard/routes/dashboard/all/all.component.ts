@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {UserArtistProgressionService} from '../../../../core/services/user-artist-progression.service';
 import {UserService} from '../../../../core/services/user/user.service';
-import {flatMap, map, startWith} from 'rxjs/operators';
+import {flatMap, map} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {Piece} from '../../../../core/types/piece';
 import {PieceService} from '../../../../core/services/piece/piece.service';
-import {FeatureGroup, featureGroup, latLngBounds, LatLngBounds, Layer, Map, marker, tileLayer} from 'leaflet';
+import {FeatureGroup, featureGroup, LatLng, LatLngBounds, Layer, Map, Marker, marker, Point, popup, tileLayer} from 'leaflet';
 
 @Component({
     selector: 'app-all',
@@ -27,11 +27,13 @@ export class AllComponent implements OnInit {
     fitBounds$: Observable<LatLngBounds>;
     leafletMap: Map;
     lastfb: LatLngBounds;
+    moreInfo: BehaviorSubject<Piece> = new BehaviorSubject(null);
 
 
     constructor(private readonly progression: UserArtistProgressionService,
                 private readonly userService: UserService,
-                private readonly pieceService: PieceService) {
+                private readonly pieceService: PieceService,
+                private changeDetector: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -41,7 +43,6 @@ export class AllComponent implements OnInit {
         this.layers = [this.baseLayer];
         this.options = {
             zoom: this.zoom,
-            // center: [45.7534, 4.8433],
             layers: [
                 this.baseLayer
             ]
@@ -72,9 +73,26 @@ export class AllComponent implements OnInit {
     private createFeatureGroupFromPieces(pieces: Piece[]) {
         return featureGroup(
             pieces.map(
-                p => marker([p.location.latitude, p.location.longitude])
+                p => this.createMarkerFromPiece(p)
             )
         );
+    }
+
+    private createMarkerFromPiece(p: Piece): Marker {
+        const latLng = new LatLng(p.location.latitude, p.location.longitude);
+        const options = {title: p.name, alt: p.name + ' marker'};
+        const mark = marker(latLng, options);
+
+        const pop = popup({offset: new Point(0, -40)})
+            .setContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
+            .on('add', () => {
+                this.moreInfo.next(p);
+                this.changeDetector.detectChanges();
+            });
+
+        mark.bindPopup(pop).openPopup();
+
+        return mark;
     }
 
     private getPieces() {

@@ -10,6 +10,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {UserService} from '../core/services/user/user.service';
 import { LoginComponent } from './routes/login/login.component';
 import { LogoutComponent } from './routes/logout/logout.component';
+import { SettingsComponent } from './routes/settings/settings.component';
 
 const routes: Route[] = [
     {
@@ -23,6 +24,10 @@ const routes: Route[] = [
     {
         path: 'logout',
         component: LogoutComponent
+    },
+    {
+        path: 'settings',
+        component: SettingsComponent
     }
 ];
 
@@ -34,7 +39,7 @@ const routes: Route[] = [
         CoreModule,
         ComponentsLibraryModule,
     ],
-    declarations: [JoinComponent, LoginFormComponent, LoginComponent, LogoutComponent],
+    declarations: [JoinComponent, LoginFormComponent, LoginComponent, LogoutComponent, SettingsComponent],
     providers: []
 })
 export class UsersModule {

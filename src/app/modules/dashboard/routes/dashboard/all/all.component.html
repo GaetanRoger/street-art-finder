@@ -1,6 +1,14 @@
-<div style="height: 500px;"
+<div class="map"
      leaflet
      [leafletOptions]="options"
      (leafletMapReady)="mapReady($event)">
     <div [leafletLayer]="markersLayer$ | async"></div>
 </div>
+
+<!--<mat-card *ngIf="moreInfo | async as piece">-->
+    <!--<mat-card-title>{{piece.name}}</mat-card-title>-->
+    <!--<mat-card-subtitle>{{piece.artist.name}}</mat-card-subtitle>-->
+    <!--<mat-card-actions>-->
+        <!--<button mat-raised-button>NAVIGATE</button>-->
+    <!--</mat-card-actions>-->
+<!--</mat-card>-->

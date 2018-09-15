@@ -2,9 +2,9 @@
         title="Dashboard"
         [showSearchButton]="true"
         [showBackButton]="true"
-        [menuItems]="[{text: 'Logout', routerLink: ['/users', 'logout']}]"
+        [menuItems]="menuItems"
 ></app-toolbar>
-<mat-tab-group mat-stretch-tabs [dynamicHeight]="true" (selectedTabChange)="tabChanged($event)">
+<mat-tab-group  mat-stretch-tabs [dynamicHeight]="true" (selectedTabChange)="tabChanged($event)">
     <mat-tab label="PROGRESSION">
         <app-artist-progression *ngFor="let progression of progression$ | async" [progression]="progression">
         </app-artist-progression>

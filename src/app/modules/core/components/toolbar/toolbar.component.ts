@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 import {Location} from '@angular/common';
+import {ToolbarMenuItem} from './toolbar-menu-item';
 
 @Component({
     selector: 'app-toolbar',
@@ -29,12 +30,7 @@ export class ToolbarComponent implements OnChanges {
      */
     @Input() showBackButton = false;
 
-    @Input() menuItems: {
-        text: string;
-        icon?: string;
-        routerLink: string | string[];
-        disabled?: boolean;
-    }[] = [];
+    @Input() menuItems: ToolbarMenuItem[] = [];
 
     @Output() searchChange: EventEmitter<string> = new EventEmitter();
 
