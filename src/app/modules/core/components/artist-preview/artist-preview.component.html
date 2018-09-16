@@ -1,5 +1,16 @@
-<div class="artist-card" [routerLink]="['artist', artist.objectID]">
-  <div class="image" [style]="image"></div>
-  <h4>{{artist.name}}</h4>
-  <p>{{artist.text}}</p>
+<div class="artist-card" [routerLink]="goToArtistPageOnClick ? ['/artist', artist.objectID] : null">
+    <div class="image" [style]="image"></div>
+    <div class="name-actions">
+        <h4>{{artist.name}}</h4>
+        <div class="actions">
+            <button *ngFor="let action of actions"
+                    mat-raised-button
+                    (click)="$event.stopPropagation(); actionClick.emit(action.id)"
+                    [disabled]="action.disabled === true"
+            >
+                {{action.text}}
+            </button>
+        </div>
+    </div>
+    <p>{{artist.text}}</p>
 </div>

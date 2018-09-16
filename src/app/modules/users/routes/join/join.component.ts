@@ -51,6 +51,7 @@ export class JoinComponent implements OnInit {
                 break;
             default:
                 this.registeringFailedMessage = 'An error occurred, please try again.';
+                console.log('Error', error);
                 break;
         }
         this.registering = false;

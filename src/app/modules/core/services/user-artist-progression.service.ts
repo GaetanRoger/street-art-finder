@@ -5,6 +5,7 @@ import {Observable, of} from 'rxjs';
 import {flatMap, map, tap} from 'rxjs/operators';
 import {ObjectIDInjectorService} from './objectid-injecter/object-i-d-injector.service';
 import {UserArtistProgression} from '../types/user-artist-progression';
+import {Artist} from '../types/artist';
 
 @Injectable({
     providedIn: 'root'
@@ -26,13 +27,34 @@ export class UserArtistProgressionService {
         );
     }
 
+    addArtistProgression(user: User, artist: Artist) {
+        const progression: UserArtistProgression = {
+            artist: {
+                objectID: artist.objectID,
+                name: artist.name,
+                images: artist.images
+            },
+            user: user.objectID,
+            maxScore: artist.piecesCount,
+            score: 0,
+        };
+
+        return this.firestore.collection(this.COLLECTION)
+            .add(progression);
+    }
+
     artistsProgressionFromUserId(id: string): Observable<UserArtistProgression[]> {
-        return this.firestore.collection<UserArtistProgression>(
-            this.COLLECTION,
-            ref => ref.where('user', '==', id)
-        ).snapshotChanges()
+        return this.getFirestoreCollectionFromUserId(id).snapshotChanges()
             .pipe(
                 map(a => this.objectIDInjecter.injectIntoCollection(a))
             );
+    }
+
+
+    private getFirestoreCollectionFromUserId(id: string) {
+        return this.firestore.collection<UserArtistProgression>(
+            this.COLLECTION,
+            ref => ref.where('user', '==', id)
+        );
     }
 }

@@ -6,12 +6,13 @@ import {UserSettings} from '../../types/user';
     providedIn: 'root'
 })
 export class UserSettingsService {
-    public readonly DEFAULT_SETTINGS: {
+    public readonly DEFAULT_SETTINGS: UserSettings = {
         locationApproximation: 50
     };
 
     constructor(private readonly firestore: AngularFirestore) {
     }
+
 
     updateUserSettings(userId: string, settings: UserSettings) {
         return this.firestore

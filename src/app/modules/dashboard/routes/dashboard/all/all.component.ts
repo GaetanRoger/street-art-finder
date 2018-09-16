@@ -28,7 +28,7 @@ import {User} from '../../../../core/types/user';
     styleUrls: ['./all.component.css']
 })
 export class AllComponent implements OnInit {
-    @Input() selected: BehaviorSubject<boolean>;
+    @Input() selected$: BehaviorSubject<boolean>;
 
     private readonly baseLayer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
     private readonly zoom = 10;
@@ -69,8 +69,8 @@ export class AllComponent implements OnInit {
             ]
         };
 
-        this.selected.subscribe(v => {
-            if (v) {
+        this.selected$.subscribe(v => {
+            if (v && this.leafletMap) {
                 this.leafletMap.invalidateSize();
                 this.leafletMap.fitBounds(this.lastfb);
             }

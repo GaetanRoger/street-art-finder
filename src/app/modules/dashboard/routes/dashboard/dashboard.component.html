@@ -9,7 +9,7 @@
         <app-artists-progressions [progressions]="progressions$" (goToDiscover)="selectedIndex = 2"></app-artists-progressions>
     </mat-tab>
     <mat-tab label="ALL" *ngIf="(progressions$ | async) && (progressions$ | async)?.length > 0">
-        <app-all [selected]="mapTabBehaviourSubject"></app-all>
+        <app-all [selected$]="mapTabBehaviourSubject"></app-all>
     </mat-tab>
     <mat-tab label="DISCOVER"><app-discover [progressions]="progressions$"></app-discover></mat-tab>
 </mat-tab-group>

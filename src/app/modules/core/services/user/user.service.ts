@@ -77,8 +77,10 @@ export class UserService {
             emailVerified: user.emailVerified,
             createdAt: user.createdAt,
             lastLoginAt: user.lastLoginAt,
-            settings: this.userSettings.DEFAULT_SETTINGS
+            settings: {...this.userSettings.DEFAULT_SETTINGS}
         };
+
+        console.log('data', data);
 
         return this.firestore
             .doc<User>(`users/${user.uid}`)
