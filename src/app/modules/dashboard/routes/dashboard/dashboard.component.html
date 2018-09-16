@@ -4,15 +4,14 @@
         [showBackButton]="true"
         [menuItems]="menuItems"
 ></app-toolbar>
-<mat-tab-group  mat-stretch-tabs [dynamicHeight]="true" (selectedTabChange)="tabChanged($event)">
+<mat-tab-group  mat-stretch-tabs [dynamicHeight]="true" (selectedTabChange)="tabChanged($event)" [selectedIndex]="selectedIndex">
     <mat-tab label="PROGRESSION">
-        <app-artist-progression *ngFor="let progression of progression$ | async" [progression]="progression">
-        </app-artist-progression>
+        <app-artists-progressions [progressions]="progressions$" (goToDiscover)="selectedIndex = 2"></app-artists-progressions>
     </mat-tab>
-    <mat-tab label="ALL" *ngIf="(progression$ | async) && (progression$ | async)?.length > 0">
+    <mat-tab label="ALL" *ngIf="(progressions$ | async) && (progressions$ | async)?.length > 0">
         <app-all [selected]="mapTabBehaviourSubject"></app-all>
     </mat-tab>
-    <mat-tab label="DISCOVER"> Content 3 </mat-tab>
+    <mat-tab label="DISCOVER"><app-discover [progressions]="progressions$"></app-discover></mat-tab>
 </mat-tab-group>
 
 

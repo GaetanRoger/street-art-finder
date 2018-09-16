@@ -12,7 +12,7 @@ import {ToolbarMenuItem} from '../../../core/components/toolbar/toolbar-menu-ite
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-    progression$: Observable<UserArtistProgression[]>;
+    progressions$: Observable<UserArtistProgression[]>;
     readonly menuItems: ToolbarMenuItem[] = [
         {
             text: 'Settings',
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
     ];
 
     mapTabBehaviourSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    selectedIndex: number;
 
 
     constructor(private readonly userArtistProgression: UserArtistProgressionService,
@@ -33,10 +34,11 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
         const user$ = this.userService.user();
-        this.progression$ = this.userArtistProgression.artistsProgression(user$);
+        this.progressions$ = this.userArtistProgression.artistsProgression(user$);
     }
 
     tabChanged(e: MatTabChangeEvent): void {
+        this.selectedIndex = e.index;
         const tab1selected = e.index === 1;
         this.mapTabBehaviourSubject.next(tab1selected);
     }

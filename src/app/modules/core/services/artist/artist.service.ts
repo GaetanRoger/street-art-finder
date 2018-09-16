@@ -22,7 +22,6 @@ export class ArtistService {
         return this.firestore.collection<Artist>(this.COLLECTION)
             .snapshotChanges()
             .pipe(
-                // tap(_ => console.log('artist findall')),
                 map(s => this.objectIDInjecter.injectIntoCollection(s))
             );
     }

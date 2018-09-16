@@ -1,0 +1,8 @@
+<app-artist-progression *ngFor="let progression of progressions | async" [progression]="progression">
+</app-artist-progression>
+
+<app-use-discover-tab *ngIf="(progressions | async)?.length === 0"
+(goToDiscover)="goToDiscover.emit()"
+></app-use-discover-tab>
+
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>

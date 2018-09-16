@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserArtistProgression} from '../../../../core/types/user-artist-progression';
+import {UserArtistProgression} from '../../../../../core/types/user-artist-progression';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 
 @Component({
