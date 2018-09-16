@@ -3,21 +3,20 @@ import {UserCredentials} from '../../types/user-credentials';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {Observable, of} from 'rxjs';
 import {User} from '../../types/user';
-import {map, startWith, switchMap, tap} from 'rxjs/operators';
+import {map, switchMap} from 'rxjs/operators';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
+import {UserSettingsService} from '../user-settings/user-settings.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
     private readonly user$: Observable<User>;
-    private readonly defaultUserData = {
-        locationApproximation: 50
-    };
 
     constructor(private readonly auth: AngularFireAuth,
                 private readonly firestore: AngularFirestore,
+                private readonly userSettings: UserSettingsService,
                 private readonly objectIDInjector: ObjectIDInjectorService<User>) {
         this.user$ = this.auth.authState
             .pipe(
@@ -34,7 +33,7 @@ export class UserService {
     login(userCredentials: UserCredentials) {
         return this.auth.auth
             .signInWithEmailAndPassword(userCredentials.email, userCredentials.password)
-            .then(c => this.updateUserData(c.user.toJSON()));
+            .then(c => this.updateUserDataFromLogin(c.user.toJSON()));
     }
 
     isLoggedIn(): Observable<boolean> {
@@ -59,8 +58,8 @@ export class UserService {
             );
     }
 
-    private updateUserData(user: any) {
-        const data: User = {
+    private updateUserDataFromLogin(user: any) {
+        const data: any = {
             email: user.email,
             emailVerified: user.emailVerified,
             createdAt: user.createdAt,
@@ -74,16 +73,22 @@ export class UserService {
 
     private setUserDataForTheFirstTime(user: any) {
         const data: User = {
-            ...this.defaultUserData,
             email: user.email,
             emailVerified: user.emailVerified,
             createdAt: user.createdAt,
-            lastLoginAt: user.lastLoginAt
+            lastLoginAt: user.lastLoginAt,
+            settings: this.userSettings.DEFAULT_SETTINGS
         };
 
         return this.firestore
             .doc<User>(`users/${user.uid}`)
             .set(data)
             .catch(e => console.log('error while creating user', e));
+    }
+
+    update(userId: string, data: object) {
+        return this.firestore
+            .doc<User>(`users/${userId}`)
+            .update(data);
     }
 }

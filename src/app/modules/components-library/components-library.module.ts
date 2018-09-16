@@ -2,10 +2,10 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
     MatButtonModule,
-    MatCardModule, MatChipsModule, MatDialogModule,
+    MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule,
     MatDividerModule, MatFormFieldModule,
     MatIconModule, MatInputModule, MatMenuModule, MatProgressBarModule,
-    MatProgressSpinnerModule, MatTabsModule,
+    MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule,
     MatToolbarModule
 } from '@angular/material';
 
@@ -22,7 +22,9 @@ import {
         MatInputModule,
         MatChipsModule,
         MatMenuModule,
-        MatTabsModule
+        MatTabsModule,
+        MatCheckboxModule,
+        MatSnackBarModule,
     ],
     declarations: [],
     exports: [
@@ -38,7 +40,10 @@ import {
         MatMenuModule,
         MatDialogModule,
         MatProgressBarModule,
-        MatTabsModule
+        MatTabsModule,
+        MatCheckboxModule,
+        MatSnackBarModule,
+
     ]
 })
 export class ComponentsLibraryModule {

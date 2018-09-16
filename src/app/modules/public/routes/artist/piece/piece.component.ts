@@ -45,7 +45,7 @@ export class PieceComponent implements OnInit {
         this.circleRadius$ = this.userService.user()
             .pipe(
                 filter(u => !!u),
-                map(u => u.locationApproximation)
+                map(u => u.settings.locationApproximation)
             );
         this.circleLayer$ = this.circleRadius$
             .pipe(

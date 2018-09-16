@@ -1,0 +1,22 @@
+.form {
+    width: 96%;
+    margin: 20px auto auto;
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.buttons {
+    margin-top: 10px;
+    text-align: right;
+}
+.error-chip {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

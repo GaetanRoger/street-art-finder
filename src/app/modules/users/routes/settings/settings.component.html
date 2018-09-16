@@ -3,3 +3,29 @@
         [showBackButton]="true"
         [showSearchButton]="false"
 ></app-toolbar>
+
+<div [formGroup]="settingsFormGroup" *ngIf="settingsFormGroup" class="form">
+    <div class="error-chip">
+        <mat-chip-list>
+            <mat-chip *ngIf="errorMessage" color="warn" selected class="mat-elevation-z2">{{errorMessage}}</mat-chip>
+        </mat-chip-list>
+    </div>
+
+    <mat-checkbox formControlName="approximateLocation" class="full-width">
+        User approximate coordinates
+    </mat-checkbox>
+    <mat-form-field *ngIf="approximateLocation.value" class="full-width">
+        <input matInput type="number" min="1" formControlName="locationApproximation"
+               placeholder="Radius of approximation"/>
+        <span matSuffix>meters</span>
+    </mat-form-field>
+    <div class="full-width buttons">
+        <button mat-raised-button color="accent" type="button" (click)="save()" [disabled]="settingsFormGroup.invalid || saving">
+            {{saving ? 'SAVING...' : 'SAVE'}}
+        </button>
+    </div>
+</div>
+<app-loading-spinner
+        *ngIf="!settingsFormGroup"
+        text="Loading settings..."
+></app-loading-spinner>
