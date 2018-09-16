@@ -2,5 +2,6 @@
      leaflet
      [leafletOptions]="options"
      (leafletMapReady)="mapReady($event)">
-    <div [leafletLayer]="markersLayer$ | async"></div>
+    <div [leafletLayer]="markersLayer$ | async" *ngIf="showMarkers$ | async"></div>
+    <div [leafletLayer]="circlesLayer$ | async" *ngIf="!(showMarkers$ | async)"></div>
 </div>

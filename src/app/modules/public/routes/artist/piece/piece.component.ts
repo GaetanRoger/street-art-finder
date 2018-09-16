@@ -38,9 +38,9 @@ export class PieceComponent implements OnInit {
 
         this.markerLayer = marker([l.latitude, l.longitude]);
 
-        this.showMarker$ = this.userService.isLoggedIn()
+        this.showMarker$ = this.userService.user()
             .pipe(
-                startWith(false),
+                map(u => u && u.settings.locationApproximation === 0)
             );
         this.circleRadius$ = this.userService.user()
             .pipe(
