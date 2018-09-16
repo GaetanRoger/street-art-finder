@@ -6,10 +6,11 @@ import {Route, RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
-import {AuthGuard} from './modules/core/guards/auth.guard';
+import {AuthGuard} from './modules/core/guards/auth/auth.guard';
 import {CoreModule} from './modules/core/core.module';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {Icon, icon, Marker} from 'leaflet';
+import {OnlyAdminGuard} from './modules/core/guards/only-admin/only-admin.guard';
 
 const routes: Route[] = [
     {
@@ -20,6 +21,11 @@ const routes: Route[] = [
     {
         path: 'users',
         loadChildren: 'src/app/modules/users/users.module#UsersModule'
+    },
+    {
+        path: 'admin',
+        canActivate: [OnlyAdminGuard],
+        loadChildren: 'src/app/modules/admin/admin.module#AdminModule'
     },
     {
         path: '',

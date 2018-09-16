@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {UserService} from '../services/user/user.service';
-import {take, tap} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
+import {UserService} from '../../services/user/user.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class OnlyAdminGuard implements CanActivate {
     constructor(private readonly userService: UserService,
                 private readonly router: Router) {
     }
@@ -15,13 +15,17 @@ export class AuthGuard implements CanActivate {
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        return this.userService.isLoggedIn().pipe(
+        return this.userService.user().pipe(
             take(1),
-            tap(b => {
-                if (!b) {
-                    this.router.navigate([''], {skipLocationChange: true});
+            map(user => {
+                    if (user && user.roles.admin) {
+                        return true;
+                    } else {
+                        this.router.navigate(['/'], {skipLocationChange: true});
+                        return false;
+                    }
                 }
-            })
+            )
         );
     }
 }

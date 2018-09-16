@@ -7,6 +7,7 @@ import {map, switchMap} from 'rxjs/operators';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {UserSettingsService} from '../user-settings/user-settings.service';
+import {UserRolesService} from '../user-roles/user-roles.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ export class UserService {
     constructor(private readonly auth: AngularFireAuth,
                 private readonly firestore: AngularFirestore,
                 private readonly userSettings: UserSettingsService,
+                private readonly userRoles: UserRolesService,
                 private readonly objectIDInjector: ObjectIDInjectorService<User>) {
         this.user$ = this.auth.authState
             .pipe(
@@ -77,10 +79,9 @@ export class UserService {
             emailVerified: user.emailVerified,
             createdAt: user.createdAt,
             lastLoginAt: user.lastLoginAt,
-            settings: {...this.userSettings.DEFAULT_SETTINGS}
+            settings: {...this.userSettings.DEFAULT_SETTINGS},
+            roles: {...this.userRoles.DEFAULT_ROLES}
         };
-
-        console.log('data', data);
 
         return this.firestore
             .doc<User>(`users/${user.uid}`)

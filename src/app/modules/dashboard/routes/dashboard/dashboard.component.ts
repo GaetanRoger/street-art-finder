@@ -13,7 +13,7 @@ import {ToolbarMenuItem} from '../../../core/components/toolbar/toolbar-menu-ite
 })
 export class DashboardComponent implements OnInit {
     progressions$: Observable<UserArtistProgression[]>;
-    readonly menuItems: ToolbarMenuItem[] = [
+    menuItems: ToolbarMenuItem[] = [
         {
             text: 'Settings',
             routerLink: ['/users', 'settings']
@@ -35,6 +35,14 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         const user$ = this.userService.user();
         this.progressions$ = this.userArtistProgression.artistsProgression(user$);
+        user$.subscribe(u => {
+            if (u && u.roles.admin) {
+                this.menuItems.push({
+                    text: 'Admin',
+                    routerLink: '/admin'
+                });
+            }
+        });
     }
 
     tabChanged(e: MatTabChangeEvent): void {
