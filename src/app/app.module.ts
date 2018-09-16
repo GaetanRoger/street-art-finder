@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
 import {AuthGuard} from './modules/core/guards/auth.guard';
-import {AngularFireAuthModule} from 'angularfire2/auth';
 import {CoreModule} from './modules/core/core.module';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {Icon, icon, Marker} from 'leaflet';
@@ -51,7 +50,9 @@ export class AppModule {
         shadowUrl: 'assets/leaflet/marker-shadow.png',
         iconAnchor: [12, 40]
     });
+
     constructor() {
         Marker.prototype.options.icon = this.defaultIcon;
+        // firebase.firestore.setLogLevel('debug');
     }
 }

@@ -4,7 +4,7 @@ import {ObjectIDable} from '../../types/object-idable';
 @Injectable({
     providedIn: 'root'
 })
-export class ObjectIDInjecterService<T extends ObjectIDable> {
+export class ObjectIDInjectorService<T extends ObjectIDable> {
 
     constructor() {
     }

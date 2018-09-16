@@ -3,7 +3,7 @@ import {ArtistService} from '../../../core/services/artist/artist.service';
 import {Observable} from 'rxjs';
 import {Artist} from '../../../core/types/artist';
 import {UserService} from '../../../core/services/user/user.service';
-import {map, startWith} from 'rxjs/operators';
+import {map, startWith, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-home',
@@ -27,13 +27,15 @@ export class HomeComponent implements OnInit {
         this.artists = this.artistService.findAll();
         this.loadingArtists$ = this.artists.pipe(
             startWith([]),
-            map(a => !a || a.length === 0)
+            map(a => !a || a.length === 0),
         );
 
         this.loggedIn$ = this.userService.isLoggedIn()
-            .pipe(startWith(false));
+            .pipe(
+                startWith(false),
+            );
         this.primaryButtonText$ = this.loggedIn$.pipe(
-            map(l => l ? 'Dashboard' : 'Join now')
+            map(l => l ? 'Dashboard' : 'Join now'),
         );
         this.primaryButtonRouterLink$ = this.loggedIn$.pipe(
             map(l => l ? 'dashboard' : 'users/join')

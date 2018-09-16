@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../core/services/user/user.service';
 import {Router} from '@angular/router';
 import {UserCredentials} from '../../../core/types/user-credentials';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -11,6 +12,7 @@ import {UserCredentials} from '../../../core/types/user-credentials';
 export class LoginComponent implements OnInit {
     login = false;
     loginFailedMessage: string;
+    debug = !environment.production;
 
     constructor(private readonly userService: UserService,
                 private readonly router: Router) {

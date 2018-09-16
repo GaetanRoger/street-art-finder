@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {User} from '../types/user';
 import {Observable, of} from 'rxjs';
-import {flatMap, map} from 'rxjs/operators';
-import {ObjectIDInjecterService} from './objectid-injecter/object-i-d-injecter.service';
+import {flatMap, map, tap} from 'rxjs/operators';
+import {ObjectIDInjectorService} from './objectid-injecter/object-i-d-injector.service';
 import {UserArtistProgression} from '../types/user-artist-progression';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class UserArtistProgressionService {
     private readonly COLLECTION = 'users_artists';
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjecterService<UserArtistProgression>) {
+                private readonly objectIDInjecter: ObjectIDInjectorService<UserArtistProgression>) {
     }
 
     artistsProgression(user: User | Observable<User>): Observable<UserArtistProgression[]> {
@@ -22,7 +22,7 @@ export class UserArtistProgressionService {
             : of(user);
 
         return user$.pipe(
-            flatMap(u => this.artistsProgressionFromUserId(u.uid))
+            flatMap(u => u ? this.artistsProgressionFromUserId(u.objectID) : of([])),
         );
     }
 

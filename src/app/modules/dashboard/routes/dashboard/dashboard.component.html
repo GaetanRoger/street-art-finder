@@ -9,7 +9,7 @@
         <app-artist-progression *ngFor="let progression of progression$ | async" [progression]="progression">
         </app-artist-progression>
     </mat-tab>
-    <mat-tab label="ALL" >
+    <mat-tab label="ALL" *ngIf="(progression$ | async) && (progression$ | async)?.length > 0">
         <app-all [selected]="mapTabBehaviourSubject"></app-all>
     </mat-tab>
     <mat-tab label="DISCOVER"> Content 3 </mat-tab>

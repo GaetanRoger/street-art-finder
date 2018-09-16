@@ -1,7 +1,34 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
+    match /artists/{artist} {
       allow read;
+    }
+
+    match /pieces/{piece} {
+      allow read;
+    }
+
+    match /users/{userId} {
+      allow read, write: if isThisUser(userId);
+    }
+
+    match /users_artists/{userArtistId} {
+        allow read: if documentBelongsToUser();
+        allow create: if newDataBelongsToUser();
+        allow update: if documentBelongsToUser() && newDataBelongsToUser();
+        allow delete: if documentBelongsToUser();
+    }
+
+    function isThisUser(userId) {
+        return request.auth.uid == userId;
+    }
+
+    function newDataBelongsToUser() {
+        return request.auth.uid == request.resource.data.user;
+    }
+
+    function documentBelongsToUser() {
+        return request.auth.uid == resource.data.user;
     }
   }
 }

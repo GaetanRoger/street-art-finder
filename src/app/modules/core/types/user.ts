@@ -1,5 +1,6 @@
-export interface UserPreview {
-    uid: string;
+import {ObjectIDable} from './object-idable';
+
+export interface UserPreview extends ObjectIDable{
     email: string;
 }
 

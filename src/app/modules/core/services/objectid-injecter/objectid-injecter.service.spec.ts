@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ObjectIDInjecterService } from './object-i-d-injecter.service';
+import { ObjectIDInjectorService } from './object-i-d-injector.service';
 
-describe('ObjectIDInjecterService', () => {
+describe('ObjectIDInjectorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ObjectIDInjecterService]
+      providers: [ObjectIDInjectorService]
     });
   });
 
-  it('should be created', inject([ObjectIDInjecterService], (service: ObjectIDInjecterService) => {
+  it('should be created', inject([ObjectIDInjectorService], (service: ObjectIDInjectorService) => {
     expect(service).toBeTruthy();
   }));
 });

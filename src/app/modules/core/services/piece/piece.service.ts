@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {Piece} from '../../types/piece';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {map} from 'rxjs/operators';
-import {ObjectIDInjecterService} from '../objectid-injecter/object-i-d-injecter.service';
+import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +12,7 @@ export class PieceService {
     readonly COLLECTION = 'pieces';
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjecterService<Piece>) {
+                private readonly objectIDInjecter: ObjectIDInjectorService<Piece>) {
     }
 
     findAll(artistId: string): Observable<Piece[]> {

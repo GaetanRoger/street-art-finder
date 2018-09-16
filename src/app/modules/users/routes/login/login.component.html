@@ -19,4 +19,6 @@
           [errorMessage]="loginFailedMessage"
           (formSubmitted)="formSubmitted($event)"
   ></app-login-form>
+
+  <button mat-raised-button *ngIf="debug" (click)="formSubmitted({email: 'test@test.com', password: 'testest'})">Debug login</button>
 </div>

@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {Artist} from '../../types/artist';
 import {combineLatest, Observable} from 'rxjs';
 import {PieceService} from '../piece/piece.service';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {Piece} from '../../types/piece';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {ObjectIDInjecterService} from '../objectid-injecter/object-i-d-injecter.service';
+import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ export class ArtistService {
     readonly COLLECTION = 'artists';
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjecterService<Artist>,
+                private readonly objectIDInjecter: ObjectIDInjectorService<Artist>,
                 private readonly pieceService: PieceService) {
     }
 
@@ -22,6 +22,7 @@ export class ArtistService {
         return this.firestore.collection<Artist>(this.COLLECTION)
             .snapshotChanges()
             .pipe(
+                // tap(_ => console.log('artist findall')),
                 map(s => this.objectIDInjecter.injectIntoCollection(s))
             );
     }
