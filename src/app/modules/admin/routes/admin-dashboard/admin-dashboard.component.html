@@ -3,3 +3,15 @@
         [showBackButton]="true"
         image="/assets/images/admin/toolbar-background.jpg"
 ></app-toolbar>
+
+<div *ngIf="aggregates$ | async as aggregates" class="buttons">
+    <button mat-raised-button >
+        {{aggregates.usersCount}} users
+    </button>
+    <button mat-raised-button >
+        {{aggregates.artistsCount}} artists
+    </button>
+    <button mat-raised-button >
+        {{aggregates.piecesCount}} pieces
+    </button>
+</div>

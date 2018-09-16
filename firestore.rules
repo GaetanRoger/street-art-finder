@@ -12,6 +12,10 @@ service cloud.firestore {
       allow read, write: if isThisUser(userId);
     }
 
+    match /aggregates/main {
+        allow read;
+    }
+
     match /users_artists/{userArtistId} {
         allow read: if documentBelongsToUser();
         allow create: if newDataBelongsToUser();
