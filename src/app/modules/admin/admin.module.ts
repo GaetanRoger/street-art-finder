@@ -4,9 +4,16 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {Route, RouterModule} from '@angular/router';
 import {CoreModule} from '../core/core.module';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
-import { AdminDashboardComponent } from './routes/admin-dashboard/admin-dashboard.component';
+import {AdminDashboardComponent} from './routes/admin-dashboard/admin-dashboard.component';
+import {AdminUsersComponent} from './routes/admin-users/admin-users.component';
+import {AdminToolbarComponent} from './components/admin-toolbar/admin-toolbar.component';
+import {TimestampPipe} from '../core/pipes/timestamp/timestamp.pipe';
 
 const routes: Route[] = [
+    {
+        path: 'users',
+        component: AdminUsersComponent,
+    },
     {
         path: '',
         component: AdminDashboardComponent
@@ -21,7 +28,8 @@ const routes: Route[] = [
         CoreModule,
         ComponentsLibraryModule,
     ],
-    declarations: [AdminDashboardComponent]
+    declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent],
+    providers: [TimestampPipe]
 })
 export class AdminModule {
 }

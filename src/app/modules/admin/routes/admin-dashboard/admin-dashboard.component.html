@@ -1,11 +1,7 @@
-<app-toolbar
-        title="Admin dashboard"
-        [showBackButton]="true"
-        image="/assets/images/admin/toolbar-background.jpg"
-></app-toolbar>
+<app-admin-toolbar title="Admin dashboard"></app-admin-toolbar>
 
 <div *ngIf="aggregates$ | async as aggregates" class="buttons">
-    <button mat-raised-button >
+    <button mat-raised-button routerLink="users">
         {{aggregates.usersCount}} users
     </button>
     <button mat-raised-button >

@@ -1,12 +1,7 @@
 .buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 90%;
-    margin: auto;
-}
-.buttons button {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    height: 36px;
-    font-size: 24px;
+    margin: 10px auto auto;
+    justify-content: space-evenly;
 }

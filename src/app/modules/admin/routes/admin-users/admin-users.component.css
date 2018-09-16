@@ -1,0 +1,11 @@
+small {
+    opacity: 0.7;
+}
+.buttons {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+.buttons button {
+    margin-left: 5px;
+}

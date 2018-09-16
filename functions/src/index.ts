@@ -16,6 +16,7 @@ import {
     decrementUsersCountOnAggregatesFunction,
     incrementUsersCountOnAggregatesFunction
 } from './firestore/users/updateUsersCountOnAggregates';
+import {deleteUserFromFirestoreOnDeletionFunction} from './auth/deleteUserFromFirestoreOnDeletion';
 
 admin.initializeApp();
 
@@ -32,3 +33,4 @@ export const incrementPiecesCountOnAggregates = incrementPiecesCountOnAggregates
 export const decrementPiecesCountOnAggregates = decrementPiecesCountOnAggregatesFunction;
 export const incrementUsersCountOnAggregates = incrementUsersCountOnAggregatesFunction;
 export const decrementUsersCountOnAggregates = decrementUsersCountOnAggregatesFunction;
+export const deleteUserFromFirestoreOnDeletion = deleteUserFromFirestoreOnDeletionFunction;

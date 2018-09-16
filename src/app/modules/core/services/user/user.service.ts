@@ -52,6 +52,24 @@ export class UserService {
         return this.auth.auth.signOut();
     }
 
+    update(userId: string, data: object) {
+        return this.firestore
+            .doc<User>(`users/${userId}`)
+            .update(data);
+    }
+
+    findAll(): Observable<User[]> {
+        return this.firestore.collection<User>('users')
+            .snapshotChanges()
+            .pipe(
+                map(u => this.objectIDInjector.injectIntoCollection(u))
+            );
+    }
+
+    sendResetEmailLink(userEmail: string): Promise<void> {
+        return this.auth.auth.sendPasswordResetEmail(userEmail);
+    }
+
     private getUser(id: string): Observable<User> {
         return this.firestore.doc<User>(`users/${id}`)
             .snapshotChanges()
@@ -87,11 +105,5 @@ export class UserService {
             .doc<User>(`users/${user.uid}`)
             .set(data)
             .catch(e => console.log('error while creating user', e));
-    }
-
-    update(userId: string, data: object) {
-        return this.firestore
-            .doc<User>(`users/${userId}`)
-            .update(data);
     }
 }
