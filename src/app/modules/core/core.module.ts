@@ -10,6 +10,8 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import { TimestampPipe } from './pipes/timestamp/timestamp.pipe';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import {AngularFireStorageModule} from 'angularfire2/storage';
+import { SmallLoadingSpinnerComponent } from './components/small-loading-spinner/small-loading-spinner.component';
 
 @NgModule({
     imports: [
@@ -17,7 +19,8 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
         RouterModule,
         ComponentsLibraryModule,
         AngularFireAuthModule,
-        AngularFirestoreModule.enablePersistence()
+        AngularFirestoreModule.enablePersistence(),
+        AngularFireStorageModule
     ],
     declarations: [
         FlatCardWithImageComponent,
@@ -25,16 +28,19 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
         ToolbarComponent,
         LoadingSpinnerComponent,
         TimestampPipe,
-        ConfirmationDialogComponent
+        ConfirmationDialogComponent,
+        SmallLoadingSpinnerComponent
     ],
     exports: [
         AngularFireAuthModule,
         AngularFirestoreModule,
+        AngularFireStorageModule,
         FlatCardWithImageComponent,
         ArtistPreviewComponent,
         ToolbarComponent,
         LoadingSpinnerComponent,
-        TimestampPipe
+        TimestampPipe,
+        SmallLoadingSpinnerComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent]

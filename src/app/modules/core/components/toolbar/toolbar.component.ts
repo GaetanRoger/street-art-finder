@@ -15,7 +15,7 @@ export class ToolbarComponent implements OnChanges {
     @Input() title: string;
 
     /**
-     * Background image to use for background. It will be darken by 50 %.
+     * Background image$ to use for background. It will be darken by 50 %.
      * If none or null is provided, see DEFAULT_BACKGROUND_COLOR for the color that will be used.
      */
     @Input() image = '/assets/images/toolbar-background-low.jpg';
@@ -39,12 +39,12 @@ export class ToolbarComponent implements OnChanges {
     @Output() searchKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter();
 
     /**
-     * Default color to be used if no background image is supplied.
+     * Default color to be used if no background image$ is supplied.
      */
     public readonly DEFAULT_BACKGROUND_COLOR = '#212121';
 
     /**
-     * Safe value of the CSS property to display the provided background image or color.
+     * Safe value of the CSS property to display the provided background image$ or color.
      */
     backgroundImage: SafeValue;
     /**
@@ -69,7 +69,7 @@ export class ToolbarComponent implements OnChanges {
     }
 
     /**
-     * Generate the background CSS property with the image or the default color.
+     * Generate the background CSS property with the image$ or the default color.
      */
     private generateBackground(): string {
         const linearGradient = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))';

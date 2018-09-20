@@ -1,16 +1,8 @@
-<h1 mat-dialog-title>{{piece.name}}</h1>
-<mat-dialog-content>
-    <div style="height: 300px;"
-         leaflet
-         [leafletOptions]="options"
-         [leafletLayers]="baseLayers">
-        <div [leafletLayer]="markerLayer" *ngIf="showMarker$ | async"></div>
-        <div [leafletLayer]="circleLayer$ | async" *ngIf="!(showMarker$ | async) && circleLayer$ | async"></div>
+<div (click)="openPieceDialog(piece)" class="piece">
+    <img [src]="image" class="image" *ngIf="image$ | async as image"/>
+    <app-small-loading-spinner *ngIf="!(image$ | async)"></app-small-loading-spinner>
+    <div class="name-blur"></div>
+    <div class="name">
+        <p>{{ piece.name}}</p>
     </div>
-    <p class="added-on">
-        Added on {{piece.addedOn.toDate() | date}}
-    </p>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-raised-button mat-dialog-close>Close</button>
-</mat-dialog-actions>
+</div>

@@ -7,7 +7,7 @@ import {Artist} from '../../../core/types/artist';
 import {Piece} from '../../../core/types/piece';
 import {PieceService} from '../../../core/services/piece/piece.service';
 import {MatDialog} from '@angular/material';
-import {PieceComponent} from './piece/piece.component';
+import {PieceDialogComponent} from './piece-dialog/piece-dialog.component';
 
 @Component({
     selector: 'app-artist',
@@ -20,7 +20,6 @@ export class ArtistComponent implements OnInit {
     filter = '';
 
     constructor(private readonly route: ActivatedRoute,
-                private readonly dialog: MatDialog,
                 private readonly artistService: ArtistService,
                 private readonly pieceService: PieceService) {
     }
@@ -52,14 +51,5 @@ export class ArtistComponent implements OnInit {
         return str
             ? str.toLocaleLowerCase().replace(' ', '')
             : str;
-    }
-
-    openPieceDialog(piece: Piece): void {
-        this.dialog.open(PieceComponent, {
-            autoFocus: false,
-            data: piece,
-            maxWidth: '96vw',
-            minWidth: '96vw'
-        });
     }
 }

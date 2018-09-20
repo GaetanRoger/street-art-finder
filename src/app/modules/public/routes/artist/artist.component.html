@@ -16,13 +16,7 @@
     ></app-flat-card-with-image>
 
     <div *ngIf="pieces$ | async as pieces">
-        <div *ngFor="let piece of filterPieces(pieces$ | async)" (click)="openPieceDialog(piece)" class="piece">
-            <img [src]="piece.images.main.low" class="image"/>
-            <div class="name-blur"></div>
-            <div class="name">
-                <p>{{ piece.name}}</p>
-            </div>
-        </div>
+        <app-piece *ngFor="let piece of filterPieces(pieces$ | async)" [piece]="piece"></app-piece>
         <div *ngIf="pieces.length > 0 && filterPieces(pieces).length === 0">
             No pieces were found with your filter.
         </div>

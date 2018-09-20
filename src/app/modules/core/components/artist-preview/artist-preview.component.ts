@@ -1,6 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Artist} from '../../types/artist';
 import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
+import {AngularFireStorage} from 'angularfire2/storage';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-artist-preview',
@@ -10,17 +13,27 @@ import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 export class ArtistPreviewComponent implements OnInit {
     @Input() artist: Artist;
     @Input() goToArtistPageOnClick = true;
-    @Input() actions: { text: string; id: number; disabled?: boolean}[] = [];
+    @Input() actions: { text: string; id: number; disabled?: boolean }[] = [];
     @Output() actionClick: EventEmitter<number> = new EventEmitter();
 
-    image: SafeStyle;
+    image$: Observable<SafeStyle>;
 
-    constructor(private readonly sanatizer: DomSanitizer) {
+    constructor(private readonly sanitizer: DomSanitizer,
+                private readonly storage: AngularFireStorage) {
     }
 
     ngOnInit() {
-        this.image = this.sanatizer.bypassSecurityTrustStyle(
-            'background-image: url("' + this.artist.images.horizontal.low + '");'
+        this.image$ = this.storage
+            .ref(this.artist.images.horizontal.low)
+            .getDownloadURL()
+            .pipe(
+                map(url => this.urlToBackground(url))
+            );
+    }
+
+    private urlToBackground(url: string): SafeStyle {
+        return this.sanitizer.bypassSecurityTrustStyle(
+            `background-image: url("${url}");`
         );
     }
 }
