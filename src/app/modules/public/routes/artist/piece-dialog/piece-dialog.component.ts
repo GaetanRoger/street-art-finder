@@ -5,6 +5,8 @@ import {UserService} from '../../../../core/services/user/user.service';
 import {Circle, circle, latLng, Layer, Marker, marker, tileLayer} from 'leaflet';
 import {Observable} from 'rxjs';
 import {filter, map, startWith} from 'rxjs/operators';
+import {SeededRandomGeneratorService} from '../../../../core/services/seeded-random-generator/seeded-random-generator.service';
+import {CoordinatesCalculusService} from '../../../../core/services/coordinates-calculus/coordinates-calculus.service';
 
 @Component({
     selector: 'app-piece-dialog',
@@ -27,30 +29,65 @@ export class PieceDialogComponent implements OnInit {
 
     constructor(private readonly dialogRef: MatDialogRef<PieceDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) public readonly piece: Piece,
-                private readonly userService: UserService) {
+                private readonly userService: UserService,
+                private readonly randomGenerator: SeededRandomGeneratorService,
+                private readonly coordinatesCalculus: CoordinatesCalculusService) {
     }
 
     ngOnInit() {
-        const l = this.piece.location;
+        const location = this.piece.location;
+        const randomNumber = this.randomGenerator.generate(this.piece.objectID, true);
+        console.log('randomnumber for', this.piece.name, 'is', randomNumber);
+        const circleLocations = {
+            latitude: this.coordinatesCalculus.addMetersToLatitude(location, randomNumber * 0.035355),
+            longitude: this.coordinatesCalculus.addMetersToLongitude(location, randomNumber * 0.035355)
+        };
 
         this.options = this.createLeafletOptions();
         this.baseLayers = [this.baseLayer];
 
-        this.markerLayer = marker([l.latitude, l.longitude]);
+        this.markerLayer = marker([location.latitude, location.longitude]);
 
-        this.showMarker$ = this.userService.user()
+        this.showMarker$ = this._shouldShowMarker();
+        this.circleRadius$ = this._getCircleRadius();
+        this.circleLayer$ = this._getCircleLayer(circleLocations);
+    }
+
+    private _shouldShowMarker() {
+        return this.userService.user()
             .pipe(
-                map(u => u && u.settings.locationApproximation === 0)
+                map(u => u && u.settings.locationApproximation === 0),
             );
-        this.circleRadius$ = this.userService.user()
+    }
+
+    private _getCircleLayer(location: { latitude: number; longitude: number; }): Observable<Circle> {
+        return this.circleRadius$
+            .pipe(
+                startWith(this.defaultRadius),
+                map(r => this._getCircleLocationsAndRadius(location, r)),
+                map(locr => circle([locr.location.latitude, locr.location.longitude], {radius: locr.radius}))
+            );
+    }
+
+    private _getCircleLocationsAndRadius(location: { latitude: number; longitude: number; }, radius: number): { location: { latitude: number; longitude: number }; radius: number } {
+        const randomNumber = this.randomGenerator.generate(this.piece.objectID, true);
+        const delta = (radius / 2) * Math.sqrt(2) * 0.001;
+        const circleLocations = {
+            latitude: this.coordinatesCalculus.addMetersToLatitude(location, randomNumber * delta),
+            longitude: this.coordinatesCalculus.addMetersToLongitude(location, randomNumber * delta)
+        };
+
+        return {
+            location: circleLocations,
+            radius
+        };
+    }
+
+    private _getCircleRadius() {
+        return this.userService.user()
             .pipe(
                 filter(u => !!u),
                 map(u => u.settings.locationApproximation)
-            );
-        this.circleLayer$ = this.circleRadius$
-            .pipe(
-                startWith(this.defaultRadius),
-                map(r => circle([l.latitude, l.longitude], {radius: r}))
             );
     }
 

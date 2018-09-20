@@ -13,6 +13,8 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import { SmallLoadingSpinnerComponent } from './components/small-loading-spinner/small-loading-spinner.component';
 import { ImageComponent } from './components/image/image.component';
+import {SeededRandomGeneratorService} from './services/seeded-random-generator/seeded-random-generator.service';
+import {CoordinatesCalculusService} from './services/coordinates-calculus/coordinates-calculus.service';
 
 @NgModule({
     imports: [
