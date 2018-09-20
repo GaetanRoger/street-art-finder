@@ -2,8 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Piece} from '../../../../core/types/piece';
 import {PieceDialogComponent} from '../piece-dialog/piece-dialog.component';
 import {MatDialog} from '@angular/material';
-import {Observable} from 'rxjs';
-import {AngularFireStorage} from 'angularfire2/storage';
 
 @Component({
     selector: 'app-piece',
@@ -13,16 +11,10 @@ import {AngularFireStorage} from 'angularfire2/storage';
 export class PieceComponent implements OnInit {
     @Input() piece: Piece;
 
-    image$: Observable<string>;
-
-    constructor(private readonly dialog: MatDialog,
-                private readonly storage: AngularFireStorage) {
+    constructor(private readonly dialog: MatDialog) {
     }
 
     ngOnInit() {
-        this.image$ = this.storage
-            .ref(this.piece.images.main.low)
-            .getDownloadURL();
     }
 
     openPieceDialog(piece: Piece): void {

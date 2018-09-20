@@ -1,9 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Artist} from '../../types/artist';
 import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
-import {AngularFireStorage} from 'angularfire2/storage';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-artist-preview',
@@ -16,19 +13,13 @@ export class ArtistPreviewComponent implements OnInit {
     @Input() actions: { text: string; id: number; disabled?: boolean }[] = [];
     @Output() actionClick: EventEmitter<number> = new EventEmitter();
 
-    image$: Observable<SafeStyle>;
+    image: SafeStyle;
 
-    constructor(private readonly sanitizer: DomSanitizer,
-                private readonly storage: AngularFireStorage) {
+    constructor(private readonly sanitizer: DomSanitizer) {
     }
 
     ngOnInit() {
-        this.image$ = this.storage
-            .ref(this.artist.images.horizontal.low)
-            .getDownloadURL()
-            .pipe(
-                map(url => this.urlToBackground(url))
-            );
+        this.image = this.urlToBackground(this.artist.images.horizontal.low);
     }
 
     private urlToBackground(url: string): SafeStyle {

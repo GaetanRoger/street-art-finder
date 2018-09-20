@@ -1,7 +1,6 @@
 .artist-card {
     margin: 5px;
     padding: 10px;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255,255, 0.8)), url("/assets/dev/hfdmsfdmdflmdf-low.jpg");
     background-size: cover;
     background-position: center;
     border-radius: 5px;

@@ -10,7 +10,7 @@
     <app-flat-card-with-image
             [title]="artist.name"
             [text]="artist.text"
-            [image]="artist.images.vertical ? artist.images.vertical.low : artist.images.horizontal.low"
+            [image]="artist.images.vertical.low"
             secondaryButtonText="Visit website"
             [secondaryButtonExternalLink]="artist.website"
     ></app-flat-card-with-image>

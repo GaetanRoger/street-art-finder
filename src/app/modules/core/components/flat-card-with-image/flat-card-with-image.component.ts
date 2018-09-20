@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 
 @Component({
@@ -6,7 +6,7 @@ import {DomSanitizer, SafeValue} from '@angular/platform-browser';
     templateUrl: './flat-card-with-image.component.html',
     styleUrls: ['./flat-card-with-image.component.scss']
 })
-export class FlatCardWithImageComponent implements OnInit {
+export class FlatCardWithImageComponent implements OnChanges {
     @Input() title: string;
     @Input() text: string;
     @Input() image: string;
@@ -23,7 +23,11 @@ export class FlatCardWithImageComponent implements OnInit {
     constructor(private readonly sanitizer: DomSanitizer) {
     }
 
-    ngOnInit() {
+    ngOnChanges() {
+        if (!this.image) {
+            return;
+        }
+
         this.backgroundImageProperty = this.sanitizer.bypassSecurityTrustStyle(
             `background-image: url("${this.image}");`
         );

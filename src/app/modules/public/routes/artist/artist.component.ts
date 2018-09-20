@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 import {ActivatedRoute} from '@angular/router';
-import {flatMap, map} from 'rxjs/operators';
+import {filter, flatMap, map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {Artist} from '../../../core/types/artist';
 import {Piece} from '../../../core/types/piece';
 import {PieceService} from '../../../core/services/piece/piece.service';
-import {MatDialog} from '@angular/material';
-import {PieceDialogComponent} from './piece-dialog/piece-dialog.component';
+import {AngularFireStorage} from 'angularfire2/storage';
 
 @Component({
     selector: 'app-artist',
@@ -21,7 +20,8 @@ export class ArtistComponent implements OnInit {
 
     constructor(private readonly route: ActivatedRoute,
                 private readonly artistService: ArtistService,
-                private readonly pieceService: PieceService) {
+                private readonly pieceService: PieceService,
+                private readonly storage: AngularFireStorage) {
     }
 
     ngOnInit() {

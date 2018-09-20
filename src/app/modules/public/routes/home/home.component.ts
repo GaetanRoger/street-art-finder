@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
         this.loggedIn$ = this.userService.isLoggedIn()
             .pipe(
-                startWith(false),
+                tap(_ => console.log('value', _))
             );
         this.primaryButtonText$ = this.loggedIn$.pipe(
             map(l => l ? 'Dashboard' : 'Join now'),

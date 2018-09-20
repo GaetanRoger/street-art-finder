@@ -16,15 +16,17 @@ export class ArtistProgressionComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.backgroundImage = this.sanitizer.bypassSecurityTrustStyle(this.generateBackgroundImage());
+        this.backgroundImage = this._generateBackgroundImage();
     }
 
-    private generateBackgroundImage() {
+    private _generateBackgroundImage(): SafeValue {
         const linearGradient = 'linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255,255, 0.8))';
         const horizontal = this.progression.artist.images.horizontal;
 
-        return horizontal.low
+        const image = horizontal.low
             ? `background-image: ${linearGradient}, url("${horizontal.low}");`
             : `background-image: ${linearGradient}, url("${horizontal.normal}");`;
+
+        return this.sanitizer.bypassSecurityTrustStyle(image);
     }
 }

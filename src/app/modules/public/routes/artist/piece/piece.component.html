@@ -1,6 +1,6 @@
 <div (click)="openPieceDialog(piece)" class="piece">
-    <img [src]="image" class="image" *ngIf="image$ | async as image"/>
-    <app-small-loading-spinner *ngIf="!(image$ | async)"></app-small-loading-spinner>
+    <!--<img [src]="piece.images.main.low" class="image">-->
+    <app-image [src]="piece.images.main.low" class="image"></app-image>
     <div class="name-blur"></div>
     <div class="name">
         <p>{{ piece.name}}</p>

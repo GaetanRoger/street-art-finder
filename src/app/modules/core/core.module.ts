@@ -12,6 +12,7 @@ import { TimestampPipe } from './pipes/timestamp/timestamp.pipe';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import {AngularFireStorageModule} from 'angularfire2/storage';
 import { SmallLoadingSpinnerComponent } from './components/small-loading-spinner/small-loading-spinner.component';
+import { ImageComponent } from './components/image/image.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { SmallLoadingSpinnerComponent } from './components/small-loading-spinner
         LoadingSpinnerComponent,
         TimestampPipe,
         ConfirmationDialogComponent,
-        SmallLoadingSpinnerComponent
+        SmallLoadingSpinnerComponent,
+        ImageComponent
     ],
     exports: [
         AngularFireAuthModule,
@@ -40,7 +42,8 @@ import { SmallLoadingSpinnerComponent } from './components/small-loading-spinner
         ToolbarComponent,
         LoadingSpinnerComponent,
         TimestampPipe,
-        SmallLoadingSpinnerComponent
+        SmallLoadingSpinnerComponent,
+        ImageComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent]
