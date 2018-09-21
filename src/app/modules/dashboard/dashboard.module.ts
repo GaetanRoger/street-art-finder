@@ -9,10 +9,16 @@ import {ArtistProgressionComponent} from './routes/dashboard/artists-progression
 import {AllComponent} from './routes/dashboard/all/all.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {DiscoverComponent} from './routes/dashboard/discover/discover.component';
-import { ArtistsProgressionsComponent } from './routes/dashboard/artists-progressions/artists-progressions.component';
-import { UseDiscoverTabComponent } from './routes/dashboard/artists-progressions/use-discover-tab/use-discover-tab.component';
+import {ArtistsProgressionsComponent} from './routes/dashboard/artists-progressions/artists-progressions.component';
+import {UseDiscoverTabComponent} from './routes/dashboard/artists-progressions/use-discover-tab/use-discover-tab.component';
+import { DashboardArtistComponent } from './routes/dashboard-artist/dashboard-artist.component';
+import { DashboardPieceProgressionComponent } from './routes/dashboard-artist/dashboard-piece-progression/dashboard-piece-progression.component';
 
 const routes: Route[] = [
+    {
+        path: 'artist/:id',
+        component: DashboardArtistComponent
+    },
     {
         path: '',
         component: DashboardComponent
@@ -34,7 +40,9 @@ const routes: Route[] = [
         AllComponent,
         DiscoverComponent,
         ArtistsProgressionsComponent,
-        UseDiscoverTabComponent
+        UseDiscoverTabComponent,
+        DashboardArtistComponent,
+        DashboardPieceProgressionComponent
     ],
     providers: []
 })

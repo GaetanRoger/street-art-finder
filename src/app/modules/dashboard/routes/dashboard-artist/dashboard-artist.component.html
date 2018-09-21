@@ -1,0 +1,7 @@
+<app-toolbar
+        title="Dashboard"
+        [showSearchButton]="false"
+        [showBackButton]="true"
+></app-toolbar>
+
+<app-dashboard-piece-progression *ngFor="let progression of progressions$ | async" [progression]="progression"></app-dashboard-piece-progression>

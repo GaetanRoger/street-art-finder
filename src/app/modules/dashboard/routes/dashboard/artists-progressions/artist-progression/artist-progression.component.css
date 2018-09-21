@@ -5,6 +5,12 @@
     background-position: center;
     border-radius: 5px;
 }
+.artist-card:hover {
+    opacity: 0.8;
+}
+.artist-card:active {
+    opacity: 0.6;
+}
 
 mat-progress-bar {
     margin-top: 10px;

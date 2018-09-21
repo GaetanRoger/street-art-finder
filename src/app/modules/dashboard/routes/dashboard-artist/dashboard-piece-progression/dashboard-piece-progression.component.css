@@ -1,0 +1,39 @@
+.piece-card {
+    margin: 5px;
+    padding: 10px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.found-icon {
+    color: #27AE60;
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+}
+
+::ng-deep .image img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+}
+
+mat-card-title {
+    display: block;
+}
+small {
+    opacity: 0.8;
+}

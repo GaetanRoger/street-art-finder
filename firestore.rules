@@ -23,6 +23,13 @@ service cloud.firestore {
         allow delete: if documentBelongsToUser();
     }
 
+    match /users_pieces/{userArtistId} {
+        allow read: if documentBelongsToUser();
+        allow create: if newDataBelongsToUser();
+        allow update: if documentBelongsToUser() && newDataBelongsToUser();
+        allow delete: if documentBelongsToUser();
+    }
+
     function isAdmin() {
         return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles.admin == true;
     }
