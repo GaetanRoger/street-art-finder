@@ -1,9 +1,8 @@
 .piece-card {
-    margin: 5px;
-    padding: 10px;
+    /*margin: 5px;*/
+    padding: 15px;
     background-size: cover;
     background-position: center;
-    border-radius: 5px;
 
     display: flex;
     flex-direction: row;
@@ -27,7 +26,23 @@
 .image {
     margin-right: 20px;
 }
+.details {
+    margin: 5px 10px;
+    border-left: rgba(21, 21, 21, 0.1) 4px solid;
+    padding: 0 10px;
+}
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.selected {
+    background-color: rgba(21, 21, 21, 0.05);
+}
 
+mat-divider {
+    margin: 0 10px;
+}
 mat-card-title {
     display: block;
 }

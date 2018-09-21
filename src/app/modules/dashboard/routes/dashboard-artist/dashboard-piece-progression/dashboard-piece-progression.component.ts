@@ -8,6 +8,7 @@ import {UserPieceProgression} from '../../../../core/types/user-piece-progressio
 })
 export class DashboardPieceProgressionComponent implements OnInit {
     @Input() progression: UserPieceProgression;
+    opened: boolean;
 
     constructor() {
     }

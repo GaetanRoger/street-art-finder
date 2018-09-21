@@ -1,4 +1,4 @@
-<div class="piece-card">
+<div class="piece-card" (click)="opened= !opened" [ngClass]="{selected: opened}">
     <div class="left">
         <app-image [src]="progression.piece.images.main.low"
                    [round]="true"
@@ -12,4 +12,15 @@
         </div>
     </div>
     <mat-icon class="found-icon" *ngIf="progression.found">check_circle</mat-icon>
+</div>
+<div class="details-container" *ngIf="opened">
+    <div class="details">
+        <div class="buttons">
+            <button mat-button *ngIf="progression.found"> SEE PICTURES</button>
+            <button mat-button *ngIf="!progression.found" color="warn"> GET SPOILED</button>
+            <button mat-button> SEE ON MAP</button>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
 </div>
