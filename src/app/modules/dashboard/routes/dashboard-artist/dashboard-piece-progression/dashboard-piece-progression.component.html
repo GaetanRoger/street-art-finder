@@ -1,6 +1,10 @@
 <div class="piece-card">
     <div class="left">
-        <app-image [src]="progression.piece.images.main.low" class="image"></app-image>
+        <app-image [src]="progression.piece.images.main.low"
+                   [round]="true"
+                   [imgHeight]="50"
+                   [imgWidth]="50"
+                   class="image"></app-image>
         <div>
             <mat-card-title>{{progression.piece.name}}</mat-card-title>
             <small *ngIf="progression.found">Found!</small>

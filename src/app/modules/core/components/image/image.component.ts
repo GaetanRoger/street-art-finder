@@ -8,7 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ImageComponent implements OnInit {
     @Input() src: string;
     @Input() alt: string;
-    @Input() imgClass: string;
+    @Input() round = false;
+    @Input() imgWidth: number;
+    @Input() imgHeight: number;
 
     showImage = false;
 
@@ -16,6 +18,7 @@ export class ImageComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.imgWidth, this.imgHeight);
     }
 
 }

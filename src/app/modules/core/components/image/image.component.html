@@ -1,6 +1,11 @@
 <img [src]="src"
      [alt]="alt"
      (load)="showImage = true"
-     [ngStyle]="{display: showImage ? 'inherit' : 'none'}"
+     [ngStyle]="{
+        'display': showImage ? 'inherit' : 'none',
+        'border-radius': round ? '50%' : '0',
+        'width': imgWidth ? imgWidth + 'px' : 'inherit',
+        'height': imgHeight ? imgHeight + 'px' : 'inherit'
+     }"
 />
 <app-small-loading-spinner *ngIf="!showImage"></app-small-loading-spinner>
