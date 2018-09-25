@@ -3,5 +3,6 @@ export enum Collections {
     pieces = 'pieces',
     users_artists = 'users_artists',
     aggregates = 'aggregates',
-    users = 'users'
+    users = 'users',
+    users_pieces = 'users_pieces',
 }

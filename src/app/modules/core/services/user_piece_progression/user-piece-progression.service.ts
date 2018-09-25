@@ -43,12 +43,20 @@ export class UserPieceProgressionService {
             );
     }
 
+    toggleFound(progressionid: string, value: boolean) {
+        console.log(progressionid, value);
+        return this.firestore
+            .doc(`${this.COLLECTION}/${progressionid}`)
+            .update({found: value});
+    }
+
     private getFirestoreCollectionFromUserId(id: string, options: PiecesProgressionOptions = {}) {
         return this.firestore.collection<UserPieceProgression>(
             this.COLLECTION,
             ref => this._addArgumentsFromOptions(ref.where('user', '==', id), options)
         );
     }
+
 
     private _addArgumentsFromOptions(query, options: PiecesProgressionOptions) {
         if (options.onlyFound) {
@@ -61,6 +69,4 @@ export class UserPieceProgressionService {
 
         return query;
     }
-
-
 }

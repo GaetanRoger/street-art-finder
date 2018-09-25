@@ -22,4 +22,11 @@ export class PieceService {
                 map(p => this.objectIDInjecter.injectIntoCollection(p)),
             );
     }
+
+    find(pieceId: string): Observable<Piece> {
+        return this.firestore
+            .doc<Piece>(`${this.COLLECTION}/${pieceId}`)
+            .snapshotChanges()
+            .pipe(map(snap => this.objectIDInjecter.injectIntoDoc(snap)));
+    }
 }

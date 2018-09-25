@@ -23,7 +23,10 @@ export class DashboardArtistComponent implements OnInit {
     ngOnInit() {
         this.artistId$ = this._routeArtistId();
         this.progressions$ = this._getUserPiecesProgressions();
+    }
 
+    markAsFound(progressionid: string, value: boolean): void {
+        this.userPieceProgression.toggleFound(progressionid, value);
     }
 
     private _getUserPiecesProgressions() {

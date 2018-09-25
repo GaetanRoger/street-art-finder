@@ -8,13 +8,13 @@ import {ComponentsLibraryModule} from '../components-library/components-library.
 import {LoadingSpinnerComponent} from './components/loading-spinner/loading-spinner.component';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
-import { TimestampPipe } from './pipes/timestamp/timestamp.pipe';
-import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
+import {TimestampPipe} from './pipes/timestamp/timestamp.pipe';
+import {ConfirmationDialogComponent} from './components/confirmation-dialog/confirmation-dialog.component';
 import {AngularFireStorageModule} from 'angularfire2/storage';
-import { SmallLoadingSpinnerComponent } from './components/small-loading-spinner/small-loading-spinner.component';
-import { ImageComponent } from './components/image/image.component';
-import {SeededRandomGeneratorService} from './services/seeded-random-generator/seeded-random-generator.service';
-import {CoordinatesCalculusService} from './services/coordinates-calculus/coordinates-calculus.service';
+import {SmallLoadingSpinnerComponent} from './components/small-loading-spinner/small-loading-spinner.component';
+import {ImageComponent} from './components/image/image.component';
+import {PieceDialogComponent} from './components/piece-dialog/piece-dialog.component';
+import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
     imports: [
@@ -23,7 +23,8 @@ import {CoordinatesCalculusService} from './services/coordinates-calculus/coordi
         ComponentsLibraryModule,
         AngularFireAuthModule,
         AngularFirestoreModule.enablePersistence(),
-        AngularFireStorageModule
+        AngularFireStorageModule,
+        LeafletModule
     ],
     declarations: [
         FlatCardWithImageComponent,
@@ -33,7 +34,8 @@ import {CoordinatesCalculusService} from './services/coordinates-calculus/coordi
         TimestampPipe,
         ConfirmationDialogComponent,
         SmallLoadingSpinnerComponent,
-        ImageComponent
+        ImageComponent,
+        PieceDialogComponent
     ],
     exports: [
         AngularFireAuthModule,
@@ -45,10 +47,10 @@ import {CoordinatesCalculusService} from './services/coordinates-calculus/coordi
         LoadingSpinnerComponent,
         TimestampPipe,
         SmallLoadingSpinnerComponent,
-        ImageComponent
+        ImageComponent,
     ],
     providers: [DatePipe],
-    entryComponents: [ConfirmationDialogComponent]
+    entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]
 })
 export class CoreModule {
 }

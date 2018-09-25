@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Piece} from '../../../../core/types/piece';
-import {PieceDialogComponent} from '../piece-dialog/piece-dialog.component';
+import {PieceDialogComponent} from '../../../../core/components/piece-dialog/piece-dialog.component';
 import {MatDialog} from '@angular/material';
 
 @Component({

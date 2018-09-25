@@ -4,4 +4,7 @@
         [showBackButton]="true"
 ></app-toolbar>
 
-<app-dashboard-piece-progression *ngFor="let progression of progressions$ | async" [progression]="progression"></app-dashboard-piece-progression>
+<app-dashboard-piece-progression *ngFor="let progression of progressions$ | async"
+                                 [progression]="progression"
+                                 (found)="markAsFound(progression.objectID, $event)"
+></app-dashboard-piece-progression>

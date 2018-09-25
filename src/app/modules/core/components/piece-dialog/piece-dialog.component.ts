@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Piece} from '../../../../core/types/piece';
-import {UserService} from '../../../../core/services/user/user.service';
+import {Piece} from '../../types/piece';
+import {UserService} from '../../services/user/user.service';
 import {Circle, circle, latLng, Layer, Marker, marker, tileLayer} from 'leaflet';
 import {Observable} from 'rxjs';
 import {filter, map, startWith} from 'rxjs/operators';
-import {SeededRandomGeneratorService} from '../../../../core/services/seeded-random-generator/seeded-random-generator.service';
-import {CoordinatesCalculusService} from '../../../../core/services/coordinates-calculus/coordinates-calculus.service';
+import {SeededRandomGeneratorService} from '../../services/seeded-random-generator/seeded-random-generator.service';
+import {CoordinatesCalculusService} from '../../services/coordinates-calculus/coordinates-calculus.service';
 
 @Component({
     selector: 'app-piece-dialog',
