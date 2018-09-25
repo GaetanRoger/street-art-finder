@@ -10,7 +10,7 @@ import {Piece} from '../../../../core/types/piece';
     templateUrl: './dashboard-piece-progression.component.html',
     styleUrls: ['./dashboard-piece-progression.component.css']
 })
-export class DashboardPieceProgressionComponent implements OnInit {
+export class DashboardPieceProgressionComponent {
     @Input() progression: UserPieceProgression;
     @Output() found: EventEmitter<boolean> = new EventEmitter();
     opened: boolean;
