@@ -16,11 +16,13 @@ export class DashboardComponent implements OnInit {
     menuItems: ToolbarMenuItem[] = [
         {
             text: 'Settings',
-            routerLink: ['/users', 'settings']
+            routerLink: ['/users', 'settings'],
+            icon: 'settings'
         },
         {
             text: 'Logout',
-            routerLink: ['/users', 'logout']
+            routerLink: ['/users', 'logout'],
+            icon: 'exit_to_app'
         }
     ];
 
@@ -39,7 +41,8 @@ export class DashboardComponent implements OnInit {
             if (u && u.roles.admin) {
                 this.menuItems.push({
                     text: 'Admin',
-                    routerLink: '/admin'
+                    routerLink: '/admin',
+                    icon: 'settings_input_component'
                 });
             }
         });

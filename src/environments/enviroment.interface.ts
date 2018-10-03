@@ -8,4 +8,8 @@ export interface Environment {
         storageBucket: string;
         messagingSenderId: string
     };
+    algolia: {
+        appId: string;
+        apiKey: string;
+    };
 }

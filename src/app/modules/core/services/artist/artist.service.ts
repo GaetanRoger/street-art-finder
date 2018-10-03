@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {Artist} from '../../types/artist';
 import {combineLatest, Observable} from 'rxjs';
 import {PieceService} from '../piece/piece.service';
-import {map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {Piece} from '../../types/piece';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
+import {AlgoliaService} from '../algolia/algolia.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,17 +14,19 @@ import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.
 export class ArtistService {
     readonly COLLECTION = 'artists';
 
+
     constructor(private readonly firestore: AngularFirestore,
                 private readonly objectIDInjecter: ObjectIDInjectorService<Artist>,
-                private readonly pieceService: PieceService) {
+                private readonly pieceService: PieceService,
+                private readonly algolia: AlgoliaService) {
     }
 
-    findAll(): Observable<Artist[]> {
-        return this.firestore.collection<Artist>(this.COLLECTION)
-            .snapshotChanges()
-            .pipe(
-                map(s => this.objectIDInjecter.injectIntoCollection(s))
-            );
+    findAll(query: string = ''): Observable<Artist[]> {
+        return this.algolia.query<Artist>(this.COLLECTION, query);
+    }
+
+    findN(query: string = '', page: number = 0, hitsPerPage: number = 5): Observable<Artist[]> {
+        return this.algolia.paginate<Artist>(this.COLLECTION, query, page, hitsPerPage);
     }
 
     find(id: string, withPieces: boolean = false): Observable<Artist> {

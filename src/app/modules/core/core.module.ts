@@ -15,6 +15,7 @@ import {SmallLoadingSpinnerComponent} from './components/small-loading-spinner/s
 import {ImageComponent} from './components/image/image.component';
 import {PieceDialogComponent} from './components/piece-dialog/piece-dialog.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {AlgoliaService} from './services/algolia/algolia.service';
 
 @NgModule({
     imports: [

@@ -9,6 +9,7 @@ import {ComponentsLibraryModule} from '../components-library/components-library.
 import {PieceDialogComponent} from '../core/components/piece-dialog/piece-dialog.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import { PieceComponent } from './routes/artist/piece/piece.component';
+import {AlgoliaService} from '../core/services/algolia/algolia.service';
 
 const routes: Route[] = [
     {

@@ -11,6 +11,8 @@ export class ImageComponent implements OnInit {
     @Input() round = false;
     @Input() imgWidth: number;
     @Input() imgHeight: number;
+    @Input() cover = true;
+    @Input() fit: boolean;
 
     showImage = false;
 

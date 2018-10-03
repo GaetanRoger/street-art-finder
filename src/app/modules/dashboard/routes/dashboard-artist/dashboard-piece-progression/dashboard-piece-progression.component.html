@@ -22,7 +22,7 @@
 <div class="details-container" *ngIf="opened">
     <div class="details">
         <div class="buttons">
-            <button mat-button *ngIf="progression.found">PICTURES</button>
+            <button mat-button *ngIf="progression.found" (click)="showPicturesDialog()">PICTURES</button>
             <button mat-button *ngIf="!progression.found" color="warn"> GET SPOILED</button>
             <button mat-button (click)="showMapDialog()">MAP</button>
             <button mat-button color="accent" *ngIf="!progression.found" (click)="found.emit(true)">FOUND!</button>

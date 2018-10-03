@@ -14,6 +14,7 @@ import {UseDiscoverTabComponent} from './routes/dashboard/artists-progressions/u
 import { DashboardArtistComponent } from './routes/dashboard-artist/dashboard-artist.component';
 import { DashboardPieceProgressionComponent } from './routes/dashboard-artist/dashboard-piece-progression/dashboard-piece-progression.component';
 import {PieceDialogComponent} from '../core/components/piece-dialog/piece-dialog.component';
+import { PiecePicturesDialogComponent } from './routes/dashboard-artist/dashboard-piece-progression/piece-pictures-dialog/piece-pictures-dialog.component';
 
 const routes: Route[] = [
     {
@@ -43,10 +44,11 @@ const routes: Route[] = [
         ArtistsProgressionsComponent,
         UseDiscoverTabComponent,
         DashboardArtistComponent,
-        DashboardPieceProgressionComponent
+        DashboardPieceProgressionComponent,
+        PiecePicturesDialogComponent
     ],
     providers: [],
-    entryComponents: [PieceDialogComponent]
+    entryComponents: [PieceDialogComponent, PiecePicturesDialogComponent]
 })
 export class DashboardModule {
 }

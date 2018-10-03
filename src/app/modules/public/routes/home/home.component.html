@@ -1,7 +1,7 @@
 <app-toolbar
         title="Street Art Finder"
         [showSearchButton]="true"
-        (searchKeyUp)="setFilter($event.target.value)"
+        (searchChange)="setFilter($event)"
 ></app-toolbar>
 
 
@@ -17,8 +17,14 @@
 
 <mat-divider></mat-divider>
 
-<app-artist-preview *ngFor="let artist of filterArtists(artists | async)" [artist]="artist">
+<app-artist-preview *ngFor="let artist of artists$ | async" [artist]="artist">
 </app-artist-preview>
+<div class="footerActions">
+    <button mat-button  (click)="loadMoreArtists()" [disabled]="!(hasMore$|async) || (loadingArtists$ | async)">
+        <span *ngIf="hasMore$|async">Load more</span>
+        <span *ngIf="!(hasMore$|async)">No more to load</span>
+    </button>
+</div>
 <app-loading-spinner *ngIf="loadingArtists$ | async"
-text="Chargement des artistes..."
+                     text="Chargement des artistes..."
 ></app-loading-spinner>

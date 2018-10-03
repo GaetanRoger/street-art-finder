@@ -45,6 +45,11 @@
 // Used for reflect-metadata in JIT. If you use AOT (and only Angular decorators), you can remove.
 import 'core-js/es7/reflect';
 
+// For algolia
+(window as any).process = {
+    env: { DEBUG: undefined },
+};
+
 
 /**
  * Web Animations `@angular/platform-browser/animations`

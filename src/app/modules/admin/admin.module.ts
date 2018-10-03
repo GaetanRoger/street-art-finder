@@ -8,6 +8,7 @@ import {AdminDashboardComponent} from './routes/admin-dashboard/admin-dashboard.
 import {AdminUsersComponent} from './routes/admin-users/admin-users.component';
 import {AdminToolbarComponent} from './components/admin-toolbar/admin-toolbar.component';
 import {TimestampPipe} from '../core/pipes/timestamp/timestamp.pipe';
+import {AngularCropperjsModule} from 'angular-cropperjs';
 
 const routes: Route[] = [
     {
@@ -27,6 +28,7 @@ const routes: Route[] = [
         RouterModule.forChild(routes),
         CoreModule,
         ComponentsLibraryModule,
+        AngularCropperjsModule
     ],
     declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent],
     providers: [TimestampPipe]
