@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AggregatesService} from '../../../core/services/aggregates/aggregates.service';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Aggregates} from '../../../core/types/aggregates';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {delay} from 'rxjs/operators';
+import Cropper from 'cropperjs';
 
 @Component({
     selector: 'app-admin-dashboard',
@@ -12,16 +12,11 @@ import {delay} from 'rxjs/operators';
 })
 export class AdminDashboardComponent implements OnInit {
     aggregates$: Observable<Aggregates>;
-    path$: Observable<SafeUrl>;
-    cropperOptions: {
-        aspectRatio: 1.7777777,
-        checkCrossOrigin: true
-        movable: false
-        scalable: false
-        viewMode: 1
-        zoomable: false
+    path$: BehaviorSubject<SafeUrl> = new BehaviorSubject(null);
+    cropperOptions: Cropper.Options = {
+        aspectRatio: 4 / 1,
+        zoomable: true,
     };
-
 
     constructor(private readonly aggregatesService: AggregatesService,
                 private readonly sanitizer: DomSanitizer) {
@@ -33,10 +28,7 @@ export class AdminDashboardComponent implements OnInit {
 
     imageUrlChanged(path: Blob): void {
         const fileReader = new FileReader();
-        fileReader.onloadend = e => this.path$ = of(this.sanitizer.bypassSecurityTrustUrl(e.target.result)).pipe(delay(500));
+        fileReader.onloadend = e => this.path$.next(this.sanitizer.bypassSecurityTrustUrl(e.target.result));
         fileReader.readAsDataURL(path);
-    }
-
-    onCropperReady() {
     }
 }

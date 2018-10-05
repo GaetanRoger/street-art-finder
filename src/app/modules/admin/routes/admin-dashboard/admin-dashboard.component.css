@@ -5,3 +5,6 @@
     margin: 10px auto auto;
     justify-content: space-evenly;
 }
+.column {
+    text-align: center;
+}

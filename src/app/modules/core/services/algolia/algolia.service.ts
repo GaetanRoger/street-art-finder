@@ -21,7 +21,7 @@ export class AlgoliaService {
         return this.algolia;
     }
 
-    query<T extends ObjectIDable>(index: string, query: string): Observable<T[]> {
+    query<T extends ObjectIDable>(index: string, query: string | QueryParameters): Observable<T[]> {
         return fromPromise(this.algolia
             .initIndex(index)
             .search(query))

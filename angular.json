@@ -32,10 +32,13 @@
                 "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
 
+              "./node_modules/cropperjs/dist/cropper.min.css",
               "./node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/cropperjs/dist/cropper.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -85,10 +88,13 @@
               {
                 "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
               },
+              "./node_modules/cropperjs/dist/cropper.min.css",
               "./node_modules/leaflet/dist/leaflet.css",
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/cropperjs/dist/cropper.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

@@ -1,0 +1,19 @@
+<app-admin-toolbar
+        title="Add piece"
+></app-admin-toolbar>
+
+<form [formGroup]="pieceFormGroup">
+    <mat-horizontal-stepper [linear]="true">
+        <mat-step [stepControl]="general" label="General">
+            <app-admin-add-piece-general-info [formGroup]="general"></app-admin-add-piece-general-info>
+        </mat-step>
+        <mat-step label="Images">
+            <app-admin-add-piece-images (mainImage)="mainImage = $event"></app-admin-add-piece-images>
+        </mat-step>
+        <mat-step label="Finish">
+            <button mat-raised-button color="accent" (click)="createPiece()">Create piece !</button>
+        </mat-step>
+    </mat-horizontal-stepper>
+</form>
+
+<!--{{pieceFormGroup.value|json }}-->

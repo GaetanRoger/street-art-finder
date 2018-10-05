@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtistService} from '../../../core/services/artist/artist.service';
-import {combineLatest, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Artist} from '../../../core/types/artist';
 import {UserService} from '../../../core/services/user/user.service';
-import {map, startWith, tap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-home',
@@ -11,8 +11,9 @@ import {map, startWith, tap} from 'rxjs/operators';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    artists$: Observable<Artist[]>;
-    loadingArtists$: Observable<boolean>;
+    initialLoading = true;
+
+    artists: Artist[];
 
     primaryButtonText$: Observable<string>;
     primaryButtonRouterLink$: Observable<string>;
@@ -28,11 +29,6 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this._resetArtists();
-        this.artists$.subscribe(a => console.log('artosts', a));
-        this.loadingArtists$ = this.artists$.pipe(
-            startWith([]),
-            map(a => !a || a.length === 0),
-        );
 
         this.loggedIn$ = this.userService.isLoggedIn()
             .pipe(
@@ -53,15 +49,18 @@ export class HomeComponent implements OnInit {
 
     loadMoreArtists(): void {
         const newArtists$ = this.artistService.findN(this.filter, ++this.page);
+        newArtists$.subscribe(a => this.artists.push(...a));
         this.hasMore$ = newArtists$.pipe(map(a => a && a.length > 0));
-        this.artists$ = combineLatest(this.artists$, newArtists$)
-            .pipe(
-                map(([alreadyLoaded, newArtists]) => [...alreadyLoaded, ...newArtists])
-            );
     }
 
     private _resetArtists(): void {
-        this.artists$ = this.artistService.findN(this.filter);
+        this.artists = null;
+        this.initialLoading = true;
+        this.artistService.findN(this.filter)
+            .subscribe(a => {
+                this.artists = a;
+                this.initialLoading = false;
+            });
         this.page = 0;
     }
 }

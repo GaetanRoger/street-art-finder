@@ -1,0 +1,36 @@
+<div [formGroup]="formGroup" class="form">
+    <mat-form-field>
+        <input matInput placeholder="Name" type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+        <textarea matInput placeholder="Description" formControlName="text"></textarea>
+    </mat-form-field>
+    <div formGroupName="location" class="location">
+        <mat-form-field>
+            <input matInput placeholder="Latitude" type="number" formControlName="latitude">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Longitude" type="number" formControlName="longitude">
+        </mat-form-field>
+    </div>
+    <mat-form-field>
+        <input type="text" placeholder="Artist" matInput formControlName="artist" [matAutocomplete]="auto">
+        <mat-hint>Start typing their name then select one</mat-hint>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+            <mat-option *ngFor="let artist of artists$ | async" [value]="artist">
+                {{artist.name}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <div class="vanished-checkbox">
+        <mat-checkbox formControlName="vanished">Vanished (does not exist anymore)</mat-checkbox>
+    </div>
+</div>
+<div class="buttons">
+    <button mat-flat-button
+            matStepperNext
+            [disabled]="formGroup.invalid">
+        <span *ngIf="formGroup.invalid">Fill out all fields</span>
+        <span *ngIf="formGroup.valid">Continue</span>
+    </button>
+</div>

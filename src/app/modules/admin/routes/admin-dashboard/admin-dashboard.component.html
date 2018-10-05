@@ -1,22 +1,25 @@
 <app-admin-toolbar title="Admin dashboard"></app-admin-toolbar>
 
 <div *ngIf="aggregates$ | async as aggregates" class="buttons">
-    <button mat-raised-button routerLink="users">
-        {{aggregates.usersCount}} users
-    </button>
-    <button mat-raised-button>
-        {{aggregates.artistsCount}} artists
-    </button>
-    <button mat-raised-button>
-        {{aggregates.piecesCount}} pieces
-    </button>
+    <div class="users column">
+        <button mat-raised-button routerLink="users">
+            {{aggregates.usersCount}} users
+        </button>
+    </div>
+    <div class="artists column">
+        <button mat-raised-button>
+            {{aggregates.artistsCount}} artists
+        </button>
+    </div>
+    <div class="pieces column">
+        <button mat-raised-button>
+            {{aggregates.piecesCount}} pieces
+        </button>
+        <button mat-button routerLink="add-piece">Add piece</button>
+    </div>
 </div>
 
 <div>
     <input type="file" accept="image/*" placeholder="Image" (change)="imageUrlChanged($event.target.files[0])"/>
-    <angular-cropper #cropper
-                     (ready)="onCropperReady()"
-                     [imageUrl]="path$ | async"
-                     [cropperOptions]="cropperOptions"
-    ></angular-cropper>
+    <angular-cropper [imageUrl]="path$ | async" [cropperOptions]="cropperOptions" *ngIf="path$.value"></angular-cropper>
 </div>

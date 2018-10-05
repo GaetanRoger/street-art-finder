@@ -7,6 +7,7 @@ import {Piece} from '../../types/piece';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {AlgoliaService} from '../algolia/algolia.service';
+import {QueryParameters} from 'algoliasearch';
 
 @Injectable({
     providedIn: 'root'
@@ -21,8 +22,13 @@ export class ArtistService {
                 private readonly algolia: AlgoliaService) {
     }
 
-    findAll(query: string = ''): Observable<Artist[]> {
-        return this.algolia.query<Artist>(this.COLLECTION, query);
+    findAll(query: string = '', limit: number = 100): Observable<Artist[]> {
+        const parameters: QueryParameters = {
+            query,
+            length: limit
+        };
+
+        return this.algolia.query<Artist>(this.COLLECTION, parameters);
     }
 
     findN(query: string = '', page: number = 0, hitsPerPage: number = 5): Observable<Artist[]> {

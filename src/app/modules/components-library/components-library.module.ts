@@ -1,11 +1,23 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
+    MatAutocompleteModule,
     MatButtonModule,
-    MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule,
-    MatDividerModule, MatFormFieldModule,
-    MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
-    MatProgressSpinnerModule, MatSnackBarModule, MatTabsModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatStepperModule,
+    MatTabsModule,
     MatToolbarModule
 } from '@angular/material';
 
@@ -25,7 +37,9 @@ import {
         MatTabsModule,
         MatCheckboxModule,
         MatSnackBarModule,
-        MatListModule
+        MatListModule,
+        MatAutocompleteModule,
+        MatStepperModule
     ],
     declarations: [],
     exports: [
@@ -44,8 +58,9 @@ import {
         MatTabsModule,
         MatCheckboxModule,
         MatSnackBarModule,
-        MatListModule
-
+        MatListModule,
+        MatAutocompleteModule,
+        MatStepperModule
     ]
 })
 export class ComponentsLibraryModule {

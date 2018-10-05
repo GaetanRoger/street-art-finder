@@ -17,14 +17,14 @@
 
 <mat-divider></mat-divider>
 
-<app-artist-preview *ngFor="let artist of artists$ | async" [artist]="artist">
+<app-artist-preview *ngFor="let artist of artists || []" [artist]="artist">
 </app-artist-preview>
 <div class="footerActions">
-    <button mat-button  (click)="loadMoreArtists()" [disabled]="!(hasMore$|async) || (loadingArtists$ | async)">
+    <button mat-button  (click)="loadMoreArtists()" [disabled]="!(hasMore$|async) || initialLoading">
         <span *ngIf="hasMore$|async">Load more</span>
         <span *ngIf="!(hasMore$|async)">No more to load</span>
     </button>
 </div>
-<app-loading-spinner *ngIf="loadingArtists$ | async"
+<app-loading-spinner *ngIf="initialLoading"
                      text="Chargement des artistes..."
 ></app-loading-spinner>

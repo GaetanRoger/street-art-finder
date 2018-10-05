@@ -1,11 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
     selector: 'app-image',
     templateUrl: './image.component.html',
     styleUrls: ['./image.component.css']
 })
-export class ImageComponent implements OnInit {
+export class ImageComponent {
     @Input() src: string;
     @Input() alt: string;
     @Input() round = false;
@@ -15,12 +15,4 @@ export class ImageComponent implements OnInit {
     @Input() fit: boolean;
 
     showImage = false;
-
-    constructor() {
-    }
-
-    ngOnInit() {
-        console.log(this.imgWidth, this.imgHeight);
-    }
-
 }

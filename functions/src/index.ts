@@ -18,6 +18,14 @@ import {
 } from './firestore/users/updateUsersCountOnAggregates';
 import {deleteUserFromFirestoreOnDeletionFunction} from './auth/deleteUserFromFirestoreOnDeletion';
 import {updateScoreOnUserArtistWhenAPieceIsFoundFunction} from './firestore/users_pieces/updateScoreOnUserArtistWhenAPieceIsFound';
+import {
+    createAlgoliaIndexOnArtistCreateFunction, deleteAlgoliaIndexOnArtistDeleteFunction,
+    updateAlgoliaIndexOnArtistUpdateFunction
+} from './firestore/artists/updateAlgoliaIndexOnArtistWrite';
+import {
+    createAlgoliaIndexOnPieceCreateFunction, deleteAlgoliaIndexOnPieceDeleteFunction,
+    updateAlgoliaIndexOnPieceUpdateFunction
+} from './firestore/pieces/updateAlgoliaIndexOnPieceWrite';
 
 admin.initializeApp();
 
@@ -36,3 +44,9 @@ export const incrementUsersCountOnAggregates = incrementUsersCountOnAggregatesFu
 export const decrementUsersCountOnAggregates = decrementUsersCountOnAggregatesFunction;
 export const deleteUserFromFirestoreOnDeletion = deleteUserFromFirestoreOnDeletionFunction;
 export const updateScoreOnUserArtistWhenAPieceIsFound = updateScoreOnUserArtistWhenAPieceIsFoundFunction;
+export const createAlgoliaIndexOnArtistCreate = createAlgoliaIndexOnArtistCreateFunction;
+export const updateAlgoliaIndexOnArtistUpdate = updateAlgoliaIndexOnArtistUpdateFunction;
+export const deleteAlgoliaIndexOnArtistDelete = deleteAlgoliaIndexOnArtistDeleteFunction;
+export const createAlgoliaIndexOnPieceCreate = createAlgoliaIndexOnPieceCreateFunction;
+export const updateAlgoliaIndexOnPieceUpdate = updateAlgoliaIndexOnPieceUpdateFunction;
+export const deleteAlgoliaIndexOnPieceDelete = deleteAlgoliaIndexOnPieceDeleteFunction;

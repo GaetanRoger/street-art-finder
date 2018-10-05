@@ -4,7 +4,7 @@
             [showSearchButton]="true"
             [showBackButton]="true"
             [image]="artist.images.horizontal.low"
-            (searchKeyUp)="setFilter($event.target.value)"
+            (searchChange)="filter$.next($event)"
     ></app-toolbar>
 
     <app-flat-card-with-image
@@ -16,12 +16,12 @@
     ></app-flat-card-with-image>
 
     <div *ngIf="pieces$ | async as pieces">
-        <app-piece *ngFor="let piece of filterPieces(pieces$ | async)" [piece]="piece"></app-piece>
-        <div *ngIf="pieces.length > 0 && filterPieces(pieces).length === 0">
-            No pieces were found with your filter.
-        </div>
-        <div *ngIf="pieces.length === 0">
+        <app-piece *ngFor="let piece of pieces" [piece]="piece"></app-piece>
+        <div *ngIf="pieces.length === 0 && !filter$.getValue()">
             No pieces were yet uploaded.
+        </div>
+        <div *ngIf="pieces.length === 0 && filter$.getValue()">
+            No pieces were found with your query.
         </div>
     </div>
 

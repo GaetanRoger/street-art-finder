@@ -4,7 +4,7 @@ import {PieceTags} from './piece-tags';
 import {Geopoint} from './geopoint';
 import {Image} from './image';
 
-export interface PiecePreview extends ObjectIDable{
+export interface PiecePreview extends ObjectIDable {
     name: string;
     images: {
         main: Image;
@@ -14,7 +14,7 @@ export interface PiecePreview extends ObjectIDable{
 export interface Piece extends PiecePreview {
     location: Geopoint;
     text: string;
-    addedOn: {toDate: () => Date};
+    addedOn: { toDate: () => Date };
     artist: ArtistPreview;
     images: {
         main: Image;

@@ -1,0 +1,28 @@
+<div>
+    <div class="main-buttons">
+        <div>
+            <button type="button" [disabled]="mainImageUrl$.value" mat-raised-button (click)="mainImageInput.click()">Add main image</button>
+            <input hidden type="file" #mainImageInput (change)="mainImageUploaded($event.target.files[0])"/>
+        </div>
+        <button type="button" mat-flat-button [disabled]="!mainImageUrl$.value" color="warn" (click)="mainImageUrl$.next(null)">Remove main image</button>
+    </div>
+
+
+    <angular-cropper [imageUrl]="mainImageUrl$.value"
+                     [cropperOptions]="croppersOptions"
+                     loadImageErrorText="Image could not be loaded"
+                     *ngIf="mainImageUrl$.value"
+                     class="mat-elevation-z15"
+                     #mainCropper
+    ></angular-cropper>
+
+</div>
+<div class="buttons">
+    <button mat-flat-button
+            (click)="onNext()"
+            matStepperNext
+            [disabled]="!mainImageUrl$.value">
+        <span *ngIf="!mainImageUrl$.value">Pick at least a main image</span>
+        <span *ngIf="mainImageUrl$.value">Continue</span>
+    </button>
+</div>
