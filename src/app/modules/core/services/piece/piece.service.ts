@@ -37,10 +37,12 @@ export class PieceService {
     }
 
     create(piece: Piece) {
-        return this.firestore.doc(`${this.COLLECTION}/${piece.objectID}`)
+        const id = piece.objectID;
+        delete piece.objectID;
+
+        return this.firestore.doc(`${this.COLLECTION}/${id}`)
             .set({
-                ...piece,
-                objectID: undefined
+                ...piece
             });
     }
 }

@@ -37,7 +37,6 @@ export class PieceDialogComponent implements OnInit {
     ngOnInit() {
         const location = this.piece.location;
         const randomNumber = this.randomGenerator.generate(this.piece.objectID, true);
-        console.log('randomnumber for', this.piece.name, 'is', randomNumber);
         const circleLocations = {
             latitude: this.coordinatesCalculus.addMetersToLatitude(location, randomNumber * 0.035355),
             longitude: this.coordinatesCalculus.addMetersToLongitude(location, randomNumber * 0.035355)

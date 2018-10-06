@@ -3,7 +3,7 @@ import {Collections} from '../collections.enum';
 import * as algoliasearch from 'algoliasearch';
 
 const env = functions.config();
-const algolia = algoliasearch(env.algolia.appId, env.algolia.appKey);
+const algolia = algoliasearch(env.algolia.appid, env.algolia.apikey);
 const client = algolia.initIndex(Collections.artists);
 
 export const createAlgoliaIndexOnArtistCreateFunction = functions.firestore

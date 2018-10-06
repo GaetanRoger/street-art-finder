@@ -11,7 +11,8 @@
             <app-admin-add-piece-images (mainImage)="mainImage = $event"></app-admin-add-piece-images>
         </mat-step>
         <mat-step label="Finish">
-            <button mat-raised-button color="accent" (click)="createPiece()">Create piece !</button>
+            <app-admin-add-piece-finish [mainImage]="mainImage" [pieceFormGroup]="pieceFormGroup"></app-admin-add-piece-finish>
+
         </mat-step>
     </mat-horizontal-stepper>
 </form>

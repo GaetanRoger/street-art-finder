@@ -14,7 +14,7 @@ export class AdminAddPieceImagesComponent implements OnInit {
 
     mainImageUrl$: BehaviorSubject<SafeUrl> = new BehaviorSubject(null);
     readonly croppersOptions: Cropper.Options & any = {
-        aspectRatio: 4 / 1,
+        aspectRatio: 4 / 2,
         zoomable: true,
         movable: true,
         dragMode: 'move'

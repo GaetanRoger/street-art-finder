@@ -14,7 +14,7 @@ export interface PiecePreview extends ObjectIDable {
 export interface Piece extends PiecePreview {
     location: Geopoint;
     text: string;
-    addedOn: { toDate: () => Date };
+    addedOn: { toDate: () => Date } | Date;
     artist: ArtistPreview;
     images: {
         main: Image;

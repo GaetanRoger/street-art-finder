@@ -9,9 +9,10 @@ import {AdminUsersComponent} from './routes/admin-users/admin-users.component';
 import {AdminToolbarComponent} from './components/admin-toolbar/admin-toolbar.component';
 import {TimestampPipe} from '../core/pipes/timestamp/timestamp.pipe';
 import {AngularCropperjsModule} from 'angular-cropperjs';
-import { AdminAddPieceComponent } from './routes/admin-add-piece/admin-add-piece.component';
-import { AdminAddPieceGeneralInfoComponent } from './routes/admin-add-piece/admin-add-piece-general-info/admin-add-piece-general-info.component';
-import { AdminAddPieceImagesComponent } from './routes/admin-add-piece/admin-add-piece-images/admin-add-piece-images.component';
+import {AdminAddPieceComponent} from './routes/admin-add-piece/admin-add-piece.component';
+import {AdminAddPieceGeneralInfoComponent} from './routes/admin-add-piece/admin-add-piece-general-info/admin-add-piece-general-info.component';
+import {AdminAddPieceImagesComponent} from './routes/admin-add-piece/admin-add-piece-images/admin-add-piece-images.component';
+import { AdminAddPieceFinishComponent } from './routes/admin-add-piece/admin-add-piece-finish/admin-add-piece-finish.component';
 
 const routes: Route[] = [
     {
@@ -19,8 +20,8 @@ const routes: Route[] = [
         component: AdminUsersComponent,
     },
     {
-      path: 'add-piece',
-      component: AdminAddPieceComponent
+        path: 'add-piece',
+        component: AdminAddPieceComponent
     },
     {
         path: '',
@@ -37,7 +38,7 @@ const routes: Route[] = [
         ComponentsLibraryModule,
         AngularCropperjsModule
     ],
-    declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent, AdminAddPieceComponent, AdminAddPieceGeneralInfoComponent, AdminAddPieceImagesComponent],
+    declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent, AdminAddPieceComponent, AdminAddPieceGeneralInfoComponent, AdminAddPieceImagesComponent, AdminAddPieceFinishComponent],
     providers: [TimestampPipe]
 })
 export class AdminModule {

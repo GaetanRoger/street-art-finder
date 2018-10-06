@@ -30,7 +30,6 @@ export class ArtistComponent implements OnInit {
         this.pieces$ = combineLatest(this.route.params, this.filter$)
             .pipe(
                 flatMap(([param, filter]) => this.pieceService.findAll(param.id, filter)),
-                tap(p => console.log(p))
             );
     }
 }

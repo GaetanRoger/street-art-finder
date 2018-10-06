@@ -37,8 +37,6 @@ export class AlgoliaService {
             hitsPerPage
         };
 
-        console.log('index', index, 'search', search);
-
         return fromPromise(this.algolia
             .initIndex(index)
             .search(search))

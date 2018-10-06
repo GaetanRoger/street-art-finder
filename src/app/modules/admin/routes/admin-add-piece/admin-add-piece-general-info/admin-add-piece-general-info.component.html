@@ -1,16 +1,30 @@
 <div [formGroup]="formGroup" class="form">
     <mat-form-field>
-        <input matInput placeholder="Name" type="text" formControlName="name">
+        <input matInput placeholder="Name" type="text" formControlName="name" minlength="3">
+        <mat-error *ngIf="name.errors?.minlength">Name must be at least {{name.errors.minlength.requiredLength}} characters long</mat-error>
     </mat-form-field>
     <mat-form-field>
         <textarea matInput placeholder="Description" formControlName="text"></textarea>
+        <mat-error *ngIf="text.errors?.minlength">Description must be at least {{text.errors.minlength.requiredLength}} characters long</mat-error>
     </mat-form-field>
     <div formGroupName="location" class="location">
         <mat-form-field>
-            <input matInput placeholder="Latitude" type="number" formControlName="latitude">
+            <input matInput
+                   type="number"
+                   placeholder="Latitude"
+                   min="-90"
+                   max="90"
+                   formControlName="latitude">
+            <mat-error *ngIf="latitude.errors">Value must be between -90 and 90</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="Longitude" type="number" formControlName="longitude">
+            <input matInput
+                   type="number"
+                   placeholder="Longitude"
+                   min="-180"
+                   max="180"
+                   formControlName="longitude">
+            <mat-error *ngIf="latitude.errors">Value must be between -180 and 180</mat-error>
         </mat-form-field>
     </div>
     <mat-form-field>
@@ -21,6 +35,7 @@
                 {{artist.name}}
             </mat-option>
         </mat-autocomplete>
+        <mat-error *ngIf="artist.errors?.invalid">Please select an artist from the dropdown list</mat-error>
     </mat-form-field>
     <div class="vanished-checkbox">
         <mat-checkbox formControlName="vanished">Vanished (does not exist anymore)</mat-checkbox>

@@ -6,6 +6,7 @@ service cloud.firestore {
 
     match /pieces/{piece} {
       allow read;
+      allow write: if isAdmin();
     }
 
     match /users/{userId} {

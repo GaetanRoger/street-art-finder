@@ -26,6 +26,7 @@ import {
     createAlgoliaIndexOnPieceCreateFunction, deleteAlgoliaIndexOnPieceDeleteFunction,
     updateAlgoliaIndexOnPieceUpdateFunction
 } from './firestore/pieces/updateAlgoliaIndexOnPieceWrite';
+import {deletePieceImagesOnDeleteFunction} from './firestore/pieces/deletePieceImagesOnDelete';
 
 admin.initializeApp();
 
@@ -50,3 +51,4 @@ export const deleteAlgoliaIndexOnArtistDelete = deleteAlgoliaIndexOnArtistDelete
 export const createAlgoliaIndexOnPieceCreate = createAlgoliaIndexOnPieceCreateFunction;
 export const updateAlgoliaIndexOnPieceUpdate = updateAlgoliaIndexOnPieceUpdateFunction;
 export const deleteAlgoliaIndexOnPieceDelete = deleteAlgoliaIndexOnPieceDeleteFunction;
+export const deletePieceImagesOnDelete = deletePieceImagesOnDeleteFunction;

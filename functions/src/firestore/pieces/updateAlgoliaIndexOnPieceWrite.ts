@@ -3,17 +3,17 @@ import {Collections} from '../collections.enum';
 import * as algoliasearch from 'algoliasearch';
 
 const env = functions.config();
-const algolia = algoliasearch(env.algolia.appId, env.algolia.appKey);
+const algolia = algoliasearch(env.algolia.appid, env.algolia.apikey);
 const client = algolia.initIndex(Collections.pieces);
 
 export const createAlgoliaIndexOnPieceCreateFunction = functions.firestore
     .document(`${Collections.pieces}/{pieceId}`)
     .onCreate((snap, context) => {
         const piece = snap.data();
-        const objectId = snap.id;
+        const objectID = snap.id;
 
         return client.addObject({
-            objectId,
+            objectID,
             ...piece,
             _geoloc: {
                 lat: piece.location.latitude,
@@ -27,13 +27,13 @@ export const updateAlgoliaIndexOnPieceUpdateFunction = functions.firestore
     .onUpdate((snap, context) => {
         const pieceAfter = snap.after.data();
         const pieceBefore = snap.before.data();
-        const objectId = snap.after.id;
+        const objectID = snap.after.id;
 
         if (JSON.stringify(pieceBefore) === JSON.stringify(pieceBefore))
             return null;
 
         return client.addObject({
-            objectId,
+            objectID,
             _geoloc: {
                 lat: pieceAfter.location._lat,
                 lng: pieceAfter.location._long
@@ -45,7 +45,7 @@ export const updateAlgoliaIndexOnPieceUpdateFunction = functions.firestore
 export const deleteAlgoliaIndexOnPieceDeleteFunction = functions.firestore
     .document(`${Collections.pieces}/{pieceId}`)
     .onDelete((snap, context) => {
-        const objectId = snap.id;
+        const objectID = snap.id;
 
-        return client.deleteObject(objectId);
+        return client.deleteObject(objectID);
     });

@@ -30,10 +30,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this._resetArtists();
 
-        this.loggedIn$ = this.userService.isLoggedIn()
-            .pipe(
-                tap(_ => console.log('value', _))
-            );
+        this.loggedIn$ = this.userService.isLoggedIn();
         this.primaryButtonText$ = this.loggedIn$.pipe(
             map(l => l ? 'Dashboard' : 'Join now'),
         );

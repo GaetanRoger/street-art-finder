@@ -1,0 +1,2 @@
+<button mat-raised-button color="accent" (click)="createPiece()">Create piece !</button>
+<mat-progress-bar *ngIf="uploadedPercentage$ | async" mode="determinate" [value]="uploadedPercentage$ | async"></mat-progress-bar>
