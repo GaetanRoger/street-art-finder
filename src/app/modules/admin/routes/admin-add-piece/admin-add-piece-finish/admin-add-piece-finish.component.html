@@ -1,2 +1,23 @@
-<button mat-raised-button color="accent" (click)="createPiece()">Create piece !</button>
-<mat-progress-bar *ngIf="uploadedPercentage$ | async" mode="determinate" [value]="uploadedPercentage$ | async"></mat-progress-bar>
+<h3>All's right?</h3>
+<div class="buttons">
+    <button mat-flat-button
+            color="accent"
+            (click)="createPiece()"
+            [disabled]="creationLaunched"
+    >
+        <span *ngIf="!creationLaunched">Create the piece!</span>
+        <span *ngIf="creationLaunched && !errored && !done">Creation...</span>
+        <span *ngIf="done">Piece created!</span>
+        <span *ngIf="errored">Error :(</span>
+    </button>
+</div>
+
+<div class="main-image-upload" *ngIf="creationLaunched">
+    <small>Main image upload...</small>
+    <mat-progress-bar mode="determinate" [value]="(uploadedPercentage$ | async) || 0"></mat-progress-bar>
+</div>
+
+<div class="main-image-upload" *ngIf="creationLaunched">
+    <small>Piece creation...</small>
+    <mat-progress-bar mode="determinate" [value]="done ? 100 : 0"></mat-progress-bar>
+</div>

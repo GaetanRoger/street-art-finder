@@ -5,7 +5,8 @@ import {Piece} from '../../../../core/types/piece';
 import {AngularFireStorage} from 'angularfire2/storage';
 import {IdGeneratorService} from '../../../../core/services/id-generator/id-generator.service';
 import {PieceService} from '../../../../core/services/piece/piece.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {PieceCreationState} from './piece-creation-state.enum';
 
 @Component({
     selector: 'app-admin-add-piece-finish',
@@ -17,6 +18,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
     @Input() mainImage: Blob;
 
     uploadedPercentage$: Observable<number | undefined>;
+    state$: BehaviorSubject<PieceCreationState> = new BehaviorSubject(PieceCreationState.None);
 
 
     constructor(private readonly storage: AngularFireStorage,
@@ -27,31 +29,62 @@ export class AdminAddPieceFinishComponent implements OnInit {
     ngOnInit() {
     }
 
+    get uploading(): boolean {
+        return this.state$.value === PieceCreationState.Uploading;
+    }
+
+    get creating(): boolean {
+        return this.state$.value === PieceCreationState.Creating;
+    }
+
+    get done(): boolean {
+        return this.state$.value === PieceCreationState.Done;
+    }
+
+    get errored(): boolean {
+        return this.state$.value === PieceCreationState.Error;
+
+    }
+
+    get creationLaunched(): boolean {
+        return this.state$.value !== PieceCreationState.None;
+    }
+
     async createPiece(): Promise<void> {
         if (this.pieceFormGroup.invalid) {
-            // todo do something
+            this.state$.next(PieceCreationState.Error);
             console.log('form group invalid');
             return;
         }
+
+        this.state$.next(PieceCreationState.Uploading);
 
         const pieceData = this.pieceFormGroup.value.general;
         const artist: Artist = pieceData.artist;
         const id = this.idGenerator.generateId();
 
-        console.log('id created:', id);
+        const uploadedImageUrl = await this._uploadedMainImage(artist, id);
 
-        console.log('uploading...');
+        this.state$.next(PieceCreationState.Creating);
+
+        await this._createPiece(id, pieceData, artist, uploadedImageUrl);
+
+        this.state$.next(PieceCreationState.Done);
+    }
+
+    private async _createPiece(id, pieceData, artist: Artist, uploadedImageUrl) {
+        const piece: Piece = this._getPieceFromForm(id, pieceData, artist, uploadedImageUrl);
+        await this.pieceService.create(piece);
+    }
+
+    private async _uploadedMainImage(artist: Artist, id) {
         const path = `/artists/${artist.objectID}/pieces/${id}/low.jpg`;
         const imageUploadTask = this.storage.upload(path, this.mainImage);
-        this.uploadedPercentage$ = imageUploadTask.percentageChanges();
-        const uploadedImage = await imageUploadTask;
-        const uploadedImageUrl = await uploadedImage.ref.getDownloadURL();
 
-        const piece: Piece = this._getPieceFromForm(id, pieceData, artist, uploadedImageUrl);
-        console.log('creating...', piece);
-        await this.pieceService.create(piece)
-            .then(c => console.log('created piece', c))
-            .catch(e => console.log('piece erreor', e));
+        this.uploadedPercentage$ = imageUploadTask.percentageChanges();
+
+        const uploadedImage = await imageUploadTask;
+        return await uploadedImage.ref.getDownloadURL();
     }
 
     private _getPieceFromForm(id: string, pieceData, artist: Artist, uploadedImageUrl): Piece {
@@ -80,7 +113,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
                 vanished: pieceData.vanished,
                 accessible: pieceData.accessible
             },
-            addedOn: new Date(),
+            addedOn: Date.now(),
         };
     }
 

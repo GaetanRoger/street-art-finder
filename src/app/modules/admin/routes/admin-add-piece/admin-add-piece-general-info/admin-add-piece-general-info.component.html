@@ -37,8 +37,11 @@
         </mat-autocomplete>
         <mat-error *ngIf="artist.errors?.invalid">Please select an artist from the dropdown list</mat-error>
     </mat-form-field>
-    <div class="vanished-checkbox">
+    <div class="checkbox">
         <mat-checkbox formControlName="vanished">Vanished (does not exist anymore)</mat-checkbox>
+    </div>
+    <div class="checkbox">
+        <mat-checkbox formControlName="accessible">Accessible to disabled people</mat-checkbox>
     </div>
 </div>
 <div class="buttons">

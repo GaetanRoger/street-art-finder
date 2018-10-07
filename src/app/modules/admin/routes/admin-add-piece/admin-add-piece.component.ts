@@ -1,12 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AngularFireStorage} from 'angularfire2/storage';
-import {Artist} from '../../../core/types/artist';
-import {Piece} from '../../../core/types/piece';
-import {PieceService} from '../../../core/services/piece/piece.service';
-import {IdGeneratorService} from '../../../core/services/id-generator/id-generator.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {PieceGroup} from './piece-group';
-import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-admin-add-piece',

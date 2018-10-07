@@ -43,10 +43,9 @@ export class UserPieceProgressionService {
             );
     }
 
-    toggleFound(progressionid: string, value: boolean) {
-        console.log(progressionid, value);
+    toggleFound(progressionId: string, value: boolean) {
         return this.firestore
-            .doc(`${this.COLLECTION}/${progressionid}`)
+            .doc(`${this.COLLECTION}/${progressionId}`)
             .update({found: value});
     }
 

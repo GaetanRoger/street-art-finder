@@ -8,7 +8,7 @@
         <div [leafletLayer]="circleLayer$ | async" *ngIf="!(showMarker$ | async) && circleLayer$ | async"></div>
     </div>
     <p class="added-on">
-        Added on {{piece.addedOn.toDate() | date}}
+        Added on {{piece.addedOn * 1000 | date}}
     </p>
 </mat-dialog-content>
 <mat-dialog-actions>

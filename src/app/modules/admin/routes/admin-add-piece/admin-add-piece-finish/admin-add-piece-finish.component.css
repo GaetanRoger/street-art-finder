@@ -1,0 +1,15 @@
+.buttons {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.buttons button {
+    font-size: 130%;
+}
+
+.main-image-upload {
+    margin-top: 20px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
