@@ -1,6 +1,6 @@
 <app-artist-preview
         *ngFor="let artist of artists$ | async"
         [artist]="artist"
-        [actions]="[{text: artist.known ? 'ALREADY ADDED' : 'ADD', id: 1, disabled: artist.known}]"
+        [actions]="[{text: artist.known ? 'ADDED' : 'ADD', id: 1, disabled: artist.known}]"
         (actionClick)="addArtistToProgression(artist)"
 ></app-artist-preview>

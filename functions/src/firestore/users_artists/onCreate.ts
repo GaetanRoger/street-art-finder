@@ -21,9 +21,10 @@ async function createUsersPiecesFromArtist(artistId: string, userId: string) {
 
     return await pieces.forEach(piece => {
         const pieceData = piece.data();
+        const pieceId = piece.id;
         const userPiece = {
             piece: {
-                objectID: pieceData.objectID,
+                objectID: pieceId,
                 name: pieceData.name,
                 images: pieceData.images
             },

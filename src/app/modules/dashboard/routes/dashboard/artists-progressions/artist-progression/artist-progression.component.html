@@ -1,6 +1,17 @@
 <div class="artist-card mat-elevation-z1" [style]="backgroundImage"
-     [routerLink]="['artist', progression.artist.objectID]">
+     [routerLink]="['artist', progression.artist.objectID]"
+     (contextmenu)="openMenu($event)"
+>
     <mat-card-title>{{progression.artist.name}}</mat-card-title>
     <mat-progress-bar [value]="(progression.score * 100) / progression.maxScore"></mat-progress-bar>
     <div class="progression-values">{{progression.score}} / {{progression.maxScore}}</div>
+    <div class="menu-trigger-container">
+        <span [matMenuTriggerFor]="artistMenu" class="menu-trigger"></span>
+    </div>
 </div>
+<mat-menu #artistMenu="matMenu">
+    <button mat-menu-item (click)="askToRemoveArtist()">
+        <mat-icon>delete</mat-icon>
+        <span>Remove artist</span>
+    </button>
+</mat-menu>

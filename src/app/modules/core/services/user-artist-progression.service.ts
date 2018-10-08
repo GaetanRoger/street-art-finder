@@ -51,6 +51,12 @@ export class UserArtistProgressionService {
     }
 
 
+    remove(objectID: string) {
+        return this.firestore.collection(this.COLLECTION)
+            .doc(objectID)
+            .delete();
+    }
+
     private getFirestoreCollectionFromUserId(id: string) {
         return this.firestore.collection<UserArtistProgression>(
             this.COLLECTION,

@@ -27,3 +27,7 @@ mat-progress-bar {
 .progression-values {
     text-align: right;
 }
+.menu-trigger-container {
+    display: flex;
+    justify-content: center;
+}

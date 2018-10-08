@@ -11,10 +11,11 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {DiscoverComponent} from './routes/dashboard/discover/discover.component';
 import {ArtistsProgressionsComponent} from './routes/dashboard/artists-progressions/artists-progressions.component';
 import {UseDiscoverTabComponent} from './routes/dashboard/artists-progressions/use-discover-tab/use-discover-tab.component';
-import { DashboardArtistComponent } from './routes/dashboard-artist/dashboard-artist.component';
-import { DashboardPieceProgressionComponent } from './routes/dashboard-artist/dashboard-piece-progression/dashboard-piece-progression.component';
+import {DashboardArtistComponent} from './routes/dashboard-artist/dashboard-artist.component';
+import {DashboardPieceProgressionComponent} from './routes/dashboard-artist/dashboard-piece-progression/dashboard-piece-progression.component';
 import {PieceDialogComponent} from '../core/components/piece-dialog/piece-dialog.component';
-import { PiecePicturesDialogComponent } from './routes/dashboard-artist/dashboard-piece-progression/piece-pictures-dialog/piece-pictures-dialog.component';
+import {PiecePicturesDialogComponent} from './routes/dashboard-artist/dashboard-piece-progression/piece-pictures-dialog/piece-pictures-dialog.component';
+import {DiscoverArtistAddedSnackbarComponent} from './routes/dashboard/discover/discover-artist-added-snackbar/discover-artist-added-snackbar.component';
 
 const routes: Route[] = [
     {
@@ -45,10 +46,11 @@ const routes: Route[] = [
         UseDiscoverTabComponent,
         DashboardArtistComponent,
         DashboardPieceProgressionComponent,
-        PiecePicturesDialogComponent
+        PiecePicturesDialogComponent,
+        DiscoverArtistAddedSnackbarComponent
     ],
     providers: [],
-    entryComponents: [PieceDialogComponent, PiecePicturesDialogComponent]
+    entryComponents: [PieceDialogComponent, PiecePicturesDialogComponent, DiscoverArtistAddedSnackbarComponent]
 })
 export class DashboardModule {
 }

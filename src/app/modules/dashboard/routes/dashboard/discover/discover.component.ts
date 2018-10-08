@@ -7,6 +7,8 @@ import {map} from 'rxjs/operators';
 import {UserArtistProgressionService} from '../../../../core/services/user-artist-progression.service';
 import {UserService} from '../../../../core/services/user/user.service';
 import {User} from '../../../../core/types/user';
+import {MatSnackBar} from '@angular/material';
+import {DiscoverArtistAddedSnackbarComponent} from './discover-artist-added-snackbar/discover-artist-added-snackbar.component';
 
 @Component({
     selector: 'app-discover',
@@ -22,7 +24,8 @@ export class DiscoverComponent implements OnInit {
 
     constructor(private readonly userService: UserService,
                 private readonly artistService: ArtistService,
-                private readonly progressionService: UserArtistProgressionService) {
+                private readonly progressionService: UserArtistProgressionService,
+                private readonly snackbar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -42,7 +45,8 @@ export class DiscoverComponent implements OnInit {
             );
     }
 
-    addArtistToProgression(artist: Artist): void {
-        this.progressionService.addArtistProgression(this.user, artist);
+    async addArtistToProgression(artist: Artist): Promise<void> {
+        await this.progressionService.addArtistProgression(this.user, artist);
+        this.snackbar.openFromComponent(DiscoverArtistAddedSnackbarComponent, {duration: 5000});
     }
 }
