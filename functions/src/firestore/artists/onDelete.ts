@@ -9,8 +9,8 @@ export function firestoreArtistsOnDelete(snap: DocumentSnapshot, context: EventC
     const id = snap.id;
 
     return Promise.all([
-        deleteAlgoliaObject(id),
-        decrementArtistCountFieldInAggregatesDocument()
+        decrementArtistCountFieldInAggregatesDocument(),
+        deleteAlgoliaObject(id)
     ]);
 }
 

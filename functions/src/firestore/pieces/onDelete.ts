@@ -9,11 +9,29 @@ export function firestorePiecesOnDelete(snap: DocumentSnapshot, context: EventCo
     const id = snap.id;
 
     return Promise.all([
+        decrementMaxScoreOnUsersArtists(id),
         decrementPiecesCountOnArtistDocument(piece),
         deleteAlgoliaObject(id),
         deleteUsersPieces(id),
         decrementPiecesCountInAggregatesDocument()
     ]);
+}
+
+async function decrementMaxScoreOnUsersArtists(id: string) {
+    const batch = admin.firestore().batch();
+
+    const usersArtists = await admin.firestore()
+        .collection(Collections.users_artists)
+        .where('artist.objectID', '==', id)
+        .get();
+
+    usersArtists.forEach(ua => {
+        batch.update(ua.ref, {
+            maxScore: ua.data().maxScore - 1
+        });
+    });
+
+    return await batch.commit();
 }
 
 function decrementPiecesCountOnArtistDocument(piece) {

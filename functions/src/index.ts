@@ -13,9 +13,10 @@ import {firestorePiecesOnDelete} from './firestore/pieces/onDelete';
 import {firestoreUsersOnCreate} from './firestore/users/onCreate';
 import {firestoreUsersOnDelete} from './firestore/users/onDelete';
 import {firestoreUsersPiecesOnUpdate} from './firestore/users_pieces/onUpdate';
+import {firestoreUsersArtistsOnCreate} from './firestore/users_artists/onCreate';
 
 
-/****************************************************************
+/* **************************************************************
  *   _____       _ _   _       _ _          _   _               *
  *  |_   _|     (_) | (_)     | (_)        | | (_)              *
  *    | |  _ __  _| |_ _  __ _| |_ ______ _| |_ _  ___  _ __    *
@@ -30,7 +31,7 @@ const auth = functions.auth;
 const firestore = functions.firestore;
 
 
-/*******************************
+/* *****************************
  *                 _   _       *
  *      /\        | | | |      *
  *     /  \  _   _| |_| |__    *
@@ -43,7 +44,7 @@ const firestore = functions.firestore;
 export const authOnDeleteF = auth.user().onDelete(authOnDelete);
 
 
-/************************************************
+/* **********************************************
  *   ______ _               _                   *
  *  |  ____(_)             | |                  *
  *  | |__   _ _ __ ___  ___| |_ ___  _ __ ___   *
@@ -108,3 +109,10 @@ export const firestoreUsersOnDeleteF = usersDocument.onDelete(firestoreUsersOnDe
 const usersPiecesDocument = firestore.document(`${Collections.users_pieces}/{userPieceId}`);
 
 export const firestoreUsersPiecesOnUpdateF = usersPiecesDocument.onUpdate(firestoreUsersPiecesOnUpdate);
+
+
+
+// Users artists
+const usersArtistsDocument = firestore.document(`${Collections.users_artists}/{userArtistId}`);
+
+export const firestoreUsersArtistsOnCreateF = usersArtistsDocument.onCreate(firestoreUsersArtistsOnCreate);

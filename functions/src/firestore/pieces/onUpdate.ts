@@ -14,12 +14,12 @@ export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, 
         return null;
 
     return Promise.all([
-        addAlgoliaObject(id, pieceAfter),
+        updateAlgoliaObject(id, pieceAfter),
         updatePieceToUsersPiecesForAllUsersFollowingArtist(id, pieceBefore, pieceAfter)
     ]);
 }
 
-function addAlgoliaObject(objectID: string, piece) {
+function updateAlgoliaObject(objectID: string, piece) {
     const client = algolia.initIndex(Collections.pieces);
     return client.addObject({
         objectID,
