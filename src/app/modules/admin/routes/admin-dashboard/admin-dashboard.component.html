@@ -12,14 +12,9 @@
         </button>
     </div>
     <div class="pieces column">
-        <button mat-raised-button>
+        <button mat-raised-button routerLink="pieces">
             {{aggregates.piecesCount}} pieces
         </button>
         <button mat-button routerLink="add-piece">Add piece</button>
     </div>
-</div>
-
-<div>
-    <input type="file" accept="image/*" placeholder="Image" (change)="imageUrlChanged($event.target.files[0])"/>
-    <angular-cropper [imageUrl]="path$ | async" [cropperOptions]="cropperOptions" *ngIf="path$.value"></angular-cropper>
 </div>

@@ -12,23 +12,12 @@ import Cropper from 'cropperjs';
 })
 export class AdminDashboardComponent implements OnInit {
     aggregates$: Observable<Aggregates>;
-    path$: BehaviorSubject<SafeUrl> = new BehaviorSubject(null);
-    cropperOptions: Cropper.Options = {
-        aspectRatio: 4 / 1,
-        zoomable: true,
-    };
 
-    constructor(private readonly aggregatesService: AggregatesService,
-                private readonly sanitizer: DomSanitizer) {
+    constructor(private readonly aggregatesService: AggregatesService) {
     }
 
     ngOnInit() {
         this.aggregates$ = this.aggregatesService.getAll();
     }
 
-    imageUrlChanged(path: Blob): void {
-        const fileReader = new FileReader();
-        fileReader.onloadend = e => this.path$.next(this.sanitizer.bypassSecurityTrustUrl(e.target.result));
-        fileReader.readAsDataURL(path);
-    }
 }

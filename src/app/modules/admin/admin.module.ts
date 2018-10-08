@@ -13,11 +13,16 @@ import {AdminAddPieceComponent} from './routes/admin-add-piece/admin-add-piece.c
 import {AdminAddPieceGeneralInfoComponent} from './routes/admin-add-piece/admin-add-piece-general-info/admin-add-piece-general-info.component';
 import {AdminAddPieceImagesComponent} from './routes/admin-add-piece/admin-add-piece-images/admin-add-piece-images.component';
 import { AdminAddPieceFinishComponent } from './routes/admin-add-piece/admin-add-piece-finish/admin-add-piece-finish.component';
+import { AdminPiecesComponent } from './routes/admin-pieces/admin-pieces.component';
 
 const routes: Route[] = [
     {
         path: 'users',
         component: AdminUsersComponent,
+    },
+    {
+        path: 'pieces',
+        component: AdminPiecesComponent
     },
     {
         path: 'add-piece',
@@ -38,7 +43,7 @@ const routes: Route[] = [
         ComponentsLibraryModule,
         AngularCropperjsModule
     ],
-    declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent, AdminAddPieceComponent, AdminAddPieceGeneralInfoComponent, AdminAddPieceImagesComponent, AdminAddPieceFinishComponent],
+    declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent, AdminAddPieceComponent, AdminAddPieceGeneralInfoComponent, AdminAddPieceImagesComponent, AdminAddPieceFinishComponent, AdminPiecesComponent],
     providers: [TimestampPipe]
 })
 export class AdminModule {

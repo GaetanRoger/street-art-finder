@@ -1,0 +1,29 @@
+.help-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #27AE60;
+    color: white;
+    opacity: 0.6;
+}
+.help-text:active {
+    opacity: 0.8;
+}
+.help-text small {
+    margin-top: 5px;
+    opacity: 0.8;
+}
+.titles {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.titles .title {
+    text-transform: uppercase;
+}
+.hide {
+    display: none;
+}

@@ -12,7 +12,7 @@ import {ConfirmationDialogComponent} from '../../../core/components/confirmation
     styleUrls: ['./admin-users.component.css']
 })
 export class AdminUsersComponent implements OnInit {
-    users$: Observable<User[]>;
+    pieces$: Observable<User[]>;
 
     @ViewChild(MatSelectionList) list: MatSelectionList;
 
@@ -26,7 +26,7 @@ export class AdminUsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.users$ = this.userService.findAll().pipe(tap(u => console.log(u)));
+        this.pieces$ = this.userService.findAll().pipe(tap(u => console.log(u)));
     }
 
     resetButtonClick() {

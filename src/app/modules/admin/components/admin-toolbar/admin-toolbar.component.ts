@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
     selector: 'app-admin-toolbar',
@@ -7,6 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class AdminToolbarComponent implements OnInit {
     @Input() title: string;
+    @Input() showSearchButton = false;
+    @Output() searchChange: EventEmitter<string> = new EventEmitter();
 
     constructor() {
     }

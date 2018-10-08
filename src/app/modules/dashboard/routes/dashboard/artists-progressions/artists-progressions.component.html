@@ -1,12 +1,19 @@
-<app-artist-progression
-        *ngFor="let progression of progressions | async"
-        [progression]="progression"
-        (removeProgression)="removeProgression(progression)"
->
-</app-artist-progression>
+<div *ngIf="(progressions | async)?.length > 0">
+    <app-help-bubble
+            text="To access more options, right click (or hold down) an artist card!"
+            uid="artists-progressions-right-click"
+    ></app-help-bubble>
+
+    <app-artist-progression
+            *ngFor="let progression of progressions | async"
+            [progression]="progression"
+            (removeProgression)="removeProgression(progression)"
+    >
+    </app-artist-progression>
+</div>
 
 <app-use-discover-tab *ngIf="(progressions | async)?.length === 0"
-(goToDiscover)="goToDiscover.emit()"
+                      (goToDiscover)="goToDiscover.emit()"
 ></app-use-discover-tab>
 
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>

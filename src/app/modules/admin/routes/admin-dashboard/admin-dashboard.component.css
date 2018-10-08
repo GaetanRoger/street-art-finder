@@ -5,6 +5,9 @@
     margin: 10px auto auto;
     justify-content: space-evenly;
 }
+.buttons > * {
+    flex: 1;
+}
 .column {
     text-align: center;
 }

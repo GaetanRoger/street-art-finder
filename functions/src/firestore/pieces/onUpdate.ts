@@ -4,6 +4,7 @@ import {Helpers} from '../../helpers';
 import {algolia} from '../../initAlgolia';
 import {Collections} from '../collections.enum';
 import * as admin from 'firebase-admin';
+import {pieceToAlgoliaObject} from './pieceToAlgoliaObject';
 
 export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, context: EventContext) {
     const pieceBefore = change.before.data();
@@ -21,14 +22,7 @@ export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, 
 
 function updateAlgoliaObject(objectID: string, piece) {
     const client = algolia.initIndex(Collections.pieces);
-    return client.addObject({
-        objectID,
-        _geoloc: {
-            lat: piece.location.latitude,
-            lng: piece.location.longitude
-        },
-        ...piece
-    });
+    return client.addObject(pieceToAlgoliaObject(objectID, piece));
 }
 
 async function updatePieceToUsersPiecesForAllUsersFollowingArtist(id: string, pieceBefore, pieceAfter) {

@@ -1,6 +1,6 @@
 <app-admin-toolbar title="Users"></app-admin-toolbar>
 <mat-selection-list #list >
-    <mat-list-option *ngFor="let user of users$ | async" [value]="user.email">
+    <mat-list-option *ngFor="let user of pieces$ | async" [value]="user.email">
         <h4 mat-line>{{user.email}}</h4>
         <small mat-line> Last login at {{user.lastLoginAt | timestamp }} | Created at {{user.createdAt | timestamp}}</small>
     </mat-list-option>

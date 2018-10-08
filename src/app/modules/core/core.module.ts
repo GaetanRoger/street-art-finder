@@ -16,6 +16,7 @@ import {ImageComponent} from './components/image/image.component';
 import {PieceDialogComponent} from './components/piece-dialog/piece-dialog.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {AlgoliaService} from './services/algolia/algolia.service';
+import { HelpBubbleComponent } from './components/help-bubble/help-bubble.component';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {AlgoliaService} from './services/algolia/algolia.service';
         ConfirmationDialogComponent,
         SmallLoadingSpinnerComponent,
         ImageComponent,
-        PieceDialogComponent
+        PieceDialogComponent,
+        HelpBubbleComponent
     ],
     exports: [
         AngularFireAuthModule,
@@ -49,6 +51,7 @@ import {AlgoliaService} from './services/algolia/algolia.service';
         TimestampPipe,
         SmallLoadingSpinnerComponent,
         ImageComponent,
+        HelpBubbleComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]

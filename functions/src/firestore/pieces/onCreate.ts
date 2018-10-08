@@ -3,6 +3,7 @@ import {EventContext} from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
 import {algolia} from '../../initAlgolia';
+import {pieceToAlgoliaObject} from './pieceToAlgoliaObject';
 
 export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const piece = snap.data();
@@ -48,14 +49,7 @@ function incrementPieceCountOnArtist(piece) {
 function addAlgoliaObject(objectID: string, piece) {
     const client = algolia.initIndex(Collections.pieces);
 
-    return client.addObject({
-        objectID,
-        ...piece,
-        _geoloc: {
-            lat: piece.location.latitude,
-            lng: piece.location.longitude
-        }
-    });
+    return client.addObject(pieceToAlgoliaObject(objectID, piece));
 }
 
 async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece) {
