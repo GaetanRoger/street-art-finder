@@ -35,6 +35,11 @@ export class PieceDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (!this.piece) {
+          console.warn('A piece is needed.');
+          return;
+        }
+
         const location = this.piece.location;
         const randomNumber = this.randomGenerator.generate(this.piece.objectID, true);
         const circleLocations = {
@@ -50,6 +55,12 @@ export class PieceDialogComponent implements OnInit {
         this.showMarker$ = this._shouldShowMarker();
         this.circleRadius$ = this._getCircleRadius();
         this.circleLayer$ = this._getCircleLayer(circleLocations);
+
+
+        this.showMarker$.subscribe(v => console.log('showMarker$', v));
+        this.circleRadius$.subscribe(v => console.log('showMarker$', v));
+        this.showMarker$.subscribe(v => console.log('showMarker$', v));
+
     }
 
     private _shouldShowMarker() {

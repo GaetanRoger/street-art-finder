@@ -1,15 +1,25 @@
-import { TestBed, inject } from '@angular/core/testing';
-
-import { AggregatesService } from './aggregates.service';
+import {AggregatesService} from './aggregates.service';
+import {of} from 'rxjs';
+import {AngularFirestore} from 'angularfire2/firestore';
 
 describe('AggregatesService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [AggregatesService]
-    });
-  });
+    const fakeFirestore = {
+        doc: (name: string) => ({
+            valueChanges: () => of({usersCount: 1, piecesCount: 2, artistsCount: 3})
+        })
+    };
 
-  it('should be created', inject([AggregatesService], (service: AggregatesService) => {
-    expect(service).toBeTruthy();
-  }));
+    let aggregateService: AggregatesService;
+
+    beforeEach(() => {
+        aggregateService = new AggregatesService(fakeFirestore as AngularFirestore);
+    });
+
+    it('should get aggregates from firestore', (done: DoneFn) => {
+        aggregateService.getAll()
+            .subscribe(v => {
+                expect(v).toEqual({usersCount: 1, piecesCount: 2, artistsCount: 3});
+                done();
+            });
+    });
 });

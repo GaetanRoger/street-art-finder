@@ -5,6 +5,7 @@ import {PieceDialogComponent} from '../../../../core/components/piece-dialog/pie
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {Piece} from '../../../../core/types/piece';
 import {PiecePicturesDialogComponent} from './piece-pictures-dialog/piece-pictures-dialog.component';
+import {filter} from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard-piece-progression',
@@ -23,6 +24,7 @@ export class DashboardPieceProgressionComponent {
     showMapDialog() {
         this.pieceService
             .find(this.progression.piece.objectID)
+            .pipe(filter(p => !!p.name))
             .subscribe(piece => this._openPieceDialog(piece));
     }
 

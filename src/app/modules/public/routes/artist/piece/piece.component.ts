@@ -18,6 +18,9 @@ export class PieceComponent implements OnInit {
     }
 
     openPieceDialog(piece: Piece): void {
+      if (!piece) {
+        return;
+      }
         this.dialog.open(PieceDialogComponent, {
             autoFocus: false,
             data: piece,

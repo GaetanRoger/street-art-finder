@@ -1,15 +1,17 @@
-import { TestBed, inject } from '@angular/core/testing';
-
-import { IdGeneratorService } from './id-generator.service';
+import {IdGeneratorService} from './id-generator.service';
+import {AngularFirestore} from 'angularfire2/firestore';
 
 describe('IdGeneratorService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [IdGeneratorService]
-    });
-  });
+    const fakeFirestore = {createId: () => 'notSoRandomId'};
+    let idGeneratorService: IdGeneratorService;
 
-  it('should be created', inject([IdGeneratorService], (service: IdGeneratorService) => {
-    expect(service).toBeTruthy();
-  }));
+
+    beforeEach(() => {
+        idGeneratorService = new IdGeneratorService(fakeFirestore as AngularFirestore);
+    });
+
+    it('should return the generated id', () => {
+        const generatedId = idGeneratorService.generateId();
+        expect(generatedId).toEqual('notSoRandomId');
+    });
 });

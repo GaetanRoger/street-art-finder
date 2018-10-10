@@ -1,6 +1,7 @@
 <h1 mat-dialog-title>{{piece.name}}</h1>
 <mat-dialog-content>
     <div style="height: 300px;"
+         *ngIf="piece"
          leaflet
          [leafletOptions]="options"
          [leafletLayers]="baseLayers">

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
 import {Piece} from '../../types/piece';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {flatMap, map, tap} from 'rxjs/operators';
+import {filter, flatMap, map, tap} from 'rxjs/operators';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
@@ -50,7 +50,11 @@ export class PieceService {
         return this.firestore
             .doc<Piece>(`${this.COLLECTION}/${pieceId}`)
             .snapshotChanges()
-            .pipe(map(snap => this.objectIDInjecter.injectIntoDoc(snap)));
+            .pipe(
+                tap(snap => console.log('exists', snap.payload.exists, snap.payload.data())),
+                // filter(snap => snap.payload.exists),
+                map(snap => this.objectIDInjecter.injectIntoDoc(snap))
+            );
     }
 
     create(piece: Piece) {
