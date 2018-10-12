@@ -14,7 +14,7 @@ import {firestoreUsersOnCreate} from './firestore/users/onCreate';
 import {firestoreUsersOnDelete} from './firestore/users/onDelete';
 import {firestoreUsersPiecesOnUpdate} from './firestore/users_pieces/onUpdate';
 import {firestoreUsersArtistsOnCreate} from './firestore/users_artists/onCreate';
-import {firestoreUsersArtistsOnDelete} from './firestore/users_artists/auDelete';
+import {firestoreUsersArtistsOnDelete} from './firestore/users_artists/onDelete';
 
 
 /* **************************************************************

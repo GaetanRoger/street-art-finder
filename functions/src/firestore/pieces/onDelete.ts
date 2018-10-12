@@ -9,7 +9,7 @@ export function firestorePiecesOnDelete(snap: DocumentSnapshot, context: EventCo
     const id = snap.id;
 
     return Promise.all([
-        decrementMaxScoreOnUsersArtists(id),
+        decrementMaxScoreOnUsersArtists(piece.artist.objectID),
         decrementPiecesCountOnArtistDocument(piece),
         deleteAlgoliaObject(id),
         deleteUsersPieces(id),
@@ -17,12 +17,12 @@ export function firestorePiecesOnDelete(snap: DocumentSnapshot, context: EventCo
     ]);
 }
 
-async function decrementMaxScoreOnUsersArtists(id: string) {
+async function decrementMaxScoreOnUsersArtists(artistId: string) {
     const batch = admin.firestore().batch();
 
     const usersArtists = await admin.firestore()
         .collection(Collections.users_artists)
-        .where('artist.objectID', '==', id)
+        .where('artist.objectID', '==', artistId)
         .get();
 
     usersArtists.forEach(ua => {

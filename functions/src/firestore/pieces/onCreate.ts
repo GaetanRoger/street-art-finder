@@ -10,7 +10,7 @@ export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventCo
     const id = snap.id;
 
     return Promise.all([
-        incrementMaxScoreOnUsersArtists(id),
+        incrementMaxScoreOnUsersArtists(piece.artist.objectID),
         incrementPieceCountOnArtist(piece),
         addAlgoliaObject(id, piece),
         addPieceToUsersPiecesForAllUsersFollowingArtist(id, piece),
@@ -18,12 +18,12 @@ export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventCo
     ]);
 }
 
-async function incrementMaxScoreOnUsersArtists(id: string) {
+async function incrementMaxScoreOnUsersArtists(artistId: string) {
     const batch = admin.firestore().batch();
 
     const usersArtists = await admin.firestore()
         .collection(Collections.users_artists)
-        .where('artist.objectID', '==', id)
+        .where('artist.objectID', '==', artistId)
         .get();
 
     usersArtists.forEach(ua => {
