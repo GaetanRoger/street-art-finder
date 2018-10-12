@@ -4,7 +4,9 @@ import {Helpers} from '../../helpers';
 import {algolia} from '../../initAlgolia';
 import {Collections} from '../collections.enum';
 import * as admin from 'firebase-admin';
-import {pieceToAlgoliaObject} from './pieceToAlgoliaObject';
+import {pieceToAlgoliaObject} from './helpers/pieceToAlgoliaObject';
+import {pieceToPiecePreview} from './helpers/pieceToPiecePreview';
+import {userArtistAndPieceToUserPiece} from './helpers/userArtistAndPieceToUserPiece';
 
 export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, context: EventContext) {
     const pieceBefore = change.before.data();
@@ -16,7 +18,8 @@ export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, 
 
     return Promise.all([
         updateAlgoliaObject(id, pieceAfter),
-        updatePieceToUsersPiecesForAllUsersFollowingArtist(id, pieceBefore, pieceAfter)
+        updatePieceToUsersPiecesForAllUsersFollowingArtist(id, pieceBefore, pieceAfter),
+        removeOrAddVanishedPiecesToUsersPieces(id, pieceBefore, pieceAfter)
     ]);
 }
 
@@ -26,19 +29,10 @@ function updateAlgoliaObject(objectID: string, piece) {
 }
 
 async function updatePieceToUsersPiecesForAllUsersFollowingArtist(id: string, pieceBefore, pieceAfter) {
-    const piecePreviewBefore = {
-        objectID: pieceBefore.objectID,
-        name: pieceBefore.name,
-        images: pieceBefore.images
-    };
+    const piecePreviewBefore = pieceToPiecePreview(pieceBefore);
+    const piecePreviewAfter = pieceToPiecePreview(pieceAfter);
 
-    const piecePreviewAfter = {
-        objectID: pieceAfter.objectID,
-        name: pieceAfter.name,
-        images: pieceAfter.images
-    };
-
-    if( Helpers.areObjectsTheSame(piecePreviewBefore, piecePreviewAfter))
+    if (Helpers.areObjectsTheSame(piecePreviewBefore, piecePreviewAfter))
         return null;
 
     const usersPieces = await admin.firestore()
@@ -51,4 +45,40 @@ async function updatePieceToUsersPiecesForAllUsersFollowingArtist(id: string, pi
             piece: piecePreviewAfter
         });
     });
+}
+
+async function removeOrAddVanishedPiecesToUsersPieces(pieceId: string, pieceBefore, pieceAfter) {
+    if (pieceBefore.tags.vanished === pieceAfter.tags.vanished) {
+        return null;
+    }
+
+    const firestore = admin.firestore();
+
+    // If piece is now vanished
+    if (pieceAfter.tags.vanished) {
+        const usersPieces = await firestore
+            .collection(Collections.users_pieces)
+            .where('piece.objectID', '==', pieceId)
+            .get();
+
+        const batch = firestore.batch();
+        usersPieces.forEach(p => batch.delete(p.ref));
+        return await batch.commit();
+    }
+    // If piece is now unvanished
+    else {
+        const usersArtists = await firestore
+            .collection(Collections.users_artists)
+            .where('artist.objectID', '==', pieceAfter.artist.objectID)
+            .get();
+
+        const batch = firestore.batch();
+        usersArtists.forEach(ua => {
+            const uaData = ua.data();
+            const newDoc = firestore.collection(Collections.users_pieces).doc();
+            batch.create(newDoc, userArtistAndPieceToUserPiece(uaData, pieceAfter, false, pieceId));
+        });
+
+        return await batch.commit();
+    }
 }

@@ -9,7 +9,7 @@ export function firestorePiecesOnDelete(snap: DocumentSnapshot, context: EventCo
     const id = snap.id;
 
     return Promise.all([
-        decrementMaxScoreOnUsersArtists(piece.artist.objectID),
+        decrementMaxScoreOnUsersArtists(piece.artist.objectID, piece.tags.vanished),
         decrementPiecesCountOnArtistDocument(piece),
         deleteAlgoliaObject(id),
         deleteUsersPieces(id),
@@ -17,7 +17,12 @@ export function firestorePiecesOnDelete(snap: DocumentSnapshot, context: EventCo
     ]);
 }
 
-async function decrementMaxScoreOnUsersArtists(artistId: string) {
+async function decrementMaxScoreOnUsersArtists(artistId: string, vanished: boolean) {
+    if (vanished) {
+        // Not need to decrement as vanished pieces do not count
+        return null;
+    }
+
     const batch = admin.firestore().batch();
 
     const usersArtists = await admin.firestore()

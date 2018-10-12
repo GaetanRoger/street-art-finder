@@ -3,14 +3,15 @@ import {EventContext} from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
 import {algolia} from '../../initAlgolia';
-import {pieceToAlgoliaObject} from './pieceToAlgoliaObject';
+import {pieceToAlgoliaObject} from './helpers/pieceToAlgoliaObject';
+import {userArtistAndPieceToUserPiece} from './helpers/userArtistAndPieceToUserPiece';
 
 export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const piece = snap.data();
     const id = snap.id;
 
     return Promise.all([
-        incrementMaxScoreOnUsersArtists(piece.artist.objectID),
+        incrementMaxScoreOnUsersArtists(piece.artist.objectID, piece.tags.vanished),
         incrementPieceCountOnArtist(piece),
         addAlgoliaObject(id, piece),
         addPieceToUsersPiecesForAllUsersFollowingArtist(id, piece),
@@ -18,7 +19,12 @@ export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventCo
     ]);
 }
 
-async function incrementMaxScoreOnUsersArtists(artistId: string) {
+async function incrementMaxScoreOnUsersArtists(artistId: string, vanished: boolean) {
+    if (vanished) {
+        // No increment as a vanished piece is not part of the progression
+        return null;
+    }
+
     const batch = admin.firestore().batch();
 
     const usersArtists = await admin.firestore()
@@ -64,16 +70,7 @@ async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece
         const userArtistData = userArtist.data();
 
         return firestore.collection(Collections.users_pieces)
-            .add({
-                user: userArtistData.user,
-                artist: userArtistData.artist,
-                piece: {
-                    objectID: id,
-                    name: piece.name,
-                    images: piece.images
-                },
-                found: false
-            });
+            .add(userArtistAndPieceToUserPiece(userArtistData, piece, false, id));
     });
 }
 
