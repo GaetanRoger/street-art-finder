@@ -30,7 +30,7 @@ import {User} from '../../../../core/types/user';
 export class AllComponent implements OnInit {
     @Input() selected$: BehaviorSubject<boolean>;
 
-    private readonly baseLayer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
+    readonly baseLayer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
     private readonly zoom = 10;
     private readonly defaultRadius = 50;
     private user$: Observable<User>;
@@ -63,10 +63,7 @@ export class AllComponent implements OnInit {
         this.fitBounds$ = this.createFitBounds();
         this.layers = [this.baseLayer];
         this.options = {
-            zoom: this.zoom,
-            layers: [
-                this.baseLayer
-            ]
+            zoom: this.zoom
         };
 
         this.selected$.subscribe(v => {

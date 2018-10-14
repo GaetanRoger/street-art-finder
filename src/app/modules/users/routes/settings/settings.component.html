@@ -4,6 +4,13 @@
         [showSearchButton]="false"
 ></app-toolbar>
 
+<app-help-bubble *ngIf="(geolocation.geolocationEnabled() | async) === false" [closable]="false">
+    <div class="help-content">
+        <span>Please allow the app to access your GPS location for better experience.</span>
+        <button mat-flat-button color="accent" (click)="howToAllowGpsLocation($event)">HOW TO</button>
+    </div>
+</app-help-bubble>
+
 <div [formGroup]="settingsFormGroup" *ngIf="settingsFormGroup" class="form">
     <div class="error-chip">
         <mat-chip-list>
@@ -19,8 +26,10 @@
                placeholder="Radius of approximation"/>
         <span matSuffix>meters</span>
     </mat-form-field>
+
     <div class="full-width buttons">
-        <button mat-raised-button color="accent" type="button" (click)="save()" [disabled]="settingsFormGroup.invalid || saving">
+        <button mat-raised-button color="accent" type="button" (click)="save()"
+                [disabled]="settingsFormGroup.invalid || saving">
             {{saving ? 'SAVING...' : 'SAVE'}}
         </button>
     </div>

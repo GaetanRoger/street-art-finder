@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {flatMap, map} from 'rxjs/operators';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {UserPieceProgressionService} from '../../../core/services/user_piece_progression/user-piece-progression.service';
 import {UserService} from '../../../core/services/user/user.service';
 import {UserPieceProgression} from '../../../core/types/user-piece-progression';
+import {PieceService} from '../../../core/services/piece/piece.service';
+import {Piece} from '../../../core/types/piece';
 
 @Component({
     selector: 'app-dashboard-artist',
@@ -14,10 +16,13 @@ import {UserPieceProgression} from '../../../core/types/user-piece-progression';
 export class DashboardArtistComponent implements OnInit {
     private artistId$: Observable<string>;
     progressions$: Observable<UserPieceProgression[]>;
+    vanishedPieces$: Observable<Piece[]>;
+    showVanishedPieces$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     constructor(private readonly route: ActivatedRoute,
                 private readonly userPieceProgression: UserPieceProgressionService,
-                private readonly userService: UserService) {
+                private readonly userService: UserService,
+                private readonly pieceService: PieceService) {
     }
 
     ngOnInit() {
@@ -27,6 +32,18 @@ export class DashboardArtistComponent implements OnInit {
 
     markAsFound(progressionid: string, value: boolean): void {
         this.userPieceProgression.toggleFound(progressionid, value);
+    }
+
+    seeVanishedPieces() {
+        if (!this.vanishedPieces$) {
+            this.vanishedPieces$ = this.artistId$.pipe(flatMap(id => this.pieceService.findAllVanished(id)));
+        }
+
+        this.showVanishedPieces$.next(true);
+    }
+
+    hideVanishedPieces() {
+        this.showVanishedPieces$.next(false);
     }
 
     private _getUserPiecesProgressions() {

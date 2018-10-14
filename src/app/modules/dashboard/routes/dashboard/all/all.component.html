@@ -4,4 +4,5 @@
      (leafletMapReady)="mapReady($event)">
     <div [leafletLayer]="markersLayer$ | async" *ngIf="showMarkers$ | async"></div>
     <div [leafletLayer]="circlesLayer$ | async" *ngIf="!(showMarkers$ | async)"></div>
+    <div [leafletLayer]="baseLayer"></div>
 </div>

@@ -4,5 +4,6 @@
     <div class="name-blur"></div>
     <div class="name">
         <p>{{ piece.name}}</p>
+        <span *ngIf="piece.distance">{{piece.distance / 1000 | number:'1.1'}} km from here</span>
     </div>
 </div>

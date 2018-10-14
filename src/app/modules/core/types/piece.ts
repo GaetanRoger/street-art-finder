@@ -6,13 +6,14 @@ import {Image} from './image';
 
 export interface PiecePreview extends ObjectIDable {
     name: string;
+    location: Geopoint;
+    distance?: number;
     images: {
         main: Image;
     };
 }
 
 export interface Piece extends PiecePreview {
-    location: Geopoint;
     text: string;
     addedOn: number;
     artist: ArtistPreview;

@@ -8,3 +8,14 @@
                                  [progression]="progression"
                                  (found)="markAsFound(progression.objectID, $event)"
 ></app-dashboard-piece-progression>
+
+<div class="footer">
+    <button mat-button *ngIf="!(showVanishedPieces$ | async)" (click)="seeVanishedPieces()">See vanished pieces</button>
+    <button mat-button *ngIf="showVanishedPieces$ | async" (click)="hideVanishedPieces()">Hide vanished pieces</button>
+</div>
+
+<div *ngIf="showVanishedPieces$ | async">
+    <div *ngFor="let vanishedPiece of vanishedPieces$ | async">
+        {{vanishedPiece.name}}
+    </div>
+</div>

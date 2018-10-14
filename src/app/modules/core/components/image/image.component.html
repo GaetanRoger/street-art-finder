@@ -1,6 +1,7 @@
 <img [src]="src"
      [alt]="alt"
      (load)="showImage = true"
+     (error)="error.emit($event)"
      [ngStyle]="{
         'display': showImage ? 'inherit' : 'none',
         'border-radius': round ? '50%' : '0',

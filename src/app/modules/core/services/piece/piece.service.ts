@@ -2,10 +2,11 @@ import {Injectable} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
 import {Piece} from '../../types/piece';
 import {AngularFirestore} from 'angularfire2/firestore';
-import {filter, flatMap, map, tap} from 'rxjs/operators';
+import {flatMap, map, take, tap} from 'rxjs/operators';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
+import {UserGeolocationService} from '../geolocation/user-geolocation.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,20 +16,44 @@ export class PieceService {
 
     constructor(private readonly firestore: AngularFirestore,
                 private readonly objectIDInjecter: ObjectIDInjectorService<Piece>,
-                private readonly algolia: AlgoliaService) {
+                private readonly algolia: AlgoliaService,
+                private readonly geolocation: UserGeolocationService) {
     }
 
     findAll(artistId: string, query: string = '', page: number = 0, hitsPerPage: number = 10): Observable<Piece[]> {
         const filters = artistId ? `artist.objectID:${artistId}` : '';
 
-        const parameters: QueryParameters = {
+        const baseParameters: QueryParameters = {
             query,
             filters,
             page,
-            hitsPerPage
+            hitsPerPage,
         };
 
-        return this.algolia.query<Piece>(this.COLLECTION, parameters);
+        return this.geolocation.currentGeolocation()
+            .pipe(
+                take(1),
+                map(loc => {
+                    console.log('loc', loc);
+                    return loc
+                    ? {...baseParameters, aroundLatLng: `${loc.latitude}, ${loc.longitude}`}
+                    : baseParameters;
+                }),
+                flatMap(param => this.algolia.query<Piece>(this.COLLECTION, param))
+            );
+    }
+
+    findAllVanished(artistId: string): Observable<Piece[]> {
+        return this.firestore
+            .collection<Piece>(this.COLLECTION, ref => {
+                return ref
+                    .where('artist.objectID', '==', artistId)
+                    .where('tags.vanished', '==', true);
+            })
+            .snapshotChanges()
+            .pipe(
+                map(snap => this.objectIDInjecter.injectIntoCollection(snap))
+            );
     }
 
     findAllAndSubscribe(query: string): Observable<Piece[]> {

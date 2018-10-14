@@ -14,7 +14,7 @@
 <div class="footer">
     <app-small-loading-spinner *ngIf="working$ | async"></app-small-loading-spinner>
     <div class="buttons">
-        <button mat-raised-button (click)="markAsVanished()">VANISH/UNVANISH</button>
+        <button mat-raised-button (click)="askForVanish()">VANISH/UNVANISH</button>
         <button mat-raised-button (click)="askForDelete()" color="warn">DELETE</button>
     </div>
 </div>

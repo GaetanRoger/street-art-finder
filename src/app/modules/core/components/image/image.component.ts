@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
     selector: 'app-image',
@@ -13,6 +13,8 @@ export class ImageComponent {
     @Input() imgHeight: number;
     @Input() cover = true;
     @Input() fit: boolean;
+
+    @Output() error: EventEmitter<Event> = new EventEmitter();
 
     showImage = false;
 }

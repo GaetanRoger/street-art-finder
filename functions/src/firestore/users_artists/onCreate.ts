@@ -34,7 +34,8 @@ async function createUsersPiecesFromArtist(artistId: string, userId: string) {
             piece: {
                 objectID: pieceId,
                 name: pieceData.name,
-                images: pieceData.images
+                images: pieceData.images,
+                location: pieceData.location
             },
             artist: pieceData.artist,
             user: userId,

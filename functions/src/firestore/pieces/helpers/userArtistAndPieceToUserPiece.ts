@@ -4,6 +4,7 @@ export function userArtistAndPieceToUserPiece(userArtist, piece, found: boolean 
         artist: userArtist.artist,
         piece: {
             objectID: pieceId || piece.objectID,
+            location: piece.location,
             name: piece.name,
             images: piece.images
         },

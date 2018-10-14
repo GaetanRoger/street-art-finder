@@ -1,0 +1,14 @@
+<mat-dialog-content>
+    <app-image
+            *ngIf="showImage"
+            [src]="image"
+            [fit]="true"
+            (error)="imageDoesNotExist($event)"
+    ></app-image>
+
+    <span *ngIf="!showImage">
+        We did not recognize your browser. Maybe you will find help
+        <a href="https://google.com/search?q={{browser.name}} {{browser.type}} enable gps location"
+           target="_blank">here</a>.
+    </span>
+</mat-dialog-content>

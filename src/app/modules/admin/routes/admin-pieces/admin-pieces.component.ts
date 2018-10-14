@@ -48,7 +48,14 @@ export class AdminPiecesComponent implements OnInit {
             .subscribe(_ => this._deleteSelectedPieces());
     }
 
-    async markAsVanished() {
+    async askForVanish() {
+        this.dialog.open(ConfirmationDialogComponent, {data: {title: 'Are you sure?', text: 'Everyone\'s progression will be lost!'}})
+            .afterClosed()
+            .pipe(filter(v => v === true))
+            .subscribe(_ => this._markAsVanished());
+    }
+
+    private async _markAsVanished() {
         this.working$.next(true);
 
         const selectedPieces = this.selectedPieces;

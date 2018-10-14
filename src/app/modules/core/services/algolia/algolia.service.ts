@@ -21,13 +21,24 @@ export class AlgoliaService {
         return this.algolia;
     }
 
-    query<T extends ObjectIDable>(index: string, query: string | QueryParameters): Observable<T[]> {
+    query<T extends ObjectIDable>(index: string, query: QueryParameters): Observable<T[]> {
         return fromPromise(this.algolia
             .initIndex(index)
-            .search(query))
+            .search({...query, getRankingInfo: true}))
             .pipe(
-                map(results => results.hits as T[])
+                map(results => {
+                    const hits = results.hits as (T & { _rankingInfo: any })[];
+                    return hits.map(hit => {
+                        return hit._rankingInfo.matchedGeoLocation
+                            ? this._addDistanceToHit(hit)
+                            : hit;
+                    });
+                })
             );
+    }
+
+    private _addDistanceToHit(hit) {
+        return Object.assign(hit, {distance: hit._rankingInfo.matchedGeoLocation.distance});
     }
 
     paginate<T extends ObjectIDable>(index: string, query: string, page: number = 0, hitsPerPage: number = 10): Observable<T[]> {

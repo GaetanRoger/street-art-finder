@@ -14,6 +14,7 @@ import {CoordinatesCalculusService} from '../../services/coordinates-calculus/co
     styleUrls: ['./piece-dialog.component.css']
 })
 export class PieceDialogComponent implements OnInit {
+    private readonly baseMapsUrl = 'https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=';
     private readonly baseLayer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
     private readonly zoom = 16;
     private readonly defaultRadius = 50;
@@ -36,8 +37,8 @@ export class PieceDialogComponent implements OnInit {
 
     ngOnInit() {
         if (!this.piece) {
-          console.warn('A piece is needed.');
-          return;
+            console.warn('A piece is needed.');
+            return;
         }
 
         const location = this.piece.location;
@@ -61,6 +62,10 @@ export class PieceDialogComponent implements OnInit {
         this.circleRadius$.subscribe(v => console.log('showMarker$', v));
         this.showMarker$.subscribe(v => console.log('showMarker$', v));
 
+    }
+
+    get mapsUrl(): string {
+        return `${this.baseMapsUrl}${this.piece.location.latitude},${this.piece.location.longitude}`;
     }
 
     private _shouldShowMarker() {

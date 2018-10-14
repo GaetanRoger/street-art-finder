@@ -1,25 +1,38 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserPieceProgression} from '../../../../core/types/user-piece-progression';
 import {MatDialog} from '@angular/material';
 import {PieceDialogComponent} from '../../../../core/components/piece-dialog/piece-dialog.component';
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {Piece} from '../../../../core/types/piece';
 import {PiecePicturesDialogComponent} from './piece-pictures-dialog/piece-pictures-dialog.component';
-import {filter} from 'rxjs/operators';
+import {filter, map, tap} from 'rxjs/operators';
+import {UserGeolocationService} from '../../../../core/services/geolocation/user-geolocation.service';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-dashboard-piece-progression',
     templateUrl: './dashboard-piece-progression.component.html',
     styleUrls: ['./dashboard-piece-progression.component.css']
 })
-export class DashboardPieceProgressionComponent {
+export class DashboardPieceProgressionComponent implements OnInit {
     @Input() progression: UserPieceProgression;
     @Output() found: EventEmitter<boolean> = new EventEmitter();
+
     opened: boolean;
+    distance$: Observable<string | number>;
 
     constructor(private readonly dialog: MatDialog,
-                private readonly pieceService: PieceService) {
+                private readonly pieceService: PieceService,
+                private readonly geolocation: UserGeolocationService) {
     }
+
+    ngOnInit(): void {
+        this.distance$ = this.geolocation.currentGeolocation()
+            .pipe(
+                map(point => point ? this.geolocation.distance(point, this.progression.piece.location, true) : null)
+            );
+    }
+
 
     showMapDialog() {
         this.pieceService

@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class HelpBubbleComponent implements OnInit {
     @Input() text: string;
     @Input() uid: string;
+    @Input() closable = true;
 
     private readonly PREFIX = 'help.bubble.';
 
@@ -24,6 +25,10 @@ export class HelpBubbleComponent implements OnInit {
     }
 
     onClick() {
+        if (!this.closable) {
+            return;
+        }
+
         if (!this.clickedOnce) {
             this.clickedOnce = true;
         } else {
