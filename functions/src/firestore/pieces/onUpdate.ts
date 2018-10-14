@@ -4,9 +4,6 @@ import {Helpers} from '../../helpers';
 import {algolia} from '../../initAlgolia';
 import {Collections} from '../collections.enum';
 import * as admin from 'firebase-admin';
-import {pieceToAlgoliaObject} from './helpers/pieceToAlgoliaObject';
-import {pieceToPiecePreview} from './helpers/pieceToPiecePreview';
-import {userArtistAndPieceToUserPiece} from './helpers/userArtistAndPieceToUserPiece';
 
 export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, context: EventContext) {
     const pieceBefore = change.before.data();
@@ -25,12 +22,12 @@ export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, 
 
 function updateAlgoliaObject(objectID: string, piece) {
     const client = algolia.initIndex(Collections.pieces);
-    return client.addObject(pieceToAlgoliaObject(objectID, piece));
+    return client.addObject(Helpers.pieceToAlgoliaObject(piece, objectID));
 }
 
 async function updatePieceToUsersPiecesForAllUsersFollowingArtist(id: string, pieceBefore, pieceAfter) {
-    const piecePreviewBefore = pieceToPiecePreview(pieceBefore);
-    const piecePreviewAfter = pieceToPiecePreview(pieceAfter);
+    const piecePreviewBefore = Helpers.pieceToPiecePreview(pieceBefore, id);
+    const piecePreviewAfter = Helpers.pieceToPiecePreview(pieceAfter, id);
 
     if (Helpers.areObjectsTheSame(piecePreviewBefore, piecePreviewAfter))
         return null;
@@ -76,7 +73,7 @@ async function removeOrAddVanishedPiecesToUsersPieces(pieceId: string, pieceBefo
         usersArtists.forEach(ua => {
             const uaData = ua.data();
             const newDoc = firestore.collection(Collections.users_pieces).doc();
-            batch.create(newDoc, userArtistAndPieceToUserPiece(uaData, pieceAfter, false, pieceId));
+            batch.create(newDoc, Helpers.pieceToUserPiece(pieceAfter, uaData.user, false, pieceId));
         });
 
         return await batch.commit();

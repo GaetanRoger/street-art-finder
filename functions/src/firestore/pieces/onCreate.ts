@@ -3,8 +3,7 @@ import {EventContext} from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
 import {algolia} from '../../initAlgolia';
-import {pieceToAlgoliaObject} from './helpers/pieceToAlgoliaObject';
-import {userArtistAndPieceToUserPiece} from './helpers/userArtistAndPieceToUserPiece';
+import {Helpers} from '../../helpers';
 
 export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const piece = snap.data();
@@ -55,7 +54,7 @@ function incrementPieceCountOnArtist(piece) {
 function addAlgoliaObject(objectID: string, piece) {
     const client = algolia.initIndex(Collections.pieces);
 
-    return client.addObject(pieceToAlgoliaObject(objectID, piece));
+    return client.addObject(Helpers.pieceToAlgoliaObject(piece, objectID));
 }
 
 async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece) {
@@ -70,7 +69,7 @@ async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece
         const userArtistData = userArtist.data();
 
         return firestore.collection(Collections.users_pieces)
-            .add(userArtistAndPieceToUserPiece(userArtistData, piece, false, id));
+            .add(Helpers.pieceToUserPiece(piece, userArtistData.user, false, id));
     });
 }
 

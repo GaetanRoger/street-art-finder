@@ -38,14 +38,8 @@ function updateAlgoliaObject(objectID: string, artistAfter) {
  * Update `images` field on every `users_artists` entry (which match current artist).
  */
 async function updateArtistPreviewOnUsersArtistsEntries(id: string, artistBefore, artistAfter) {
-    const artistBeforePreview = {
-        name: artistBefore.name,
-        images: artistBefore.images
-    };
-    const artistAfterPreview = {
-        name: artistAfter.name,
-        images: artistAfter.images
-    };
+    const artistBeforePreview = Helpers.artistToArtistPreview(artistBefore, id);
+    const artistAfterPreview = Helpers.artistToArtistPreview(artistAfter, id);
 
     if (Helpers.areObjectsTheSame(artistBeforePreview, artistAfterPreview))
         return null;
@@ -59,8 +53,7 @@ async function updateArtistPreviewOnUsersArtistsEntries(id: string, artistBefore
 
     usersArtists.forEach(ua => {
         batch.update(ua.ref, {
-            ['artist.images']: artistAfter.images,
-            ['artist.name']: artistAfter.name
+            artist: artistAfterPreview
         });
     });
 

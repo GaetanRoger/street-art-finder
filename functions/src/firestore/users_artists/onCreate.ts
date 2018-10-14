@@ -2,6 +2,7 @@ import {DocumentSnapshot} from 'firebase-functions/lib/providers/firestore';
 import {EventContext} from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
+import {Helpers} from '../../helpers';
 
 export function firestoreUsersArtistsOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const userArtist = snap.data();
@@ -30,18 +31,7 @@ async function createUsersPiecesFromArtist(artistId: string, userId: string) {
         }
 
         const pieceId = piece.id;
-        const userPiece = {
-            piece: {
-                objectID: pieceId,
-                name: pieceData.name,
-                images: pieceData.images,
-                location: pieceData.location
-            },
-            artist: pieceData.artist,
-            user: userId,
-            found: false
-        };
-        return firestore.collection(Collections.users_pieces)
-            .add(userPiece);
+        const userPiece = Helpers.pieceToUserPiece(pieceData, userId, false, pieceId);
+        return firestore.collection(Collections.users_pieces).add(userPiece);
     });
 }
