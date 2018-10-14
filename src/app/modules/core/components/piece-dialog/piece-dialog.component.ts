@@ -56,12 +56,6 @@ export class PieceDialogComponent implements OnInit {
         this.showMarker$ = this._shouldShowMarker();
         this.circleRadius$ = this._getCircleRadius();
         this.circleLayer$ = this._getCircleLayer(circleLocations);
-
-
-        this.showMarker$.subscribe(v => console.log('showMarker$', v));
-        this.circleRadius$.subscribe(v => console.log('showMarker$', v));
-        this.showMarker$.subscribe(v => console.log('showMarker$', v));
-
     }
 
     get mapsUrl(): string {

@@ -53,7 +53,6 @@ export class AdminAddPieceFinishComponent implements OnInit {
     async createPiece(): Promise<void> {
         if (this.pieceFormGroup.invalid) {
             this.state$.next(PieceCreationState.Error);
-            console.log('form group invalid');
             return;
         }
 

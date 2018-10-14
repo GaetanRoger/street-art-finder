@@ -32,9 +32,6 @@ export class LoginComponent implements OnInit {
         this.login = true;
         this.loginFailedMessage = '';
         this.userService.login(value)
-            .then(_ => {
-                console.log('user', _);
-            })
             .catch(e => this.manageRegisterError(e));
     }
 

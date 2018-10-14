@@ -20,12 +20,9 @@ async function createUsersPiecesFromArtist(artistId: string, userId: string) {
         .where('artist.objectID', '==', artistId)
         .get();
 
-    console.log('found', pieces.size, 'pieces');
-
     return await pieces.forEach(piece => {
         const pieceData = piece.data();
 
-        console.log('piece', pieceData);
         if (pieceData.tags.vanished) {
             return null;
         }

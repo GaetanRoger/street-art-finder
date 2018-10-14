@@ -26,7 +26,7 @@ export class AdminUsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.pieces$ = this.userService.findAll().pipe(tap(u => console.log(u)));
+        this.pieces$ = this.userService.findAll();
     }
 
     resetButtonClick() {

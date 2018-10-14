@@ -61,8 +61,6 @@ export class SettingsComponent implements OnInit {
         event.preventDefault();
         event.cancelBubble = true;
 
-        console.log('bro', this.browserDetector.detect());
-
         this.dialog.open(ActivateGpsLocationDialogComponent,
             {
                 data: this.browserDetector.detect(),

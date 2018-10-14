@@ -34,7 +34,6 @@ export class PieceService {
             .pipe(
                 take(1),
                 map(loc => {
-                    console.log('loc', loc);
                     return loc
                     ? {...baseParameters, aroundLatLng: `${loc.latitude}, ${loc.longitude}`}
                     : baseParameters;
@@ -67,7 +66,6 @@ export class PieceService {
         return combineLatest(pieces.map(p => this.find(p.objectID)))
             .pipe(
                 map(p => p.filter((pp: Piece) => pp && pp.name)), // We check the piece exists
-                tap(p => console.log('pieces', p))
             ) as Observable<Piece[]>;
     }
 
@@ -76,8 +74,6 @@ export class PieceService {
             .doc<Piece>(`${this.COLLECTION}/${pieceId}`)
             .snapshotChanges()
             .pipe(
-                tap(snap => console.log('exists', snap.payload.exists, snap.payload.data())),
-                // filter(snap => snap.payload.exists),
                 map(snap => this.objectIDInjecter.injectIntoDoc(snap))
             );
     }
