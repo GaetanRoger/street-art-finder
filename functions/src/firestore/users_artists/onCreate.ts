@@ -3,13 +3,15 @@ import {EventContext} from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
 import {Helpers} from '../../helpers';
+import {algolia} from '../../initAlgolia';
 
 export function firestoreUsersArtistsOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const userArtist = snap.data();
     const id = snap.id;
 
     return Promise.all([
-        createUsersPiecesFromArtist(userArtist.artist.objectID, userArtist.user)
+        createUsersPiecesFromArtist(userArtist.artist.objectID, userArtist.user),
+        addAlgoliaObject(userArtist, id)
     ]);
 }
 
@@ -31,4 +33,11 @@ async function createUsersPiecesFromArtist(artistId: string, userId: string) {
         const userPiece = Helpers.pieceToUserPiece(pieceData, userId, false, pieceId);
         return firestore.collection(Collections.users_pieces).add(userPiece);
     });
+}
+
+function addAlgoliaObject(userArtist, id: string) {
+    const client = algolia.initIndex(Collections.users_artists);
+
+    return client.addObject(Helpers.userArtistToAlgoliaObject(userArtist, id))
+        .catch(err => console.error("Error while adding user artist to algolia", err));
 }

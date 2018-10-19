@@ -5,11 +5,15 @@
     background-position: center;
     border-radius: 5px;
 }
-.artist-card:hover {
+.artist-card:not(.removed):hover {
     opacity: 0.8;
 }
-.artist-card:active {
+.artist-card:not(.removed):active {
     opacity: 0.6;
+}
+.artist-card.removed {
+    filter: grayscale(0.9);
+    opacity: 0.5;
 }
 
 mat-progress-bar {

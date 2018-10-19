@@ -4,13 +4,13 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {Route, RouterModule} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AngularFireModule} from 'angularfire2';
 import {environment} from '../environments/environment';
 import {AuthGuard} from './modules/core/guards/auth/auth.guard';
 import {CoreModule} from './modules/core/core.module';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {Icon, icon, Marker} from 'leaflet';
 import {OnlyAdminGuard} from './modules/core/guards/only-admin/only-admin.guard';
+import {AngularFireModule} from '@angular/fire';
 
 const routes: Route[] = [
     {

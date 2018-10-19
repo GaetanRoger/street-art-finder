@@ -14,6 +14,8 @@ export class ArtistProgressionComponent implements OnInit {
     @Input() progression: UserArtistProgression;
     @Output() removeProgression: EventEmitter<void> = new EventEmitter();
 
+    removed = false;
+
     backgroundImage: SafeValue;
     @ViewChild(MatMenuTrigger) contextMenu: MatMenuTrigger;
 
@@ -52,6 +54,9 @@ export class ArtistProgressionComponent implements OnInit {
             }
         ).afterClosed()
             .pipe(filter(result => result === true))
-            .subscribe(_ => this.removeProgression.emit());
+            .subscribe(_ => {
+                this.removeProgression.emit();
+                this.removed = true;
+            });
     }
 }

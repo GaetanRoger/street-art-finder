@@ -6,11 +6,11 @@ import {ArtistPreviewComponent} from './components/artist-preview/artist-preview
 import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import {LoadingSpinnerComponent} from './components/loading-spinner/loading-spinner.component';
-import {AngularFireAuthModule} from 'angularfire2/auth';
-import {AngularFirestoreModule} from 'angularfire2/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {TimestampPipe} from './pipes/timestamp/timestamp.pipe';
 import {ConfirmationDialogComponent} from './components/confirmation-dialog/confirmation-dialog.component';
-import {AngularFireStorageModule} from 'angularfire2/storage';
+import {AngularFireStorageModule} from '@angular/fire/storage';
 import {SmallLoadingSpinnerComponent} from './components/small-loading-spinner/small-loading-spinner.component';
 import {ImageComponent} from './components/image/image.component';
 import {PieceDialogComponent} from './components/piece-dialog/piece-dialog.component';

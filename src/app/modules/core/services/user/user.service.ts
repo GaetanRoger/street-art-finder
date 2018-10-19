@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {UserCredentials} from '../../types/user-credentials';
-import {AngularFireAuth} from 'angularfire2/auth';
+import {AngularFireAuth} from '@angular/fire/auth';
 import {Observable, of} from 'rxjs';
 import {User} from '../../types/user';
 import {map, switchMap} from 'rxjs/operators';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {UserSettingsService} from '../user-settings/user-settings.service';
 import {UserRolesService} from '../user-roles/user-roles.service';

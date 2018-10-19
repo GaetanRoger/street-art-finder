@@ -2,12 +2,14 @@
         title="Dashboard"
         [showSearchButton]="true"
         [showBackButton]="true"
+        (searchChange)="filterArtist($event)"
         [menuItems]="menuItems"
 ></app-toolbar>
 <mat-tab-group mat-stretch-tabs [dynamicHeight]="true" (selectedTabChange)="tabChanged($event)"
                [selectedIndex]="selectedIndex">
     <mat-tab label="PROGRESSION">
         <app-artists-progressions [progressions]="progressions$"
+                                  [isFiltered]="!!(filter$ | async)"
                                   (goToDiscover)="selectedIndex = 2"></app-artists-progressions>
     </mat-tab>
     <mat-tab label="ALL" *ngIf="(progressions$ | async) && (progressions$ | async)?.length > 0">

@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {Artist} from '../../../../core/types/artist';
 import {Piece} from '../../../../core/types/piece';
-import {AngularFireStorage} from 'angularfire2/storage';
+import {AngularFireStorage} from '@angular/fire/storage';
 import {IdGeneratorService} from '../../../../core/services/id-generator/id-generator.service';
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';

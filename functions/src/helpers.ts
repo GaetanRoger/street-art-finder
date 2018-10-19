@@ -1,4 +1,3 @@
-
 export class Helpers {
     static areObjectsTheSame(object1: object, object2: object): boolean {
         return JSON.stringify(object1) === JSON.stringify(object2);
@@ -54,5 +53,12 @@ export class Helpers {
     private static _booleanMapToArray(map: object): string[] {
         return Object.keys(map)
             .filter(t => map[t] === true);
+    }
+
+    static userArtistToAlgoliaObject(userArtist, id: string) {
+        return {
+            ...userArtist,
+            objectID: id
+        };
     }
 }

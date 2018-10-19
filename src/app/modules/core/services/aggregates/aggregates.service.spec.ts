@@ -1,6 +1,6 @@
 import {AggregatesService} from './aggregates.service';
 import {of} from 'rxjs';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 describe('AggregatesService', () => {
     const fakeFirestore = {

@@ -4,7 +4,7 @@ import {combineLatest, Observable} from 'rxjs';
 import {PieceService} from '../piece/piece.service';
 import {map} from 'rxjs/operators';
 import {Piece} from '../../types/piece';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';

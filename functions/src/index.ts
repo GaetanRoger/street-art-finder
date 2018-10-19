@@ -15,6 +15,7 @@ import {firestoreUsersOnDelete} from './firestore/users/onDelete';
 import {firestoreUsersPiecesOnUpdate} from './firestore/users_pieces/onUpdate';
 import {firestoreUsersArtistsOnCreate} from './firestore/users_artists/onCreate';
 import {firestoreUsersArtistsOnDelete} from './firestore/users_artists/onDelete';
+import {firestoreUsersArtistsOnUpdate} from './firestore/users_artists/onUpdate';
 
 
 /* **************************************************************
@@ -112,9 +113,9 @@ const usersPiecesDocument = firestore.document(`${Collections.users_pieces}/{use
 export const firestoreUsersPiecesOnUpdateF = usersPiecesDocument.onUpdate(firestoreUsersPiecesOnUpdate);
 
 
-
 // Users artists
 const usersArtistsDocument = firestore.document(`${Collections.users_artists}/{userArtistId}`);
 
 export const firestoreUsersArtistsOnCreateF = usersArtistsDocument.onCreate(firestoreUsersArtistsOnCreate);
+export const firestoreUsersArtistsOnUpdateF = usersArtistsDocument.onUpdate(firestoreUsersArtistsOnUpdate);
 export const firestoreUsersArtistsOnDeleteF = usersArtistsDocument.onDelete(firestoreUsersArtistsOnDelete);

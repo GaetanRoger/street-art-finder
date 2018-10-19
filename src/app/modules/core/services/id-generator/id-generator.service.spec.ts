@@ -1,5 +1,5 @@
 import {IdGeneratorService} from './id-generator.service';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 
 describe('IdGeneratorService', () => {
     const fakeFirestore = {createId: () => 'notSoRandomId'};

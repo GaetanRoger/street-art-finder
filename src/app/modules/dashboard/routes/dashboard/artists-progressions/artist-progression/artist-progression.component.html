@@ -1,4 +1,5 @@
 <div class="artist-card mat-elevation-z1" [style]="backgroundImage"
+     [ngClass]="{removed: removed}"
      [routerLink]="['artist', progression.artist.objectID]"
      (contextmenu)="openMenu($event)"
 >

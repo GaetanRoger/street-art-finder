@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
 import {Piece} from '../../types/piece';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {flatMap, map, take, tap} from 'rxjs/operators';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {AlgoliaService} from '../algolia/algolia.service';

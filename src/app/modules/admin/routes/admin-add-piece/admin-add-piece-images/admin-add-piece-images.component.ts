@@ -30,7 +30,7 @@ export class AdminAddPieceImagesComponent implements OnInit {
 
     mainImageUploaded(result: Blob) {
         const fileReader = new FileReader();
-        fileReader.onloadend = e => this.mainImageUrl$.next(this.sanitizer.bypassSecurityTrustUrl(e.target.result));
+        fileReader.onload = (e: any) => this.mainImageUrl$.next(this.sanitizer.bypassSecurityTrustUrl(e.target.result));
         fileReader.readAsDataURL(result);
     }
 

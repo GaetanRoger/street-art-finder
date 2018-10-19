@@ -10,7 +10,9 @@ import {UserArtistProgressionService} from '../../../../core/services/user-artis
 })
 export class ArtistsProgressionsComponent implements OnInit {
     @Input() progressions: Observable<UserArtistProgression[]>;
+    @Input() isFiltered = false;
     @Output() goToDiscover: EventEmitter<void> = new EventEmitter();
+    @Output() artistWasRemoved: EventEmitter<void> = new EventEmitter();
     loading = true;
 
     constructor(private readonly artistProgression: UserArtistProgressionService) {
@@ -20,8 +22,9 @@ export class ArtistsProgressionsComponent implements OnInit {
         this.progressions.subscribe(_ => this.loading = false);
     }
 
-    removeProgression(progression: UserArtistProgression): void {
-        this.artistProgression.remove(progression.objectID);
+    async removeProgression(progression: UserArtistProgression): Promise<void> {
+        await this.artistProgression.remove(progression.objectID);
+        this.artistWasRemoved.emit();
     }
 
 }

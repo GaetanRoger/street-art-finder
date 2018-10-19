@@ -12,7 +12,7 @@
     </app-artist-progression>
 </div>
 
-<app-use-discover-tab *ngIf="(progressions | async)?.length === 0"
+<app-use-discover-tab *ngIf="(progressions | async)?.length === 0 && !isFiltered"
                       (goToDiscover)="goToDiscover.emit()"
 ></app-use-discover-tab>
 

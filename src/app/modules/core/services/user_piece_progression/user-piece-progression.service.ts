@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from 'angularfire2/firestore';
+import {AngularFirestore} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {User} from '../../types/user';
 import {Observable, of} from 'rxjs';

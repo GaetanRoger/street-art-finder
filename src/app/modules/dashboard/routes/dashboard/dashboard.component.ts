@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../core/services/user/user.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {UserArtistProgressionService} from '../../../core/services/user-artist-progression.service';
 import {UserArtistProgression} from '../../../core/types/user-artist-progression';
 import {MatTabChangeEvent} from '@angular/material';
 import {ToolbarMenuItem} from '../../../core/components/toolbar/toolbar-menu-item';
+import {distinctUntilChanged, flatMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard',
@@ -13,6 +14,7 @@ import {ToolbarMenuItem} from '../../../core/components/toolbar/toolbar-menu-ite
 })
 export class DashboardComponent implements OnInit {
     progressions$: Observable<UserArtistProgression[]>;
+    filter$: BehaviorSubject<string> = new BehaviorSubject('');
     menuItems: ToolbarMenuItem[] = [
         {
             text: 'Settings',
@@ -36,7 +38,14 @@ export class DashboardComponent implements OnInit {
 
     ngOnInit() {
         const user$ = this.userService.user();
-        this.progressions$ = this.userArtistProgression.artistsProgression(user$);
+
+        this.progressions$ = combineLatest(user$, this.filter$)
+            .pipe(
+                distinctUntilChanged(), //todo
+                tap(([user, filter]) => console.log('refreshed')),
+                flatMap(([user, filter]) => this.userArtistProgression.artistsProgression(user, filter))
+            );
+
         user$.subscribe(u => {
             if (u && u.roles.admin) {
                 this.menuItems.push({
@@ -54,4 +63,7 @@ export class DashboardComponent implements OnInit {
         this.mapTabBehaviourSubject.next(tab1selected);
     }
 
+    filterArtist(newFilter: string) {
+        this.filter$.next(newFilter || '');
+    }
 }
