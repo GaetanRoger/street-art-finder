@@ -1,5 +1,7 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
+const tinify = require("tinify");
+const env = functions.config();
 
 import {Collections} from './firestore/collections.enum';
 
@@ -16,6 +18,7 @@ import {firestoreUsersPiecesOnUpdate} from './firestore/users_pieces/onUpdate';
 import {firestoreUsersArtistsOnCreate} from './firestore/users_artists/onCreate';
 import {firestoreUsersArtistsOnDelete} from './firestore/users_artists/onDelete';
 import {firestoreUsersArtistsOnUpdate} from './firestore/users_artists/onUpdate';
+import {storageOnFinalize} from './storage/onFinalize';
 
 
 /* **************************************************************
@@ -31,6 +34,8 @@ import {firestoreUsersArtistsOnUpdate} from './firestore/users_artists/onUpdate'
 admin.initializeApp();
 const auth = functions.auth;
 const firestore = functions.firestore;
+
+tinify.key = env.tinify.key;
 
 
 /* *****************************
@@ -119,3 +124,17 @@ const usersArtistsDocument = firestore.document(`${Collections.users_artists}/{u
 export const firestoreUsersArtistsOnCreateF = usersArtistsDocument.onCreate(firestoreUsersArtistsOnCreate);
 export const firestoreUsersArtistsOnUpdateF = usersArtistsDocument.onUpdate(firestoreUsersArtistsOnUpdate);
 export const firestoreUsersArtistsOnDeleteF = usersArtistsDocument.onDelete(firestoreUsersArtistsOnDelete);
+
+
+/* ******************************************
+ *    _____ _                               *
+ *   / ____| |                              *
+ *  | (___ | |_ ___  _ __ __ _  __ _  ___   *
+ *   \___ \| __/ _ \| '__/ _` |/ _` |/ _ \  *
+ *   ____) | || (_) | | | (_| | (_| |  __/  *
+ *  |_____/ \__\___/|_|  \__,_|\__, |\___|  *
+ *                              __/ |       *
+ *                             |___/        *
+ * ******************************************/
+
+export const storageOnFinalizeF = functions.storage.object().onFinalize(storageOnFinalize);

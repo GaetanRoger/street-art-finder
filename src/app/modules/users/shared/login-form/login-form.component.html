@@ -5,11 +5,11 @@
         </mat-chip-list>
     </div>
     <fieldset [disabled]="disabled">
-        <mat-form-field color="accent">
+        <mat-form-field color="primary">
             <input matInput type="email" [placeholder]="emailPlaceholder" formControlName="email"/>
             <mat-error *ngIf="email.errors?.email">This e-mail is invalid</mat-error>
         </mat-form-field>
-        <mat-form-field color="accent">
+        <mat-form-field color="primary">
             <input matInput type="password" [placeholder]="passwordPlaceholder" formControlName="password"/>
             <mat-error *ngIf="password.errors?.minlength as minlength">Password is too short
                 ({{minlength.actualLength}}/{{minlength.requiredLength}})
@@ -24,7 +24,7 @@
             >
                 {{secondaryButtonText}}
             </button>
-            <button mat-raised-button color="accent" type="button" (click)="submit()"
+            <button mat-raised-button color="primary" type="button" (click)="submit()"
                     [disabled]="joinFormGroup.invalid || disabled">
                 GO!
             </button>

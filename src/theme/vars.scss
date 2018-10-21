@@ -1,0 +1,6 @@
+@import 'node_modules/@angular/material/theming';
+$primary: mat-palette($mat-teal);
+$accent:  mat-palette($mat-green);
+
+// The warn palette is optional (defaults to red).
+$warn:    mat-palette($mat-red);

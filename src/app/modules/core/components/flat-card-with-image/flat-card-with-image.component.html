@@ -11,13 +11,13 @@
                 <button
                         *ngIf="primaryButtonRouterLink"
                         mat-raised-button
-                        color="accent"
+                        color="primary"
                         [routerLink]="primaryButtonRouterLink">
                     {{primaryButtonText}}
                 </button>
                 <!-- ELSE IF the primary button is an external link -->
                 <a mat-raised-button
-                   color="accent"
+                   color="primary"
                    [href]="primaryButtonExternalLink"
                    *ngIf="primaryButtonExternalLink"
                 >
@@ -30,13 +30,13 @@
                 <button
                         *ngIf="secondaryButtonRouterLink"
                         mat-button
-                        color="accent"
+                        color="primary"
                         [routerLink]="secondaryButtonRouterLink">
                     {{secondaryButtonText}}
                 </button>
                 <!-- ELSE IF the secondary button is an external link -->
                 <a mat-button
-                   color="accent"
+                   color="primary"
                    [href]="secondaryButtonExternalLink"
                    *ngIf="secondaryButtonExternalLink"
                 >

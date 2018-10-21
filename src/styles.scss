@@ -1,7 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'theme/vars';
 
+/* Resetting CSS */
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+/* Applying theme color globally */
+.primary-color {
+  color: mat-color($primary);
+}
+
+
+
+/* Other */
 .mat-tab-body-wrapper{
   flex-grow: 1;
 }
