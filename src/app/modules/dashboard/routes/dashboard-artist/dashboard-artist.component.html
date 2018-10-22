@@ -2,7 +2,12 @@
         title="Dashboard"
         [showSearchButton]="false"
         [showBackButton]="true"
+        [image]="(artist$ | async)?.images.horizontal.low"
 ></app-toolbar>
+<div class="title">
+    <h1 class="primary-color">{{(artist$ | async)?.name}}</h1>
+    <p>Here is your progression</p>
+</div>
 
 <app-dashboard-piece-progression *ngFor="let progression of progressions$ | async"
                                  [progression]="progression"

@@ -19,6 +19,7 @@ import {AlgoliaService} from './services/algolia/algolia.service';
 import { HelpBubbleComponent } from './components/help-bubble/help-bubble.component';
 import {FormsModule} from '@angular/forms';
 import { SmallHorizontalLoaderComponent } from './components/small-horizontal-loader/small-horizontal-loader.component';
+import { FullScreenMessageComponent } from './components/full-screen-message/full-screen-message.component';
 
 @NgModule({
     imports: [
@@ -42,7 +43,8 @@ import { SmallHorizontalLoaderComponent } from './components/small-horizontal-lo
         ImageComponent,
         PieceDialogComponent,
         HelpBubbleComponent,
-        SmallHorizontalLoaderComponent
+        SmallHorizontalLoaderComponent,
+        FullScreenMessageComponent
     ],
     exports: [
         AngularFireAuthModule,
@@ -56,7 +58,8 @@ import { SmallHorizontalLoaderComponent } from './components/small-horizontal-lo
         SmallLoadingSpinnerComponent,
         ImageComponent,
         HelpBubbleComponent,
-        SmallHorizontalLoaderComponent
+        SmallHorizontalLoaderComponent,
+        FullScreenMessageComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]

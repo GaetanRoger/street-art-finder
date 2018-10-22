@@ -1,25 +1,34 @@
-<mat-expansion-panel>
-    <mat-expansion-panel-header>Filters</mat-expansion-panel-header>
-    <div [formGroup]="filterFormGroup">
-        <div class="fields">
-            <mat-form-field *ngIf="cities$ | async">
-                <mat-select placeholder="City" formControlName="cities">
-                    <mat-option *ngFor="let city of cities$ | async" [value]="city.value">
-                        {{city.value}} ({{city.count}} artist)
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+<div *ngIf="online.online">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>Filters</mat-expansion-panel-header>
+        <div [formGroup]="filterFormGroup">
+            <div class="fields">
+                <mat-form-field *ngIf="cities$ | async">
+                    <mat-select placeholder="City" formControlName="cities">
+                        <mat-option *ngFor="let city of cities$ | async" [value]="city.value">
+                            {{city.value}} ({{city.count}} artist)
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="buttons">
+                <app-small-horizontal-loader *ngIf="filterLoad"></app-small-horizontal-loader>
+                <button mat-flat-button (click)="filterFormGroup.reset()">RESET FILTERS</button>
+            </div>
         </div>
-        <div class="buttons">
-            <app-small-horizontal-loader *ngIf="filterLoad"></app-small-horizontal-loader>
-            <button mat-flat-button (click)="filterFormGroup.reset()">RESET FILTERS</button>
-        </div>
-    </div>
-</mat-expansion-panel>
+    </mat-expansion-panel>
 
-<app-artist-preview
-        *ngFor="let artist of artists$ | async"
-        [artist]="artist"
-        [actions]="[{text: artist.known ? 'ADDED' : 'ADD', id: 1, disabled: artist.known}]"
-        (actionClick)="addArtistToProgression(artist)"
-></app-artist-preview>
+    <app-artist-preview
+
+            *ngFor="let artist of artists$ | async"
+            [artist]="artist"
+            [actions]="[{text: artist.known ? 'ADDED' : 'ADD', id: 1, disabled: artist.known}]"
+            (actionClick)="addArtistToProgression(artist)"
+    ></app-artist-preview>
+</div>
+
+<app-full-screen-message
+        *ngIf="!online.online"
+        title="You are offline"
+        text="Sorry, the discover tab is only available online"
+></app-full-screen-message>

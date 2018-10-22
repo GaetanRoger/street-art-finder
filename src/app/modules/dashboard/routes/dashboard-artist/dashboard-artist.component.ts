@@ -7,6 +7,8 @@ import {UserService} from '../../../core/services/user/user.service';
 import {UserPieceProgression} from '../../../core/types/user-piece-progression';
 import {PieceService} from '../../../core/services/piece/piece.service';
 import {Piece} from '../../../core/types/piece';
+import {ArtistService} from '../../../core/services/artist/artist.service';
+import {Artist} from '../../../core/types/artist';
 
 @Component({
     selector: 'app-dashboard-artist',
@@ -18,16 +20,23 @@ export class DashboardArtistComponent implements OnInit {
     progressions$: Observable<UserPieceProgression[]>;
     vanishedPieces$: Observable<Piece[]>;
     showVanishedPieces$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    artist$: Observable<Artist>;
 
     constructor(private readonly route: ActivatedRoute,
                 private readonly userPieceProgression: UserPieceProgressionService,
                 private readonly userService: UserService,
-                private readonly pieceService: PieceService) {
+                private readonly pieceService: PieceService,
+                private readonly artistService: ArtistService) {
     }
 
     ngOnInit() {
         this.artistId$ = this._routeArtistId();
+        this.artist$ = this._artistFromId();
         this.progressions$ = this._getUserPiecesProgressions();
+    }
+
+    private _artistFromId() {
+        return this.artistId$.pipe(flatMap(id => this.artistService.find(id)));
     }
 
     markAsFound(progressionid: string, value: boolean): void {

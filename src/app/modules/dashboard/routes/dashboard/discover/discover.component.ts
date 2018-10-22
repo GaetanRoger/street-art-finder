@@ -11,6 +11,7 @@ import {MatSnackBar} from '@angular/material';
 import {DiscoverArtistAddedSnackbarComponent} from './discover-artist-added-snackbar/discover-artist-added-snackbar.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FacetQueryResponse} from '../../../../core/services/algolia/facet-query-response';
+import {OnlineService} from '../../../../core/services/online/online.service';
 
 @Component({
     selector: 'app-discover',
@@ -31,10 +32,13 @@ export class DiscoverComponent implements OnInit {
                 private readonly artistService: ArtistService,
                 private readonly progressionService: UserArtistProgressionService,
                 private readonly snackbar: MatSnackBar,
-                private readonly fb: FormBuilder) {
+                private readonly fb: FormBuilder,
+                public readonly online: OnlineService) {
     }
 
     ngOnInit() {
+        console.log('is online', this.online.online);
+
         this.filterFormGroup = this.fb.group({
             cities: this.fb.control(null)
         });

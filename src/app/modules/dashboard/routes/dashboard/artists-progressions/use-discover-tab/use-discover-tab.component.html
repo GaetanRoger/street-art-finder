@@ -1,7 +1,6 @@
-<div class="container">
-    <h1>You haven't added any artist yet!</h1>
-    <p>Use the discover tab to add them</p>
-    <div class="buttons">
-        <button mat-raised-button color="accent" (click)="goToDiscoverTab()">GO TO DISCOVER</button>
-    </div>
-</div>
+<app-full-screen-message
+    title="You haven't added any artist yet!"
+    text="Use the discover tab to add them"
+    actionText="GO TO DISCOVER"
+    (action)="goToDiscoverTab()"
+></app-full-screen-message>
