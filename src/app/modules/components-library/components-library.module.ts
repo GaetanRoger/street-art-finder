@@ -7,14 +7,14 @@ import {
     MatCheckboxModule,
     MatChipsModule,
     MatDialogModule,
-    MatDividerModule,
+    MatDividerModule, MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule, MatSelectModule,
     MatSnackBarModule,
     MatStepperModule,
     MatTabsModule,
@@ -39,7 +39,9 @@ import {
         MatSnackBarModule,
         MatListModule,
         MatAutocompleteModule,
-        MatStepperModule
+        MatStepperModule,
+        MatExpansionModule,
+        MatSelectModule
     ],
     declarations: [],
     exports: [
@@ -60,7 +62,9 @@ import {
         MatSnackBarModule,
         MatListModule,
         MatAutocompleteModule,
-        MatStepperModule
+        MatStepperModule,
+        MatExpansionModule,
+        MatSelectModule
     ]
 })
 export class ComponentsLibraryModule {

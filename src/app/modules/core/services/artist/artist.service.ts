@@ -8,12 +8,16 @@ import {AngularFirestore} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
+import {FacetQueryResponse} from '../algolia/facet-query-response';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ArtistService {
     readonly COLLECTION = 'artists';
+    private DEFAULT_FIND_ALL_PARAMS = {
+        limit: 5
+    };
 
 
     constructor(private readonly firestore: AngularFirestore,
@@ -22,10 +26,17 @@ export class ArtistService {
                 private readonly algolia: AlgoliaService) {
     }
 
-    findAll(query: string = '', limit: number = 100): Observable<Artist[]> {
+    findAll(query: string = '', params?: { city?: string; limit?: number }): Observable<Artist[]> {
+        params = params
+            ? {...this.DEFAULT_FIND_ALL_PARAMS, ...params}
+            : this.DEFAULT_FIND_ALL_PARAMS;
+
+        const filters = params.city ? `cities:${params.city}` : '';
+
         const parameters: QueryParameters = {
             query,
-            length: limit
+            length: params.limit,
+            filters
         };
 
         return this.algolia.query<Artist>(this.COLLECTION, parameters);
@@ -42,6 +53,13 @@ export class ArtistService {
         return withPieces ?
             this.joinArtistAndPieces(artist$, pieces$)
             : artist$;
+    }
+
+    getAvailableCities(sortByCount: boolean = false): Observable<FacetQueryResponse[]> {
+        return this.algolia.facets(this.COLLECTION, 'cities')
+            .pipe(
+                map(r => sortByCount ? r.sort((r1, r2) => r1.count - r2.count) : r)
+            );
     }
 
     private findOne(id: string): Observable<Artist> {

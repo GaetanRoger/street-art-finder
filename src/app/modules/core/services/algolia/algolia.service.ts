@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import * as algoliasearch from 'algoliasearch';
 import {Client, QueryParameters} from 'algoliasearch';
+import {FacetQueryResponse} from './facet-query-response';
 
 @Injectable({
     providedIn: 'root'
@@ -53,6 +54,20 @@ export class AlgoliaService {
             .search(search))
             .pipe(
                 map(results => results.hits as T[])
+            );
+    }
+
+    facets(collection: string, facet: string): Observable<FacetQueryResponse[]> {
+        return fromPromise(this.client()
+            .searchForFacetValues([{
+                indexName: collection,
+                params: {
+                    facetName: facet,
+                    facetQuery: ''
+                }
+            }]))
+            .pipe(
+                map(r => r[0].facetHits)
             );
     }
 }

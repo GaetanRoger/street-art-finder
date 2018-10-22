@@ -50,7 +50,7 @@ export class AdminAddPieceGeneralInfoComponent implements OnInit {
     ngOnInit() {
         this.artists$ = this.artist.valueChanges
             .pipe(
-                flatMap(query => this.artistService.findAll(query, 5))
+                flatMap(query => this.artistService.findAll(query))
             );
     }
 

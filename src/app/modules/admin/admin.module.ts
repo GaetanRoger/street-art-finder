@@ -14,6 +14,8 @@ import {AdminAddPieceGeneralInfoComponent} from './routes/admin-add-piece/admin-
 import {AdminAddPieceImagesComponent} from './routes/admin-add-piece/admin-add-piece-images/admin-add-piece-images.component';
 import { AdminAddPieceFinishComponent } from './routes/admin-add-piece/admin-add-piece-finish/admin-add-piece-finish.component';
 import { AdminPiecesComponent } from './routes/admin-pieces/admin-pieces.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpModule} from '@angular/http';
 
 const routes: Route[] = [
     {

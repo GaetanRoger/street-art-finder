@@ -7,6 +7,8 @@ import {IdGeneratorService} from '../../../../core/services/id-generator/id-gene
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {PieceCreationState} from './piece-creation-state.enum';
+import {Address} from '../../../../core/types/address';
+import {AddressFromGeopointService} from '../../../../core/services/address-from-geopoint/address-from-geopoint.service';
 
 @Component({
     selector: 'app-admin-add-piece-finish',
@@ -23,7 +25,8 @@ export class AdminAddPieceFinishComponent implements OnInit {
 
     constructor(private readonly storage: AngularFireStorage,
                 private readonly idGenerator: IdGeneratorService,
-                private readonly pieceService: PieceService) {
+                private readonly pieceService: PieceService,
+                private readonly addressService: AddressFromGeopointService) {
     }
 
     ngOnInit() {
@@ -72,7 +75,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
     }
 
     private async _createPiece(id, pieceData, artist: Artist, uploadedImageUrl) {
-        const piece: Piece = this._getPieceFromForm(id, pieceData, artist, uploadedImageUrl);
+        const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, uploadedImageUrl);
         await this.pieceService.create(piece);
     }
 
@@ -86,7 +89,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
         return await uploadedImage.ref.getDownloadURL();
     }
 
-    private _getPieceFromForm(id: string, pieceData, artist: Artist, uploadedImageUrl): Piece {
+    private async _getPieceFromForm(id: string, pieceData, artist: Artist, uploadedImageUrl): Promise<Piece> {
         return {
             objectID: id,
             name: pieceData.name,
@@ -100,6 +103,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
                 longitude: pieceData.location.longitude,
                 latitude: pieceData.location.latitude
             },
+            address: await this.addressService.get(pieceData.location),
             images: {
                 main: {
                     // todo Resize low image to be quicker to load
@@ -115,5 +119,4 @@ export class AdminAddPieceFinishComponent implements OnInit {
             addedOn: Date.now(),
         };
     }
-
 }

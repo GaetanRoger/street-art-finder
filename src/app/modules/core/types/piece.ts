@@ -3,6 +3,7 @@ import {ArtistPreview} from './artist';
 import {PieceTags} from './piece-tags';
 import {Geopoint} from './geopoint';
 import {Image} from './image';
+import {Address} from './address';
 
 export interface PiecePreview extends ObjectIDable {
     name: string;
@@ -21,5 +22,6 @@ export interface Piece extends PiecePreview {
         main: Image;
         others: string[];
     };
+    address?: Address;
     tags: PieceTags;
 }

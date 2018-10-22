@@ -18,6 +18,7 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {AlgoliaService} from './services/algolia/algolia.service';
 import { HelpBubbleComponent } from './components/help-bubble/help-bubble.component';
 import {FormsModule} from '@angular/forms';
+import { SmallHorizontalLoaderComponent } from './components/small-horizontal-loader/small-horizontal-loader.component';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import {FormsModule} from '@angular/forms';
         SmallLoadingSpinnerComponent,
         ImageComponent,
         PieceDialogComponent,
-        HelpBubbleComponent
+        HelpBubbleComponent,
+        SmallHorizontalLoaderComponent
     ],
     exports: [
         AngularFireAuthModule,
@@ -53,7 +55,8 @@ import {FormsModule} from '@angular/forms';
         TimestampPipe,
         SmallLoadingSpinnerComponent,
         ImageComponent,
-        HelpBubbleComponent
+        HelpBubbleComponent,
+        SmallHorizontalLoaderComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]

@@ -11,11 +11,11 @@ export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventCo
 
     return Promise.all([
         incrementMaxScoreOnUsersArtists(piece.artist.objectID, piece.tags.vanished),
-        incrementPieceCountOnArtist(piece),
+        incrementPieceCountAndUpdateCitiesOnArtist(piece),
         addAlgoliaObject(id, piece),
         addPieceToUsersPiecesForAllUsersFollowingArtist(id, piece),
         incrementPiecesCountInAggregatesDocument()
-    ]);
+    ] as Promise<any>[]);
 }
 
 async function incrementMaxScoreOnUsersArtists(artistId: string, vanished: boolean) {
@@ -40,24 +40,31 @@ async function incrementMaxScoreOnUsersArtists(artistId: string, vanished: boole
     return await batch.commit();
 }
 
-function incrementPieceCountOnArtist(piece) {
-    return admin.firestore()
+async function incrementPieceCountAndUpdateCitiesOnArtist(piece) {
+    const artist = await admin.firestore()
         .doc(`${Collections.artists}/${piece.artist.objectID}`)
-        .get()
-        .then(doc => {
-            return doc.ref.update({
-                piecesCount: doc.data().piecesCount + 1
-            });
-        });
+        .get();
+
+    const data = artist.data();
+    const ref = artist.ref;
+
+    const cities = data.cities || [];
+    if (!cities.includes(piece.address.city))
+        cities.push(piece.address.city);
+
+    return await ref.update({
+        piecesCount: data.piecesCount + 1,
+        cities: cities
+    });
 }
 
-function addAlgoliaObject(objectID: string, piece) {
+function addAlgoliaObject(objectID: string, piece): Promise<any> {
     const client = algolia.initIndex(Collections.pieces);
 
     return client.addObject(Helpers.pieceToAlgoliaObject(piece, objectID));
 }
 
-async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece) {
+async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece){
     const firestore = admin.firestore();
 
     const usersArtists = await firestore
