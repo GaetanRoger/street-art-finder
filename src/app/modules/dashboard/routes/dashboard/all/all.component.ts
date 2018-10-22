@@ -120,7 +120,7 @@ export class AllComponent implements OnInit {
     }
 
     private getPieces() {
-        return this.progression.artistsProgression(this.user$)
+        return this.progression.findAll(this.user$)
             .pipe(
                 map(uas => uas.map(ua => ua.artist.objectID)),
                 flatMap(ids => this.getPiecesByArtistsIds(ids))

@@ -1,5 +1,5 @@
 <app-toolbar
-        title="Dashboard"
+        [title]="title | async"
         [showSearchButton]="true"
         [showBackButton]="true"
         (searchChange)="filterArtist($event)"

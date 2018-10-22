@@ -12,6 +12,7 @@ import {Icon, icon, Marker} from 'leaflet';
 import {OnlyAdminGuard} from './modules/core/guards/only-admin/only-admin.guard';
 import {AngularFireModule} from '@angular/fire';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import {FormsModule} from '@angular/forms';
 
 const routes: Route[] = [
     {

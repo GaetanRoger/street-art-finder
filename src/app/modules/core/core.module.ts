@@ -17,10 +17,12 @@ import {PieceDialogComponent} from './components/piece-dialog/piece-dialog.compo
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {AlgoliaService} from './services/algolia/algolia.service';
 import { HelpBubbleComponent } from './components/help-bubble/help-bubble.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,
         RouterModule,
         ComponentsLibraryModule,
         AngularFireAuthModule,

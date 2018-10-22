@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from '../types/user';
-import {combineLatest, Observable, of} from 'rxjs';
-import {filter, flatMap, map, tap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {flatMap, map, tap} from 'rxjs/operators';
 import {ObjectIDInjectorService} from './objectid-injecter/object-i-d-injector.service';
 import {UserArtistProgression} from '../types/user-artist-progression';
 import {Artist} from '../types/artist';
 import {AlgoliaService} from './algolia/algolia.service';
-import {QueryParameters} from 'algoliasearch';
 
 @Injectable({
     providedIn: 'root'
@@ -16,17 +15,16 @@ export class UserArtistProgressionService {
     private readonly COLLECTION = 'users_artists';
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjectorService<UserArtistProgression>,
-                private readonly algolia: AlgoliaService) {
+                private readonly objectIDInjecter: ObjectIDInjectorService<UserArtistProgression>) {
     }
 
-    artistsProgression(user: User | Observable<User>, query: string = ''): Observable<UserArtistProgression[]> {
+    findAll(user: User | Observable<User>): Observable<UserArtistProgression[]> {
         const user$ = user instanceof Observable
             ? user
             : of(user);
 
         return user$.pipe(
-            flatMap(u => u ? this.artistsProgressionFromUserId(u.objectID, query) : of([])),
+            flatMap(u => u ? this.artistsProgressionFromUserId(u.objectID) : of([])),
         );
     }
 
@@ -46,15 +44,13 @@ export class UserArtistProgressionService {
             .add(progression);
     }
 
-    artistsProgressionFromUserId(userId: string, query: string = ''): Observable<UserArtistProgression[]> {
-        const params: QueryParameters = {
-            query,
-            facetFilters: `user:${userId}`,
-            hitsPerPage: 5,
-            page: 0
-        };
-
-        return this.algolia.query<UserArtistProgression>(this.COLLECTION, params);
+    artistsProgressionFromUserId(userId: string): Observable<UserArtistProgression[]> {
+        return this.firestore
+            .collection<UserArtistProgression>(this.COLLECTION, ref => ref.where('user', '==', userId))
+            .snapshotChanges()
+            .pipe(
+                map(ua => this.objectIDInjecter.injectIntoCollection(ua))
+            );
     }
 
 
@@ -62,13 +58,6 @@ export class UserArtistProgressionService {
         return this.firestore.collection(this.COLLECTION)
             .doc(objectID)
             .delete();
-    }
-
-    private getFirestoreCollectionFromUserId(id: string) {
-        return this.firestore.collection<UserArtistProgression>(
-            this.COLLECTION,
-            ref => ref.where('user', '==', id)
-        );
     }
 
     private find(objectID: string): Observable<UserArtistProgression> {

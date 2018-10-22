@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 import {Location} from '@angular/common';
 import {ToolbarMenuItem} from './toolbar-menu-item';
@@ -37,6 +37,8 @@ export class ToolbarComponent implements OnChanges {
     @Output() searchKeyDown: EventEmitter<KeyboardEvent> = new EventEmitter();
 
     @Output() searchKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter();
+
+    filter: string;
 
     /**
      * Default color to be used if no background image is supplied.
@@ -81,5 +83,6 @@ export class ToolbarComponent implements OnChanges {
 
     emitSearchChange(event: string) {
         this.searchChange.emit(event);
+        this.filter = event;
     }
 }

@@ -5,7 +5,7 @@ import {UserArtistProgressionService} from '../../../core/services/user-artist-p
 import {UserArtistProgression} from '../../../core/types/user-artist-progression';
 import {MatTabChangeEvent} from '@angular/material';
 import {ToolbarMenuItem} from '../../../core/components/toolbar/toolbar-menu-item';
-import {distinctUntilChanged, flatMap, tap} from 'rxjs/operators';
+import {flatMap, map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard',
@@ -36,14 +36,21 @@ export class DashboardComponent implements OnInit {
                 private readonly userService: UserService) {
     }
 
+
+    get title(): Observable<string> {
+        return this.filter$
+            .pipe(
+                map(f => f ? `Filter: ${f}` : 'Dashboard')
+            );
+    }
+
     ngOnInit() {
         const user$ = this.userService.user();
 
         this.progressions$ = combineLatest(user$, this.filter$)
             .pipe(
-                distinctUntilChanged(), //todo
-                tap(([user, filter]) => console.log('refreshed')),
-                flatMap(([user, filter]) => this.userArtistProgression.artistsProgression(user, filter))
+                flatMap(([user, filt]) => this.userArtistProgression.findAll(user).pipe(map(uas => this.filterByArtistName(uas, filt)))),
+                map(uas => uas.sort((ua1, ua2) => ua1.score / ua1.maxScore - ua2.score / ua2.maxScore))
             );
 
         user$.subscribe(u => {
@@ -57,6 +64,12 @@ export class DashboardComponent implements OnInit {
         });
     }
 
+    private filterByArtistName(uas: UserArtistProgression[], filter: string) {
+        return uas.filter(
+            ua => ua.artist.name.toLowerCase().includes(filter)
+        );
+    }
+
     tabChanged(e: MatTabChangeEvent): void {
         this.selectedIndex = e.index;
         const tab1selected = e.index === 1;
@@ -64,6 +77,6 @@ export class DashboardComponent implements OnInit {
     }
 
     filterArtist(newFilter: string) {
-        this.filter$.next(newFilter || '');
+        this.filter$.next((newFilter || '').toLowerCase().trim());
     }
 }
