@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PieceService} from '../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Piece} from '../../../core/types/piece';
 import {delay, filter, flatMap, tap} from 'rxjs/operators';
-import {MatDialog, MatSelectionList, MatSnackBar} from '@angular/material';
-import {ConfirmationDialogComponent} from '../../../core/components/confirmation-dialog/confirmation-dialog.component';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
     selector: 'app-admin-pieces',
@@ -16,20 +15,16 @@ export class AdminPiecesComponent implements OnInit {
     filter$: BehaviorSubject<string> = new BehaviorSubject('');
     working$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-    @ViewChild(MatSelectionList) list: MatSelectionList;
+    selectedPieces: Piece[] = [];
+
+    readonly mainText = p => p.name;
+    readonly subText = p => p.tags.vanished ? 'Vanished' : 'Not vanished';
 
     constructor(private readonly piecesService: PieceService,
-                private readonly snackbar: MatSnackBar,
-                private readonly dialog: MatDialog) {
-    }
-
-    get selectedPieces(): Piece[] {
-        return this.list.selectedOptions.selected.map(e => e.value);
+                private readonly snackbar: MatSnackBar) {
     }
 
     ngOnInit() {
-        // this.pieces$ = this.piecesService.findAll('', this.filter$.value);
-
         this.pieces$ = this.filter$
             .pipe(
                 delay(0), // Fix for ExpressionChangedAfterItHasBeenCheckedError (don't ask why)
@@ -40,22 +35,8 @@ export class AdminPiecesComponent implements OnInit {
             );
     }
 
-    async askForDelete() {
 
-        this.dialog.open(ConfirmationDialogComponent, {data: {title: 'Are you sure?', text: 'Everyone\'s progression will be lost!'}})
-            .afterClosed()
-            .pipe(filter(v => v === true))
-            .subscribe(_ => this._deleteSelectedPieces());
-    }
-
-    async askForVanish() {
-        this.dialog.open(ConfirmationDialogComponent, {data: {title: 'Are you sure?', text: 'Everyone\'s progression will be lost!'}})
-            .afterClosed()
-            .pipe(filter(v => v === true))
-            .subscribe(_ => this._markAsVanished());
-    }
-
-    private async _markAsVanished() {
+    async markAsVanished() {
         this.working$.next(true);
 
         const selectedPieces = this.selectedPieces;
@@ -78,7 +59,7 @@ export class AdminPiecesComponent implements OnInit {
         this.working$.next(false);
     }
 
-    private async _deleteSelectedPieces() {
+    async deleteSelectedPieces() {
         this.working$.next(true);
 
         const deletion = this.selectedPieces.map(p => this.piecesService.delete(p.objectID));

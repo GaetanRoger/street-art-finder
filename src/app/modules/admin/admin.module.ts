@@ -14,13 +14,17 @@ import {AdminAddPieceGeneralInfoComponent} from './routes/admin-add-piece/admin-
 import {AdminAddPieceImagesComponent} from './routes/admin-add-piece/admin-add-piece-images/admin-add-piece-images.component';
 import {AdminAddPieceFinishComponent} from './routes/admin-add-piece/admin-add-piece-finish/admin-add-piece-finish.component';
 import {AdminPiecesComponent} from './routes/admin-pieces/admin-pieces.component';
-import {Ng2ImgMaxModule} from 'ng2-img-max';
-import {ImageResizerService} from '../core/services/image-resizer/image-resizer.service';
+import {AdminArtistsComponent} from './routes/admin-artists/admin-artists.component';
+import {SelectableListComponent} from './components/selectable-list/selectable-list.component';
 
 const routes: Route[] = [
     {
         path: 'users',
         component: AdminUsersComponent,
+    },
+    {
+        path: 'artists',
+        component: AdminArtistsComponent
     },
     {
         path: 'pieces',
@@ -45,7 +49,18 @@ const routes: Route[] = [
         ComponentsLibraryModule,
         AngularCropperjsModule,
     ],
-    declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent, AdminAddPieceComponent, AdminAddPieceGeneralInfoComponent, AdminAddPieceImagesComponent, AdminAddPieceFinishComponent, AdminPiecesComponent],
+    declarations: [
+        AdminDashboardComponent,
+        AdminUsersComponent,
+        AdminToolbarComponent,
+        AdminAddPieceComponent,
+        AdminAddPieceGeneralInfoComponent,
+        AdminAddPieceImagesComponent,
+        AdminAddPieceFinishComponent,
+        AdminPiecesComponent,
+        AdminArtistsComponent,
+        SelectableListComponent
+    ],
     providers: [TimestampPipe]
 })
 export class AdminModule {

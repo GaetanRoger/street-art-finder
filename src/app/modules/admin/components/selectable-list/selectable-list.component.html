@@ -1,0 +1,26 @@
+<mat-selection-list #list [disabled]="working$ | async">
+    <mat-list-option *ngFor="let element of elements$ | async"
+                     [value]="element"
+                     [id]="'option-' + element.objectID">
+        <h4 mat-line>{{mainText(element)}}</h4>
+        <small mat-line *ngIf="subText"> {{subText(element)}}</small>
+    </mat-list-option>
+</mat-selection-list>
+
+<div class="footer">
+    <app-small-loading-spinner *ngIf="working$ | async"></app-small-loading-spinner>
+    <div class="buttons">
+        <button mat-raised-button
+                (click)="secondaryButtonClicked()"
+                [disabled]="!(enableButtons$ | async)"
+        >{{secondaryButton}}</button>
+        <button mat-raised-button
+                (click)="primaryButtonClicked()" color="accent"
+                [disabled]="!(enableButtons$ | async)"
+        >{{primaryButton}}</button>
+    </div>
+</div>
+
+
+<app-loading-spinner *ngIf="!(elements$ | async)"></app-loading-spinner>
+

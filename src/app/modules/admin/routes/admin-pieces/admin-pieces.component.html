@@ -4,21 +4,23 @@
         (searchChange)="filter$.next($event)"
 
 ></app-admin-toolbar>
-<mat-selection-list #list [disabled]="working$ | async">
-    <mat-list-option *ngFor="let piece of pieces$ | async" [value]="piece">
-        <h4 mat-line>{{piece.name}}</h4>
-        <small mat-line> {{piece.tags.vanished ? 'Vanished' : 'Not vanished'}}</small>
-    </mat-list-option>
-</mat-selection-list>
 
-<div class="footer">
-    <app-small-loading-spinner *ngIf="working$ | async"></app-small-loading-spinner>
-    <div class="buttons">
-        <button mat-raised-button (click)="askForVanish()">VANISH/UNVANISH</button>
-        <button mat-raised-button (click)="askForDelete()" color="warn">DELETE</button>
-    </div>
-</div>
+<app-selectable-list
+    [elements$]="pieces$"
+    [working$]="working$"
 
+    [mainText]="mainText"
+    [subText]="subText"
 
-<app-loading-spinner *ngIf="!(pieces$ | async)"></app-loading-spinner>
+    primaryButton="DELETE"
+    primaryButtonConfirmText="All users' progressions will be lost and the piece gone forever!"
+    [primaryButtonConfirmDelayed]="true"
+    (primaryButtonClick)="deleteSelectedPieces()"
 
+    secondaryButton="VANISH/UNVANISH"
+    secondaryButtonConfirmText="Everyone's progression will be lost!"
+    [secondaryButtonConfirmDelayed]="true"
+    (secondaryButtonClick)="markAsVanished()"
+
+    (selectionChanged)="selectedPieces = $event"
+></app-selectable-list>

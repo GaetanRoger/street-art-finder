@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Artist} from '../../types/artist';
 import {combineLatest, Observable} from 'rxjs';
 import {PieceService} from '../piece/piece.service';
-import {map} from 'rxjs/operators';
+import {flatMap, map} from 'rxjs/operators';
 import {Piece} from '../../types/piece';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
@@ -73,6 +73,19 @@ export class ArtistService {
             );
     }
 
+    delete(objectID: string) {
+        return this.firestore.collection(this.COLLECTION)
+            .doc(objectID)
+            .delete();
+    }
+
+    findAllAndSubscribe(filter: string): Observable<Artist[]> {
+        return this.findAll(filter)
+            .pipe(
+                flatMap(pieces => this._combineArtistsFromFirestore(pieces)),
+            );
+    }
+
     private findOne(id: string): Observable<Artist> {
         return this.firestore.collection<Artist>(this.COLLECTION)
             .doc<Artist>(id)
@@ -91,5 +104,12 @@ export class ArtistService {
                     return artist;
                 }),
             );
+    }
+
+    private _combineArtistsFromFirestore(artists: Artist[]): Observable<Artist[]> {
+        return combineLatest(artists.map(p => this.find(p.objectID)))
+            .pipe(
+                map(p => p.filter((pp: Artist) => pp && pp.name)), // We check the piece exists
+            ) as Observable<Artist[]>;
     }
 }

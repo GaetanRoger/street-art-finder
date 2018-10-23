@@ -1,0 +1,23 @@
+<app-admin-toolbar
+        title="Artists"
+        [showSearchButton]="true"
+        (searchChange)="filter$.next($event)"
+
+></app-admin-toolbar>
+
+<app-selectable-list
+        [elements$]="artists$"
+        [working$]="working$"
+        [mainText]="primaryText"
+        [subText]="secondaryText"
+        secondaryButton="Click2"
+
+        primaryButton="DELETE"
+        primaryButtonConfirmText="The artist data will be gone forever, all all progression and pieces will be lost!"
+        [primaryButtonConfirmDelayed]="true"
+        (primaryButtonClick)="deleteSelectedArtists()"
+
+
+        (selectionChanged)="selectedArtists = $event"
+></app-selectable-list>
+
