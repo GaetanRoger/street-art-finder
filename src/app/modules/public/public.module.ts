@@ -10,6 +10,7 @@ import {PieceDialogComponent} from '../core/components/piece-dialog/piece-dialog
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import { PieceComponent } from './routes/artist/piece/piece.component';
 import {AlgoliaService} from '../core/services/algolia/algolia.service';
+import { LearnMoreComponent } from './routes/learn-more/learn-more.component';
 
 const routes: Route[] = [
     {
@@ -19,6 +20,10 @@ const routes: Route[] = [
     {
         path: 'artist/:id',
         component: ArtistComponent
+    },
+    {
+        path: 'learn-more',
+        component: LearnMoreComponent
     },
     {
         path: '**',
@@ -37,7 +42,8 @@ const routes: Route[] = [
         HomeComponent,
         NotFoundComponent,
         ArtistComponent,
-        PieceComponent
+        PieceComponent,
+        LearnMoreComponent
     ]
 })
 export class PublicModule {

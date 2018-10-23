@@ -24,15 +24,17 @@ export class AddressFromGeopointService {
             city: response.address.city
         };
 
-        if (response.address.state)
-            address.state = response.address.state;
-        if (response.address.city_district)
-            address.cityDistrict = response.address.city_district;
-        if (response.address.postcode)
-            address.postcode = response.address.postcode;
-        if (response.display_name)
-            address.displayName = response.display_name;
+        this._addIfExists(address, 'state', response.address.state);
+        this._addIfExists(address, 'cityDistrict', response.address.city_district);
+        this._addIfExists(address, 'postcode', response.address.postcode);
+        this._addIfExists(address, 'displayName', response.display_name);
 
         return address;
+    }
+
+    private _addIfExists(address: Address, fieldName: string, fieldValue: any): void {
+        if (fieldValue) {
+            address[fieldName] = fieldValue;
+        }
     }
 }

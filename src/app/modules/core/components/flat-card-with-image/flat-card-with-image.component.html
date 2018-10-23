@@ -1,8 +1,8 @@
 <div class="join-now-card">
-    <div class="left-image" [style]="backgroundImageProperty">
+    <div class="left-image" [style]="backgroundImageProperty" *ngIf="image">
     </div>
     <div class="right-text">
-        <h4>{{title}}</h4>
+        <h4 [class]="titleClass">{{title}}</h4>
         <p>{{text}}</p>
         <div class="buttons">
             <!-- IF a text is provided for the primary button -->

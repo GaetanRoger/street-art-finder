@@ -49,7 +49,7 @@ async function incrementPieceCountAndUpdateCitiesOnArtist(piece) {
     const ref = artist.ref;
 
     const cities = data.cities || [];
-    if (!cities.includes(piece.address.city))
+    if (piece.address.city && !cities.includes(piece.address.city))
         cities.push(piece.address.city);
 
     return await ref.update({

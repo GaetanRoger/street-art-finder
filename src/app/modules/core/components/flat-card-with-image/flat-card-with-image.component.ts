@@ -8,6 +8,7 @@ import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 })
 export class FlatCardWithImageComponent implements OnChanges {
     @Input() title: string;
+    @Input() titleClass = '';
     @Input() text: string;
     @Input() image: string;
     @Input() primaryButtonText: string;

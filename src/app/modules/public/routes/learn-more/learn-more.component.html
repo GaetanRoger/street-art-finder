@@ -1,0 +1,38 @@
+<app-toolbar
+        title="Street Art Finder"
+        [showSearchButton]="false"
+        [showBackButton]="true"
+></app-toolbar>
+
+
+<app-flat-card-with-image
+        title="See them for real"
+        titleClass="primary-color"
+        text="Play the treasure hunt, check them as you find them, and get to experience street art."
+        primaryButtonText="JOIN NOW"
+        primaryButtonRouterLink="/users/join"
+></app-flat-card-with-image>
+
+<mat-divider></mat-divider>
+
+<div class="card righty">
+    <div class="title">
+        <mat-chip-list>
+            <mat-chip [selected]="true" color="accent">%</mat-chip>
+        </mat-chip-list>
+        <h2>Real time progression</h2>
+    </div>
+
+        <p>See which piece you have found, and which ones are left.</p>
+</div>
+
+<div class="card lefty alternate">
+    <div class="title">
+        <h2>Real or approxiamate locations</h2>
+        <mat-chip-list>
+            <mat-chip [selected]="true">%</mat-chip>
+        </mat-chip-list>
+    </div>
+
+    <p>If you are a searcher, you can choose to only get areas and not accurate points where to look for pieces</p>
+</div>

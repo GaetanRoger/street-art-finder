@@ -108,7 +108,7 @@ export class PieceService {
     }
 
     async uploadImages(image: Blob, imageName: string, artistId: string, pieceId: string): Promise<{ low: AngularFireUploadTask; normal: AngularFireUploadTask }> {
-        const resized = await this.resizer.resize(image, imageName);
+        const resized = await this.resizer.resize(image, imageName, 500, 500);
 
         const uploadLow = this.uploadImage(
             resized,

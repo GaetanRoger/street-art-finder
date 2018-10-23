@@ -10,11 +10,11 @@ export class ImageResizerService {
     constructor(private readonly resizer: Ng2ImgMaxService) {
     }
 
-    resize(blob: Blob, name: string, maxSize: number = 500): Promise<Blob> {
+    resize(blob: Blob, name: string, maxWidth: number = 500, maxHeight: number = 500): Promise<Blob> {
         const file = new File([blob], name, {type: blob.type});
 
         return this.resizer
-            .resize([file], maxSize, maxSize)
+            .resize([file], maxWidth, maxHeight)
             .pipe(take(1))
             .toPromise();
     }

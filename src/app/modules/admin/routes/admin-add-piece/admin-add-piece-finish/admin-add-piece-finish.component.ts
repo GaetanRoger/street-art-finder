@@ -76,44 +76,24 @@ export class AdminAddPieceFinishComponent implements OnInit {
         this.state$.next(PieceCreationState.Done);
     }
 
-    private async _createPiece(id, pieceData, artist: Artist, uploadedImageUrlLow: string, uploadedImageUrlNormal: string) {
+    private async _createPiece(
+        id: string,
+        pieceData,
+        artist: Artist,
+        uploadedImageUrlLow: string,
+        uploadedImageUrlNormal: string
+    ) {
         const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, uploadedImageUrlLow, uploadedImageUrlNormal);
         await this.pieceService.create(piece);
     }
 
-    private async _uploadMainImageLow(artist: Artist, pieceId: string): Promise<string> {
-        const resized = await this.resizer.resize(this.mainImage.blob, this.mainImage.name);
-
-        const upload = this.pieceService.uploadImage(
-            resized,
-            this.mainImage.name,
-            artist.objectID,
-            pieceId,
-            'low'
-        );
-
-        this.lowUploadedPercentage$ = upload.percentageChanges();
-
-        const uploadedImage = await upload;
-        return await uploadedImage.ref.getDownloadURL();
-    }
-
-    private async _uploadMainImageNormal(artist: Artist, pieceId: string): Promise<string> {
-        const upload = this.pieceService.uploadImage(
-            this.mainImage.blob,
-            this.mainImage.name,
-            artist.objectID,
-            pieceId,
-            'normal'
-        );
-
-        this.normalUploadedPercentage$ = upload.percentageChanges();
-
-        const uploadedImage = await upload;
-        return await uploadedImage.ref.getDownloadURL();
-    }
-
-    private async _getPieceFromForm(id: string, pieceData, artist: Artist, uploadedImageUrlLow: string, uploadedImageUrlNormal: string): Promise<Piece> {
+    private async _getPieceFromForm(
+        id: string,
+        pieceData,
+        artist: Artist,
+        lowImageUrl: string,
+        normalImageUrl: string
+    ): Promise<Piece> {
         return {
             objectID: id,
             name: pieceData.name,
@@ -130,8 +110,8 @@ export class AdminAddPieceFinishComponent implements OnInit {
             address: await this.addressService.get(pieceData.location),
             images: {
                 main: {
-                    low: uploadedImageUrlLow,
-                    normal: uploadedImageUrlNormal
+                    low: lowImageUrl,
+                    normal: normalImageUrl
                 },
                 others: []
             },
