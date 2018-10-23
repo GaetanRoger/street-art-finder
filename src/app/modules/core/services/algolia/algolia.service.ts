@@ -38,20 +38,11 @@ export class AlgoliaService {
             );
     }
 
-    private _addDistanceToHit(hit) {
-        return Object.assign(hit, {distance: hit._rankingInfo.matchedGeoLocation.distance});
-    }
-
-    paginate<T extends ObjectIDable>(index: string, query: string, page: number = 0, hitsPerPage: number = 10): Observable<T[]> {
-        const search: QueryParameters = {
-            query,
-            page,
-            hitsPerPage
-        };
+    paginate<T extends ObjectIDable>(index: string, query: QueryParameters): Observable<T[]> {
 
         return fromPromise(this.algolia
             .initIndex(index)
-            .search(search))
+            .search(query))
             .pipe(
                 map(results => results.hits as T[])
             );
@@ -69,5 +60,9 @@ export class AlgoliaService {
             .pipe(
                 map(r => r[0].facetHits)
             );
+    }
+
+    private _addDistanceToHit(hit) {
+        return Object.assign(hit, {distance: hit._rankingInfo.matchedGeoLocation.distance});
     }
 }

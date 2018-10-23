@@ -9,6 +9,7 @@ import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.
 import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
 import {FacetQueryResponse} from '../algolia/facet-query-response';
+import {FiltersBuilder} from '../algolia/filters-builder';
 
 @Injectable({
     providedIn: 'root'
@@ -16,22 +17,26 @@ import {FacetQueryResponse} from '../algolia/facet-query-response';
 export class ArtistService {
     readonly COLLECTION = 'artists';
     private DEFAULT_FIND_ALL_PARAMS = {
-        limit: 5
+        limit: 5,
+        published: true
     };
 
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjectorService<Artist>,
+                private readonly objectIDInjector: ObjectIDInjectorService<Artist>,
                 private readonly pieceService: PieceService,
                 private readonly algolia: AlgoliaService) {
     }
 
-    findAll(query: string = '', params?: { city?: string; limit?: number }): Observable<Artist[]> {
+    findAll(query: string = '', params?: { city?: string; limit?: number; published?: boolean }): Observable<Artist[]> {
         params = params
             ? {...this.DEFAULT_FIND_ALL_PARAMS, ...params}
             : this.DEFAULT_FIND_ALL_PARAMS;
 
-        const filters = params.city ? `cities:${params.city}` : '';
+        const filters = new FiltersBuilder()
+            .add('cities', params.city, !!params.city)
+            .add('published', params.published.toString())
+            .build();
 
         const parameters: QueryParameters = {
             query,
@@ -43,7 +48,13 @@ export class ArtistService {
     }
 
     findN(query: string = '', page: number = 0, hitsPerPage: number = 5): Observable<Artist[]> {
-        return this.algolia.paginate<Artist>(this.COLLECTION, query, page, hitsPerPage);
+        const aQuery: QueryParameters = {
+            page,
+            hitsPerPage,
+            query,
+            filters: new FiltersBuilder('published', true.toString()).build()
+        };
+        return this.algolia.paginate<Artist>(this.COLLECTION, aQuery);
     }
 
     find(id: string, withPieces: boolean = false): Observable<Artist> {
@@ -67,7 +78,7 @@ export class ArtistService {
             .doc<Artist>(id)
             .snapshotChanges()
             .pipe(
-                map(a => this.objectIDInjecter.injectIntoDoc(a)),
+                map(a => this.objectIDInjector.injectIntoDoc(a)),
                 map(a => ({...a, pieces: []}))
             );
     }

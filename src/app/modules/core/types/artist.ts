@@ -16,6 +16,7 @@ export interface Artist extends ArtistPreview {
     pieces: Piece[];
     piecesCount: number;
     cities: string[];
+    published: boolean;
     images: {
         horizontal: Image;
         vertical?: Image;
