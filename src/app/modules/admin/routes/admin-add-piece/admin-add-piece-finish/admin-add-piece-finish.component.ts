@@ -7,8 +7,8 @@ import {IdGeneratorService} from '../../../../core/services/id-generator/id-gene
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {PieceCreationState} from './piece-creation-state.enum';
-import {Address} from '../../../../core/types/address';
 import {AddressFromGeopointService} from '../../../../core/services/address-from-geopoint/address-from-geopoint.service';
+import {ImageResizerService} from '../../../../core/services/image-resizer/image-resizer.service';
 
 @Component({
     selector: 'app-admin-add-piece-finish',
@@ -17,16 +17,18 @@ import {AddressFromGeopointService} from '../../../../core/services/address-from
 })
 export class AdminAddPieceFinishComponent implements OnInit {
     @Input() pieceFormGroup: FormGroup;
-    @Input() mainImage: Blob;
+    @Input() mainImage: { blob: Blob; name: string };
 
-    uploadedPercentage$: Observable<number | undefined>;
+    lowUploadedPercentage$: Observable<number | undefined>;
+    normalUploadedPercentage$: Observable<number | undefined>;
     state$: BehaviorSubject<PieceCreationState> = new BehaviorSubject(PieceCreationState.None);
 
 
     constructor(private readonly storage: AngularFireStorage,
                 private readonly idGenerator: IdGeneratorService,
                 private readonly pieceService: PieceService,
-                private readonly addressService: AddressFromGeopointService) {
+                private readonly addressService: AddressFromGeopointService,
+                private readonly resizer: ImageResizerService) {
     }
 
     ngOnInit() {
@@ -65,31 +67,53 @@ export class AdminAddPieceFinishComponent implements OnInit {
         const artist: Artist = pieceData.artist;
         const id = this.idGenerator.generateId();
 
-        const uploadedImageUrl = await this._uploadedMainImage(artist, id);
+        const urls = await this._uploadImages(artist, id);
 
         this.state$.next(PieceCreationState.Creating);
 
-        await this._createPiece(id, pieceData, artist, uploadedImageUrl);
+        await this._createPiece(id, pieceData, artist, urls.low, urls.normal);
 
         this.state$.next(PieceCreationState.Done);
     }
 
-    private async _createPiece(id, pieceData, artist: Artist, uploadedImageUrl) {
-        const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, uploadedImageUrl);
+    private async _createPiece(id, pieceData, artist: Artist, uploadedImageUrlLow: string, uploadedImageUrlNormal: string) {
+        const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, uploadedImageUrlLow, uploadedImageUrlNormal);
         await this.pieceService.create(piece);
     }
 
-    private async _uploadedMainImage(artist: Artist, id) {
-        const path = `/artists/${artist.objectID}/pieces/${id}/low.jpg`;
-        const imageUploadTask = this.storage.upload(path, this.mainImage);
+    private async _uploadMainImageLow(artist: Artist, pieceId: string): Promise<string> {
+        const resized = await this.resizer.resize(this.mainImage.blob, this.mainImage.name);
 
-        this.uploadedPercentage$ = imageUploadTask.percentageChanges();
+        const upload = this.pieceService.uploadImage(
+            resized,
+            this.mainImage.name,
+            artist.objectID,
+            pieceId,
+            'low'
+        );
 
-        const uploadedImage = await imageUploadTask;
+        this.lowUploadedPercentage$ = upload.percentageChanges();
+
+        const uploadedImage = await upload;
         return await uploadedImage.ref.getDownloadURL();
     }
 
-    private async _getPieceFromForm(id: string, pieceData, artist: Artist, uploadedImageUrl): Promise<Piece> {
+    private async _uploadMainImageNormal(artist: Artist, pieceId: string): Promise<string> {
+        const upload = this.pieceService.uploadImage(
+            this.mainImage.blob,
+            this.mainImage.name,
+            artist.objectID,
+            pieceId,
+            'normal'
+        );
+
+        this.normalUploadedPercentage$ = upload.percentageChanges();
+
+        const uploadedImage = await upload;
+        return await uploadedImage.ref.getDownloadURL();
+    }
+
+    private async _getPieceFromForm(id: string, pieceData, artist: Artist, uploadedImageUrlLow: string, uploadedImageUrlNormal: string): Promise<Piece> {
         return {
             objectID: id,
             name: pieceData.name,
@@ -106,9 +130,8 @@ export class AdminAddPieceFinishComponent implements OnInit {
             address: await this.addressService.get(pieceData.location),
             images: {
                 main: {
-                    // todo Resize low image to be quicker to load
-                    low: uploadedImageUrl,
-                    normal: uploadedImageUrl
+                    low: uploadedImageUrlLow,
+                    normal: uploadedImageUrlNormal
                 },
                 others: []
             },
@@ -117,6 +140,26 @@ export class AdminAddPieceFinishComponent implements OnInit {
                 accessible: pieceData.accessible
             },
             addedOn: Date.now(),
+        };
+    }
+
+    private async _uploadImages(artist: Artist, pieceId: string): Promise<{ low: string; normal: string; }> {
+        const uploads = await this.pieceService.uploadImages(
+            this.mainImage.blob,
+            this.mainImage.name,
+            artist.objectID,
+            pieceId
+        );
+
+        this.normalUploadedPercentage$ = uploads.normal.percentageChanges();
+        this.lowUploadedPercentage$ = uploads.low.percentageChanges();
+
+        const uploadedLow = await uploads.low;
+        const uploadedNormal = await uploads.normal;
+
+        return {
+            low: await uploadedLow.ref.getDownloadURL(),
+            normal: await uploadedNormal.ref.getDownloadURL(),
         };
     }
 }

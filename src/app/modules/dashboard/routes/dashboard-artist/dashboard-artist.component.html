@@ -6,7 +6,15 @@
 ></app-toolbar>
 <div class="title">
     <h1 class="primary-color">{{(artist$ | async)?.name}}</h1>
-    <p>Here is your progression</p>
+    <div class="buttons">
+        <button mat-button (click)="hideFound.next(!hideFound.value)">
+            <mat-icon *ngIf="!hideFound.value">visibility</mat-icon>
+            <mat-icon *ngIf="hideFound.value">visibility_off</mat-icon>
+            <span> found pieces </span>
+            <span *ngIf="!hideFound.value">shown</span>
+            <span *ngIf="hideFound.value">hidden</span>
+        </button>
+    </div>
 </div>
 
 <app-dashboard-piece-progression *ngFor="let progression of progressions$ | async"

@@ -37,8 +37,6 @@ export class DiscoverComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('is online', this.online.online);
-
         this.filterFormGroup = this.fb.group({
             cities: this.fb.control(null)
         });

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {flatMap, map} from 'rxjs/operators';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {UserPieceProgressionService} from '../../../core/services/user_piece_progression/user-piece-progression.service';
 import {UserService} from '../../../core/services/user/user.service';
 import {UserPieceProgression} from '../../../core/types/user-piece-progression';
@@ -9,6 +9,7 @@ import {PieceService} from '../../../core/services/piece/piece.service';
 import {Piece} from '../../../core/types/piece';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 import {Artist} from '../../../core/types/artist';
+import {UserGeolocationService} from '../../../core/services/geolocation/user-geolocation.service';
 
 @Component({
     selector: 'app-dashboard-artist',
@@ -22,17 +23,29 @@ export class DashboardArtistComponent implements OnInit {
     showVanishedPieces$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     artist$: Observable<Artist>;
 
+    hideFound: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
     constructor(private readonly route: ActivatedRoute,
                 private readonly userPieceProgression: UserPieceProgressionService,
                 private readonly userService: UserService,
                 private readonly pieceService: PieceService,
-                private readonly artistService: ArtistService) {
+                private readonly artistService: ArtistService,
+                private readonly geolocation: UserGeolocationService) {
     }
 
     ngOnInit() {
+        this._loadHideFoundValueFromLocalStorage();
+        this.hideFound.subscribe(v => localStorage.setItem('toggle.hideFoundPieces', v ? 'true' : 'false'));
         this.artistId$ = this._routeArtistId();
         this.artist$ = this._artistFromId();
         this.progressions$ = this._getUserPiecesProgressions();
+    }
+
+    private _loadHideFoundValueFromLocalStorage() {
+        const ls = localStorage.getItem('toggle.hideFoundPieces');
+        if (ls && ls === 'true') {
+            this.hideFound.next(true);
+        }
     }
 
     private _artistFromId() {
@@ -56,12 +69,29 @@ export class DashboardArtistComponent implements OnInit {
     }
 
     private _getUserPiecesProgressions() {
-        return this.userPieceProgression
-            .piecesProgression(
-                this.userService.user(),
-                {
-                    notFoundFirst: true
-                }
+        const upp$ = this.hideFound
+            .pipe(
+                flatMap(u => this.userPieceProgression.piecesProgression(
+                    this.userService.user(),
+                    {
+                        onlyNotFound: u
+                    }
+                ))
+            );
+
+        return combineLatest(upp$, this.geolocation.currentGeolocation())
+            .pipe(
+                map(
+                    ([pp, g]) => pp.map(p => {
+                        p.piece.distance = g
+                            ? this.geolocation.distance(g, p.piece.location) as number
+                            : null;
+                        return p;
+                    })
+                ),
+                map(
+                    pp => pp.sort((p1, p2) => p1.piece.distance - p2.piece.distance)
+                )
             );
     }
 

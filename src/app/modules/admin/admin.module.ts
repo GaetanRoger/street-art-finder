@@ -12,10 +12,10 @@ import {AngularCropperjsModule} from 'angular-cropperjs';
 import {AdminAddPieceComponent} from './routes/admin-add-piece/admin-add-piece.component';
 import {AdminAddPieceGeneralInfoComponent} from './routes/admin-add-piece/admin-add-piece-general-info/admin-add-piece-general-info.component';
 import {AdminAddPieceImagesComponent} from './routes/admin-add-piece/admin-add-piece-images/admin-add-piece-images.component';
-import { AdminAddPieceFinishComponent } from './routes/admin-add-piece/admin-add-piece-finish/admin-add-piece-finish.component';
-import { AdminPiecesComponent } from './routes/admin-pieces/admin-pieces.component';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {HttpModule} from '@angular/http';
+import {AdminAddPieceFinishComponent} from './routes/admin-add-piece/admin-add-piece-finish/admin-add-piece-finish.component';
+import {AdminPiecesComponent} from './routes/admin-pieces/admin-pieces.component';
+import {Ng2ImgMaxModule} from 'ng2-img-max';
+import {ImageResizerService} from '../core/services/image-resizer/image-resizer.service';
 
 const routes: Route[] = [
     {
@@ -43,7 +43,7 @@ const routes: Route[] = [
         RouterModule.forChild(routes),
         CoreModule,
         ComponentsLibraryModule,
-        AngularCropperjsModule
+        AngularCropperjsModule,
     ],
     declarations: [AdminDashboardComponent, AdminUsersComponent, AdminToolbarComponent, AdminAddPieceComponent, AdminAddPieceGeneralInfoComponent, AdminAddPieceImagesComponent, AdminAddPieceFinishComponent, AdminPiecesComponent],
     providers: [TimestampPipe]

@@ -10,7 +10,7 @@ import Cropper from 'cropperjs';
     styleUrls: ['./admin-add-piece-images.component.css']
 })
 export class AdminAddPieceImagesComponent implements OnInit {
-    @Output() mainImage: EventEmitter<Blob> = new EventEmitter();
+    @Output() mainImage: EventEmitter<{ blob: Blob; name: string }> = new EventEmitter();
 
     mainImageUrl$: BehaviorSubject<SafeUrl> = new BehaviorSubject(null);
     readonly croppersOptions: Cropper.Options & any = {
@@ -20,6 +20,8 @@ export class AdminAddPieceImagesComponent implements OnInit {
         dragMode: 'move'
     };
 
+    private name: string;
+
     @ViewChild('mainCropper') mainCropper: CropperComponent;
 
     constructor(private readonly sanitizer: DomSanitizer) {
@@ -28,7 +30,9 @@ export class AdminAddPieceImagesComponent implements OnInit {
     ngOnInit() {
     }
 
-    mainImageUploaded(result: Blob) {
+    mainImageUploaded(result: File) {
+        this.name = result.name;
+
         const fileReader = new FileReader();
         fileReader.onload = (e: any) => this.mainImageUrl$.next(this.sanitizer.bypassSecurityTrustUrl(e.target.result));
         fileReader.readAsDataURL(result);
@@ -37,6 +41,6 @@ export class AdminAddPieceImagesComponent implements OnInit {
     onNext() {
         this.mainCropper.cropper
             .getCroppedCanvas()
-            .toBlob(blob => this.mainImage.emit(blob));
+            .toBlob(blob => this.mainImage.emit({blob, name: this.name}));
     }
 }

@@ -14,23 +14,15 @@ import {Observable} from 'rxjs';
     templateUrl: './dashboard-piece-progression.component.html',
     styleUrls: ['./dashboard-piece-progression.component.css']
 })
-export class DashboardPieceProgressionComponent implements OnInit {
+export class DashboardPieceProgressionComponent {
     @Input() progression: UserPieceProgression;
     @Output() found: EventEmitter<boolean> = new EventEmitter();
 
     opened: boolean;
-    distance$: Observable<string | number>;
 
     constructor(private readonly dialog: MatDialog,
                 private readonly pieceService: PieceService,
                 private readonly geolocation: UserGeolocationService) {
-    }
-
-    ngOnInit(): void {
-        this.distance$ = this.geolocation.currentGeolocation()
-            .pipe(
-                map(point => point ? this.geolocation.distance(point, this.progression.piece.location, true) : null)
-            );
     }
 
 

@@ -9,8 +9,8 @@
         <mat-icon *ngIf="!progression.found" class="not-found">help_outline</mat-icon>
         <div>
             <mat-card-title>{{progression.piece.name}}</mat-card-title>
-            <small *ngIf="distance$ | async as distance">{{distance}} from here</small>
-            <small *ngIf="(distance$ | async) === null">Please <a routerLink="/users/settings">enable</a> geolocation to view distances</small>
+            <small *ngIf="progression.piece.distance as distance">{{(distance / 1000)| number:'1.1-1'}} km from here</small>
+            <small *ngIf="progression.piece.distance === null">Please <a routerLink="/users/settings">enable</a> geolocation to view distances</small>
         </div>
     </div>
     <mat-chip-list >

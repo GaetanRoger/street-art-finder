@@ -13,8 +13,13 @@
 </div>
 
 <div class="main-image-upload" *ngIf="creationLaunched">
-    <small>Main image upload...</small>
-    <mat-progress-bar mode="determinate" [value]="(uploadedPercentage$ | async) || 0"></mat-progress-bar>
+    <small>Main image upload (low)...</small>
+    <mat-progress-bar mode="determinate" [value]="(lowUploadedPercentage$ | async) || 0"></mat-progress-bar>
+</div>
+
+<div class="main-image-upload" *ngIf="creationLaunched">
+    <small>Main image upload (normal)...</small>
+    <mat-progress-bar mode="determinate" [value]="(normalUploadedPercentage$ | async) || 0"></mat-progress-bar>
 </div>
 
 <div class="main-image-upload" *ngIf="creationLaunched">

@@ -9,7 +9,7 @@ import {PieceGroup} from './piece-group';
 })
 export class AdminAddPieceComponent implements OnInit {
     pieceFormGroup: FormGroup;
-    mainImage: Blob;
+    mainImage: { blob: Blob; name: string };
 
     constructor(private readonly fb: FormBuilder) {
     }

@@ -7,7 +7,7 @@
 <app-help-bubble *ngIf="(geolocation.geolocationEnabled() | async) === false" [closable]="false">
     <div class="help-content">
         <span>Please allow the app to access your GPS location for better experience.</span>
-        <button mat-flat-button color="accent" (click)="howToAllowGpsLocation($event)">HOW TO</button>
+        <button mat-flat-button color="primary" (click)="howToAllowGpsLocation($event)">HOW TO</button>
     </div>
 </app-help-bubble>
 
@@ -18,7 +18,7 @@
         </mat-chip-list>
     </div>
 
-    <mat-checkbox formControlName="approximateLocation" class="full-width">
+    <mat-checkbox formControlName="approximateLocation" class="full-width" color="primary">
         User approximate coordinates
     </mat-checkbox>
     <mat-form-field *ngIf="approximateLocation.value" class="full-width">
@@ -28,7 +28,7 @@
     </mat-form-field>
 
     <div class="full-width buttons">
-        <button mat-raised-button color="accent" type="button" (click)="save()"
+        <button mat-raised-button color="primary" type="button" (click)="save()"
                 [disabled]="settingsFormGroup.invalid || saving">
             {{saving ? 'SAVING...' : 'SAVE'}}
         </button>

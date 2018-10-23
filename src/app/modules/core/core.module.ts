@@ -20,6 +20,7 @@ import { HelpBubbleComponent } from './components/help-bubble/help-bubble.compon
 import {FormsModule} from '@angular/forms';
 import { SmallHorizontalLoaderComponent } from './components/small-horizontal-loader/small-horizontal-loader.component';
 import { FullScreenMessageComponent } from './components/full-screen-message/full-screen-message.component';
+import {Ng2ImgMaxModule} from 'ng2-img-max';
 
 @NgModule({
     imports: [
@@ -30,7 +31,9 @@ import { FullScreenMessageComponent } from './components/full-screen-message/ful
         AngularFireAuthModule,
         AngularFirestoreModule.enablePersistence(),
         AngularFireStorageModule,
-        LeafletModule
+        LeafletModule,
+        Ng2ImgMaxModule
+
     ],
     declarations: [
         FlatCardWithImageComponent,
@@ -44,7 +47,7 @@ import { FullScreenMessageComponent } from './components/full-screen-message/ful
         PieceDialogComponent,
         HelpBubbleComponent,
         SmallHorizontalLoaderComponent,
-        FullScreenMessageComponent
+        FullScreenMessageComponent,
     ],
     exports: [
         AngularFireAuthModule,
