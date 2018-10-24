@@ -15,12 +15,12 @@ import {SmallLoadingSpinnerComponent} from './components/small-loading-spinner/s
 import {ImageComponent} from './components/image/image.component';
 import {PieceDialogComponent} from './components/piece-dialog/piece-dialog.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {AlgoliaService} from './services/algolia/algolia.service';
-import { HelpBubbleComponent } from './components/help-bubble/help-bubble.component';
+import {HelpBubbleComponent} from './components/help-bubble/help-bubble.component';
 import {FormsModule} from '@angular/forms';
-import { SmallHorizontalLoaderComponent } from './components/small-horizontal-loader/small-horizontal-loader.component';
-import { FullScreenMessageComponent } from './components/full-screen-message/full-screen-message.component';
+import {SmallHorizontalLoaderComponent} from './components/small-horizontal-loader/small-horizontal-loader.component';
+import {FullScreenMessageComponent} from './components/full-screen-message/full-screen-message.component';
 import {Ng2ImgMaxModule} from 'ng2-img-max';
+import {LoadMoreButtonComponent} from './components/load-more-button/load-more-button.component';
 
 @NgModule({
     imports: [
@@ -29,7 +29,7 @@ import {Ng2ImgMaxModule} from 'ng2-img-max';
         RouterModule,
         ComponentsLibraryModule,
         AngularFireAuthModule,
-        AngularFirestoreModule.enablePersistence(),
+        AngularFirestoreModule.enablePersistence({experimentalTabSynchronization: true}),
         AngularFireStorageModule,
         LeafletModule,
         Ng2ImgMaxModule
@@ -48,6 +48,7 @@ import {Ng2ImgMaxModule} from 'ng2-img-max';
         HelpBubbleComponent,
         SmallHorizontalLoaderComponent,
         FullScreenMessageComponent,
+        LoadMoreButtonComponent,
     ],
     exports: [
         AngularFireAuthModule,
@@ -62,7 +63,8 @@ import {Ng2ImgMaxModule} from 'ng2-img-max';
         ImageComponent,
         HelpBubbleComponent,
         SmallHorizontalLoaderComponent,
-        FullScreenMessageComponent
+        FullScreenMessageComponent,
+        LoadMoreButtonComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]

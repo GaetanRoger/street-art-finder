@@ -14,7 +14,7 @@ import {
     MatListModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule, MatSelectModule,
+    MatProgressSpinnerModule, MatRippleModule, MatSelectModule,
     MatSnackBarModule,
     MatStepperModule,
     MatTabsModule,
@@ -41,7 +41,8 @@ import {
         MatAutocompleteModule,
         MatStepperModule,
         MatExpansionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatRippleModule
     ],
     declarations: [],
     exports: [
@@ -64,7 +65,8 @@ import {
         MatAutocompleteModule,
         MatStepperModule,
         MatExpansionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatRippleModule
     ]
 })
 export class ComponentsLibraryModule {

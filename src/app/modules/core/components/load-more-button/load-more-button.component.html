@@ -1,0 +1,11 @@
+<div class="container">
+    <button mat-raised-button
+            color="primary"
+            (click)="loadMore.emit()"
+            *ngIf="!noMoreToLoad"
+    >Load more
+    </button>
+
+    <p *ngIf="noMoreToLoad">Nothing more to load</p>
+
+</div>

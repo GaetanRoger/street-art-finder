@@ -15,7 +15,7 @@
             [secondaryButtonExternalLink]="artist.website"
     ></app-flat-card-with-image>
 
-    <div *ngIf="pieces$ | async as pieces">
+    <div *ngIf="pieces.length > 0">
         <app-piece *ngFor="let piece of pieces" [piece]="piece"></app-piece>
         <div *ngIf="pieces.length === 0 && !filter$.getValue()">
             No pieces were yet uploaded.
@@ -24,6 +24,11 @@
             No pieces were found with your query.
         </div>
     </div>
+
+    <app-load-more-button
+            [noMoreToLoad]="noMoreToLoad"
+            (loadMore)="loadPieces()"
+    ></app-load-more-button>
 
 </div>
 <div *ngIf="!(artist$ | async)">

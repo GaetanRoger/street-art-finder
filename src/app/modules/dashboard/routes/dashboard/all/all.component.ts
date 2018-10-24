@@ -21,6 +21,7 @@ import {
     tileLayer
 } from 'leaflet';
 import {User} from '../../../../core/types/user';
+import {UserGeolocationService} from '../../../../core/services/geolocation/user-geolocation.service';
 
 @Component({
     selector: 'app-all',
@@ -41,6 +42,7 @@ export class AllComponent implements OnInit {
     markersLayer$: Observable<FeatureGroup>;
     circlesLayer$: Observable<FeatureGroup>;
     showMarkers$: Observable<boolean>;
+    userLayer$: Observable<Marker>;
     options: any;
     fitBounds$: Observable<LatLngBounds>;
     leafletMap: Map;
@@ -51,11 +53,13 @@ export class AllComponent implements OnInit {
     constructor(private readonly progression: UserArtistProgressionService,
                 private readonly userService: UserService,
                 private readonly pieceService: PieceService,
-                private changeDetector: ChangeDetectorRef) {
+                private changeDetector: ChangeDetectorRef,
+                private readonly geolocation: UserGeolocationService) {
     }
 
     ngOnInit() {
         this.user$ = this.userService.user();
+        this.userLayer$ = this._getUserMarker();
         this.showMarkers$ = this.user$.pipe(map(u => u.settings.locationApproximation === 0));
         this.pieces$ = this.getPieces();
         this.markersLayer$ = this.createMarkersLayer();
@@ -74,6 +78,19 @@ export class AllComponent implements OnInit {
         });
 
         this.fitBounds$.subscribe(fb => this.lastfb = fb);
+    }
+
+    private _getUserMarker() {
+        return this.geolocation.currentGeolocation().pipe(
+            map(g => {
+                if (!g) return null;
+                const m = marker([g.latitude, g.longitude]);
+                const p = popup({offset: new Point(0, -40)})
+                    .setContent(`<strong>You are here</strong>`);
+                m.bindPopup(p).togglePopup();
+                return m;
+            })
+        );
     }
 
     private createFitBounds() {
