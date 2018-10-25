@@ -1,13 +1,12 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {UserArtistProgressionService} from '../../../../core/services/user-artist-progression.service';
 import {UserService} from '../../../../core/services/user/user.service';
 import {flatMap, map} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {Piece} from '../../../../core/types/piece';
 import {PieceService} from '../../../../core/services/piece/piece.service';
-import {Circle, Layer, Marker, TileLayer} from 'leaflet';
+import {Circle, Marker} from 'leaflet';
 import {User} from '../../../../core/types/user';
-import {UserGeolocationService} from '../../../../core/services/geolocation/user-geolocation.service';
 import {MapHelperService} from '../../../../core/services/map-helper/map-helper.service';
 import {MapElementInput} from '../../../../core/components/map/map-element-input';
 
@@ -19,36 +18,22 @@ import {MapElementInput} from '../../../../core/components/map/map-element-input
 export class AllComponent implements OnInit {
     @Input() selected$: BehaviorSubject<boolean>;
 
-    baseLayer: TileLayer;
-    private readonly zoom = 10;
     private user$: Observable<User>;
 
     pieces$: Observable<MapElementInput[]>;
 
-    layers: Layer[];
     showMarkers$: Observable<boolean>;
-    userLayer$: Observable<Marker>;
-    options: any;
-
 
     constructor(private readonly progression: UserArtistProgressionService,
                 private readonly userService: UserService,
                 private readonly pieceService: PieceService,
-                private readonly changeDetector: ChangeDetectorRef,
-                private readonly geolocation: UserGeolocationService,
                 private readonly mapHelper: MapHelperService) {
     }
 
     ngOnInit() {
-        this.baseLayer = this.mapHelper.tileLayer();
         this.user$ = this.userService.user();
-        this.userLayer$ = this.mapHelper.userMarker();
         this.showMarkers$ = this.mapHelper.showMarkers();
         this.pieces$ = this._getPieces();
-        this.layers = [this.baseLayer];
-        this.options = {
-            zoom: this.zoom
-        };
     }
 
     private _createMarkerFromPiece(p: Piece): Marker {
