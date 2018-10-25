@@ -5,23 +5,10 @@ import {flatMap, map} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {Piece} from '../../../../core/types/piece';
 import {PieceService} from '../../../../core/services/piece/piece.service';
-import {
-    Circle,
-    circle,
-    FeatureGroup,
-    featureGroup,
-    LatLng,
-    LatLngBounds,
-    Layer,
-    Map,
-    Marker,
-    marker,
-    Point,
-    popup,
-    tileLayer
-} from 'leaflet';
+import {Circle, FeatureGroup, featureGroup, LatLngBounds, Layer, Map, Marker, TileLayer} from 'leaflet';
 import {User} from '../../../../core/types/user';
 import {UserGeolocationService} from '../../../../core/services/geolocation/user-geolocation.service';
+import {MapHelperService} from '../../../../core/services/map-helper/map-helper.service';
 
 @Component({
     selector: 'app-all',
@@ -31,9 +18,8 @@ import {UserGeolocationService} from '../../../../core/services/geolocation/user
 export class AllComponent implements OnInit {
     @Input() selected$: BehaviorSubject<boolean>;
 
-    readonly baseLayer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
+    baseLayer: TileLayer;
     private readonly zoom = 10;
-    private readonly defaultRadius = 50;
     private user$: Observable<User>;
 
     pieces$: Observable<Piece[]>;
@@ -53,18 +39,20 @@ export class AllComponent implements OnInit {
     constructor(private readonly progression: UserArtistProgressionService,
                 private readonly userService: UserService,
                 private readonly pieceService: PieceService,
-                private changeDetector: ChangeDetectorRef,
-                private readonly geolocation: UserGeolocationService) {
+                private readonly changeDetector: ChangeDetectorRef,
+                private readonly geolocation: UserGeolocationService,
+                private readonly mapHelper: MapHelperService) {
     }
 
     ngOnInit() {
+        this.baseLayer = this.mapHelper.tileLayer();
         this.user$ = this.userService.user();
-        this.userLayer$ = this._getUserMarker();
-        this.showMarkers$ = this.user$.pipe(map(u => u.settings.locationApproximation === 0));
-        this.pieces$ = this.getPieces();
-        this.markersLayer$ = this.createMarkersLayer();
-        this.circlesLayer$ = this.createCirclesLayer();
-        this.fitBounds$ = this.createFitBounds();
+        this.userLayer$ = this.mapHelper.userMarker();
+        this.showMarkers$ = this.mapHelper.showMarkers();
+        this.pieces$ = this._getPieces();
+        this.markersLayer$ = this._createMarkersLayer();
+        this.circlesLayer$ = this._createCirclesLayer();
+        this.fitBounds$ = this._createFitBounds();
         this.layers = [this.baseLayer];
         this.options = {
             zoom: this.zoom
@@ -80,102 +68,83 @@ export class AllComponent implements OnInit {
         this.fitBounds$.subscribe(fb => this.lastfb = fb);
     }
 
-    private _getUserMarker() {
-        return this.geolocation.currentGeolocation().pipe(
-            map(g => {
-                if (!g) return null;
-                const m = marker([g.latitude, g.longitude]);
-                const p = popup({offset: new Point(0, -40)})
-                    .setContent(`<strong>You are here</strong>`);
-                m.bindPopup(p).togglePopup();
-                return m;
-            })
-        );
+    mapReady(lMap: Map): void {
+        this.leafletMap = lMap;
     }
 
-    private createFitBounds() {
+    private _createFitBounds() {
         return this.markersLayer$.pipe(
             map(fg => fg.getBounds())
         );
     }
 
-    private createMarkersLayer() {
+    private _createMarkersLayer() {
         return this.pieces$.pipe(
-            map(pieces => this.createMarkerFeatureGroupFromPieces(pieces))
+            map(pieces => this._createMarkerFeatureGroupFromPieces(pieces))
         );
     }
 
-    private createCirclesLayer() {
+    private _createCirclesLayer() {
         return this.pieces$.pipe(
-            flatMap(pieces => this.createCircleFeatureGroupFromPieces(pieces))
+            flatMap(pieces => this._createCircleFeatureGroupFromPieces(pieces))
         );
     }
 
-    private createMarkerFeatureGroupFromPieces(pieces: Piece[]) {
+    private _createMarkerFeatureGroupFromPieces(pieces: Piece[]) {
         return featureGroup(
             pieces.map(
-                p => this.createMarkerFromPiece(p)
+                p => this._createMarkerFromPiece(p)
             )
         );
     }
 
-    private createMarkerFromPiece(p: Piece): Marker {
-        const latLng = new LatLng(p.location.latitude, p.location.longitude);
-        const options = {title: p.name, alt: p.name + ' marker'};
-        const mark = marker(latLng, options);
-
-        const pop = popup({offset: new Point(0, -40)})
-            .setContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
-            .on('add', () => {
-                this.moreInfo.next(p);
-                this.changeDetector.detectChanges();
-            });
-
-        mark.bindPopup(pop).openPopup();
-
-        return mark;
+    private _createMarkerFromPiece(p: Piece): Marker {
+        return this.mapHelper.markerBuilder(p.location)
+            .setOptions({title: p.name, alt: `${p.name} marker`})
+            .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
+            .setEvents({
+                onAdd: () => {
+                    this.moreInfo.next(p);
+                    this.changeDetector.detectChanges();
+                }
+            })
+            .build();
     }
 
-    private getPieces() {
+    private _getPieces() {
         return this.progression.findAll(this.user$)
             .pipe(
                 map(uas => uas.map(ua => ua.artist.objectID)),
-                flatMap(ids => this.getPiecesByArtistsIds(ids))
+                flatMap(ids => this._getPiecesByArtistsIds(ids))
             );
     }
 
-    private getPiecesByArtistsIds(artistsIds: string[]): Observable<Piece[]> {
+    private _getPiecesByArtistsIds(artistsIds: string[]): Observable<Piece[]> {
         const piecesByArtist$ = artistsIds.map(id => this.pieceService.findAll(id));
         return combineLatest(piecesByArtist$)
             .pipe(flatMap(p => p));
     }
 
-    mapReady(lMap: Map): void {
-        this.leafletMap = lMap;
-    }
-
-    private createCircleFeatureGroupFromPieces(pieces: Piece[]): Observable<FeatureGroup> {
+    private _createCircleFeatureGroupFromPieces(pieces: Piece[]): Observable<FeatureGroup> {
         return this.user$
             .pipe(
                 map(u => featureGroup(
-                    pieces.map(p => this.createCircleFromPiece(p, u.settings.locationApproximation))
+                    pieces.map(p => this._createCircleFromPiece(p, u.settings.locationApproximation))
                 ))
             );
     }
 
-    private createCircleFromPiece(p: Piece, radius: number): Circle {
-        const latLng = new LatLng(p.location.latitude, p.location.longitude);
-        const circ = circle(latLng, radius);
-
-        const pop = popup({offset: new Point(0, -40)})
-            .setContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
-            .on('add', () => {
-                this.moreInfo.next(p);
-                this.changeDetector.detectChanges();
-            });
-
-        circ.bindPopup(pop).openPopup();
-
-        return circ;
+    private _createCircleFromPiece(p: Piece, radius: number): Circle {
+        return this.mapHelper
+            .circleBuilder(p.location)
+            .setRadius(radius)
+            .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
+            .setEvents({
+                onAdd: () => {
+                    this.moreInfo.next(p);
+                    this.changeDetector.detectChanges();
+                }
+            })
+            .build();
     }
 }

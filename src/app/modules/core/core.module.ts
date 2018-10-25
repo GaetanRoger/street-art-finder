@@ -21,6 +21,7 @@ import {SmallHorizontalLoaderComponent} from './components/small-horizontal-load
 import {FullScreenMessageComponent} from './components/full-screen-message/full-screen-message.component';
 import {Ng2ImgMaxModule} from 'ng2-img-max';
 import {LoadMoreButtonComponent} from './components/load-more-button/load-more-button.component';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
     imports: [
@@ -49,6 +50,7 @@ import {LoadMoreButtonComponent} from './components/load-more-button/load-more-b
         SmallHorizontalLoaderComponent,
         FullScreenMessageComponent,
         LoadMoreButtonComponent,
+        MapComponent,
     ],
     exports: [
         AngularFireAuthModule,
@@ -64,7 +66,8 @@ import {LoadMoreButtonComponent} from './components/load-more-button/load-more-b
         HelpBubbleComponent,
         SmallHorizontalLoaderComponent,
         FullScreenMessageComponent,
-        LoadMoreButtonComponent
+        LoadMoreButtonComponent,
+        MapComponent,
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]

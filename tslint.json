@@ -10,6 +10,7 @@
       true,
       "check-space"
     ],
+    "only-arrow-functions": true,
     "curly": true,
     "deprecation": {
       "severity": "warn"
@@ -31,7 +32,6 @@
       true,
       140
     ],
-    "max-file-line-count": [true, 100],
     "member-access": false,
     "member-ordering": [
       true,

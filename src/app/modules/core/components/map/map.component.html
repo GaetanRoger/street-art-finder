@@ -1,0 +1,9 @@
+<div class="map"
+     leaflet
+     [leafletOptions]="{zoom: zoom}"
+     (leafletMapReady)="mapReady($event)"
+>
+    <div [leafletLayer]="tileLayer"></div>
+    <div [leafletLayer]="elementsLayer" *ngIf="elementsLayer"></div>
+    <div [leafletLayer]="userLayer$ | async" *ngIf="(userLayer$ | async) && showUserMarker"></div>
+</div>

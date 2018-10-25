@@ -15,7 +15,7 @@ import {CoordinatesCalculusService} from '../../services/coordinates-calculus/co
 })
 export class PieceDialogComponent implements OnInit {
     private readonly baseMapsUrl = 'https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=';
-    private readonly baseLayer = tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
+    private readonly baseLayer = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
     private readonly zoom = 16;
     private readonly defaultRadius = 50;
 

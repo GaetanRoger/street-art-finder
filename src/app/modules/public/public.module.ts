@@ -6,11 +6,9 @@ import {CoreModule} from '../core/core.module';
 import {NotFoundComponent} from './routes/not-found/not-found.component';
 import {ArtistComponent} from './routes/artist/artist.component';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
-import {PieceDialogComponent} from '../core/components/piece-dialog/piece-dialog.component';
-import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import { PieceComponent } from './routes/artist/piece/piece.component';
-import {AlgoliaService} from '../core/services/algolia/algolia.service';
-import { LearnMoreComponent } from './routes/learn-more/learn-more.component';
+import {PieceComponent} from './routes/artist/piece/piece.component';
+import {LearnMoreComponent} from './routes/learn-more/learn-more.component';
+import {TempComponent} from './routes/temp/temp.component';
 
 const routes: Route[] = [
     {
@@ -24,6 +22,10 @@ const routes: Route[] = [
     {
         path: 'learn-more',
         component: LearnMoreComponent
+    },
+    {
+        path: 'temp',
+        component: TempComponent
     },
     {
         path: '**',
@@ -43,7 +45,8 @@ const routes: Route[] = [
         NotFoundComponent,
         ArtistComponent,
         PieceComponent,
-        LearnMoreComponent
+        LearnMoreComponent,
+        TempComponent
     ]
 })
 export class PublicModule {

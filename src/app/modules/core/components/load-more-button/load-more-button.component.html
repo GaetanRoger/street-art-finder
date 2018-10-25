@@ -6,6 +6,8 @@
     >Load more
     </button>
 
-    <p *ngIf="noMoreToLoad">Nothing more to load</p>
+    <mat-chip-list *ngIf="noMoreToLoad">
+        <mat-chip>Nothing more to load</mat-chip>
+    </mat-chip-list>
 
 </div>
