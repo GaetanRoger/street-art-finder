@@ -1,9 +1,7 @@
-<div class="map"
-     leaflet
-     [leafletOptions]="options"
-     (leafletMapReady)="mapReady($event)">
-    <div [leafletLayer]="markersLayer$ | async" *ngIf="showMarkers$ | async"></div>
-    <div [leafletLayer]="circlesLayer$ | async" *ngIf="!(showMarkers$ | async)"></div>
-    <div [leafletLayer]="baseLayer"></div>
-    <div [leafletLayer]="userLayer$ | async" *ngIf="userLayer$ | async"></div>
+<div class="map">
+    <app-map
+        [elements]="pieces$ | async"
+        [layerToShow]="(showMarkers$ | async) ? 'marker' : 'circle'"
+        [refresh]="selected$"
+    ></app-map>
 </div>

@@ -1,9 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {featureGroup, FeatureGroup, Map, Marker, TileLayer} from 'leaflet';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {MapHelperService} from '../../services/map-helper/map-helper.service';
 import {ObjectIDable} from '../../types/object-idable';
 import {MapElementInput} from './map-element-input';
+import {filter} from 'rxjs/operators';
 
 const cloneLayer = require('leaflet-clonelayer');
 
@@ -51,6 +52,8 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
      * Initial map zoom.
      */
     @Input() zoom = 18;
+
+    @Input() refresh: BehaviorSubject<boolean>;
 
     /**
      * True to use user's locationApproximation setting.
@@ -131,6 +134,12 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
         if (this._leafletMap && this._markersLayer) {
             this._updateFitBounds();
         }
+
+        if (this.refresh) {
+            this.refresh
+                .pipe(filter(v => v === true))
+                .subscribe(() => this._refreshMap());
+        }
     }
 
     /**
@@ -204,6 +213,15 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
      * @private
      */
     private _updateFitBounds() {
-        this._leafletMap.fitBounds(this._markersLayer.getBounds());
+        if (this._leafletMap && this._markersLayer.getLayers().length > 0) {
+            this._leafletMap.fitBounds(this._markersLayer.getBounds());
+        }
+    }
+
+    private _refreshMap() {
+        if (this._leafletMap) {
+            this._leafletMap.invalidateSize();
+            this._updateFitBounds();
+        }
     }
 }

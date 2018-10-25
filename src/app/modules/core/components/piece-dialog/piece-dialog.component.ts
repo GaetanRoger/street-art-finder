@@ -118,8 +118,7 @@ export class PieceDialogComponent implements OnInit {
     private _getCircleRadius() {
         return this.userService.user()
             .pipe(
-                filter(u => !!u),
-                map(u => u.settings.locationApproximation)
+                map(u => u ? u.settings.locationApproximation : 50)
             );
     }
 }

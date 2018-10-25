@@ -15,7 +15,6 @@ import {CoordinatesCalculusService} from '../coordinates-calculus/coordinates-ca
 })
 export class MapHelperService {
     readonly MAP_TILES_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    readonly POPUP_OFFSET = new Point(0, -40);
 
     constructor(private readonly userGeolocation: UserGeolocationService,
                 private readonly userService: UserService,
