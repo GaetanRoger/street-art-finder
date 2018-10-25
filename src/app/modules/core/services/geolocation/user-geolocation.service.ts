@@ -28,8 +28,6 @@ export class UserGeolocationService {
             );
         }
 
-        this._geolocation$.subscribe(v => console.log('location', v));
-
         return this._geolocation$;
 
     }

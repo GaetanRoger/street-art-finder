@@ -6,3 +6,6 @@ mat-dialog-actions {
     display: flex;
     justify-content: space-between;
 }
+.map {
+    height: 300px;
+}

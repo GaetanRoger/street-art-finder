@@ -16,8 +16,7 @@ export class SeededRandomGeneratorService {
 
         if (!maybeNegative) {
             return positiveRandom;
-        }
-        else {
+        } else {
             const r = this.generate(numberSeed * 2);
             return r < 0.5 ? positiveRandom : -positiveRandom;
         }

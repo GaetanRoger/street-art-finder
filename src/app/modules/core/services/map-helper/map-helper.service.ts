@@ -7,6 +7,8 @@ import {Geopoint} from '../../types/geopoint';
 import {UserService} from '../user/user.service';
 import {CircleBuilder} from './builders/circle-builder';
 import {MarkerBuilder} from './builders/marker-builder';
+import {SeededRandomGeneratorService} from '../seeded-random-generator/seeded-random-generator.service';
+import {CoordinatesCalculusService} from '../coordinates-calculus/coordinates-calculus.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +18,9 @@ export class MapHelperService {
     readonly POPUP_OFFSET = new Point(0, -40);
 
     constructor(private readonly userGeolocation: UserGeolocationService,
-                private readonly userService: UserService) {
+                private readonly userService: UserService,
+                private readonly random: SeededRandomGeneratorService,
+                private readonly coordinatesCalculus: CoordinatesCalculusService) {
     }
 
     /**
@@ -65,5 +69,22 @@ export class MapHelperService {
      */
     geopointToLatLng(point: Geopoint): LatLng {
         return new LatLng(point.latitude, point.longitude);
+    }
+
+    latLngToGeopoint(point: LatLng): Geopoint {
+        return {
+            latitude: point.lat,
+            longitude: point.lng
+        };
+    }
+
+    randomizeCircleLocation(location: Geopoint, seed: number | string, radius: number): Geopoint {
+        const randomNumber = this.random.generate(seed, true);
+        const delta = (radius / 2) * Math.sqrt(2) * 0.001;
+        return {
+            latitude: this.coordinatesCalculus.addMetersToLatitude(location, randomNumber * delta),
+            longitude: this.coordinatesCalculus.addMetersToLongitude(location, randomNumber * delta)
+        };
+
     }
 }

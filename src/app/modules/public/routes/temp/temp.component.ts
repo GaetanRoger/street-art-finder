@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Geopoint} from '../../../core/types/geopoint';
-import {circle, Marker, marker} from 'leaflet';
-import {MapHelperService} from '../../../core/services/map-helper/map-helper.service';
+import {MapElementInput} from '../../../core/components/map/map-element-input';
+import {circle, marker} from 'leaflet';
 
 @Component({
     selector: 'app-temp',
@@ -9,19 +9,18 @@ import {MapHelperService} from '../../../core/services/map-helper/map-helper.ser
     styleUrls: ['./temp.component.css']
 })
 export class TempComponent implements OnInit {
-    elements: Geopoint[] = [
+    elements: MapElementInput[] = [
         {
-            latitude: 12.55,
-            longitude: 12.55
+            id: '1',
+            marker: marker([12.55, 12.55]),
+            circle: circle([12.55, 12.55], {radius: 50})
         },
         {
-            latitude: 12.56,
-            longitude: 12.55
+            id: '2',
+            marker: marker([12.56, 12.55]),
+            circle: circle([12.56, 12.55], {radius: 50})
         }
     ];
-
-    readonly elementToMarker = (g) => marker([g.latitude, g.longitude]);
-    readonly elementToCircle = (g) => circle([g.latitude, g.longitude], {radius: 50});
 
     style = 'marker';
 
@@ -33,8 +32,9 @@ export class TempComponent implements OnInit {
 
     add() {
         this.elements = [...this.elements, {
-            latitude: 12.54,
-            longitude: 12.55
+            id: '2',
+            marker: marker([12.54, 12.55]),
+            circle: circle([12.54, 12.55], {radius: 50})
         }];
 
         this.style = 'circle';

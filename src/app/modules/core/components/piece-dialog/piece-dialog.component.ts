@@ -2,11 +2,11 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Piece} from '../../types/piece';
 import {UserService} from '../../services/user/user.service';
-import {Circle, circle, latLng, Layer, Marker, marker, tileLayer} from 'leaflet';
+import {Circle, Marker} from 'leaflet';
 import {Observable} from 'rxjs';
-import {filter, map, startWith} from 'rxjs/operators';
-import {SeededRandomGeneratorService} from '../../services/seeded-random-generator/seeded-random-generator.service';
-import {CoordinatesCalculusService} from '../../services/coordinates-calculus/coordinates-calculus.service';
+import {filter, map} from 'rxjs/operators';
+import {MapElementInput} from '../map/map-element-input';
+import {MapHelperService} from '../../services/map-helper/map-helper.service';
 
 @Component({
     selector: 'app-piece-dialog',
@@ -14,25 +14,57 @@ import {CoordinatesCalculusService} from '../../services/coordinates-calculus/co
     styleUrls: ['./piece-dialog.component.css']
 })
 export class PieceDialogComponent implements OnInit {
-    private readonly baseMapsUrl = 'https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=';
-    private readonly baseLayer = tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: '...'});
-    private readonly zoom = 16;
-    private readonly defaultRadius = 50;
 
+    /* *************************************************** *
+     *           _   _        _ _           _              *
+     *      /\  | | | |      (_) |         | |             *
+     *     /  \ | |_| |_ _ __ _| |__  _   _| |_ ___  ___   *
+     *    / /\ \| __| __| '__| | '_ \| | | | __/ _ \/ __|  *
+     *   / ____ \ |_| |_| |  | | |_) | |_| | ||  __/\__ \  *
+     *  /_/    \_\__|\__|_|  |_|_.__/ \__,_|\__\___||___/  *
+     *                                                     *
+     * *************************************************** */
 
-    options: any;
-    baseLayers: Layer[];
-    markerLayer: Marker;
-    circleLayer$: Observable<Circle>;
+    /*
+     *   ___      _    _ _
+     *  | _ \_  _| |__| (_)__
+     *  |  _/ || | '_ \ | / _|
+     *  |_|  \_,_|_.__/_|_\__|
+     *
+     */
+
+    readonly baseMapsUrl = 'https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=';
 
     showMarker$: Observable<boolean>;
-    circleRadius$: Observable<number>;
+    pieceMapInput$: Observable<MapElementInput[]>;
+
+
+    /* ***************************************** *
+     *   __  __      _   _               _       *
+     *  |  \/  |    | | | |             | |      *
+     *  | \  / | ___| |_| |__   ___   __| |___   *
+     *  | |\/| |/ _ \ __| '_ \ / _ \ / _` / __|  *
+     *  | |  | |  __/ |_| | | | (_) | (_| \__ \  *
+     *  |_|  |_|\___|\__|_| |_|\___/ \__,_|___/  *
+     *                                           *
+     * ***************************************** */
+
+    /*
+     *   ___      _    _ _
+     *  | _ \_  _| |__| (_)__
+     *  |  _/ || | '_ \ | / _|
+     *  |_|  \_,_|_.__/_|_\__|
+     *
+     */
 
     constructor(private readonly dialogRef: MatDialogRef<PieceDialogComponent>,
                 @Inject(MAT_DIALOG_DATA) public readonly piece: Piece,
                 private readonly userService: UserService,
-                private readonly randomGenerator: SeededRandomGeneratorService,
-                private readonly coordinatesCalculus: CoordinatesCalculusService) {
+                private readonly mapHelper: MapHelperService) {
+    }
+
+    get mapsUrl(): string {
+        return `${this.baseMapsUrl}${this.piece.location.latitude},${this.piece.location.longitude}`;
     }
 
     ngOnInit() {
@@ -41,25 +73,39 @@ export class PieceDialogComponent implements OnInit {
             return;
         }
 
-        const location = this.piece.location;
-        const randomNumber = this.randomGenerator.generate(this.piece.objectID, true);
-        const circleLocations = {
-            latitude: this.coordinatesCalculus.addMetersToLatitude(location, randomNumber * 0.035355),
-            longitude: this.coordinatesCalculus.addMetersToLongitude(location, randomNumber * 0.035355)
-        };
-
-        this.options = this.createLeafletOptions();
-        this.baseLayers = [this.baseLayer];
-
-        this.markerLayer = marker([location.latitude, location.longitude]);
-
         this.showMarker$ = this._shouldShowMarker();
-        this.circleRadius$ = this._getCircleRadius();
-        this.circleLayer$ = this._getCircleLayer(circleLocations);
+        this.pieceMapInput$ = this._getPieceMapInput();
     }
 
-    get mapsUrl(): string {
-        return `${this.baseMapsUrl}${this.piece.location.latitude},${this.piece.location.longitude}`;
+
+    /*
+     *   ___     _          _
+     *  | _ \_ _(_)_ ____ _| |_ ___
+     *  |  _/ '_| \ V / _` |  _/ -_)
+     *  |_| |_| |_|\_/\__,_|\__\___|
+     *
+     */
+
+    private _getPieceMapInput(): Observable<MapElementInput[]> {
+        return this._getCircleRadius()
+            .pipe(
+                map(r => ({
+                    id: this.piece.objectID,
+                    marker: this._createMarkerFromPiece(this.piece),
+                    circle: this._createCircleFromPiece(this.piece, r)
+                })),
+                map(p => ([p]))
+            );
+    }
+
+    private _createCircleFromPiece(piece: Piece, radius: number): Circle {
+        return this.mapHelper.circleBuilder(piece.location)
+            .setRadius(radius)
+            .build();
+    }
+
+    private _createMarkerFromPiece(piece: Piece): Marker {
+        return this.mapHelper.markerBuilder(piece.location).build();
     }
 
     private _shouldShowMarker() {
@@ -69,43 +115,11 @@ export class PieceDialogComponent implements OnInit {
             );
     }
 
-    private _getCircleLayer(location: { latitude: number; longitude: number; }): Observable<Circle> {
-        return this.circleRadius$
-            .pipe(
-                startWith(this.defaultRadius),
-                map(r => this._getCircleLocationsAndRadius(location, r)),
-                map(locr => circle([locr.location.latitude, locr.location.longitude], {radius: locr.radius}))
-            );
-    }
-
-    private _getCircleLocationsAndRadius(location: { latitude: number; longitude: number; }, radius: number): { location: { latitude: number; longitude: number }; radius: number } {
-        const randomNumber = this.randomGenerator.generate(this.piece.objectID, true);
-        const delta = (radius / 2) * Math.sqrt(2) * 0.001;
-        const circleLocations = {
-            latitude: this.coordinatesCalculus.addMetersToLatitude(location, randomNumber * delta),
-            longitude: this.coordinatesCalculus.addMetersToLongitude(location, randomNumber * delta)
-        };
-
-        return {
-            location: circleLocations,
-            radius
-        };
-    }
-
     private _getCircleRadius() {
         return this.userService.user()
             .pipe(
                 filter(u => !!u),
                 map(u => u.settings.locationApproximation)
             );
-    }
-
-    private createLeafletOptions(): any {
-        const l = this.piece.location;
-
-        return {
-            zoom: this.zoom,
-            center: latLng(l.latitude, l.longitude),
-        };
     }
 }
