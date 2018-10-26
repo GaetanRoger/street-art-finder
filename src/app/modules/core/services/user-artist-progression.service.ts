@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {User} from '../types/user';
 import {Observable, of} from 'rxjs';
-import {flatMap, map, tap} from 'rxjs/operators';
+import {flatMap, map, take, tap} from 'rxjs/operators';
 import {ObjectIDInjectorService} from './objectid-injecter/object-i-d-injector.service';
 import {UserArtistProgression} from '../types/user-artist-progression';
 import {Artist} from '../types/artist';
-import {AlgoliaService} from './algolia/algolia.service';
+import {UserPieceProgressionService} from './user_piece_progression/user-piece-progression.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,8 @@ export class UserArtistProgressionService {
     private readonly COLLECTION = 'users_artists';
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjectorService<UserArtistProgression>) {
+                private readonly objectIDInjecter: ObjectIDInjectorService<UserArtistProgression>,
+                private readonly pieceProgression: UserPieceProgressionService) {
     }
 
     findAll(user: User | Observable<User>): Observable<UserArtistProgression[]> {
@@ -68,5 +69,17 @@ export class UserArtistProgressionService {
                 map(snap => this.objectIDInjecter.injectIntoDoc(snap)),
                 tap(_ => console.log('found', _))
             );
+    }
+
+    async markAllPiecesAsFound(progression: UserArtistProgression) {
+        const pieces = await this.pieceProgression
+            .piecesProgression(progression.artist.objectID, {onlyNotFound: true})
+            .pipe(take(1))
+            .toPromise();
+
+        return this.pieceProgression.toggleMultipleFounds(
+            pieces.map(p => p.objectID),
+            true
+        );
     }
 }

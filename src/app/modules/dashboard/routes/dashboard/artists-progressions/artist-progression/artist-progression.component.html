@@ -11,8 +11,12 @@
     </div>
 </div>
 <mat-menu #artistMenu="matMenu">
-    <button mat-menu-item (click)="askToRemoveArtist()">
-        <mat-icon>delete</mat-icon>
+    <button mat-menu-item (click)="askToMarkAllPiecesAsFound()">
+        <mat-icon>visibility</mat-icon>
+        <span>Mark all pieces as found</span>
+    </button>
+    <button mat-menu-item class="warn" (click)="askToRemoveArtist()">
+        <mat-icon color="warn">delete</mat-icon>
         <span>Remove artist</span>
     </button>
 </mat-menu>

@@ -13,6 +13,7 @@ import {filter} from 'rxjs/operators';
 export class ArtistProgressionComponent implements OnInit {
     @Input() progression: UserArtistProgression;
     @Output() removeProgression: EventEmitter<void> = new EventEmitter();
+    @Output() markAllAsFound: EventEmitter<void> = new EventEmitter();
 
     removed = false;
 
@@ -49,7 +50,9 @@ export class ArtistProgressionComponent implements OnInit {
             {
                 data: {
                     title: `Remove artist ${this.progression.artist.name}?`,
-                    text: 'All your progression will be lost!'
+                    text: 'All your progression will be lost!',
+                    submitActivationDelay: 2000,
+                    mainButtonColor: 'warn'
                 }
             }
         ).afterClosed()
@@ -57,6 +60,23 @@ export class ArtistProgressionComponent implements OnInit {
             .subscribe(_ => {
                 this.removeProgression.emit();
                 this.removed = true;
+            });
+    }
+
+    askToMarkAllPiecesAsFound(): void {
+        this.dialog.open(
+            ConfirmationDialogComponent,
+            {
+                data: {
+                    title: `Are you sure?`,
+                    text: `Mark all pieces of artist ${this.progression.artist.name} as found?`,
+                    submitActivationDelay: 2000,
+                }
+            }
+        ).afterClosed()
+            .pipe(filter(result => result === true))
+            .subscribe(_ => {
+                this.markAllAsFound.emit();
             });
     }
 }

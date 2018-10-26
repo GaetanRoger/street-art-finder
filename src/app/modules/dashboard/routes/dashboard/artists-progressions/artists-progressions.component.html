@@ -8,6 +8,7 @@
             *ngFor="let progression of progressions | async"
             [progression]="progression"
             (removeProgression)="removeProgression(progression)"
+            (markAllAsFound)="markAllPiecesAsFound(progression)"
     >
     </app-artist-progression>
 </div>

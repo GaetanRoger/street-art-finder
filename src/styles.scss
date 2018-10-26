@@ -8,6 +8,9 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 .primary-color {
   color: mat-color($primary);
 }
+.warn, .warn mat-icon {
+  color: mat-color($warn);
+}
 
 
 

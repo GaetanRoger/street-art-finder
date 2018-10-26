@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
-import {User} from '../../types/user';
 import {Observable, of} from 'rxjs';
 import {flatMap, map} from 'rxjs/operators';
 import {UserPieceProgression} from '../../types/user-piece-progression';
 import {PiecesProgressionOptions} from './pieces-progression-options';
+import {UserService} from '../user/user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,25 +19,22 @@ export class UserPieceProgressionService {
     };
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjectorService<UserPieceProgression>) {
+                private readonly objectIDInjecter: ObjectIDInjectorService<UserPieceProgression>,
+                private readonly userService: UserService) {
     }
 
-    piecesProgression(user: User | Observable<User>, options: PiecesProgressionOptions): Observable<UserPieceProgression[]> {
+    piecesProgression(artistId: string, options: PiecesProgressionOptions): Observable<UserPieceProgression[]> {
         const opt = options || this.DEFAULT_OPTIONS;
 
-        const user$ = user instanceof Observable
-            ? user
-            : of(user);
-
-        return user$.pipe(
-            flatMap(u => u ? this.artistsProgressionFromUserId(u.objectID, opt) : of([])),
+        return this.userService.user().pipe(
+            flatMap(u => u ? this.artistsProgressionFromUserId(artistId, u.objectID, opt) : of([])),
         );
     }
 
-    artistsProgressionFromUserId(id: string, options: PiecesProgressionOptions = {}): Observable<UserPieceProgression[]> {
+    artistsProgressionFromUserId(artistId: string, userId: string, options: PiecesProgressionOptions = {}): Observable<UserPieceProgression[]> {
         const opt = options || this.DEFAULT_OPTIONS;
 
-        return this.getFirestoreCollectionFromUserId(id, opt).snapshotChanges()
+        return this._getFirestoreCollectionFromUserId(artistId, userId, opt).snapshotChanges()
             .pipe(
                 map(a => this.objectIDInjecter.injectIntoCollection(a))
             );
@@ -49,10 +46,23 @@ export class UserPieceProgressionService {
             .update({found: value});
     }
 
-    private getFirestoreCollectionFromUserId(id: string, options: PiecesProgressionOptions = {}) {
+    toggleMultipleFounds(progessionids: string[], value: boolean) {
+        const batch = this.firestore.firestore.batch();
+
+        progessionids
+            .map(pId => this.firestore.doc(`${this.COLLECTION}/${pId}`).ref)
+            .forEach(ref => batch.update(ref, {found: value}));
+
+        return batch.commit();
+    }
+
+    private _getFirestoreCollectionFromUserId(artistId: string, userId: string, options: PiecesProgressionOptions = {}) {
         return this.firestore.collection<UserPieceProgression>(
             this.COLLECTION,
-            ref => this._addArgumentsFromOptions(ref.where('user', '==', id), options)
+            ref => this._addArgumentsFromOptions(
+                ref.where('user', '==', userId)
+                    .where('artist.objectID', '==', artistId),
+                options)
         );
     }
 

@@ -1,8 +1,9 @@
 import {Change, EventContext} from 'firebase-functions';
 import {DocumentSnapshot} from 'firebase-functions/lib/providers/firestore';
 import {Helpers} from '../../helpers';
-import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
+import * as admin from 'firebase-admin';
+import Firestore = FirebaseFirestore.Firestore;
 
 export async function firestoreUsersPiecesOnUpdate(change: Change<DocumentSnapshot>, context: EventContext) {
     const userPieceBefore = change.before.data();
@@ -17,7 +18,7 @@ export async function firestoreUsersPiecesOnUpdate(change: Change<DocumentSnapsh
     ]);
 }
 
-function updateScoreOnUserArtistWhenAPieceIsFound(userPieceBefore, userPieceAfter) {
+async function updateScoreOnUserArtistWhenAPieceIsFound(userPieceBefore, userPieceAfter) {
     const oldFound = userPieceBefore.found;
     const newFound = userPieceAfter.found;
 
@@ -25,24 +26,30 @@ function updateScoreOnUserArtistWhenAPieceIsFound(userPieceBefore, userPieceAfte
         return null;
     }
 
+    const firestore = admin.firestore() as Firestore;
+
+
     // If found, increment score by one ; else decrement by one.
     const increment = newFound ? 1 : -1;
     const artistId = userPieceAfter.artist.objectID;
     const userId = userPieceAfter.user;
 
-    return admin.firestore()
+    const artistsQuery = await firestore
         .collection(Collections.users_artists)
         .where('artist.objectID', '==', artistId)
-        .where('user', '==', userId)
-        .get()
-        .then(ua => {
-            if (ua.size !== 1) {
-                const errorText = `MULTIPLE users_artists RETURNED FOR ARTIST ${artistId} AND USER ${userId}`;
-                console.error(errorText);
-                return Promise.reject(errorText);
-            } else {
-                const doc = ua.docs[0];
-                return doc.ref.update({score: doc.data().score + increment});
-            }
-        });
+        .where('user', '==', userId);
+
+    return await firestore.runTransaction(async (t) => {
+        const artists = await t.get(artistsQuery);
+
+        if (artists.size !== 1) {
+            const errorText = `MULTIPLE users_artists RETURNED FOR ARTIST ${artistId} AND USER ${userId}`;
+            console.error(errorText);
+            return Promise.reject(errorText);
+        }
+
+        const artist = artists.docs[0];
+
+        return await t.update(artist.ref, {score: artist.data().score + increment});
+    });
 }

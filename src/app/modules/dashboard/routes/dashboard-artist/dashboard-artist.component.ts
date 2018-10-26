@@ -69,14 +69,13 @@ export class DashboardArtistComponent implements OnInit {
     }
 
     private _getUserPiecesProgressions() {
-        const upp$ = this.hideFound
+        const upp$ = combineLatest(this.artistId$, this.hideFound)
             .pipe(
-                flatMap(u => this.userPieceProgression.piecesProgression(
-                    this.userService.user(),
-                    {
-                        onlyNotFound: u
-                    }
-                ))
+                flatMap(
+                    ([artistId, hideFound]) => this.userPieceProgression
+                        .piecesProgression(artistId, {
+                    onlyNotFound: hideFound
+                }))
             );
 
         return combineLatest(upp$, this.geolocation.currentGeolocation())

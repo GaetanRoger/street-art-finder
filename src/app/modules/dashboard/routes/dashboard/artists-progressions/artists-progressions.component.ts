@@ -27,4 +27,7 @@ export class ArtistsProgressionsComponent implements OnInit {
         this.artistWasRemoved.emit();
     }
 
+    markAllPiecesAsFound(progression: UserArtistProgression) {
+        this.artistProgression.markAllPiecesAsFound(progression);
+    }
 }
