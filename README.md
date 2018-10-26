@@ -6,8 +6,8 @@
 ### Known bugs
 - [ ] Adding or removing lots of pieces screw up the maxscore count on artists progression
 - [ ] Popups are not shown when clicking on circles on map
-- [ ] Search for pieces does not work on Artist Component
-- [x] (should be fixed) Leaflet "Cannot remove of undefined" occurring randomly
+- [X] Search for pieces does not work on Artist Component
+- [x] Leaflet "Cannot remove of undefined" occurring randomly
 
 ### Priority 1
 - [ ] Allow admins to add artists

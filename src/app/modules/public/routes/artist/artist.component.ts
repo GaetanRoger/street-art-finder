@@ -41,9 +41,8 @@ export class ArtistComponent implements OnInit {
         if (reset) {
             this.page = 0;
             this.pieces = [];
+            this.noMoreToLoad = false;
         }
-
-        console.log('loading page', this.page, 'filter', this.filter$.value);
 
         this.route.params
             .pipe(
