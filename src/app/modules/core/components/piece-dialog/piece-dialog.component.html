@@ -4,6 +4,7 @@
         <app-map
             [elements]="pieceMapInput$ | async"
             [layerToShow]="(showMarker$ | async) ? 'marker' : 'circle'"
+            [zoom]="16"
         ></app-map>
     </div>
     <p class="added-on">

@@ -1,13 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {UserPieceProgression} from '../../../../core/types/user-piece-progression';
 import {MatDialog} from '@angular/material';
 import {PieceDialogComponent} from '../../../../core/components/piece-dialog/piece-dialog.component';
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {Piece} from '../../../../core/types/piece';
 import {PiecePicturesDialogComponent} from './piece-pictures-dialog/piece-pictures-dialog.component';
-import {filter, map, tap} from 'rxjs/operators';
-import {UserGeolocationService} from '../../../../core/services/geolocation/user-geolocation.service';
-import {Observable} from 'rxjs';
+import {filter} from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard-piece-progression',
@@ -21,8 +19,7 @@ export class DashboardPieceProgressionComponent {
     opened: boolean;
 
     constructor(private readonly dialog: MatDialog,
-                private readonly pieceService: PieceService,
-                private readonly geolocation: UserGeolocationService) {
+                private readonly pieceService: PieceService) {
     }
 
 
@@ -42,7 +39,7 @@ export class DashboardPieceProgressionComponent {
     private _openPieceDialog(piece: Piece): void {
         this.dialog.open(PieceDialogComponent, {
             autoFocus: false,
-            data: piece,
+            data: {piece, alwaysUseMarker: this.progression.found},
             maxWidth: '96vw',
             minWidth: '96vw'
         });

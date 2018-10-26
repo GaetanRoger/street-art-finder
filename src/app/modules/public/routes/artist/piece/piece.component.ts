@@ -23,7 +23,7 @@ export class PieceComponent implements OnInit {
       }
         this.dialog.open(PieceDialogComponent, {
             autoFocus: false,
-            data: piece,
+            data: {piece},
             maxWidth: '96vw',
             minWidth: '96vw'
         });

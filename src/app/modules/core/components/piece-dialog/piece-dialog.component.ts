@@ -4,9 +4,10 @@ import {Piece} from '../../types/piece';
 import {UserService} from '../../services/user/user.service';
 import {Circle, Marker} from 'leaflet';
 import {Observable} from 'rxjs';
-import {filter, map} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {MapElementInput} from '../map/map-element-input';
 import {MapHelperService} from '../../services/map-helper/map-helper.service';
+import {User} from '../../types/user';
 
 @Component({
     selector: 'app-piece-dialog',
@@ -37,6 +38,8 @@ export class PieceDialogComponent implements OnInit {
 
     showMarker$: Observable<boolean>;
     pieceMapInput$: Observable<MapElementInput[]>;
+    piece: Piece;
+    alwaysUseMarker: boolean;
 
 
     /* ***************************************** *
@@ -58,9 +61,11 @@ export class PieceDialogComponent implements OnInit {
      */
 
     constructor(private readonly dialogRef: MatDialogRef<PieceDialogComponent>,
-                @Inject(MAT_DIALOG_DATA) public readonly piece: Piece,
+                @Inject(MAT_DIALOG_DATA) public readonly data: { piece: Piece; alwaysUseMarker: boolean },
                 private readonly userService: UserService,
                 private readonly mapHelper: MapHelperService) {
+        this.piece = this.data.piece;
+        this.alwaysUseMarker = this.data.alwaysUseMarker || false;
     }
 
     get mapsUrl(): string {
@@ -111,8 +116,13 @@ export class PieceDialogComponent implements OnInit {
     private _shouldShowMarker() {
         return this.userService.user()
             .pipe(
-                map(u => u && u.settings.locationApproximation === 0),
+                map(user => this._shouldShowMarkers(user)),
             );
+    }
+
+    private _shouldShowMarkers(user: User) {
+        return this.alwaysUseMarker
+            || (user && user.settings && user.settings.locationApproximation === 0);
     }
 
     private _getCircleRadius() {

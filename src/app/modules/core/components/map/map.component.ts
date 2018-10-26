@@ -47,9 +47,9 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
      * True to show the user's marker.
      */
     @Input() showUserMarker = true;
-
     /**
      * Initial map zoom.
+     * Zoom is used only if one element is provided. If many, map will use fitBounds.
      */
     @Input() zoom = 18;
 
@@ -149,9 +149,7 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
     mapReady(map: Map): void {
         this._leafletMap = map;
 
-        if (this._markersLayer.getLayers().length > 0) {
-            this._leafletMap.fitBounds(this._markersLayer.getBounds());
-        }
+        this._updateFitBounds();
     }
 
 
@@ -213,8 +211,10 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
      * @private
      */
     private _updateFitBounds() {
-        if (this._leafletMap && this._markersLayer.getLayers().length > 0) {
+        if (this._leafletMap && this._markersLayer.getLayers().length > 1) {
             this._leafletMap.fitBounds(this._markersLayer.getBounds());
+        } else if (this._markersLayer.getLayers().length === 1) {
+            this._leafletMap.setView(this._markersLayer.getBounds().getCenter(), this.zoom);
         }
     }
 
