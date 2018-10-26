@@ -1,7 +1,7 @@
 import {Geopoint} from '../../../types/geopoint';
 import {MapHelperService} from '../map-helper.service';
 import {LayerEvents} from '../layer-events';
-import {Layer, Point} from 'leaflet';
+import {Layer, Point, Popup} from 'leaflet';
 
 export class BaseBuilder {
     protected readonly location: Geopoint;
@@ -33,13 +33,15 @@ export class BaseBuilder {
 
     protected _addPopupIfPopupContent<T extends Layer>(layer: T): void {
         if (this.popupContent) {
-            layer.bindPopup(this.popupContent, {offset: this.offset})
-                .togglePopup();
+            const popUp = new Popup({offset: this.offset})
+                .setContent(this.popupContent);
+
+            layer.bindPopup(popUp).openPopup();
         }
     }
 
     protected _addEventsIfEvents<T extends Layer>(layer: T): void {
-        if (this.setEvents && this.events.onAdd) {
+        if (this.events && this.events.onAdd) {
             layer.on('add', this.events.onAdd);
         }
     }
