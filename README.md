@@ -18,6 +18,7 @@
 - [ ] Use Cypress to test all processes (see how to mock data into/out of Firestore)
 - [ ] Allow users to reset their password
 - [ ] Better way to see vanished pieces
+- [x] Itineraries should go to randomized location when using circles.
 
 ### Priority 3
 - [ ] Ask for geolocation only when needed

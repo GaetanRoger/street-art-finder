@@ -3,11 +3,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Piece} from '../../types/piece';
 import {UserService} from '../../services/user/user.service';
 import {Circle, Marker} from 'leaflet';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
+import {flatMap, map} from 'rxjs/operators';
 import {MapElementInput} from '../map/map-element-input';
 import {MapHelperService} from '../../services/map-helper/map-helper.service';
 import {User} from '../../types/user';
+import {Geopoint} from '../../types/geopoint';
 
 @Component({
     selector: 'app-piece-dialog',
@@ -38,6 +39,7 @@ export class PieceDialogComponent implements OnInit {
 
     showMarker$: Observable<boolean>;
     pieceMapInput$: Observable<MapElementInput[]>;
+    itinaryUrl$: Observable<string>;
     piece: Piece;
     alwaysUseMarker: boolean;
 
@@ -68,10 +70,6 @@ export class PieceDialogComponent implements OnInit {
         this.alwaysUseMarker = this.data.alwaysUseMarker || false;
     }
 
-    get mapsUrl(): string {
-        return `${this.baseMapsUrl}${this.piece.location.latitude},${this.piece.location.longitude}`;
-    }
-
     ngOnInit() {
         if (!this.piece) {
             console.warn('A piece is needed.');
@@ -80,6 +78,7 @@ export class PieceDialogComponent implements OnInit {
 
         this.showMarker$ = this._shouldShowMarker();
         this.pieceMapInput$ = this._getPieceMapInput();
+        this.itinaryUrl$ = this._getItineraryUrl();
     }
 
 
@@ -130,5 +129,28 @@ export class PieceDialogComponent implements OnInit {
             .pipe(
                 map(u => u ? u.settings.locationApproximation : 50)
             );
+    }
+
+    private _getItineraryUrl(): Observable<string> {
+        return this.showMarker$
+            .pipe(
+                flatMap(s => s ? this._getItineraryUrlForMarker() : this._getItineraryUrlForCicle())
+            );
+    }
+
+    private _getItineraryUrlForCicle(): Observable<string> {
+        return this._getCircleRadius()
+            .pipe(
+                map(r => this.mapHelper.randomizeCircleLocation(this.piece.location, this.piece.objectID, r)),
+                map(l => this._generateItineraryUrl(l))
+            );
+    }
+
+    private _getItineraryUrlForMarker(): Observable<string> {
+        return of(this._generateItineraryUrl(this.piece.location));
+    }
+
+    private _generateItineraryUrl(location: Geopoint): string {
+        return `${this.baseMapsUrl}${location.latitude},${location.longitude}`;
     }
 }

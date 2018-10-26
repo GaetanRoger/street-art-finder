@@ -13,5 +13,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-raised-button mat-dialog-close>Close</button>
-    <a mat-button target="_blank" [href]="mapsUrl">GO THERE</a>
+    <a mat-button target="_blank" [href]="itinaryUrl$ | async">GO THERE</a>
 </mat-dialog-actions>
