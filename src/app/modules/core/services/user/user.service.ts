@@ -106,4 +106,8 @@ export class UserService {
             .set(data)
             .catch(e => console.log('error while creating user', e));
     }
+
+    delete(): Promise<void> {
+        return this.auth.auth.currentUser.delete();
+    }
 }

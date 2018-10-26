@@ -34,6 +34,9 @@
         </button>
     </div>
 </div>
+<div class="delete-account" (click)="askForAccountDeletion()">
+    <button mat-flat-button color="warn">DELETE ACCOUNT</button>
+</div>
 <app-loading-spinner
         *ngIf="!settingsFormGroup"
         text="Loading settings..."

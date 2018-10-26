@@ -7,6 +7,9 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {UserGeolocationService} from '../../../core/services/geolocation/user-geolocation.service';
 import {BrowserDetectorService} from '../../../core/services/browser-detector/browser-detector.service';
 import {ActivateGpsLocationDialogComponent} from './components/activate-gps-location-dialog/activate-gps-location-dialog.component';
+import {ConfirmationDialogComponent} from '../../../core/components/confirmation-dialog/confirmation-dialog.component';
+import {filter} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-settings',
@@ -25,7 +28,8 @@ export class SettingsComponent implements OnInit {
                 private readonly snackbar: MatSnackBar,
                 public readonly geolocation: UserGeolocationService,
                 private readonly browserDetector: BrowserDetectorService,
-                private readonly dialog: MatDialog) {
+                private readonly dialog: MatDialog,
+                private readonly router: Router) {
     }
 
     get approximateLocation(): FormControl {
@@ -66,6 +70,22 @@ export class SettingsComponent implements OnInit {
                 data: this.browserDetector.detect(),
                 minWidth: '96vw'
             });
+    }
+
+    askForAccountDeletion() {
+        this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                title: 'You are about to delete all your data.',
+                text: 'This action cannot be undone. Everything related to you will be deleted.',
+                submitActivationDelay: 5000,
+                mainButtonColor: 'warn'
+            }
+        }).afterClosed()
+            .pipe(filter(v => v === true))
+            .subscribe(() => this.userService.delete().then(() => {
+                this.snackbar.open('Your account has been deleted.', null, {duration: 5000});
+                this.router.navigate(['/']);
+            }));
     }
 
     private createFormGroup(u: User): FormGroup {
