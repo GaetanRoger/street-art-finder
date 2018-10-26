@@ -25,7 +25,7 @@ export class AddressFromGeopointService {
 
         const address: Address = {
             country: response.address.country,
-            city: response.address.city
+            city: response.address.city ? response.address.city : response.address.village
         };
 
         this._addIfExists(address, 'state', response.address.state);
