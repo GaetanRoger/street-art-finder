@@ -1,9 +1,11 @@
-import {DocumentSnapshot} from 'firebase-functions/lib/providers/firestore';
 import {EventContext} from 'firebase-functions';
 import {algolia} from '../../initAlgolia';
 import {Collections} from '../collections.enum';
 import {Task} from 'algoliasearch';
-import * as admin from 'firebase-admin';
+import {getFirestore} from '../../getFirestore';
+import DocumentSnapshot = FirebaseFirestore.DocumentSnapshot;
+import DocumentReference = FirebaseFirestore.DocumentReference;
+import {Helpers} from '../../helpers';
 
 export function firestoreArtistsOnDelete(snap: DocumentSnapshot, context: EventContext) {
     const id = snap.id;
@@ -19,13 +21,9 @@ function deleteAlgoliaObject(id: string): Promise<Task> {
     return client.deleteObject(id);
 }
 
-function decrementArtistCountFieldInAggregatesDocument() {
-    return admin.firestore()
-        .doc(`${Collections.aggregates}/main`)
-        .get()
-        .then(doc => {
-            return doc.ref.update({
-                artistsCount: doc.data().artistsCount - 1
-            });
-        });
+async function decrementArtistCountFieldInAggregatesDocument() {
+    const aggregatesQuery: DocumentReference = await getFirestore()
+        .doc(`${Collections.aggregates}/main`);
+
+    return Helpers.increment(aggregatesQuery, 'artistsCount', -1);
 }

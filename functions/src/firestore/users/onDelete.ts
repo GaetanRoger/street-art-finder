@@ -2,6 +2,8 @@ import {DocumentSnapshot} from 'firebase-functions/lib/providers/firestore';
 import {EventContext} from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
+import {getFirestore} from '../../getFirestore';
+import {Helpers} from '../../helpers';
 
 export function firestoreUsersOnDelete(snap: DocumentSnapshot, context: EventContext) {
     const id = snap.id;
@@ -14,14 +16,8 @@ export function firestoreUsersOnDelete(snap: DocumentSnapshot, context: EventCon
 }
 
 function decrementUsersCountInAggregatesDocument() {
-    return admin.firestore()
-        .doc(`${Collections.aggregates}/main`)
-        .get()
-        .then(doc => {
-            return doc.ref.update({
-                usersCount: doc.data().usersCount - 1
-            });
-        });
+    const aggregates = getFirestore().doc(`${Collections.aggregates}/main`);
+    return Helpers.increment(aggregates, 'usersCount', -1);
 }
 
 async function deleteUsersArtistsOfUser(id: string) {

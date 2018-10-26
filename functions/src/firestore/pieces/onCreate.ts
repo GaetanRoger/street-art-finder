@@ -4,6 +4,8 @@ import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
 import {algolia} from '../../initAlgolia';
 import {Helpers} from '../../helpers';
+import {getFirestore} from '../../getFirestore';
+import DocumentReference = FirebaseFirestore.DocumentReference;
 
 export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const piece = snap.data();
@@ -15,7 +17,7 @@ export function firestorePiecesOnCreate(snap: DocumentSnapshot, context: EventCo
         addAlgoliaObject(id, piece),
         addPieceToUsersPiecesForAllUsersFollowingArtist(id, piece),
         incrementPiecesCountInAggregatesDocument()
-    ] as Promise<any>[]);
+    ]);
 }
 
 async function incrementMaxScoreOnUsersArtists(artistId: string, vanished: boolean) {
@@ -24,37 +26,40 @@ async function incrementMaxScoreOnUsersArtists(artistId: string, vanished: boole
         return null;
     }
 
-    const batch = admin.firestore().batch();
-
-    const usersArtists = await admin.firestore()
+    const usersArtistsQuery = getFirestore()
         .collection(Collections.users_artists)
-        .where('artist.objectID', '==', artistId)
-        .get();
+        .where('artist.objectID', '==', artistId);
 
-    usersArtists.forEach(ua => {
-        batch.update(ua.ref, {
-            maxScore: ua.data().maxScore + 1
+    return getFirestore().runTransaction(async t => {
+        const usersArtists = await t.get(usersArtistsQuery);
+
+        usersArtists.forEach(ua => {
+            t.update(ua.ref, {
+                maxScore: ua.data().maxScore + 1
+            });
         });
     });
-
-    return await batch.commit();
 }
 
 async function incrementPieceCountAndUpdateCitiesOnArtist(piece) {
-    const artist = await admin.firestore()
-        .doc(`${Collections.artists}/${piece.artist.objectID}`)
-        .get();
+    const artistQuery: DocumentReference = await getFirestore()
+        .doc(`${Collections.artists}/${piece.artist.objectID}`);
 
-    const data = artist.data();
-    const ref = artist.ref;
+    return getFirestore().runTransaction(async t => {
+        const artist = await t.get(artistQuery);
 
-    const cities = data.cities || [];
-    if (piece.address.city && !cities.includes(piece.address.city))
-        cities.push(piece.address.city);
+        const data = artist.data();
+        const ref = artist.ref;
 
-    return await ref.update({
-        piecesCount: data.piecesCount + 1,
-        cities: cities
+        const cities = data.cities || [];
+
+        if (piece.address.city && !cities.includes(piece.address.city))
+            cities.push(piece.address.city);
+
+        t.update(ref, {
+            piecesCount: data.piecesCount + 1,
+            cities: cities
+        });
     });
 }
 
@@ -64,7 +69,7 @@ function addAlgoliaObject(objectID: string, piece): Promise<any> {
     return client.addObject(Helpers.pieceToAlgoliaObject(piece, objectID));
 }
 
-async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece){
+async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece) {
     const firestore = admin.firestore();
 
     const usersArtists = await firestore
@@ -81,12 +86,7 @@ async function addPieceToUsersPiecesForAllUsersFollowingArtist(id: string, piece
 }
 
 function incrementPiecesCountInAggregatesDocument() {
-    return admin.firestore()
-        .doc(`${Collections.aggregates}/main`)
-        .get()
-        .then(doc => {
-            return doc.ref.update({
-                piecesCount: doc.data().piecesCount + 1
-            });
-        });
+    const aggregates = getFirestore().doc(`${Collections.aggregates}/main`);
+
+    return Helpers.increment(aggregates, 'piecesCount', 1);
 }

@@ -3,6 +3,8 @@ import {EventContext} from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
 import {algolia} from '../../initAlgolia';
+import {getFirestore} from '../../getFirestore';
+import {Helpers} from '../../helpers';
 
 export function firestorePiecesOnDelete(snap: DocumentSnapshot, context: EventContext) {
     const piece = snap.data() ;
@@ -23,31 +25,25 @@ async function decrementMaxScoreOnUsersArtists(artistId: string, vanished: boole
         return null;
     }
 
-    const batch = admin.firestore().batch();
-
-    const usersArtists = await admin.firestore()
+    const usersArtistsQuery = getFirestore()
         .collection(Collections.users_artists)
-        .where('artist.objectID', '==', artistId)
-        .get();
+        .where('artist.objectID', '==', artistId);
 
-    usersArtists.forEach(ua => {
-        batch.update(ua.ref, {
-            maxScore: ua.data().maxScore - 1
+    return getFirestore().runTransaction(async t => {
+        const usersArtists = await t.get(usersArtistsQuery);
+
+        usersArtists.forEach(ua => {
+            t.update(ua.ref, {
+                maxScore: ua.data().maxScore - 1
+            });
         });
     });
-
-    return await batch.commit();
 }
 
 function decrementPiecesCountOnArtistDocument(piece) {
-    return admin.firestore()
-        .doc(`${Collections.artists}/${piece.artist.objectID}`)
-        .get()
-        .then(doc => {
-            return doc.ref.update({
-                piecesCount: doc.data().piecesCount - 1
-            });
-        });
+    const artist = getFirestore().doc(`${Collections.artists}/${piece.artist.objectID}`);
+
+    return Helpers.increment(artist, 'piecesCount',-1);
 }
 
 function deleteAlgoliaObject(id: string) {
@@ -67,12 +63,7 @@ async function deleteUsersPieces(id: string) {
 }
 
 function decrementPiecesCountInAggregatesDocument() {
-    return admin.firestore()
-        .doc(`${Collections.aggregates}/main`)
-        .get()
-        .then(doc => {
-            return doc.ref.update({
-                piecesCount: doc.data().piecesCount - 1
-            });
-        });
+    const aggregates = getFirestore().doc(`${Collections.aggregates}/main`);
+
+    return Helpers.increment(aggregates, 'piecesCount',-1);
 }

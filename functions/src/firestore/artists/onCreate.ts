@@ -1,9 +1,11 @@
 import {algolia} from '../../initAlgolia';
 import {Collections} from '../collections.enum';
-import * as admin from 'firebase-admin';
 import {Task} from 'algoliasearch';
-import {DocumentSnapshot} from 'firebase-functions/lib/providers/firestore';
 import {EventContext} from 'firebase-functions';
+import {getFirestore} from '../../getFirestore';
+import {Helpers} from '../../helpers';
+import DocumentSnapshot = FirebaseFirestore.DocumentSnapshot;
+import DocumentReference = FirebaseFirestore.DocumentReference;
 
 export function firestoreArtistsOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const artist = snap.data();
@@ -19,16 +21,10 @@ export function firestoreArtistsOnCreate(snap: DocumentSnapshot, context: EventC
  * Increment the value of `artistsCount` in the `aggregates` document.
  */
 async function incrementArtistsCountInAggregatesDocument() {
-    const aggregates = await admin.firestore()
-        .doc(`${Collections.aggregates}/main`)
-        .get();
+    const aggregatesQuery: DocumentReference = await getFirestore()
+        .doc(`${Collections.aggregates}/main`);
 
-    const aggregatesData = aggregates.data();
-    const aggregatesRef = aggregates.ref;
-
-    return aggregatesRef.update({
-        artistsCount: aggregatesData.artistsCount + 1
-    });
+    return Helpers.increment(aggregatesQuery, 'artistsCount', 1);
 }
 
 /**

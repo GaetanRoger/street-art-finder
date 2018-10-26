@@ -2,8 +2,7 @@ import {Change, EventContext} from 'firebase-functions';
 import {DocumentSnapshot} from 'firebase-functions/lib/providers/firestore';
 import {Helpers} from '../../helpers';
 import {Collections} from '../collections.enum';
-import * as admin from 'firebase-admin';
-import Firestore = FirebaseFirestore.Firestore;
+import {getFirestore} from '../../getFirestore';
 
 export async function firestoreUsersPiecesOnUpdate(change: Change<DocumentSnapshot>, context: EventContext) {
     const userPieceBefore = change.before.data();
@@ -26,20 +25,17 @@ async function updateScoreOnUserArtistWhenAPieceIsFound(userPieceBefore, userPie
         return null;
     }
 
-    const firestore = admin.firestore() as Firestore;
-
-
     // If found, increment score by one ; else decrement by one.
     const increment = newFound ? 1 : -1;
     const artistId = userPieceAfter.artist.objectID;
     const userId = userPieceAfter.user;
 
-    const artistsQuery = await firestore
+    const artistsQuery = await getFirestore()
         .collection(Collections.users_artists)
         .where('artist.objectID', '==', artistId)
         .where('user', '==', userId);
 
-    return await firestore.runTransaction(async (t) => {
+    return await getFirestore().runTransaction(async (t) => {
         const artists = await t.get(artistsQuery);
 
         if (artists.size !== 1) {

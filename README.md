@@ -4,7 +4,7 @@
 
 ## TODO
 ### Known bugs
-- [ ] Adding or removing lots of pieces screw up the maxscore count on artists progression
+- [x] Adding or removing lots of pieces screw up the maxscore count on artists progression
 - [ ] Popups are not shown when clicking on circles on map
 - [x] Marking all pieces of an artist as found does not update score correctly (fixed using transaction)
 - [X] Search for pieces does not work on Artist Component
@@ -14,7 +14,7 @@
 - [ ] Allow admins to add artists
 - [ ] Allow admins to remove artists
 - [ ] Allow admins to mark artists as published/unpublished
-- [ ] User transactions and batches in functions to avoid data lose
+- [x] User transactions and batches in functions to avoid data lose
 - [x] Allow users to delete all their data
 
 ### Priority 2
