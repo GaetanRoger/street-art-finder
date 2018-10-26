@@ -1,6 +1,5 @@
-import {Pipe, PipeTransform, ViewChild} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 import {DatePipe} from '@angular/common';
-import {MatSelectionList} from '@angular/material';
 
 @Pipe({
     name: 'timestamp'
@@ -11,7 +10,11 @@ export class TimestampPipe implements PipeTransform {
     }
 
     transform(value: number, args?: any): string | null {
-        return this.datePipe.transform(new Date(Number(value)), args);
+        const digits = value.toString().length;
+        const timestamp = digits === 10 ? Number(value) * 1000 : Number(value);
+
+        console.log('value', value, 'digits', digits, 'timestamp', timestamp);
+        return this.datePipe.transform(new Date(timestamp), args);
     }
 
 }
