@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {Artist} from '../../../../core/types/artist';
 import {ArtistService} from '../../../../core/services/artist/artist.service';
-import {flatMap} from 'rxjs/operators';
-import {environment} from '../../../../../../environments/environment';
+import {debounceTime, filter, flatMap, tap} from 'rxjs/operators';
+import {AddressFromGeopointService} from '../../../../core/services/address-from-geopoint/address-from-geopoint.service';
+import {Address} from '../../../../core/types/address';
 
 @Component({
     selector: 'app-admin-add-piece-general-info',
@@ -14,9 +15,11 @@ import {environment} from '../../../../../../environments/environment';
 export class AdminAddPieceGeneralInfoComponent implements OnInit {
     @Input() formGroup: FormGroup;
     artists$: Observable<Artist[]>;
+    address: Address;
 
     constructor(private readonly fb: FormBuilder,
-                private readonly artistService: ArtistService) {
+                private readonly artistService: ArtistService,
+                private readonly addressService: AddressFromGeopointService) {
     }
 
     get name(): FormControl {
@@ -52,10 +55,43 @@ export class AdminAddPieceGeneralInfoComponent implements OnInit {
             .pipe(
                 flatMap(query => this.artistService.findAll(query))
             );
+        this._retrieveInfoFromGeopoint();
     }
 
     displayWith(artist: Artist) {
         return artist ? artist.name : undefined;
     }
 
+    private _retrieveInfoFromGeopoint() {
+        this.location.valueChanges
+            .pipe(
+                tap(() => this.address ? this.address.city = undefined : null),
+                tap(() => this.location.setErrors({...this.location.errors, loading: true})),
+                debounceTime(1000),
+                filter(loc => !!loc.latitude && !!loc.longitude),
+                flatMap(loc => this.addressService.get(loc))
+            )
+            .subscribe(v => {
+                this.address = v;
+                if (!v || !v.city) {
+                    this.location.setErrors({noCity: true});
+
+                } else {
+                    this.location.setErrors(null);
+                }
+            });
+    }
+
+    moreInfo() {
+        // todo better
+        let displayname: string;
+
+        if (this.address && this.address.displayName) {
+            displayname = this.address.displayName;
+        } else {
+            displayname = ' nothing';
+        }
+
+        alert('Streart needs a city for each piece to work. What was found there : ' + displayname);
+    }
 }

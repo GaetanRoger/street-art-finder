@@ -19,9 +19,11 @@
 - [ ] Use Cypress to test all processes (see how to mock data into/out of Firestore)
 - [ ] Allow users to reset their password
 - [ ] Better way to see vanished pieces
+- [x] Check if city found when entering geolocation
 - [x] Itineraries should go to randomized location when using circles.
 
 ### Priority 3
+- [ ] Get geolocation from picture metadata when creating a piece
 - [ ] Ask for geolocation only when needed
 - [ ] Make the app core functionalities work offline (dashboard progression)
 

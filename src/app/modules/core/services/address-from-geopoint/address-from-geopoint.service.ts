@@ -19,6 +19,10 @@ export class AddressFromGeopointService {
             .pipe(take(1))
             .toPromise();
 
+        if (!response || !response.address) {
+            return null;
+        }
+
         const address: Address = {
             country: response.address.country,
             city: response.address.city

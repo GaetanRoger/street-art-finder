@@ -17,3 +17,18 @@
     justify-content: space-evenly;
     text-align: center;
 }
+
+.city-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 80%;
+    opacity: 0.8;
+}
+.city-error {
+    opacity: 1;
+    color: red;
+}
+.more-info {
+    opacity: 0.6;
+}
