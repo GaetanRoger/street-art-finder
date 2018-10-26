@@ -10,7 +10,7 @@ export class MarkerBuilder extends BaseBuilder {
     }
 
     build(): Marker {
-        const mark = marker(this.mapHelper.geopointToLatLng(this.location), this.options);
+        const mark = new Marker(this.mapHelper.geopointToLatLng(this.location), this.options);
 
         this._addEventsIfEvents(mark);
         this._addPopupIfPopupContent(mark);

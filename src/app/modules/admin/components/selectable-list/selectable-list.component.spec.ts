@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SelectableListComponent } from './selectable-list.component';
 
 describe('SelectableListComponent', () => {
-  let component: SelectableListComponent;
+  let component: SelectableListComponent<any>;
   let fixture: ComponentFixture<SelectableListComponent>;
 
   beforeEach(async(() => {
