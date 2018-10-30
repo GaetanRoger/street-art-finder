@@ -1,9 +1,9 @@
-<app-toolbar
+<streat-toolbar
         title="Dashboard"
         [showSearchButton]="false"
         [showBackButton]="true"
         [image]="(artist$ | async)?.images.horizontal.low"
-></app-toolbar>
+></streat-toolbar>
 <div class="title">
     <h1 class="primary-color">{{(artist$ | async)?.name}}</h1>
     <div class="buttons">
@@ -17,10 +17,10 @@
     </div>
 </div>
 
-<app-dashboard-piece-progression *ngFor="let progression of progressions$ | async"
+<streat-dashboard-piece-progression *ngFor="let progression of progressions$ | async"
                                  [progression]="progression"
                                  (found)="markAsFound(progression.objectID, $event)"
-></app-dashboard-piece-progression>
+></streat-dashboard-piece-progression>
 
 <div class="footer">
     <button mat-button *ngIf="!(showVanishedPieces$ | async)" (click)="seeVanishedPieces()">See vanished pieces</button>

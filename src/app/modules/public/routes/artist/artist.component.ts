@@ -3,12 +3,12 @@ import {ArtistService} from '../../../core/services/artist/artist.service';
 import {ActivatedRoute} from '@angular/router';
 import {delay, flatMap, map, tap} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {Artist} from '../../../core/types/artist';
-import {Piece} from '../../../core/types/piece';
+import {Artist} from '../../../shared/types/artist';
+import {Piece} from '../../../shared/types/piece';
 import {PieceService} from '../../../core/services/piece/piece.service';
 
 @Component({
-    selector: 'app-artist',
+    selector: 'streat-artist',
     templateUrl: './artist.component.html',
     styleUrls: ['./artist.component.css']
 })
@@ -47,7 +47,7 @@ export class ArtistComponent implements OnInit {
         this.route.params
             .pipe(
                 tap(() => this.loading$.next(true)),
-                flatMap(param => this.pieceService.findAll(param.id, this.filter$.value, this.page++, 5)),
+                flatMap(param => this.pieceService.search(param.id, this.filter$.value, this.page++, 5)),
                 tap(() => this.loading$.next(false))
             )
             .subscribe(p => {

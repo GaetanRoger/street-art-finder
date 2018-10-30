@@ -1,0 +1,13 @@
+<img [src]="src"
+     [alt]="alt"
+     (load)="showImage = true"
+     (error)="error.emit($event)"
+     [ngStyle]="{
+        'display': showImage ? 'inherit' : 'none',
+        'border-radius': round ? '50%' : '0',
+        'width': imgWidth ? imgWidth + 'px' : (fit ? '100%' : 'inherit'),
+        'height': imgHeight ? imgHeight + 'px' : 'inherit',
+        'object-fit': cover ? 'cover' : 'none'
+     }"
+/>
+<streat-small-loading-spinner *ngIf="!showImage"></streat-small-loading-spinner>

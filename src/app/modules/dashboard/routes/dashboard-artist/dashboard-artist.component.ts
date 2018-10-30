@@ -2,17 +2,17 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {flatMap, map} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {UserPieceProgressionService} from '../../../core/services/user_piece_progression/user-piece-progression.service';
-import {UserService} from '../../../core/services/user/user.service';
-import {UserPieceProgression} from '../../../core/types/user-piece-progression';
+import {UserPieceProgressionService} from '../../../core/services/users/user_piece_progression/user-piece-progression.service';
+import {UserService} from '../../../core/services/users/user/user.service';
+import {UserPieceProgression} from '../../../shared/types/user-piece-progression';
 import {PieceService} from '../../../core/services/piece/piece.service';
-import {Piece} from '../../../core/types/piece';
+import {Piece} from '../../../shared/types/piece';
 import {ArtistService} from '../../../core/services/artist/artist.service';
-import {Artist} from '../../../core/types/artist';
-import {UserGeolocationService} from '../../../core/services/geolocation/user-geolocation.service';
+import {Artist} from '../../../shared/types/artist';
+import {UserGeolocationService} from '../../../core/services/location/geolocation/user-geolocation.service';
 
 @Component({
-    selector: 'app-dashboard-artist',
+    selector: 'streat-dashboard-artist',
     templateUrl: './dashboard-artist.component.html',
     styleUrls: ['./dashboard-artist.component.css']
 })

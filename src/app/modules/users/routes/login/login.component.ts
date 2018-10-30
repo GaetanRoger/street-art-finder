@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../../core/services/user/user.service';
+import {UserService} from '../../../core/services/users/user/user.service';
 import {Router} from '@angular/router';
-import {UserCredentials} from '../../../core/types/user-credentials';
+import {UserCredentials} from '../../../shared/types/user-credentials';
 import {environment} from '../../../../../environments/environment';
 
 @Component({
-    selector: 'app-login',
+    selector: 'streat-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })

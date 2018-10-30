@@ -4,6 +4,7 @@ import {Helpers} from '../../helpers';
 import {algolia} from '../../initAlgolia';
 import {Collections} from '../collections.enum';
 import * as admin from 'firebase-admin';
+import {getFirestore} from '../../getFirestore';
 
 export async function firestorePiecesOnUpdate(change: Change<DocumentSnapshot>, context: EventContext) {
     const pieceBefore = change.before.data();
@@ -49,7 +50,7 @@ async function removeOrAddVanishedPiecesToUsersPieces(pieceId: string, pieceBefo
         return null;
     }
 
-    const firestore = admin.firestore();
+    const firestore = getFirestore();
 
     // If piece is now vanished
     if (pieceAfter.tags.vanished) {

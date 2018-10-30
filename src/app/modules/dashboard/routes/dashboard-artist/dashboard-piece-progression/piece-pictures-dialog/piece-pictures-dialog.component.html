@@ -1,13 +1,13 @@
 <mat-dialog-content>
-    <app-image [src]="data.piece.images.main.normal"
+    <streat-image [src]="data.piece.images.main.normal"
                [cover]="true"
                [fit]="true"
-    ></app-image>
-    <app-image *ngFor="let image of data.piece.images.others || []"
+    ></streat-image>
+    <streat-image *ngFor="let image of data.piece.images.others || []"
                [src]="image"
                [cover]="true"
                [fit]="true"
-    ></app-image>
+    ></streat-image>
     <div class="buttons">
         <button mat-raised-button (click)="dialogRef.close()">Close</button>
     </div>

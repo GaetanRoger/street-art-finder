@@ -2,7 +2,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {artistValidator} from './artist.validator';
 
 export class PieceGroup {
-    general = this.fb.group({
+    general = new FormGroup({
         name: new FormControl('', [Validators.required, Validators.minLength(3)]),
         text: new FormControl('', [Validators.required, Validators.minLength(3)]),
         vanished: new FormControl(false),
@@ -13,7 +13,4 @@ export class PieceGroup {
             longitude: new FormControl('', [Validators.required, Validators.min(-180), Validators.max(180)])
         })
     });
-
-    constructor(private readonly fb: FormBuilder) {
-    }
 }

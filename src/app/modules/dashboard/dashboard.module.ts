@@ -13,9 +13,10 @@ import {ArtistsProgressionsComponent} from './routes/dashboard/artists-progressi
 import {UseDiscoverTabComponent} from './routes/dashboard/artists-progressions/use-discover-tab/use-discover-tab.component';
 import {DashboardArtistComponent} from './routes/dashboard-artist/dashboard-artist.component';
 import {DashboardPieceProgressionComponent} from './routes/dashboard-artist/dashboard-piece-progression/dashboard-piece-progression.component';
-import {PieceDialogComponent} from '../core/components/piece-dialog/piece-dialog.component';
+import {PieceDialogComponent} from '../shared/components/piece-dialog/piece-dialog.component';
 import {PiecePicturesDialogComponent} from './routes/dashboard-artist/dashboard-piece-progression/piece-pictures-dialog/piece-pictures-dialog.component';
 import {DiscoverArtistAddedSnackbarComponent} from './routes/dashboard/discover/discover-artist-added-snackbar/discover-artist-added-snackbar.component';
+import {SharedModule} from '../shared/shared.module';
 
 const routes: Route[] = [
     {
@@ -33,8 +34,7 @@ const routes: Route[] = [
         CommonModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
-        CoreModule,
-        ComponentsLibraryModule,
+        SharedModule,
         LeafletModule
     ],
     declarations: [

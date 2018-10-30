@@ -1,21 +1,22 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {Artist} from '../../../../core/types/artist';
-import {Piece} from '../../../../core/types/piece';
+import {Artist} from '../../../../shared/types/artist';
+import {Piece} from '../../../../shared/types/piece';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {IdGeneratorService} from '../../../../core/services/id-generator/id-generator.service';
+import {IdGeneratorService} from '../../../../core/services/random/id-generator/id-generator.service';
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {PieceCreationState} from './piece-creation-state.enum';
-import {AddressFromGeopointService} from '../../../../core/services/address-from-geopoint/address-from-geopoint.service';
+import {AddressFromGeopointService} from '../../../../core/services/location/address-from-geopoint/address-from-geopoint.service';
 import {ImageResizerService} from '../../../../core/services/image-resizer/image-resizer.service';
 
 @Component({
-    selector: 'app-admin-add-piece-finish',
+    selector: 'streat-admin-add-piece-finish',
     templateUrl: './admin-add-piece-finish.component.html',
     styleUrls: ['./admin-add-piece-finish.component.css']
 })
 export class AdminAddPieceFinishComponent implements OnInit {
+    @Input() uploadImages = true;
     @Input() pieceFormGroup: FormGroup;
     @Input() mainImage: { blob: Blob; name: string };
 
@@ -67,7 +68,9 @@ export class AdminAddPieceFinishComponent implements OnInit {
         const artist: Artist = pieceData.artist;
         const id = this.idGenerator.generateId();
 
-        const urls = await this._uploadImages(artist, id);
+        const urls = this.uploadImages ?
+            await this._uploadImages(artist, id)
+            : {low: undefined, normal: undefined};
 
         this.state$.next(PieceCreationState.Creating);
 

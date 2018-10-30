@@ -8,7 +8,7 @@
 </mat-selection-list>
 
 <div class="footer">
-    <app-small-loading-spinner *ngIf="working$ | async"></app-small-loading-spinner>
+    <streat-small-loading-spinner *ngIf="working$ | async"></streat-small-loading-spinner>
     <div class="buttons">
         <button mat-raised-button
                 (click)="secondaryButtonClicked()"
@@ -22,5 +22,5 @@
 </div>
 
 
-<app-loading-spinner *ngIf="!(elements$ | async)"></app-loading-spinner>
+<streat-loading-spinner *ngIf="!(elements$ | async)"></streat-loading-spinner>
 

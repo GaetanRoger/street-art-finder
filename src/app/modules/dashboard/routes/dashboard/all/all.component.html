@@ -1,7 +1,7 @@
 <div class="map">
-    <app-map
+    <streat-map
         [elements]="pieces$ | async"
         [layerToShow]="(showMarkers$ | async) ? 'marker' : 'circle'"
         [refresh]="selected$"
-    ></app-map>
+    ></streat-map>
 </div>

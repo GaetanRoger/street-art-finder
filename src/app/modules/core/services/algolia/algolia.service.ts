@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../../../../environments/environment';
-import {ObjectIDable} from '../../types/object-idable';
+import {ObjectIDable} from '../../../shared/types/object-idable';
 import {fromPromise} from 'rxjs/internal-compatibility';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';

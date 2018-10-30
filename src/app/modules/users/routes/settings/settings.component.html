@@ -1,15 +1,15 @@
-<app-toolbar
+<streat-toolbar
         title="Settings"
         [showBackButton]="true"
         [showSearchButton]="false"
-></app-toolbar>
+></streat-toolbar>
 
-<app-help-bubble *ngIf="(geolocation.geolocationEnabled() | async) === false" [closable]="false">
+<streat-help-bubble *ngIf="(geolocation.geolocationEnabled() | async) === false" [closable]="false">
     <div class="help-content">
         <span>Please allow the app to access your GPS location for better experience.</span>
         <button mat-flat-button color="primary" (click)="howToAllowGpsLocation($event)">HOW TO</button>
     </div>
-</app-help-bubble>
+</streat-help-bubble>
 
 <div [formGroup]="settingsFormGroup" *ngIf="settingsFormGroup" class="form">
     <div class="error-chip">
@@ -37,7 +37,7 @@
 <div class="delete-account" (click)="askForAccountDeletion()">
     <button mat-flat-button color="warn">DELETE ACCOUNT</button>
 </div>
-<app-loading-spinner
+<streat-loading-spinner
         *ngIf="!settingsFormGroup"
         text="Loading settings..."
-></app-loading-spinner>
+></streat-loading-spinner>

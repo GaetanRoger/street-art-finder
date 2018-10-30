@@ -2,12 +2,12 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {MatDialog, MatSelectionList, MatSnackBar} from '@angular/material';
 import {delay, filter, flatMap, tap} from 'rxjs/operators';
-import {ConfirmationDialogComponent} from '../../../core/components/confirmation-dialog/confirmation-dialog.component';
-import {Artist} from '../../../core/types/artist';
+import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
+import {Artist} from '../../../shared/types/artist';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 
 @Component({
-    selector: 'app-admin-artists',
+    selector: 'streat-admin-artists',
     templateUrl: './admin-artists.component.html',
     styleUrls: ['./admin-artists.component.css']
 })

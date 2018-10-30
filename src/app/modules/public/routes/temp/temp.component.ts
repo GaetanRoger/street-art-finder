@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Geopoint} from '../../../core/types/geopoint';
-import {MapElementInput} from '../../../core/components/map/map-element-input';
+import {Geopoint} from '../../../shared/types/geopoint';
+import {MapElementInput} from '../../../shared/components/map/map-element-input';
 import {circle, marker} from 'leaflet';
 
 @Component({
-    selector: 'app-temp',
+    selector: 'streat-temp',
     templateUrl: './temp.component.html',
     styleUrls: ['./temp.component.css']
 })

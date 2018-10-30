@@ -1,11 +1,11 @@
-<app-admin-toolbar
+<streat-admin-toolbar
         title="Artists"
         [showSearchButton]="true"
         (searchChange)="filter$.next($event)"
 
-></app-admin-toolbar>
+></streat-admin-toolbar>
 
-<app-selectable-list
+<streat-selectable-list
         [elements$]="artists$"
         [working$]="working$"
         [mainText]="primaryText"
@@ -19,5 +19,5 @@
 
 
         (selectionChanged)="selectedArtists = $event"
-></app-selectable-list>
+></streat-selectable-list>
 

@@ -1,11 +1,11 @@
-<app-toolbar
+<streat-toolbar
         title="Welcome to Streart"
         [showSearchButton]="true"
         (searchChange)="setFilter($event)"
-></app-toolbar>
+></streat-toolbar>
 
 
-<app-flat-card-with-image
+<streat-flat-card-with-image
         title="See them for real"
         text="{{(loggedIn$ | async) ? 'Come here' : 'Sign up'}} to create your own unique route"
         [primaryButtonText]="primaryButtonText$|async"
@@ -13,18 +13,18 @@
         [secondaryButtonText]="(loggedIn$ | async) ? '' : 'Learn more'"
         secondaryButtonRouterLink="learn-more"
         image="/assets/images/paper-map-low.jpg"
-></app-flat-card-with-image>
+></streat-flat-card-with-image>
 
 <mat-divider></mat-divider>
 
-<app-artist-preview *ngFor="let artist of artists || []" [artist]="artist">
-</app-artist-preview>
+<streat-artist-preview *ngFor="let artist of artists || []" [artist]="artist">
+</streat-artist-preview>
 <div class="footerActions">
     <button mat-button  (click)="loadMoreArtists()" [disabled]="!(hasMore$|async) || initialLoading">
         <span *ngIf="hasMore$|async">Load more</span>
         <span *ngIf="!(hasMore$|async)">No more to load</span>
     </button>
 </div>
-<app-loading-spinner *ngIf="initialLoading"
+<streat-loading-spinner *ngIf="initialLoading"
                      text="Chargement des artistes..."
-></app-loading-spinner>
+></streat-loading-spinner>

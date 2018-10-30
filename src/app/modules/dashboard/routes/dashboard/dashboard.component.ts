@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../../core/services/user/user.service';
+import {UserService} from '../../../core/services/users/user/user.service';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {UserArtistProgressionService} from '../../../core/services/user-artist-progression.service';
-import {UserArtistProgression} from '../../../core/types/user-artist-progression';
+import {UserArtistProgressionService} from '../../../core/services/users/user-artist-progression.service';
+import {UserArtistProgression} from '../../../shared/types/user-artist-progression';
 import {MatTabChangeEvent} from '@angular/material';
-import {ToolbarMenuItem} from '../../../core/components/toolbar/toolbar-menu-item';
+import {ToolbarMenuItem} from '../../../shared/components/toolbar/toolbar-menu-item';
 import {flatMap, map} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-dashboard',
+    selector: 'streat-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })

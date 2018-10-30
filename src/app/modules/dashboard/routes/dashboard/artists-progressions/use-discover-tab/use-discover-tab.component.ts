@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
-    selector: 'app-use-discover-tab',
+    selector: 'streat-use-discover-tab',
     templateUrl: './use-discover-tab.component.html',
     styleUrls: ['./use-discover-tab.component.css']
 })

@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Piece} from '../../../../../core/types/piece';
+import {Piece} from '../../../../../shared/types/piece';
 
 @Component({
-    selector: 'app-piece-pictures-dialog',
+    selector: 'streat-piece-pictures-dialog',
     templateUrl: './piece-pictures-dialog.component.html',
     styleUrls: ['./piece-pictures-dialog.component.css']
 })

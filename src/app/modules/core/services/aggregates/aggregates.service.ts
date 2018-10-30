@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
-import {Aggregates} from '../../types/aggregates';
+import {Aggregates} from '../../../shared/types/aggregates';
 
 @Injectable({
     providedIn: 'root'

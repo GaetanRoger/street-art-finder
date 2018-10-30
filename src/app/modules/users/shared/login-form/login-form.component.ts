@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserCredentials} from '../../../core/types/user-credentials';
+import {UserCredentials} from '../../../shared/types/user-credentials';
 
 @Component({
-    selector: 'app-login-form',
+    selector: 'streat-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.css']
 })

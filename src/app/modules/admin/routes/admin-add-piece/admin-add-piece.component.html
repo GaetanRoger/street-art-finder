@@ -1,17 +1,21 @@
-<app-admin-toolbar
+<streat-admin-toolbar
         title="Add piece"
-></app-admin-toolbar>
+></streat-admin-toolbar>
 
 <form [formGroup]="pieceFormGroup">
     <mat-horizontal-stepper [linear]="true">
         <mat-step [stepControl]="general" label="General">
-            <app-admin-add-piece-general-info [formGroup]="general"></app-admin-add-piece-general-info>
+            <streat-admin-add-piece-general-info [formGroup]="general"></streat-admin-add-piece-general-info>
         </mat-step>
         <mat-step label="Images">
-            <app-admin-add-piece-images (mainImage)="mainImage = $event"></app-admin-add-piece-images>
+            <streat-admin-add-piece-images
+                    [editing]="editing"
+                    (mainImage)="mainImage = $event"
+            ></streat-admin-add-piece-images>
         </mat-step>
         <mat-step label="Finish">
-            <app-admin-add-piece-finish [mainImage]="mainImage" [pieceFormGroup]="pieceFormGroup"></app-admin-add-piece-finish>
+            <streat-admin-add-piece-finish [mainImage]="mainImage"
+                                        [pieceFormGroup]="pieceFormGroup"></streat-admin-add-piece-finish>
 
         </mat-step>
     </mat-horizontal-stepper>

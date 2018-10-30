@@ -1,12 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
-import {UserArtistProgression} from '../../../../core/types/user-artist-progression';
+import {UserArtistProgression} from '../../../../shared/types/user-artist-progression';
 import {ArtistService} from '../../../../core/services/artist/artist.service';
-import {Artist} from '../../../../core/types/artist';
+import {Artist} from '../../../../shared/types/artist';
 import {delay, flatMap, map, startWith, tap} from 'rxjs/operators';
-import {UserArtistProgressionService} from '../../../../core/services/user-artist-progression.service';
-import {UserService} from '../../../../core/services/user/user.service';
-import {User} from '../../../../core/types/user';
+import {UserArtistProgressionService} from '../../../../core/services/users/user-artist-progression.service';
+import {UserService} from '../../../../core/services/users/user/user.service';
+import {User} from '../../../../shared/types/user';
 import {MatSnackBar} from '@angular/material';
 import {DiscoverArtistAddedSnackbarComponent} from './discover-artist-added-snackbar/discover-artist-added-snackbar.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -14,7 +14,7 @@ import {FacetQueryResponse} from '../../../../core/services/algolia/facet-query-
 import {OnlineService} from '../../../../core/services/online/online.service';
 
 @Component({
-    selector: 'app-discover',
+    selector: 'streat-discover',
     templateUrl: './discover.component.html',
     styleUrls: ['./discover.component.css']
 })
@@ -49,7 +49,7 @@ export class DiscoverComponent implements OnInit {
                 startWith(undefined),
                 delay(0), // Fix for ExpressionChangedAfterItHasBeenCheckedError
                 tap(_ => this.filterLoad = true),
-                flatMap(c => this.artistService.findAll('', {city: c})),
+                flatMap(c => this.artistService.search('', {city: c})),
                 tap(_ => this.filterLoad = false)
             );
 

@@ -1,4 +1,4 @@
-import {Geopoint} from '../../../types/geopoint';
+import {Geopoint} from '../../../../shared/types/geopoint';
 import {MapHelperService} from '../map-helper.service';
 import {LayerEvents} from '../layer-events';
 import {Layer, Point, Popup} from 'leaflet';

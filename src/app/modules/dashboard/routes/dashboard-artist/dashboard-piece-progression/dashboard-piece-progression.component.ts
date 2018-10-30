@@ -1,14 +1,14 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {UserPieceProgression} from '../../../../core/types/user-piece-progression';
+import {UserPieceProgression} from '../../../../shared/types/user-piece-progression';
 import {MatDialog} from '@angular/material';
-import {PieceDialogComponent} from '../../../../core/components/piece-dialog/piece-dialog.component';
+import {PieceDialogComponent} from '../../../../shared/components/piece-dialog/piece-dialog.component';
 import {PieceService} from '../../../../core/services/piece/piece.service';
-import {Piece} from '../../../../core/types/piece';
+import {Piece} from '../../../../shared/types/piece';
 import {PiecePicturesDialogComponent} from './piece-pictures-dialog/piece-pictures-dialog.component';
 import {filter} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-dashboard-piece-progression',
+    selector: 'streat-dashboard-piece-progression',
     templateUrl: './dashboard-piece-progression.component.html',
     styleUrls: ['./dashboard-piece-progression.component.css']
 })

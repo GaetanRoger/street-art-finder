@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ObjectIDable} from '../../types/object-idable';
+import {ObjectIDable} from '../../../shared/types/object-idable';
 
 @Injectable({
     providedIn: 'root'

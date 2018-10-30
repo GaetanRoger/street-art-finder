@@ -1,11 +1,11 @@
 <div class="piece-card" (click)="opened= !opened" [ngClass]="{selected: opened}">
     <div class="left">
-        <app-image [src]="progression.piece.images.main.low"
+        <streat-image [src]="progression.piece.images.main.low"
                    [round]="true"
                    [imgHeight]="50"
                    [imgWidth]="50"
                    *ngIf="progression.found"
-                   class="image"></app-image>
+                   class="image"></streat-image>
         <mat-icon *ngIf="!progression.found" class="not-found">help_outline</mat-icon>
         <div>
             <mat-card-title>{{progression.piece.name}}</mat-card-title>

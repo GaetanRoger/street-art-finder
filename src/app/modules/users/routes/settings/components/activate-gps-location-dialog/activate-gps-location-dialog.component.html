@@ -1,10 +1,10 @@
 <mat-dialog-content>
-    <app-image
+    <streat-image
             *ngIf="showImage"
             [src]="image"
             [fit]="true"
             (error)="imageDoesNotExist($event)"
-    ></app-image>
+    ></streat-image>
 
     <span *ngIf="!showImage">
         We did not recognize your browser. Maybe you will find help

@@ -12,23 +12,23 @@
                 </mat-form-field>
             </div>
             <div class="buttons">
-                <app-small-horizontal-loader *ngIf="filterLoad"></app-small-horizontal-loader>
+                <streat-small-horizontal-loader *ngIf="filterLoad"></streat-small-horizontal-loader>
                 <button mat-flat-button (click)="filterFormGroup.reset()">RESET FILTERS</button>
             </div>
         </div>
     </mat-expansion-panel>
 
-    <app-artist-preview
+    <streat-artist-preview
 
             *ngFor="let artist of artists$ | async"
             [artist]="artist"
             [actions]="[{text: artist.known ? 'ADDED' : 'ADD', id: 1, disabled: artist.known}]"
             (actionClick)="addArtistToProgression(artist)"
-    ></app-artist-preview>
+    ></streat-artist-preview>
 </div>
 
-<app-full-screen-message
+<streat-full-screen-message
         *ngIf="!online.online"
         title="You are offline"
         text="Sorry, the discover tab is only available online"
-></app-full-screen-message>
+></streat-full-screen-message>

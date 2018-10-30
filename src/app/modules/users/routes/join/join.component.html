@@ -1,15 +1,15 @@
-<app-toolbar
+<streat-toolbar
         title="Join us!"
         [showBackButton]="true"
         [showSearchButton]="false"
-></app-toolbar>
+></streat-toolbar>
 
 <div class="title">
     <h1 class="primary-color">One more step</h1>
     <p>We won't ask you much</p>
 </div>
 <div class="form-container">
-    <app-login-form
+    <streat-login-form
             emailPlaceholder="Enter your e-mail address..."
             passwordPlaceholder="Choose a password..."
             secondaryButtonText="I'm already registered"
@@ -18,5 +18,5 @@
             [disabled]="registering"
             [errorMessage]="registeringFailedMessage"
             (formSubmitted)="formSubmitted($event)"
-    ></app-login-form>
+    ></streat-login-form>
 </div>

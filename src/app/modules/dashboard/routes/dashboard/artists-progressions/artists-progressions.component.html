@@ -1,20 +1,20 @@
 <div *ngIf="(progressions | async)?.length > 0">
-    <app-help-bubble
+    <streat-help-bubble
             text="To access more options, right click (or hold down) an artist card!"
             uid="artists-progressions-right-click"
-    ></app-help-bubble>
+    ></streat-help-bubble>
 
-    <app-artist-progression
+    <streat-artist-progression
             *ngFor="let progression of progressions | async"
             [progression]="progression"
             (removeProgression)="removeProgression(progression)"
             (markAllAsFound)="markAllPiecesAsFound(progression)"
     >
-    </app-artist-progression>
+    </streat-artist-progression>
 </div>
 
-<app-use-discover-tab *ngIf="(progressions | async)?.length === 0 && !isFiltered"
+<streat-use-discover-tab *ngIf="(progressions | async)?.length === 0 && !isFiltered"
                       (goToDiscover)="goToDiscover.emit()"
-></app-use-discover-tab>
+></streat-use-discover-tab>
 
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<streat-loading-spinner *ngIf="loading"></streat-loading-spinner>

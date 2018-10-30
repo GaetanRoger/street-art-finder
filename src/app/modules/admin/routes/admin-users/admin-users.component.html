@@ -1,4 +1,4 @@
-<app-admin-toolbar title="Users"></app-admin-toolbar>
+<streat-admin-toolbar title="Users"></streat-admin-toolbar>
 <mat-selection-list #list >
     <mat-list-option *ngFor="let user of pieces$ | async" [value]="user.email">
         <h4 mat-line>{{user.email}}</h4>

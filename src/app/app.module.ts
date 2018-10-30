@@ -13,6 +13,7 @@ import {OnlyAdminGuard} from './modules/core/guards/only-admin/only-admin.guard'
 import {AngularFireModule} from '@angular/fire';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {HttpClientModule} from '@angular/common/http';
+import {SharedModule} from './modules/shared/shared.module';
 
 const routes: Route[] = [
     {
@@ -47,6 +48,7 @@ const routes: Route[] = [
         BrowserAnimationsModule,
         AngularFireModule.initializeApp(environment.firebase),
         CoreModule,
+        SharedModule,
         LeafletModule.forRoot(),
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],

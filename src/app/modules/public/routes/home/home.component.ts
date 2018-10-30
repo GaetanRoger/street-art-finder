@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 import {Observable, of} from 'rxjs';
-import {Artist} from '../../../core/types/artist';
-import {UserService} from '../../../core/services/user/user.service';
+import {Artist} from '../../../shared/types/artist';
+import {UserService} from '../../../core/services/users/user/user.service';
 import {map, tap} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-home',
+    selector: 'streat-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })
@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     }
 
     loadMoreArtists(): void {
-        const newArtists$ = this.artistService.findN(this.filter, ++this.page);
+        const newArtists$ = this.artistService.searchN(this.filter, ++this.page);
         newArtists$.subscribe(a => this.artists.push(...a));
         this.hasMore$ = newArtists$.pipe(map(a => a && a.length > 0));
     }
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
     private _resetArtists(): void {
         this.artists = null;
         this.initialLoading = true;
-        this.artistService.findN(this.filter)
+        this.artistService.searchN(this.filter)
             .subscribe(a => {
                 this.artists = a;
                 this.initialLoading = false;

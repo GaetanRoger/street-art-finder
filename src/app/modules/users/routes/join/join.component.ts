@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {UserCredentials} from '../../../core/types/user-credentials';
-import {UserService} from '../../../core/services/user/user.service';
+import {UserCredentials} from '../../../shared/types/user-credentials';
+import {UserService} from '../../../core/services/users/user/user.service';
 import {Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-join',
+    selector: 'streat-join',
     templateUrl: './join.component.html',
     styleUrls: ['./join.component.css']
 })

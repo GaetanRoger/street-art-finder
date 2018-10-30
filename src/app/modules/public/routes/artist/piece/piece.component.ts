@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Piece} from '../../../../core/types/piece';
-import {PieceDialogComponent} from '../../../../core/components/piece-dialog/piece-dialog.component';
+import {Piece} from '../../../../shared/types/piece';
+import {PieceDialogComponent} from '../../../../shared/components/piece-dialog/piece-dialog.component';
 import {MatDialog} from '@angular/material';
 
 @Component({
-    selector: 'app-piece',
+    selector: 'streat-piece',
     templateUrl: './piece.component.html',
     styleUrls: ['./piece.component.css']
 })

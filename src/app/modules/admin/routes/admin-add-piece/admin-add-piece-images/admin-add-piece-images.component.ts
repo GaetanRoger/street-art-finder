@@ -1,15 +1,16 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {CropperComponent} from 'angular-cropperjs';
 import Cropper from 'cropperjs';
 
 @Component({
-    selector: 'app-admin-add-piece-images',
+    selector: 'streat-admin-add-piece-images',
     templateUrl: './admin-add-piece-images.component.html',
     styleUrls: ['./admin-add-piece-images.component.css']
 })
 export class AdminAddPieceImagesComponent implements OnInit {
+    @Input() editing: boolean;
     @Output() mainImage: EventEmitter<{ blob: Blob; name: string }> = new EventEmitter();
 
     mainImageUrl$: BehaviorSubject<SafeUrl> = new BehaviorSubject(null);
@@ -19,7 +20,7 @@ export class AdminAddPieceImagesComponent implements OnInit {
         movable: true,
         dragMode: 'move'
     };
-
+    editingButChangingMainImage = false;
     private name: string;
 
     @ViewChild('mainCropper') mainCropper: CropperComponent;
@@ -28,6 +29,11 @@ export class AdminAddPieceImagesComponent implements OnInit {
     }
 
     ngOnInit() {
+    }
+
+    get disableButton(): boolean {
+        return (!this.editing && !this.mainImageUrl$.value)
+            || (this.editing && this.editingButChangingMainImage && !this.mainImageUrl$.value);
     }
 
     mainImageUploaded(result: File) {
@@ -39,8 +45,10 @@ export class AdminAddPieceImagesComponent implements OnInit {
     }
 
     onNext() {
-        this.mainCropper.cropper
-            .getCroppedCanvas()
-            .toBlob(blob => this.mainImage.emit({blob, name: this.name}));
+        if (!this.editing || (this.editing && this.editingButChangingMainImage)) {
+            this.mainCropper.cropper
+                .getCroppedCanvas()
+                .toBlob(blob => this.mainImage.emit({blob, name: this.name}));
+        }
     }
 }

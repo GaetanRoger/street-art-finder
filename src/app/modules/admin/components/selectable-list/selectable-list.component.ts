@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
-import {ObjectIDable} from '../../../core/types/object-idable';
+import {ObjectIDable} from '../../../shared/types/object-idable';
 import {MatDialog, MatSelectionList} from '@angular/material';
-import {ConfirmationDialogComponent} from '../../../core/components/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {filter, map} from 'rxjs/operators';
-import {ConfirmationDialogData} from '../../../core/components/confirmation-dialog/confirmation-dialog-data';
+import {ConfirmationDialogData} from '../../../shared/components/confirmation-dialog/confirmation-dialog-data';
 
 @Component({
-    selector: 'app-selectable-list',
+    selector: 'streat-selectable-list',
     templateUrl: './selectable-list.component.html',
     styleUrls: ['./selectable-list.component.css']
 })

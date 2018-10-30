@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UserService} from '../../../core/services/user/user.service';
+import {UserService} from '../../../core/services/users/user/user.service';
 import {Observable} from 'rxjs';
-import {User} from '../../../core/types/user';
+import {User} from '../../../shared/types/user';
 import {filter, tap} from 'rxjs/operators';
 import {MatDialog, MatSelectionList, MatSnackBar} from '@angular/material';
-import {ConfirmationDialogComponent} from '../../../core/components/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-    selector: 'app-admin-users',
+    selector: 'streat-admin-users',
     templateUrl: './admin-users.component.html',
     styleUrls: ['./admin-users.component.css']
 })
@@ -26,7 +26,7 @@ export class AdminUsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.pieces$ = this.userService.findAll();
+        this.pieces$ = this.userService.findAll([]);
     }
 
     resetButtonClick() {

@@ -5,10 +5,10 @@ import {Route, RouterModule} from '@angular/router';
 import {CoreModule} from '../core/core.module';
 import {NotFoundComponent} from './routes/not-found/not-found.component';
 import {ArtistComponent} from './routes/artist/artist.component';
-import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import {PieceComponent} from './routes/artist/piece/piece.component';
 import {LearnMoreComponent} from './routes/learn-more/learn-more.component';
 import {TempComponent} from './routes/temp/temp.component';
+import {SharedModule} from '../shared/shared.module';
 
 const routes: Route[] = [
     {
@@ -37,8 +37,7 @@ const routes: Route[] = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        CoreModule,
-        ComponentsLibraryModule
+        SharedModule,
     ],
     declarations: [
         HomeComponent,

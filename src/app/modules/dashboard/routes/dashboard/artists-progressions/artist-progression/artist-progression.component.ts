@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {UserArtistProgression} from '../../../../../core/types/user-artist-progression';
+import {UserArtistProgression} from '../../../../../shared/types/user-artist-progression';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 import {MatDialog, MatMenuTrigger} from '@angular/material';
-import {ConfirmationDialogComponent} from '../../../../../core/components/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogComponent} from '../../../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {filter} from 'rxjs/operators';
 
 @Component({
-    selector: 'app-artist-progression',
+    selector: 'streat-artist-progression',
     templateUrl: './artist-progression.component.html',
     styleUrls: ['./artist-progression.component.css']
 })

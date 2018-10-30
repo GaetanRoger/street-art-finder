@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-    selector: 'app-admin-toolbar',
+    selector: 'streat-admin-toolbar',
     templateUrl: './admin-toolbar.component.html',
     styleUrls: ['./admin-toolbar.component.css']
 })

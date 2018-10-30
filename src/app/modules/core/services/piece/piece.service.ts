@@ -1,31 +1,34 @@
 import {Injectable} from '@angular/core';
 import {combineLatest, Observable} from 'rxjs';
-import {Piece} from '../../types/piece';
-import {AngularFirestore} from '@angular/fire/firestore';
+import {Piece} from '../../../shared/types/piece';
 import {flatMap, map, take} from 'rxjs/operators';
-import {ObjectIDInjectorService} from '../objectid-injecter/object-i-d-injector.service';
 import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
-import {UserGeolocationService} from '../geolocation/user-geolocation.service';
+import {UserGeolocationService} from '../location/geolocation/user-geolocation.service';
 import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/storage';
 import {ImageResizerService} from '../image-resizer/image-resizer.service';
+import {Findable} from '../firestore/firestore-finder/findable';
+import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-finder.service';
+import {FirestoreWhere} from '../firestore/firestore-finder/firestore-where';
+import {FirestoreCruderService} from '../firestore/firestore-cruder/firestore-cruder.service';
+import {FiltersBuilder} from '../algolia/filters-builder';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PieceService {
+export class PieceService implements Findable<Piece> {
     readonly COLLECTION = 'pieces';
 
-    constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjectorService<Piece>,
-                private readonly algolia: AlgoliaService,
+    constructor(private readonly algolia: AlgoliaService,
                 private readonly geolocation: UserGeolocationService,
                 private readonly storage: AngularFireStorage,
-                private readonly resizer: ImageResizerService) {
+                private readonly resizer: ImageResizerService,
+                private readonly finder: FirestoreFinderService<Piece>,
+                private readonly cruder: FirestoreCruderService<Piece>) {
     }
 
-    findAll(artistId: string, query: string = '', page: number = 0, hitsPerPage: number = 10): Observable<Piece[]> {
-        const filters = artistId ? `artist.objectID:${artistId}` : '';
+    search(artistId: string, query: string = '', page: number = 0, hitsPerPage: number = 10): Observable<Piece[]> {
+        const filters = new FiltersBuilder('artist.objectID', artistId, !!artistId).build();
 
         const baseParameters: QueryParameters = {
             query,
@@ -47,54 +50,37 @@ export class PieceService {
     }
 
     findAllVanished(artistId: string): Observable<Piece[]> {
-        return this.firestore
-            .collection<Piece>(this.COLLECTION, ref => {
-                return ref
-                    .where('artist.objectID', '==', artistId)
-                    .where('tags.vanished', '==', true);
-            })
-            .snapshotChanges()
-            .pipe(
-                map(snap => this.objectIDInjecter.injectIntoCollection(snap))
-            );
+        return this.finder.findFrom(this.COLLECTION)
+            .where('artist.objectID', '==', artistId)
+            .where('tags.vanished', '==', true)
+            .run();
     }
 
     findAllAndSubscribe(query: string): Observable<Piece[]> {
-        return this.findAll('', query)
+        return this.search('', query)
             .pipe(
                 flatMap(pieces => this._combinePiecesFromFirestore(pieces)),
             );
     }
 
     find(pieceId: string): Observable<Piece> {
-        return this.firestore
-            .doc<Piece>(`${this.COLLECTION}/${pieceId}`)
-            .snapshotChanges()
-            .pipe(
-                map(snap => this.objectIDInjecter.injectIntoDoc(snap))
-            );
+        return this.finder.find(this.COLLECTION, pieceId);
     }
 
-    create(piece: Piece) {
-        const id = piece.objectID;
-        delete piece.objectID;
-
-        return this.firestore.doc(`${this.COLLECTION}/${id}`)
-            .set({
-                ...piece
-            });
+    findAll(where: FirestoreWhere[]): Observable<Piece[]> {
+        return this.finder.findAll(this.COLLECTION, where);
     }
 
-    markAsVanished(pieceId: string, value: boolean = true): Promise<void> {
-        return this.firestore.collection(this.COLLECTION)
-            .doc(pieceId)
-            .update({['tags.vanished']: value});
+    create(piece: Piece): Observable<string> {
+        return this.cruder.create(this.COLLECTION, piece);
     }
 
-    delete(pieceId: string): Promise<void> {
-        return this.firestore.collection(this.COLLECTION)
-            .doc(pieceId)
-            .delete();
+    markAsVanished(pieceId: string, value: boolean = true): Observable<string> {
+        return this.cruder.update(this.COLLECTION, pieceId, {['tags.vanished']: value});
+    }
+
+    delete(pieceId: string): Observable<string> {
+        return this.cruder.delete(this.COLLECTION, pieceId);
     }
 
     uploadImage(image: Blob, imageName: string, artistId: string, pieceId: string, prefix: string = ''): AngularFireUploadTask {
@@ -107,24 +93,16 @@ export class PieceService {
         return this.storage.upload(pathNormal, image);
     }
 
-    async uploadImages(image: Blob, imageName: string, artistId: string, pieceId: string): Promise<{ low: AngularFireUploadTask; normal: AngularFireUploadTask }> {
+    async uploadImages(
+        image: Blob,
+        imageName: string,
+        artistId: string,
+        pieceId: string
+    ): Promise<{ low: AngularFireUploadTask; normal: AngularFireUploadTask }> {
         const resized = await this.resizer.resize(image, imageName, 500, 500);
 
-        const uploadLow = this.uploadImage(
-            resized,
-            imageName,
-            artistId,
-            pieceId,
-            'low'
-        );
-
-        const uploadNormal = this.uploadImage(
-            image,
-            imageName,
-            artistId,
-            pieceId,
-            'normal'
-        );
+        const uploadLow = this.uploadImage(resized, imageName, artistId, pieceId, 'low');
+        const uploadNormal = this.uploadImage(image, imageName, artistId, pieceId, 'normal');
 
         return {
             low: uploadLow,

@@ -1,17 +1,17 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {UserArtistProgressionService} from '../../../../core/services/user-artist-progression.service';
-import {UserService} from '../../../../core/services/user/user.service';
+import {UserArtistProgressionService} from '../../../../core/services/users/user-artist-progression.service';
+import {UserService} from '../../../../core/services/users/user/user.service';
 import {flatMap, map} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {Piece} from '../../../../core/types/piece';
+import {Piece} from '../../../../shared/types/piece';
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {Circle, Marker} from 'leaflet';
-import {User} from '../../../../core/types/user';
+import {User} from '../../../../shared/types/user';
 import {MapHelperService} from '../../../../core/services/map-helper/map-helper.service';
-import {MapElementInput} from '../../../../core/components/map/map-element-input';
+import {MapElementInput} from '../../../../shared/components/map/map-element-input';
 
 @Component({
-    selector: 'app-all',
+    selector: 'streat-all',
     templateUrl: './all.component.html',
     styleUrls: ['./all.component.css']
 })
@@ -58,7 +58,7 @@ export class AllComponent implements OnInit {
     }
 
     private _getPiecesByArtistsIds(artistsIds: string[]): Observable<Piece[]> {
-        const piecesByArtist$ = artistsIds.map(id => this.pieceService.findAll(id));
+        const piecesByArtist$ = artistsIds.map(id => this.pieceService.search(id));
         return combineLatest(piecesByArtist$)
             .pipe(flatMap(p => p));
     }

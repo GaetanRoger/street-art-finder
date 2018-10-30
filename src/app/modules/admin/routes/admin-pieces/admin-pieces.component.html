@@ -1,11 +1,11 @@
-<app-admin-toolbar
+<streat-admin-toolbar
         title="Pieces"
         [showSearchButton]="true"
         (searchChange)="filter$.next($event)"
 
-></app-admin-toolbar>
+></streat-admin-toolbar>
 
-<app-selectable-list
+<streat-selectable-list
     [elements$]="pieces$"
     [working$]="working$"
 
@@ -23,4 +23,4 @@
     (secondaryButtonClick)="markAsVanished()"
 
     (selectionChanged)="selectedPieces = $event"
-></app-selectable-list>
+></streat-selectable-list>

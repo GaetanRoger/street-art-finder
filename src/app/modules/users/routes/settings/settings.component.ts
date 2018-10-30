@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '../../../core/services/user/user.service';
-import {User} from '../../../core/types/user';
-import {UserSettingsService} from '../../../core/services/user-settings/user-settings.service';
+import {UserService} from '../../../core/services/users/user/user.service';
+import {User} from '../../../shared/types/user';
+import {UserSettingsService} from '../../../core/services/users/user-settings/user-settings.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {UserGeolocationService} from '../../../core/services/geolocation/user-geolocation.service';
+import {UserGeolocationService} from '../../../core/services/location/geolocation/user-geolocation.service';
 import {BrowserDetectorService} from '../../../core/services/browser-detector/browser-detector.service';
 import {ActivateGpsLocationDialogComponent} from './components/activate-gps-location-dialog/activate-gps-location-dialog.component';
-import {ConfirmationDialogComponent} from '../../../core/components/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {filter} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
 @Component({
-    selector: 'app-settings',
+    selector: 'streat-settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.css']
 })

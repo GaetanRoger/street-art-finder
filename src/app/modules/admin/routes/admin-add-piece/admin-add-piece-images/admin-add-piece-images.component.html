@@ -1,4 +1,8 @@
-<div>
+<div class="keeping-image-checkbox">
+    <mat-checkbox *ngIf="editing" [checked]="true" (change)="editingButChangingMainImage = !$event.checked">Keeping the same main image?</mat-checkbox>
+</div>
+
+<div *ngIf="!editing || editingButChangingMainImage">
     <div class="main-buttons">
         <div>
             <button type="button" [disabled]="mainImageUrl$.value" mat-raised-button (click)="mainImageInput.click()">Add main image</button>
@@ -18,11 +22,12 @@
 
 </div>
 <div class="buttons">
-    <button mat-flat-button
+    <button mat-raised-button
+            color="primary"
             (click)="onNext()"
             matStepperNext
-            [disabled]="!mainImageUrl$.value">
-        <span *ngIf="!mainImageUrl$.value">Pick at least a main image</span>
-        <span *ngIf="mainImageUrl$.value">Continue</span>
+            [disabled]="disableButton">
+        <span *ngIf="disableButton">Pick at least a main image</span>
+        <span *ngIf="!disableButton">Continue</span>
     </button>
 </div>

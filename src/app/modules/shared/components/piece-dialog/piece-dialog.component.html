@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{piece.name}}</h1>
+<mat-dialog-content>
+    <div class="map" *ngIf="pieceMapInput$ | async">
+        <streat-map
+            [elements]="pieceMapInput$ | async"
+            [layerToShow]="(showMarker$ | async) ? 'marker' : 'circle'"
+            [zoom]="16"
+        ></streat-map>
+    </div>
+    <p class="added-on">
+        Added on {{piece.addedOn | timestamp}}
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close>Close</button>
+    <button mat-raised-button color="warn" mat-dialog-close [routerLink]="['/admin', 'add-piece', piece.objectID]"><mat-icon>settings_input_component</mat-icon> EDIT</button>
+    <a mat-button target="_blank" [href]="itinaryUrl$ | async">GO THERE</a>
+</mat-dialog-actions>

@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {UserGeolocationService} from '../geolocation/user-geolocation.service';
+import {UserGeolocationService} from '../location/geolocation/user-geolocation.service';
 import {Observable} from 'rxjs';
 import {LatLng, Marker, Point, TileLayer, tileLayer} from 'leaflet';
 import {map} from 'rxjs/operators';
-import {Geopoint} from '../../types/geopoint';
-import {UserService} from '../user/user.service';
+import {Geopoint} from '../../../shared/types/geopoint';
+import {UserService} from '../users/user/user.service';
 import {CircleBuilder} from './builders/circle-builder';
 import {MarkerBuilder} from './builders/marker-builder';
-import {SeededRandomGeneratorService} from '../seeded-random-generator/seeded-random-generator.service';
-import {CoordinatesCalculusService} from '../coordinates-calculus/coordinates-calculus.service';
+import {SeededRandomGeneratorService} from '../random/seeded-random-generator/seeded-random-generator.service';
+import {CoordinatesCalculusService} from '../location/coordinates-calculus/coordinates-calculus.service';
 
 @Injectable({
     providedIn: 'root'

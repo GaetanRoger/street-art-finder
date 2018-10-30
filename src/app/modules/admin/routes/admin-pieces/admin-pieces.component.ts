@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {PieceService} from '../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Piece} from '../../../core/types/piece';
+import {Piece} from '../../../shared/types/piece';
 import {delay, filter, flatMap, tap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 
 @Component({
-    selector: 'app-admin-pieces',
+    selector: 'streat-admin-pieces',
     templateUrl: './admin-pieces.component.html',
     styleUrls: ['./admin-pieces.component.css']
 })

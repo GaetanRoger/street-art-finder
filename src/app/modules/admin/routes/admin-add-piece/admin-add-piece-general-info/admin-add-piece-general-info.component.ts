@@ -1,14 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {Artist} from '../../../../core/types/artist';
+import {Artist} from '../../../../shared/types/artist';
 import {ArtistService} from '../../../../core/services/artist/artist.service';
 import {debounceTime, filter, flatMap, tap} from 'rxjs/operators';
-import {AddressFromGeopointService} from '../../../../core/services/address-from-geopoint/address-from-geopoint.service';
-import {Address} from '../../../../core/types/address';
+import {AddressFromGeopointService} from '../../../../core/services/location/address-from-geopoint/address-from-geopoint.service';
+import {Address} from '../../../../shared/types/address';
 
 @Component({
-    selector: 'app-admin-add-piece-general-info',
+    selector: 'streat-admin-add-piece-general-info',
     templateUrl: './admin-add-piece-general-info.component.html',
     styleUrls: ['./admin-add-piece-general-info.component.css']
 })
@@ -53,7 +53,7 @@ export class AdminAddPieceGeneralInfoComponent implements OnInit {
     ngOnInit() {
         this.artists$ = this.artist.valueChanges
             .pipe(
-                flatMap(query => this.artistService.findAll(query))
+                flatMap(query => this.artistService.search(query))
             );
         this._retrieveInfoFromGeopoint();
     }
