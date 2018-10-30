@@ -1,9 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Route, RouterModule} from '@angular/router';
-import {CoreModule} from '../core/core.module';
-import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import {AdminDashboardComponent} from './routes/admin-dashboard/admin-dashboard.component';
 import {AdminUsersComponent} from './routes/admin-users/admin-users.component';
 import {AdminToolbarComponent} from './components/admin-toolbar/admin-toolbar.component';
@@ -49,6 +47,7 @@ const routes: Route[] = [
     imports: [
         CommonModule,
         ReactiveFormsModule,
+        FormsModule,
         RouterModule.forChild(routes),
         SharedModule,
         AngularCropperjsModule,

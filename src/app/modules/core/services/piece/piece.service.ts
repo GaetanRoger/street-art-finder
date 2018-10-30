@@ -12,6 +12,7 @@ import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-fi
 import {FirestoreWhere} from '../firestore/firestore-finder/firestore-where';
 import {FirestoreCruderService} from '../firestore/firestore-cruder/firestore-cruder.service';
 import {FiltersBuilder} from '../algolia/filters-builder';
+import {ObjectIDable} from '../../../shared/types/object-idable';
 
 @Injectable({
     providedIn: 'root'
@@ -115,5 +116,11 @@ export class PieceService implements Findable<Piece> {
             .pipe(
                 map(p => p.filter((pp: Piece) => pp && pp.name)), // We check the piece exists
             ) as Observable<Piece[]>;
+    }
+
+    update(piece: ObjectIDable) {
+        const id = piece.objectID;
+        delete piece.objectID;
+        return this.cruder.update(this.COLLECTION, id , piece);
     }
 }

@@ -1,8 +1,8 @@
 <div class="keeping-image-checkbox">
-    <mat-checkbox *ngIf="editing" [checked]="true" (change)="editingButChangingMainImage = !$event.checked">Keeping the same main image?</mat-checkbox>
+    <mat-checkbox *ngIf="editing" [(ngModel)]="editingAndKeepingSameImages">Keeping the same main image?</mat-checkbox>
 </div>
 
-<div *ngIf="!editing || editingButChangingMainImage">
+<div *ngIf="!editing || !editingAndKeepingSameImages">
     <div class="main-buttons">
         <div>
             <button type="button" [disabled]="mainImageUrl$.value" mat-raised-button (click)="mainImageInput.click()">Add main image</button>

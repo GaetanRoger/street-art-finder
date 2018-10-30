@@ -10,8 +10,10 @@ import Cropper from 'cropperjs';
     styleUrls: ['./admin-add-piece-images.component.css']
 })
 export class AdminAddPieceImagesComponent implements OnInit {
+
     @Input() editing: boolean;
     @Output() mainImage: EventEmitter<{ blob: Blob; name: string }> = new EventEmitter();
+    @Output() uploadImages: EventEmitter<boolean> = new EventEmitter();
 
     mainImageUrl$: BehaviorSubject<SafeUrl> = new BehaviorSubject(null);
     readonly croppersOptions: Cropper.Options & any = {
@@ -20,7 +22,7 @@ export class AdminAddPieceImagesComponent implements OnInit {
         movable: true,
         dragMode: 'move'
     };
-    editingButChangingMainImage = false;
+    private _editingAndKeepingSameImages = false;
     private name: string;
 
     @ViewChild('mainCropper') mainCropper: CropperComponent;
@@ -28,12 +30,21 @@ export class AdminAddPieceImagesComponent implements OnInit {
     constructor(private readonly sanitizer: DomSanitizer) {
     }
 
+    get editingAndKeepingSameImages(): boolean {
+        return this._editingAndKeepingSameImages;
+    }
+
+    set editingAndKeepingSameImages(value: boolean) {
+        this.uploadImages.emit(!value);
+        this._editingAndKeepingSameImages = value;
+    }
+
     ngOnInit() {
     }
 
     get disableButton(): boolean {
         return (!this.editing && !this.mainImageUrl$.value)
-            || (this.editing && this.editingButChangingMainImage && !this.mainImageUrl$.value);
+            || (this.editing && !this._editingAndKeepingSameImages && !this.mainImageUrl$.value);
     }
 
     mainImageUploaded(result: File) {
@@ -45,7 +56,7 @@ export class AdminAddPieceImagesComponent implements OnInit {
     }
 
     onNext() {
-        if (!this.editing || (this.editing && this.editingButChangingMainImage)) {
+        if (!this.editing || (this.editing && !this._editingAndKeepingSameImages)) {
             this.mainCropper.cropper
                 .getCroppedCanvas()
                 .toBlob(blob => this.mainImage.emit({blob, name: this.name}));

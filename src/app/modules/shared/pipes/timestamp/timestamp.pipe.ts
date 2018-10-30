@@ -13,7 +13,6 @@ export class TimestampPipe implements PipeTransform {
         const digits = value.toString().length;
         const timestamp = digits === 10 ? Number(value) * 1000 : Number(value);
 
-        console.log('value', value, 'digits', digits, 'timestamp', timestamp);
         return this.datePipe.transform(new Date(timestamp), args);
     }
 

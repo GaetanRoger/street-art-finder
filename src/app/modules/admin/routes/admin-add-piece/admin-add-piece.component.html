@@ -11,11 +11,15 @@
             <streat-admin-add-piece-images
                     [editing]="editing"
                     (mainImage)="mainImage = $event"
+                    (uploadImages)="uploadImages = $event"
             ></streat-admin-add-piece-images>
         </mat-step>
         <mat-step label="Finish">
             <streat-admin-add-piece-finish [mainImage]="mainImage"
-                                        [pieceFormGroup]="pieceFormGroup"></streat-admin-add-piece-finish>
+                                           [editing]="editing"
+                                           [editingPieceId]="editingPieceId"
+                                           [uploadImages]="uploadImages"
+                                           [pieceFormGroup]="pieceFormGroup"></streat-admin-add-piece-finish>
 
         </mat-step>
     </mat-horizontal-stepper>

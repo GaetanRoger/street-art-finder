@@ -17,8 +17,10 @@ import {ImageResizerService} from '../../../../core/services/image-resizer/image
 })
 export class AdminAddPieceFinishComponent implements OnInit {
     @Input() uploadImages = true;
+    @Input() editing: boolean;
     @Input() pieceFormGroup: FormGroup;
     @Input() mainImage: { blob: Blob; name: string };
+    @Input() editingPieceId: string;
 
     lowUploadedPercentage$: Observable<number | undefined>;
     normalUploadedPercentage$: Observable<number | undefined>;
@@ -87,7 +89,12 @@ export class AdminAddPieceFinishComponent implements OnInit {
         uploadedImageUrlNormal: string
     ) {
         const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, uploadedImageUrlLow, uploadedImageUrlNormal);
-        await this.pieceService.create(piece);
+        if (this.editing) {
+            piece.objectID = this.editingPieceId;
+            await this.pieceService.update(piece);
+        } else {
+            await this.pieceService.create(piece);
+        }
     }
 
     private async _getPieceFromForm(
@@ -96,8 +103,8 @@ export class AdminAddPieceFinishComponent implements OnInit {
         artist: Artist,
         lowImageUrl: string,
         normalImageUrl: string
-    ): Promise<Piece> {
-        return {
+    ): Promise<any> {
+        let obj = {
             objectID: id,
             name: pieceData.name,
             text: pieceData.text,
@@ -111,19 +118,24 @@ export class AdminAddPieceFinishComponent implements OnInit {
                 latitude: pieceData.location.latitude
             },
             address: await this.addressService.get(pieceData.location),
-            images: {
-                main: {
-                    low: lowImageUrl,
-                    normal: normalImageUrl
-                },
-                others: []
-            },
             tags: {
                 vanished: pieceData.vanished,
                 accessible: pieceData.accessible
             },
             addedOn: Date.now(),
         };
+
+        if (lowImageUrl && normalImageUrl) {
+            obj['images'] = {
+                main: {
+                    low: lowImageUrl,
+                    normal: normalImageUrl
+                },
+                others: []
+            };
+        }
+
+        return obj;
     }
 
     private async _uploadImages(artist: Artist, pieceId: string): Promise<{ low: string; normal: string; }> {
