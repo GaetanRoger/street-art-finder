@@ -1,0 +1,14 @@
+mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.up-to-date {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    font-size: 125%;
+
+}

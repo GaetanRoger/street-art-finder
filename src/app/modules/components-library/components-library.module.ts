@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {
-    MatAutocompleteModule,
+    MatAutocompleteModule, MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -42,7 +42,8 @@ import {
         MatStepperModule,
         MatExpansionModule,
         MatSelectModule,
-        MatRippleModule
+        MatRippleModule,
+        MatBadgeModule
     ],
     declarations: [],
     exports: [
@@ -66,7 +67,8 @@ import {
         MatStepperModule,
         MatExpansionModule,
         MatSelectModule,
-        MatRippleModule
+        MatRippleModule,
+        MatBadgeModule
     ]
 })
 export class ComponentsLibraryModule {

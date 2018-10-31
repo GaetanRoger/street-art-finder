@@ -1,0 +1,22 @@
+<div class="notification-content"
+     (swipeleft)="onSwipe($event, '-')"
+     (swiperight)="onSwipe($event, '')"
+[@swipe]="{value: animation, params: animationParams}">
+  <div class="header">
+    <h4 class="primary-color">{{notification.title}}</h4>
+    <mat-icon>{{notification.icon}}</mat-icon>
+  </div>
+  <p class="text" (click)="showDateId = showDateId === notification.objectID ? undefined : notification.objectID">{{notification.text}}</p>
+  <small class="date" *ngIf="showDateId === notification.objectID">{{notification.date | timestamp}}</small>
+  <div class="links">
+    <a mat-raised-button
+       *ngIf="notification.link"
+       [href]="notification.link.href"
+       target="_blank"
+    >{{notification.link.text}}</a>
+    <a mat-raised-button
+       *ngIf="notification.routerLink"
+       [routerLink]="notification.routerLink.href"
+    >{{notification.routerLink.text}}</a>
+  </div>
+</div>

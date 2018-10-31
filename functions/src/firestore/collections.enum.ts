@@ -1,4 +1,5 @@
 export enum Collections {
+    notifications = 'notifications',
     artists = 'artists',
     pieces = 'pieces',
     users_artists = 'users_artists',

@@ -1,0 +1,14 @@
+<div class="notifications"
+     *ngIf="unreadNotifications$ | async as notifications">
+    <button mat-mini-fab
+            *ngIf="notifications?.length > 0"
+            color="primary"
+            (click)="openNotificationsDialog()">
+        <mat-icon
+                [matBadge]="notifications.length"
+                matBadgeColor="warn"
+        >notifications
+        </mat-icon>
+    </button>
+</div>
+

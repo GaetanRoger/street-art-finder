@@ -2,8 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
 import {Route, RouterModule} from '@angular/router';
-import {CoreModule} from '../core/core.module';
-import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import {DashboardComponent} from './routes/dashboard/dashboard.component';
 import {ArtistProgressionComponent} from './routes/dashboard/artists-progressions/artist-progression/artist-progression.component';
 import {AllComponent} from './routes/dashboard/all/all.component';
@@ -17,6 +15,9 @@ import {PieceDialogComponent} from '../shared/components/piece-dialog/piece-dial
 import {PiecePicturesDialogComponent} from './routes/dashboard-artist/dashboard-piece-progression/piece-pictures-dialog/piece-pictures-dialog.component';
 import {DiscoverArtistAddedSnackbarComponent} from './routes/dashboard/discover/discover-artist-added-snackbar/discover-artist-added-snackbar.component';
 import {SharedModule} from '../shared/shared.module';
+import {NotificationsComponent} from './routes/dashboard/notifications/notifications.component';
+import {NotificationsDialogComponent} from './routes/dashboard/notifications/notifications-dialog/notifications-dialog.component';
+import { NotificationComponent } from './routes/dashboard/notifications/notifications-dialog/notification/notification.component';
 
 const routes: Route[] = [
     {
@@ -47,10 +48,18 @@ const routes: Route[] = [
         DashboardArtistComponent,
         DashboardPieceProgressionComponent,
         PiecePicturesDialogComponent,
-        DiscoverArtistAddedSnackbarComponent
+        DiscoverArtistAddedSnackbarComponent,
+        NotificationsComponent,
+        NotificationsDialogComponent,
+        NotificationComponent
     ],
     providers: [],
-    entryComponents: [PieceDialogComponent, PiecePicturesDialogComponent, DiscoverArtistAddedSnackbarComponent]
+    entryComponents: [
+        PieceDialogComponent,
+        PiecePicturesDialogComponent,
+        DiscoverArtistAddedSnackbarComponent,
+        NotificationsDialogComponent
+    ]
 })
 export class DashboardModule {
 }

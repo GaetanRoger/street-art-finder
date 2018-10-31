@@ -1,0 +1,40 @@
+mat-icon{
+    opacity: 0.5;
+}
+
+.notification-content {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 0;
+}
+
+h4 {
+    margin-bottom: 0;
+    margin-top: 0;
+    font-weight: normal;
+    font-size: 125%;
+}
+p {
+    margin-top: 5px;
+    margin-bottom: 2px;
+    opacity: 0.8;
+    text-align: justify;
+}
+
+.date {
+    opacity: 0.6;
+    font-size: 80%;
+    margin-left: 10px;
+}
+
+.links {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
