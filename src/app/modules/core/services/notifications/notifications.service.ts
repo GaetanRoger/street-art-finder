@@ -13,7 +13,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 export class NotificationsService {
     private readonly COLLECTION = 'notifications';
 
-    constructor(private readonly finder: FirestoreFinderService<Notification>,
+    constructor(private readonly finder: FirestoreFinderService,
                 private readonly userService: UserService,
                 private readonly firestore: AngularFirestore) {
     }
@@ -24,7 +24,7 @@ export class NotificationsService {
     }
 
     private _findUnreadOfUser(user: User): Observable<Notification[]> {
-        return this.finder.findFrom(this.COLLECTION)
+        return this.finder.findFrom<Notification>(this.COLLECTION)
             .where('user', '==', user.objectID)
             .where('read', '==', false)
             .orderBy('date', 'desc')

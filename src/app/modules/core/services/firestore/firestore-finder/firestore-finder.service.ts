@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFirestore, CollectionReference, Query} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../../objectid-injecter/object-i-d-injector.service';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {ObjectIDable} from '../../../../shared/types/object-idable';
 import {FirestoreWhere} from './firestore-where';
 import {FirestoreQueryBuilder} from '../firestore-cruder/firestore-query-builder';
@@ -11,32 +11,32 @@ import {FirestoreOrderBy} from './firestore-order-by';
 @Injectable({
     providedIn: 'root'
 })
-export class FirestoreFinderService<T extends ObjectIDable> {
+export class FirestoreFinderService {
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly injecter: ObjectIDInjectorService<T>) {
+                private readonly injecter: ObjectIDInjectorService) {
     }
 
-    find(collection: string, objectId: string): Observable<T> {
+    find<T extends ObjectIDable>(collection: string, objectId: string): Observable<T> {
         return this.firestore
             .collection<T>(collection)
             .doc<T>(objectId)
             .snapshotChanges()
             .pipe(
-                map(v => this.injecter.injectIntoDoc(v))
+                map(v => this.injecter.injectIntoDoc<T>(v))
             );
     }
 
-    findAll(collection: string, where: FirestoreWhere[] = [], orderBy?: FirestoreOrderBy): Observable<T[]> {
+    findAll<T extends ObjectIDable>(collection: string, where: FirestoreWhere[] = [], orderBy?: FirestoreOrderBy): Observable<T[]> {
         return this.firestore
             .collection<T>(collection, this._applyWhereAndOrderBy(where, orderBy))
             .snapshotChanges()
             .pipe(
-                map(v => this.injecter.injectIntoCollection(v))
+                map(v => this.injecter.injectIntoCollection<T>(v)),
             );
     }
 
-    findFrom(collection: string): FirestoreQueryBuilder<T> {
+    findFrom<T extends ObjectIDable>(collection: string): FirestoreQueryBuilder<T> {
         return new FirestoreQueryBuilder(collection, this);
     }
 

@@ -14,6 +14,7 @@ import {AngularFireModule} from '@angular/fire';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from './modules/shared/shared.module';
+import {ExtraModuleInjectorService} from './modules/core/extra-module-injector.service';
 
 const routes: Route[] = [
     {
@@ -62,8 +63,7 @@ export class AppModule {
         shadowUrl: 'assets/leaflet/marker-shadow.png',
         iconAnchor: [12, 40]
     });
-
-    constructor() {
+    constructor(extraInjector: ExtraModuleInjectorService) {
         Marker.prototype.options.icon = this.defaultIcon;
         // firebase.firestore.setLogLevel('debug');
     }

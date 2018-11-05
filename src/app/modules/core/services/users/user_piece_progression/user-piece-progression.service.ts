@@ -21,9 +21,8 @@ export class UserPieceProgressionService {
     };
 
     constructor(private readonly firestore: AngularFirestore,
-                private readonly objectIDInjecter: ObjectIDInjectorService<UserPieceProgression>,
                 private readonly userService: UserService,
-                private readonly finder: FirestoreFinderService<UserPieceProgression>,
+                private readonly finder: FirestoreFinderService,
                 private readonly cruder: FirestoreCruderService<UserPieceProgression>) {
     }
 
@@ -60,7 +59,7 @@ export class UserPieceProgressionService {
     }
 
     private _getFirestoreCollectionFromUserId(artistId: string, userId: string, options: PiecesProgressionOptions = {}) {
-        return this.finder.findFrom(this.COLLECTION)
+        return this.finder.findFrom<UserPieceProgression>(this.COLLECTION)
             .where('user', '==', userId)
             .where('artist.objectID', '==', artistId)
             .if(options.onlyFound).where('found', '==', true)

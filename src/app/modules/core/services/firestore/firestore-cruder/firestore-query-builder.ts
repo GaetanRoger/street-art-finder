@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
  */
 export class FirestoreQueryBuilder<T extends ObjectIDable> {
     private readonly _collection: string;
-    private readonly _finder: FirestoreFinderService<T>;
+    private readonly _finder: FirestoreFinderService;
 
     private _where: FirestoreWhere[] = [];
     private _orderBy: { field: string, direction: 'asc' | 'desc' };
@@ -20,7 +20,7 @@ export class FirestoreQueryBuilder<T extends ObjectIDable> {
      * @param collection Collection to query.
      * @param cruder Finder service used to query.
      */
-    constructor(collection: string, cruder: FirestoreFinderService<T>) {
+    constructor(collection: string, cruder: FirestoreFinderService) {
         this._collection = collection;
         this._finder = cruder;
     }
@@ -83,7 +83,7 @@ export class FirestoreQueryBuilder<T extends ObjectIDable> {
     }
 
     run(): Observable<T[]> {
-        return this._finder.findAll(this._collection, this._where, this._orderBy);
+        return this._finder.findAll<T>(this._collection, this._where, this._orderBy);
     }
 
     private _runThisAction() {

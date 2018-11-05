@@ -28,8 +28,8 @@ export class FirestoreCruderService<T extends ObjectIDable> {
         delete document.objectID;
 
         return docId
-            ? this._createFromId(collection, document, docId)
-            : this._createFromNothing(collection, document);
+            ? this._createFromId<T>(collection, document, docId)
+            : this._createFromNothing<T>(collection, document);
     }
 
     /**
@@ -57,7 +57,25 @@ export class FirestoreCruderService<T extends ObjectIDable> {
      * @return An observable of the delete document ID.
      */
     delete(collection: string, objectID: string): Observable<string> {
-        const promise = this.firestore.collection(collection)
+        return this._performDeletion<T>(collection, objectID);
+    }
+
+    /**
+     * Delete another type of document within a collection.
+     *
+     * This method must only be used when the document to delete
+     * does not match with the generic type given to the class.
+     *
+     * @param collection Collection where to delete.
+     * @param objectID ID of the document to delete.
+     * @return An observable of the delete document ID.
+     */
+    deleteOther<S extends ObjectIDable>(collection: string, objectID: string): Observable<string> {
+        return this._performDeletion<S>(collection, objectID);
+    }
+
+    private _performDeletion<S extends ObjectIDable>(collection: string, objectID: string): Observable<string> {
+        const promise = this.firestore.collection<S>(collection)
             .doc(objectID)
             .delete();
 
@@ -73,8 +91,8 @@ export class FirestoreCruderService<T extends ObjectIDable> {
      * @param docId Document ID.
      * @private
      */
-    private _createFromId(collection: string, document: T, docId: string): Observable<string> {
-        const promise = this.firestore.collection<T>(collection).doc(docId).set(document);
+    private _createFromId<S extends ObjectIDable>(collection: string, document: S, docId: string): Observable<string> {
+        const promise = this.firestore.collection<S>(collection).doc(docId).set(document);
         return fromPromise(promise).pipe(map(() => docId));
     }
 
@@ -84,8 +102,8 @@ export class FirestoreCruderService<T extends ObjectIDable> {
      * @param document Document data to create.
      * @private
      */
-    private _createFromNothing(collection: string, document: T): Observable<string> {
-        const promise = this.firestore.collection<T>(collection).add(document);
+    private _createFromNothing<S extends ObjectIDable>(collection: string, document: S): Observable<string> {
+        const promise = this.firestore.collection<S>(collection).add(document);
         return fromPromise(promise).pipe(map(p => p.id));
     }
 }

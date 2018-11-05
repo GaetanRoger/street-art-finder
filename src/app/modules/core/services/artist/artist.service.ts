@@ -7,26 +7,34 @@ import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
 import {FacetQueryResponse} from '../algolia/facet-query-response';
 import {FiltersBuilder} from '../algolia/filters-builder';
-import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-finder.service';
 import {Findable} from '../firestore/firestore-finder/findable';
 import {FirestoreWhere} from '../firestore/firestore-finder/firestore-where';
-import {FirestoreCruderService} from '../firestore/firestore-cruder/firestore-cruder.service';
+import {ImplementsFindable} from '../../decorators/implements-findable';
+import {AutoImplemented} from '../../decorators/auto-implemented';
+import {Deletable} from '../firestore/firestore-cruder/deletable';
+import {ImplementsDeletable} from '../../decorators/implements-deletable';
+
 
 @Injectable({
     providedIn: 'root'
 })
-export class ArtistService implements Findable<Artist> {
-    readonly COLLECTION = 'artists';
+@ImplementsFindable<Artist>('artists')
+@ImplementsDeletable<Artist>('artists')
+export class ArtistService implements Findable<Artist>, Deletable<Artist> {
+    @AutoImplemented collection: string;
+    @AutoImplemented find: (id: string) => Observable<Artist>;
+    @AutoImplemented findAll: (where: FirestoreWhere[]) => Observable<Artist[]>;
+    @AutoImplemented delete: (id: string) => Observable<string>;
+
     private DEFAULT_FIND_ALL_PARAMS = {
         limit: 5,
         published: true
     };
 
     constructor(private readonly pieceService: PieceService,
-                private readonly algolia: AlgoliaService,
-                private readonly finder: FirestoreFinderService<Artist>,
-                private readonly cruder: FirestoreCruderService<Artist>) {
+                private readonly algolia: AlgoliaService) {
     }
+
 
     search(query: string = '', params?: { city?: string; limit?: number; published?: boolean }): Observable<Artist[]> {
         params = params
@@ -44,7 +52,7 @@ export class ArtistService implements Findable<Artist> {
             filters
         };
 
-        return this.algolia.query<Artist>(this.COLLECTION, parameters);
+        return this.algolia.query<Artist>(this.collection, parameters);
     }
 
     searchN(query: string = '', page: number = 0, hitsPerPage: number = 5): Observable<Artist[]> {
@@ -54,27 +62,15 @@ export class ArtistService implements Findable<Artist> {
             query,
             filters: new FiltersBuilder('published', true.toString()).build()
         };
-        return this.algolia.paginate<Artist>(this.COLLECTION, aQuery);
-    }
-
-    find(id: string): Observable<Artist> {
-        return this.finder.find(this.COLLECTION, id);
-    }
-
-    findAll(where: FirestoreWhere[]): Observable<Artist[]> {
-        return this.finder.findAll(this.COLLECTION, where);
+        return this.algolia.paginate<Artist>(this.collection, aQuery);
     }
 
 
     getAvailableCities(sortByCount: boolean = false): Observable<FacetQueryResponse[]> {
-        return this.algolia.facets(this.COLLECTION, 'cities')
+        return this.algolia.facets(this.collection, 'cities')
             .pipe(
                 map(r => sortByCount ? r.sort((r1, r2) => r1.count - r2.count) : r)
             );
-    }
-
-    delete(objectID: string): Observable<string> {
-        return this.cruder.delete(this.COLLECTION, objectID);
     }
 
     findAllAndSubscribe(filter: string): Observable<Artist[]> {
@@ -88,6 +84,7 @@ export class ArtistService implements Findable<Artist> {
         return combineLatest(artists.map(p => this.find(p.objectID)))
             .pipe(
                 map(p => p.filter((pp: Artist) => pp && pp.name)), // We check the piece exists
+
             ) as Observable<Artist[]>;
     }
 }

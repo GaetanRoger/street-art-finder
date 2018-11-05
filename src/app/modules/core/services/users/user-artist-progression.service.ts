@@ -15,7 +15,7 @@ export class UserArtistProgressionService {
     private readonly COLLECTION = 'users_artists';
 
     constructor(private readonly pieceProgression: UserPieceProgressionService,
-                private readonly finder: FirestoreFinderService<UserArtistProgression>,
+                private readonly finder: FirestoreFinderService,
                 private readonly cruder: FirestoreCruderService<UserArtistProgression>) {
     }
 
@@ -45,7 +45,7 @@ export class UserArtistProgressionService {
     }
 
     artistsProgressionFromUserId(userId: string): Observable<UserArtistProgression[]> {
-        return this.finder.findFrom(this.COLLECTION)
+        return this.finder.findFrom<UserArtistProgression>(this.COLLECTION)
             .where('user', '==', userId)
             .run();
     }

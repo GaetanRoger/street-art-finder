@@ -24,7 +24,7 @@ export class PieceService implements Findable<Piece> {
                 private readonly geolocation: UserGeolocationService,
                 private readonly storage: AngularFireStorage,
                 private readonly resizer: ImageResizerService,
-                private readonly finder: FirestoreFinderService<Piece>,
+                private readonly finder: FirestoreFinderService,
                 private readonly cruder: FirestoreCruderService<Piece>) {
     }
 
@@ -51,7 +51,7 @@ export class PieceService implements Findable<Piece> {
     }
 
     findAllVanished(artistId: string): Observable<Piece[]> {
-        return this.finder.findFrom(this.COLLECTION)
+        return this.finder.findFrom<Piece>(this.COLLECTION)
             .where('artist.objectID', '==', artistId)
             .where('tags.vanished', '==', true)
             .run();
@@ -65,11 +65,11 @@ export class PieceService implements Findable<Piece> {
     }
 
     find(pieceId: string): Observable<Piece> {
-        return this.finder.find(this.COLLECTION, pieceId);
+        return this.finder.find<Piece>(this.COLLECTION, pieceId);
     }
 
     findAll(where: FirestoreWhere[]): Observable<Piece[]> {
-        return this.finder.findAll(this.COLLECTION, where);
+        return this.finder.findAll<Piece>(this.COLLECTION, where);
     }
 
     create(piece: Piece): Observable<string> {

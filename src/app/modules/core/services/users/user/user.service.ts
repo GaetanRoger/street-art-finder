@@ -21,7 +21,7 @@ export class UserService implements Findable<User> {
     constructor(private readonly auth: AngularFireAuth,
                 private readonly userSettings: UserSettingsService,
                 private readonly userRoles: UserRolesService,
-                private readonly finder: FirestoreFinderService<User>,
+                private readonly finder: FirestoreFinderService,
                 private readonly cruder: FirestoreCruderService<User>) {
         this.user$ = this.auth.authState
             .pipe(
@@ -58,11 +58,11 @@ export class UserService implements Findable<User> {
     }
 
     find(id: string): Observable<User> {
-        return this.finder.find(this.COLLECTION, id);
+        return this.finder.find<User>(this.COLLECTION, id);
     }
 
     findAll(where: FirestoreWhere[]): Observable<User[]> {
-        return this.finder.findAll(this.COLLECTION, where);
+        return this.finder.findAll<User>(this.COLLECTION, where);
     }
 
 
