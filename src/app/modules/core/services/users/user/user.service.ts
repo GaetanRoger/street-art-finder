@@ -8,7 +8,7 @@ import {User} from '../../../../shared/types/user';
 import {UserCredentials} from '../../../../shared/types/user-credentials';
 import {FirestoreFinderService} from '../../firestore/firestore-finder/firestore-finder.service';
 import {FirestoreCruderService} from '../../firestore/firestore-cruder/firestore-cruder.service';
-import {Findable} from '../../firestore/firestore-finder/findable';
+import {Findable} from '../../firestore/firestore-finder/interfaces/findable';
 import {FirestoreWhere} from '../../firestore/firestore-finder/firestore-where';
 
 @Injectable({

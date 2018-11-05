@@ -7,21 +7,19 @@ import {QueryParameters} from 'algoliasearch';
 import {UserGeolocationService} from '../location/geolocation/user-geolocation.service';
 import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/storage';
 import {ImageResizerService} from '../image-resizer/image-resizer.service';
-import {Findable} from '../firestore/firestore-finder/findable';
+import {Findable} from '../firestore/firestore-finder/interfaces/findable';
 import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-finder.service';
 import {FirestoreCruderService} from '../firestore/firestore-cruder/firestore-cruder.service';
 import {FiltersBuilder} from '../algolia/filters-builder';
 import {AutoImplemented} from '../../decorators/auto-implemented';
-import {Deletable} from '../firestore/firestore-cruder/deletable';
 import {Implements} from '../../decorators/implements';
-import {Creatable} from '../firestore/firestore-cruder/creatable';
-import {Updatable} from '../firestore/firestore-cruder/updatable';
+import {Writable} from '../firestore/firestore-cruder/interfaces/writable';
 
 @Injectable({
     providedIn: 'root'
 })
-@Implements<Piece>([Findable, Creatable, Updatable, Deletable], 'pieces')
-export class PieceService implements Findable<Piece>, Creatable<Piece>, Updatable<Piece>, Deletable<Piece> {
+@Implements<Piece>([Findable, Writable], 'pieces')
+export class PieceService implements Findable<Piece>, Writable<Piece> {
     @AutoImplemented collection: string;
     @AutoImplemented find: (id: string) => Observable<Piece>;
     @AutoImplemented create: (document: Piece) => Observable<string>;

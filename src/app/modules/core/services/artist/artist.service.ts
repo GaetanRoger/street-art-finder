@@ -6,11 +6,11 @@ import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
 import {FacetQueryResponse} from '../algolia/facet-query-response';
 import {FiltersBuilder} from '../algolia/filters-builder';
-import {Findable} from '../firestore/firestore-finder/findable';
+import {Findable} from '../firestore/firestore-finder/interfaces/findable';
 import {FirestoreWhere} from '../firestore/firestore-finder/firestore-where';
 import {AutoImplemented} from '../../decorators/auto-implemented';
-import {Deletable} from '../firestore/firestore-cruder/deletable';
-import {Listable} from '../firestore/firestore-finder/listable';
+import {Deletable} from '../firestore/firestore-cruder/interfaces/deletable';
+import {Listable} from '../firestore/firestore-finder/interfaces/listable';
 import {Implements} from '../../decorators/implements';
 
 
