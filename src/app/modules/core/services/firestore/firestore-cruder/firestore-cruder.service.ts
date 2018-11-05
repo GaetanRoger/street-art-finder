@@ -24,12 +24,25 @@ export class FirestoreCruderService<T extends ObjectIDable> {
      * @return An observable of the created document ID.
      */
     create(collection: string, document: T): Observable<string> {
-        const docId = document.objectID;
-        delete document.objectID;
+        return this._performCreation(collection, document);
+    }
 
-        return docId
-            ? this._createFromId<T>(collection, document, docId)
-            : this._createFromNothing<T>(collection, document);
+
+    /**
+     * Create a document in a Firestore collection.
+     *
+     * If the document has a`objectID` field, the value will be used as the document ID.
+     * If a document in this collection already has this ID, the document will be overridden.
+     *
+     * This method must only be used when the document to create
+     * does not match with the generic type given to the class.
+     *
+     * @param collection Collection where to create.
+     * @param document Document data to create.
+     * @return An observable of the created document ID.
+     */
+    createOther<S extends ObjectIDable>(collection: string, document: S): Observable<string> {
+        return this._performCreation<S>(collection, document);
     }
 
     /**
@@ -42,11 +55,23 @@ export class FirestoreCruderService<T extends ObjectIDable> {
      * @return An observable of the updated document ID.
      */
     update(collection: string, objectID: string, value: any): Observable<string> {
-        const promise = this.firestore.collection(collection)
-            .doc(objectID)
-            .update(value);
+        return this._performUpdate<T>(collection, objectID, value);
+    }
 
-        return fromPromise(promise).pipe(map(() => objectID));
+    /**
+     * Update a document with a collection.
+     * Only given fields in `value` will be updated.
+     *
+     * his method must only be used when the document to update
+     * does not match with the generic type given to the class.
+     *
+     * @param collection Collection where to update.
+     * @param objectID ID of the document ot update.
+     * @param value Values to update.
+     * @return An observable of the updated document ID.
+     */
+    updateOther<S extends ObjectIDable>(collection: string, objectID: string, value: any): Observable<string> {
+        return this._performUpdate<S>(collection, objectID, value);
     }
 
     /**
@@ -72,6 +97,23 @@ export class FirestoreCruderService<T extends ObjectIDable> {
      */
     deleteOther<S extends ObjectIDable>(collection: string, objectID: string): Observable<string> {
         return this._performDeletion<S>(collection, objectID);
+    }
+
+    private _performCreation<S extends ObjectIDable>(collection: string, document: S): Observable<string> {
+        const docId = document.objectID;
+        delete document.objectID;
+
+        return docId
+            ? this._createFromId<S>(collection, document, docId)
+            : this._createFromNothing<S>(collection, document);
+    }
+
+    private _performUpdate<S extends ObjectIDable>(collection: string, objectID: string, value: any): Observable<string> {
+        const promise = this.firestore.collection<S>(collection)
+            .doc<S>(objectID)
+            .update(value);
+
+        return fromPromise(promise).pipe(map(() => objectID));
     }
 
     private _performDeletion<S extends ObjectIDable>(collection: string, objectID: string): Observable<string> {
@@ -106,4 +148,6 @@ export class FirestoreCruderService<T extends ObjectIDable> {
         const promise = this.firestore.collection<S>(collection).add(document);
         return fromPromise(promise).pipe(map(p => p.id));
     }
+
+
 }

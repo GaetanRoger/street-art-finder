@@ -11,18 +11,21 @@ import {Findable} from '../firestore/firestore-finder/findable';
 import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-finder.service';
 import {FirestoreCruderService} from '../firestore/firestore-cruder/firestore-cruder.service';
 import {FiltersBuilder} from '../algolia/filters-builder';
-import {ObjectIDable} from '../../../shared/types/object-idable';
 import {AutoImplemented} from '../../decorators/auto-implemented';
 import {Deletable} from '../firestore/firestore-cruder/deletable';
 import {Implements} from '../../decorators/implements';
+import {Creatable} from '../firestore/firestore-cruder/creatable';
+import {Updatable} from '../firestore/firestore-cruder/updatable';
 
 @Injectable({
     providedIn: 'root'
 })
-@Implements<Piece>([Findable, Deletable], 'pieces')
-export class PieceService implements Findable<Piece>, Deletable<Piece> {
+@Implements<Piece>([Findable, Creatable, Updatable, Deletable], 'pieces')
+export class PieceService implements Findable<Piece>, Creatable<Piece>, Updatable<Piece>, Deletable<Piece> {
     @AutoImplemented collection: string;
     @AutoImplemented find: (id: string) => Observable<Piece>;
+    @AutoImplemented create: (document: Piece) => Observable<string>;
+    @AutoImplemented update: (document: Piece) => Observable<string>;
     @AutoImplemented delete: (id: string) => Observable<string>;
 
     constructor(private readonly algolia: AlgoliaService,
@@ -69,10 +72,6 @@ export class PieceService implements Findable<Piece>, Deletable<Piece> {
             );
     }
 
-    create(piece: Piece): Observable<string> {
-        return this.cruder.create(this.collection, piece);
-    }
-
     markAsVanished(pieceId: string, value: boolean = true): Observable<string> {
         return this.cruder.update(this.collection, pieceId, {['tags.vanished']: value});
     }
@@ -109,11 +108,5 @@ export class PieceService implements Findable<Piece>, Deletable<Piece> {
             .pipe(
                 map(p => p.filter((pp: Piece) => pp && pp.name)), // We check the piece exists
             ) as Observable<Piece[]>;
-    }
-
-    update(piece: ObjectIDable) {
-        const id = piece.objectID;
-        delete piece.objectID;
-        return this.cruder.update(this.collection, id, piece);
     }
 }
