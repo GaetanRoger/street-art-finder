@@ -9,16 +9,21 @@ import {AngularFireStorage, AngularFireUploadTask} from '@angular/fire/storage';
 import {ImageResizerService} from '../image-resizer/image-resizer.service';
 import {Findable} from '../firestore/firestore-finder/findable';
 import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-finder.service';
-import {FirestoreWhere} from '../firestore/firestore-finder/firestore-where';
 import {FirestoreCruderService} from '../firestore/firestore-cruder/firestore-cruder.service';
 import {FiltersBuilder} from '../algolia/filters-builder';
 import {ObjectIDable} from '../../../shared/types/object-idable';
+import {AutoImplemented} from '../../decorators/auto-implemented';
+import {Deletable} from '../firestore/firestore-cruder/deletable';
+import {Implements} from '../../decorators/implements';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PieceService implements Findable<Piece> {
-    readonly COLLECTION = 'pieces';
+@Implements<Piece>([Findable, Deletable], 'pieces')
+export class PieceService implements Findable<Piece>, Deletable<Piece> {
+    @AutoImplemented collection: string;
+    @AutoImplemented find: (id: string) => Observable<Piece>;
+    @AutoImplemented delete: (id: string) => Observable<string>;
 
     constructor(private readonly algolia: AlgoliaService,
                 private readonly geolocation: UserGeolocationService,
@@ -46,12 +51,12 @@ export class PieceService implements Findable<Piece> {
                         ? {...baseParameters, aroundLatLng: `${loc.latitude}, ${loc.longitude}`}
                         : baseParameters;
                 }),
-                flatMap(param => this.algolia.query<Piece>(this.COLLECTION, param))
+                flatMap(param => this.algolia.query<Piece>(this.collection, param))
             );
     }
 
     findAllVanished(artistId: string): Observable<Piece[]> {
-        return this.finder.findFrom<Piece>(this.COLLECTION)
+        return this.finder.findFrom<Piece>(this.collection)
             .where('artist.objectID', '==', artistId)
             .where('tags.vanished', '==', true)
             .run();
@@ -64,24 +69,12 @@ export class PieceService implements Findable<Piece> {
             );
     }
 
-    find(pieceId: string): Observable<Piece> {
-        return this.finder.find<Piece>(this.COLLECTION, pieceId);
-    }
-
-    findAll(where: FirestoreWhere[]): Observable<Piece[]> {
-        return this.finder.findAll<Piece>(this.COLLECTION, where);
-    }
-
     create(piece: Piece): Observable<string> {
-        return this.cruder.create(this.COLLECTION, piece);
+        return this.cruder.create(this.collection, piece);
     }
 
     markAsVanished(pieceId: string, value: boolean = true): Observable<string> {
-        return this.cruder.update(this.COLLECTION, pieceId, {['tags.vanished']: value});
-    }
-
-    delete(pieceId: string): Observable<string> {
-        return this.cruder.delete(this.COLLECTION, pieceId);
+        return this.cruder.update(this.collection, pieceId, {['tags.vanished']: value});
     }
 
     uploadImage(image: Blob, imageName: string, artistId: string, pieceId: string, prefix: string = ''): AngularFireUploadTask {
@@ -121,6 +114,6 @@ export class PieceService implements Findable<Piece> {
     update(piece: ObjectIDable) {
         const id = piece.objectID;
         delete piece.objectID;
-        return this.cruder.update(this.COLLECTION, id , piece);
+        return this.cruder.update(this.collection, id, piece);
     }
 }

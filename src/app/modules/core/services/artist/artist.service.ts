@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Artist} from '../../../shared/types/artist';
 import {combineLatest, Observable} from 'rxjs';
-import {PieceService} from '../piece/piece.service';
 import {flatMap, map} from 'rxjs/operators';
 import {AlgoliaService} from '../algolia/algolia.service';
 import {QueryParameters} from 'algoliasearch';
@@ -9,21 +8,20 @@ import {FacetQueryResponse} from '../algolia/facet-query-response';
 import {FiltersBuilder} from '../algolia/filters-builder';
 import {Findable} from '../firestore/firestore-finder/findable';
 import {FirestoreWhere} from '../firestore/firestore-finder/firestore-where';
-import {ImplementsFindable} from '../../decorators/implements-findable';
 import {AutoImplemented} from '../../decorators/auto-implemented';
 import {Deletable} from '../firestore/firestore-cruder/deletable';
-import {ImplementsDeletable} from '../../decorators/implements-deletable';
+import {Listable} from '../firestore/firestore-finder/listable';
+import {Implements} from '../../decorators/implements';
 
 
 @Injectable({
     providedIn: 'root'
 })
-@ImplementsFindable<Artist>('artists')
-@ImplementsDeletable<Artist>('artists')
-export class ArtistService implements Findable<Artist>, Deletable<Artist> {
+@Implements<Artist>([Findable, Listable, Deletable], 'artists')
+export class ArtistService implements Findable<Artist>, Listable<Artist>, Deletable<Artist> {
     @AutoImplemented collection: string;
     @AutoImplemented find: (id: string) => Observable<Artist>;
-    @AutoImplemented findAll: (where: FirestoreWhere[]) => Observable<Artist[]>;
+    @AutoImplemented list: (where: FirestoreWhere[]) => Observable<Artist[]>;
     @AutoImplemented delete: (id: string) => Observable<string>;
 
     private DEFAULT_FIND_ALL_PARAMS = {
@@ -31,8 +29,7 @@ export class ArtistService implements Findable<Artist>, Deletable<Artist> {
         published: true
     };
 
-    constructor(private readonly pieceService: PieceService,
-                private readonly algolia: AlgoliaService) {
+    constructor(private readonly algolia: AlgoliaService) {
     }
 
 
