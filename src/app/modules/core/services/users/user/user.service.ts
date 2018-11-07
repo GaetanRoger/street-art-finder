@@ -10,11 +10,17 @@ import {FirestoreFinderService} from '../../firestore/firestore-finder/firestore
 import {FirestoreCruderService} from '../../firestore/firestore-cruder/firestore-cruder.service';
 import {Findable} from '../../firestore/firestore-finder/interfaces/findable';
 import {FirestoreWhere} from '../../firestore/firestore-finder/firestore-where';
+import {Implements} from '../../../decorators/implements';
+import {AutoImplemented} from '../../../decorators/auto-implemented';
 
 @Injectable({
     providedIn: 'root'
 })
+@Implements([Findable], 'users')
 export class UserService implements Findable<User> {
+    @AutoImplemented collection: string;
+    @AutoImplemented find: (id: string) => Observable<User>;
+
     private readonly COLLECTION = 'users';
     private readonly user$: Observable<User>;
 
@@ -32,13 +38,13 @@ export class UserService implements Findable<User> {
     register(userCredentials: UserCredentials) {
         return this.auth.auth
             .createUserWithEmailAndPassword(userCredentials.email, userCredentials.password)
-            .then(c => this.setUserDataForTheFirstTime(c.user.toJSON()));
+            .then(c => this._setUserDataForTheFirstTime(c.user.toJSON()));
     }
 
     login(userCredentials: UserCredentials) {
         return this.auth.auth
             .signInWithEmailAndPassword(userCredentials.email, userCredentials.password)
-            .then(c => this.updateUserDataFromLogin(c.user.toJSON()));
+            .then(c => this._updateUserDataFromLogin(c.user.toJSON()));
     }
 
     isLoggedIn(): Observable<boolean> {
@@ -57,10 +63,6 @@ export class UserService implements Findable<User> {
         return this.cruder.update(this.COLLECTION, userId, data);
     }
 
-    find(id: string): Observable<User> {
-        return this.finder.find<User>(this.COLLECTION, id);
-    }
-
     findAll(where: FirestoreWhere[]): Observable<User[]> {
         return this.finder.findAll<User>(this.COLLECTION, where);
     }
@@ -70,7 +72,11 @@ export class UserService implements Findable<User> {
         return this.auth.auth.sendPasswordResetEmail(userEmail);
     }
 
-    private updateUserDataFromLogin(user: any): Observable<string> {
+    delete(): Promise<void> {
+        return this.auth.auth.currentUser.delete();
+    }
+
+    private _updateUserDataFromLogin(user: any): Observable<string> {
         const data: any = {
             email: user.email,
             emailVerified: user.emailVerified,
@@ -81,7 +87,7 @@ export class UserService implements Findable<User> {
         return this.cruder.update(this.COLLECTION, user.uid, data);
     }
 
-    private setUserDataForTheFirstTime(user: any) {
+    private _setUserDataForTheFirstTime(user: any) {
         const data: User = {
             objectID: user.uid,
             email: user.email,
@@ -97,9 +103,5 @@ export class UserService implements Findable<User> {
                 undefined,
                 e => console.log('error while creating user', e)
             );
-    }
-
-    delete(): Promise<void> {
-        return this.auth.auth.currentUser.delete();
     }
 }

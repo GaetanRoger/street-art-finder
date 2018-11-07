@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtistService} from '../../../core/services/artist/artist.service';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Artist} from '../../../shared/types/artist';
 import {UserService} from '../../../core/services/users/user/user.service';
-import {map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
+import {Paginator} from '../../../core/services/algolia/paginator';
 
 @Component({
     selector: 'streat-home',
@@ -11,25 +12,38 @@ import {map, tap} from 'rxjs/operators';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    initialLoading = true;
-
-    artists: Artist[];
-
     primaryButtonText$: Observable<string>;
     primaryButtonRouterLink$: Observable<string>;
     loggedIn$: Observable<boolean>;
-    hasMore$: Observable<boolean> = of(true);
 
-    private page: number;
-    private filter = '';
+    artists$: Observable<Artist[]>;
+    noMoreToLoad$: Observable<boolean>;
+    loading$: Observable<boolean>;
+
+    private _paginator: Paginator<Artist>;
 
     constructor(private readonly artistService: ArtistService,
                 private readonly userService: UserService) {
     }
 
     ngOnInit() {
-        this._resetArtists();
+        this._paginator = this.artistService.paginator();
 
+        this._setupPaginator();
+        this._setupLoggedInObservables();
+        this.search();
+    }
+
+    search(query?: string): void {
+        this._paginator.setQuery(query || '');
+        this._paginator.reset();
+    }
+
+    loadMoreArtists() {
+        this._paginator.more();
+    }
+
+    private _setupLoggedInObservables() {
         this.loggedIn$ = this.userService.isLoggedIn();
         this.primaryButtonText$ = this.loggedIn$.pipe(
             map(l => l ? 'Dashboard' : 'Join now'),
@@ -39,25 +53,9 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    setFilter(filter: string): void {
-        this.filter = filter || '';
-        this._resetArtists();
-    }
-
-    loadMoreArtists(): void {
-        const newArtists$ = this.artistService.searchN(this.filter, ++this.page);
-        newArtists$.subscribe(a => this.artists.push(...a));
-        this.hasMore$ = newArtists$.pipe(map(a => a && a.length > 0));
-    }
-
-    private _resetArtists(): void {
-        this.artists = null;
-        this.initialLoading = true;
-        this.artistService.searchN(this.filter)
-            .subscribe(a => {
-                this.artists = a;
-                this.initialLoading = false;
-            });
-        this.page = 0;
+    private _setupPaginator() {
+        this.artists$ = this._paginator.contentChanges;
+        this.noMoreToLoad$ = this._paginator.noMoreToLoad;
+        this.loading$ = this._paginator.loading;
     }
 }

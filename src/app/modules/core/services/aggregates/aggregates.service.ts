@@ -1,20 +1,19 @@
 import {Injectable} from '@angular/core';
-import {AngularFirestore} from '@angular/fire/firestore';
 import {Observable} from 'rxjs';
 import {Aggregates} from '../../../shared/types/aggregates';
+import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-finder.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AggregatesService {
-    private readonly DOC = 'aggregates/main';
+    private readonly COLLECTION = 'aggregates';
+    private readonly MAIN_DOC = 'main';
 
-    constructor(private readonly firestore: AngularFirestore) {
+    constructor(private readonly finder: FirestoreFinderService) {
     }
 
     getAll(): Observable<Aggregates> {
-        return this.firestore.doc<Aggregates>(this.DOC)
-            .valueChanges();
+        return this.finder.find<Aggregates>(this.COLLECTION, this.MAIN_DOC);
     }
-
 }

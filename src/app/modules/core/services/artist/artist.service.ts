@@ -12,6 +12,7 @@ import {AutoImplemented} from '../../decorators/auto-implemented';
 import {Deletable} from '../firestore/firestore-cruder/interfaces/deletable';
 import {Listable} from '../firestore/firestore-finder/interfaces/listable';
 import {Implements} from '../../decorators/implements';
+import {Paginator} from '../algolia/paginator';
 
 
 @Injectable({
@@ -30,6 +31,11 @@ export class ArtistService implements Findable<Artist>, Listable<Artist>, Deleta
     };
 
     constructor(private readonly algolia: AlgoliaService) {
+    }
+
+    paginator(): Paginator<Artist> {
+        return new Paginator<Artist>(this.collection, this.algolia)
+            .setHitsPerPage(5);
     }
 
     search(query: string = '', params?: { city?: string; limit?: number; published?: boolean }): Observable<Artist[]> {
