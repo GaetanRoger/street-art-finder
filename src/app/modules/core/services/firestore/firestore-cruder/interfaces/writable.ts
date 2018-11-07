@@ -4,5 +4,5 @@ import {Updatable} from './updatable';
 import {Deletable} from './deletable';
 
 // @ts-ignore
-export abstract class Writable<T extends ObjectIDable> extends Creatable<T>, Updatable<T>, Deletable<T>{
+export abstract class Writable<T extends ObjectIDable> extends Creatable<T>, Updatable<T>, Deletable<T> {
 }

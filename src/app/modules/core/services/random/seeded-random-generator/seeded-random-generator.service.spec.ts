@@ -45,7 +45,7 @@ describe('SeededRandomGeneratorService', () => {
         expect(seed3).not.toEqual(seed4);
     });
 
-    it('should generate numbers between 0 and 1', function () {
+    it('should generate numbers between 0 and 1', () => {
         const seed1 = seededRandomGenerator.generate('seed1');
         const seed2 = seededRandomGenerator.generate('seed2');
         const seed3 = seededRandomGenerator.generate('seed3');

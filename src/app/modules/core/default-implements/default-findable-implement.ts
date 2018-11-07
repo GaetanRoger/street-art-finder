@@ -13,6 +13,6 @@ export class DefaultFindableImplement<T extends ObjectIDable> implements Findabl
     find = (id: string): Observable<T> => {
         const finder = ExtraModuleInjectorService.get<FirestoreFinderService>(FirestoreFinderService);
         return finder.find<T>(this.params.collection, id);
-    };
+    }
 
 }

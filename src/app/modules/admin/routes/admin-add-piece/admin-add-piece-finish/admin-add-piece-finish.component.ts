@@ -104,7 +104,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
         lowImageUrl: string,
         normalImageUrl: string
     ): Promise<any> {
-        let obj = {
+        const obj = {
             objectID: id,
             name: pieceData.name,
             text: pieceData.text,

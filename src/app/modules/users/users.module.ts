@@ -39,7 +39,14 @@ const routes: Route[] = [
         RouterModule.forChild(routes),
         SharedModule
     ],
-    declarations: [JoinComponent, LoginFormComponent, LoginComponent, LogoutComponent, SettingsComponent, ActivateGpsLocationDialogComponent],
+    declarations: [
+        JoinComponent,
+        LoginFormComponent,
+        LoginComponent,
+        LogoutComponent,
+        SettingsComponent,
+        ActivateGpsLocationDialogComponent
+    ],
     providers: [],
     entryComponents: [ActivateGpsLocationDialogComponent]
 })

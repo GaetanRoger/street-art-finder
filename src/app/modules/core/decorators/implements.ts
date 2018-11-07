@@ -19,13 +19,9 @@ const implementsMap = new Map<Function, { name: string, impl: (any) => Function 
     .set(Deletable, defaultDeletableImplement)
     .set(Writable, [...defaultCreatableImplement, ...defaultUpdatableImplement, ...defaultDeletableImplement]);
 
-// noinspection TsLint Arrow functions are prohibited for decorators.
-export function Implements<T extends ObjectIDable>(interfaces: Function[], collection: string) {
-    return (target): void => {
-        target.prototype.collection = collection;
-        interfaces.forEach(i => inject<T>(i, target, collection));
-    };
-}
+const injectImplement = (target: any, interfaceImplement, collection: string) => {
+    return target.prototype[interfaceImplement.name] = interfaceImplement.impl({collection});
+};
 
 const inject = <T extends ObjectIDable>(interf: Function, target: any, collection: string): void => {
     const interfaceImplements = implementsMap.get(interf);
@@ -37,6 +33,10 @@ const inject = <T extends ObjectIDable>(interf: Function, target: any, collectio
     }
 };
 
-const injectImplement = (target: any, interfaceImplement, collection: string) => {
-    return target.prototype[interfaceImplement.name] = interfaceImplement.impl({collection});
-};
+// tslint:disable:only-arrow-functions Arrow functions do not work for decorators.
+export function Implements<T extends ObjectIDable>(interfaces: Function[], collection: string) {
+    return (target): void => {
+        target.prototype.collection = collection;
+        interfaces.forEach(i => inject<T>(i, target, collection));
+    };
+}
