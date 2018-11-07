@@ -8,32 +8,29 @@ import {Findable} from '../services/firestore/firestore-finder/interfaces/findab
 import {Listable} from '../services/firestore/firestore-finder/interfaces/listable';
 import {Creatable} from '../services/firestore/firestore-cruder/interfaces/creatable';
 import {Updatable} from '../services/firestore/firestore-cruder/interfaces/updatable';
-import {Writable} from '../services/firestore/firestore-cruder/interfaces/writable';
 import {Deletable} from '../services/firestore/firestore-cruder/interfaces/deletable';
-import {Readable} from '../services/firestore/firestore-finder/interfaces/readable';
+import {Writable} from '../services/firestore/firestore-cruder/interfaces/writable';
 
+const implementsMap = new Map<Function, { name: string, impl: (any) => Function }[]>()
+    .set(Findable, defaultFindableImplement)
+    .set(Listable, defaultListableImplement)
+    .set(Creatable, defaultCreatableImplement)
+    .set(Updatable, defaultUpdatableImplement)
+    .set(Deletable, defaultDeletableImplement)
+    .set(Writable, [...defaultCreatableImplement, ...defaultUpdatableImplement, ...defaultDeletableImplement]);
 
-const implementsMap: { [key: string]: { name: string, impl: (any) => Function }[] } = {
-    [Findable.name]: defaultFindableImplement,
-    [Listable.name]: defaultListableImplement,
-    [Creatable.name]: defaultCreatableImplement,
-    [Updatable.name]: defaultUpdatableImplement,
-    [Deletable.name]: defaultDeletableImplement,
-    [Writable.name]: [...defaultCreatableImplement, ...defaultUpdatableImplement, ...defaultDeletableImplement],
-    [Readable.name]: [...defaultFindableImplement, ...defaultListableImplement]
-};
-
-export const Implements = <T extends ObjectIDable>(interfaces: Function[], collection: string) => {
+// noinspection TsLint Arrow functions are prohibited for decorators.
+export function Implements<T extends ObjectIDable>(interfaces: Function[], collection: string) {
     return (target): void => {
         target.prototype.collection = collection;
         interfaces.forEach(i => inject<T>(i, target, collection));
     };
-};
+}
 
 const inject = <T extends ObjectIDable>(interf: Function, target: any, collection: string): void => {
-    const interfaceImplements = implementsMap[interf.name];
+    const interfaceImplements = implementsMap.get(interf);
 
-    if (interfaceImplements) {
+    if (interfaceImplements !== undefined) {
         interfaceImplements.forEach(interfaceImplement => injectImplement(target, interfaceImplement, collection));
     } else {
         console.warn(interf.name, 'is not supported by the @Implements decorator.');

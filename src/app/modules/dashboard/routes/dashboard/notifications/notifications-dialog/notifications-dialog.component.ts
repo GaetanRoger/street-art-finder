@@ -9,7 +9,6 @@ import {Notification} from '../../../../../shared/types/notification';
 })
 export class NotificationsDialogComponent implements OnInit {
     notifications: Notification[];
-    showDateId: string;
 
     get unreadNotifications(): number {
         return this.notifications.filter(n => !n.read).length;

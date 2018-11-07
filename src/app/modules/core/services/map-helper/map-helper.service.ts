@@ -26,8 +26,8 @@ export class MapHelperService {
      * Creates a tile layer with tiles from open street map.
      * @param zoom
      */
-    tileLayer(zoom: number = 18): TileLayer {
-        return tileLayer(this.MAP_TILES_URL, {zoom});
+    tileLayer(): TileLayer {
+        return tileLayer(this.MAP_TILES_URL);
     }
 
     /**

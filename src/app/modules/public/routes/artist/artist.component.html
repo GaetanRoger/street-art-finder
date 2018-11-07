@@ -4,7 +4,7 @@
             [showSearchButton]="true"
             [showBackButton]="true"
             [image]="artist.images.horizontal.low"
-            (searchChange)="filter$.next($event)"
+            (searchChange)="search($event)"
     ></streat-toolbar>
 
     <streat-flat-card-with-image
@@ -15,19 +15,22 @@
             [secondaryButtonExternalLink]="artist.website"
     ></streat-flat-card-with-image>
 
-    <div *ngIf="pieces.length > 0">
+    <div *ngIf="pieces$ | async as pieces">
         <streat-piece *ngFor="let piece of pieces" [piece]="piece"></streat-piece>
-        <div *ngIf="pieces.length === 0 && !filter$.getValue()">
-            No pieces were yet uploaded.
-        </div>
-        <div *ngIf="pieces.length === 0 && filter$.getValue()">
-            No pieces were found with your query.
+        <div *ngIf="!(loading$ | async)">
+                <div *ngIf="pieces.length === 0 && !filter$.getValue()">
+                No pieces were yet uploaded.
+            </div>
+            <div *ngIf="pieces.length === 0 && filter$.getValue()">
+                No pieces were found with your query.
+            </div>
         </div>
     </div>
 
     <streat-load-more-button
-            [noMoreToLoad]="noMoreToLoad"
-            (loadMore)="loadPieces()"
+            [noMoreToLoad]="noMoreToLoad$ | async"
+            [disabled]="(loading$ | async) || (pieces$ | async)?.length === 0"
+            (loadMore)="loadMore()"
     ></streat-load-more-button>
 
 </div>

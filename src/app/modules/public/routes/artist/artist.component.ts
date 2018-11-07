@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 import {ActivatedRoute} from '@angular/router';
-import {delay, flatMap, map, tap} from 'rxjs/operators';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Artist} from '../../../shared/types/artist';
 import {Piece} from '../../../shared/types/piece';
 import {PieceService} from '../../../core/services/piece/piece.service';
+import {Paginator} from '../../../core/services/algolia/paginator';
 
 @Component({
     selector: 'streat-artist',
@@ -14,13 +14,11 @@ import {PieceService} from '../../../core/services/piece/piece.service';
 })
 export class ArtistComponent implements OnInit {
     artist$: Observable<Artist>;
-    filter$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-    pieces: Piece[] = [];
-    loading$: BehaviorSubject<boolean> = new BehaviorSubject(true);
+    pieces$: Observable<Piece[]>;
+    loading$: Observable<boolean>;
+    noMoreToLoad$: Observable<boolean>;
 
-    noMoreToLoad = false;
-
-    private page = 0;
+    private _paginator: Paginator<Piece>;
 
     constructor(private readonly route: ActivatedRoute,
                 private readonly artistService: ArtistService,
@@ -28,33 +26,32 @@ export class ArtistComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.artist$ = this.route.params.pipe(
-            map(p => p.id),
-            flatMap(a => this.artistService.find(a))
-        );
-        this.filter$
-            .pipe(delay(100))
-            .subscribe(() => this.loadPieces(true));
+        const artistId = this.route.snapshot.params.id;
+
+        this._findArtist(artistId);
+        this._setupPaginator(artistId);
+
+        this.search('');
     }
 
-    loadPieces(reset: boolean = false): void {
-        if (reset) {
-            this.page = 0;
-            this.pieces = [];
-            this.noMoreToLoad = false;
-        }
+    loadMore(): void {
+        this._paginator.more();
+    }
 
-        this.route.params
-            .pipe(
-                tap(() => this.loading$.next(true)),
-                flatMap(param => this.pieceService.search(param.id, this.filter$.value, this.page++, 5)),
-                tap(() => this.loading$.next(false))
-            )
-            .subscribe(p => {
-                this.pieces.push(...p);
-                if (p.length === 0) {
-                    this.noMoreToLoad = true;
-                }
-            });
+    search(filter: string): void {
+        this._paginator.setQuery(filter);
+        this._paginator.reset();
+    }
+
+    private _findArtist(artistId): void {
+        this.artist$ = this.artistService.find(artistId);
+    }
+
+    private _setupPaginator(artistId): void {
+        this._paginator = this.pieceService.paginator(artistId).setNearestFirst(true);
+
+        this.pieces$ = this._paginator.contentChanges;
+        this.noMoreToLoad$ = this._paginator.noMoreToLoad;
+        this.loading$ = this._paginator.loading;
     }
 }

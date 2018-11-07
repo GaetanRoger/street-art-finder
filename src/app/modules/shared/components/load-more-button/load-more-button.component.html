@@ -2,6 +2,7 @@
     <button mat-raised-button
             color="primary"
             (click)="loadMore.emit()"
+            [disabled]="disabled"
             *ngIf="!noMoreToLoad"
     >Load more
     </button>

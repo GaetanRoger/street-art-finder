@@ -32,7 +32,6 @@ export class ArtistService implements Findable<Artist>, Listable<Artist>, Deleta
     constructor(private readonly algolia: AlgoliaService) {
     }
 
-
     search(query: string = '', params?: { city?: string; limit?: number; published?: boolean }): Observable<Artist[]> {
         params = params
             ? {...this.DEFAULT_FIND_ALL_PARAMS, ...params}

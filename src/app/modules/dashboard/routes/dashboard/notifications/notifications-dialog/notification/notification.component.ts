@@ -30,6 +30,8 @@ export class NotificationComponent implements OnInit {
 
     animation: string;
     animationParams: { duration: string; dir: string };
+    showDateId: string;
+
 
     constructor() {
     }

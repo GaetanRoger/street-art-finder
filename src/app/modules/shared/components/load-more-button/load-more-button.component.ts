@@ -9,6 +9,7 @@ export class LoadMoreButtonComponent {
     @Input() text = 'Load more';
     @Input() noMoreText = 'No more to load';
     @Input() noMoreToLoad = false;
+    @Input() disabled = false;
 
     @Output() loadMore: EventEmitter<void> = new EventEmitter();
 }

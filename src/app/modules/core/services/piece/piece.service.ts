@@ -13,6 +13,7 @@ import {FirestoreCruderService} from '../firestore/firestore-cruder/firestore-cr
 import {FiltersBuilder} from '../algolia/filters-builder';
 import {AutoImplemented} from '../../decorators/auto-implemented';
 import {Implements} from '../../decorators/implements';
+import {Paginator} from '../algolia/paginator';
 import {Writable} from '../firestore/firestore-cruder/interfaces/writable';
 
 @Injectable({
@@ -32,6 +33,14 @@ export class PieceService implements Findable<Piece>, Writable<Piece> {
                 private readonly resizer: ImageResizerService,
                 private readonly finder: FirestoreFinderService,
                 private readonly cruder: FirestoreCruderService<Piece>) {
+    }
+
+    paginator(artistId: string): Paginator<Piece> {
+        const filters = new FiltersBuilder('artist.objectID', artistId, !!artistId).build();
+
+        return new Paginator<Piece>(this.collection, this.algolia, this.geolocation)
+            .setHitsPerPage(5)
+            .setFilters(filters);
     }
 
     search(artistId: string, query: string = '', page: number = 0, hitsPerPage: number = 10): Observable<Piece[]> {
