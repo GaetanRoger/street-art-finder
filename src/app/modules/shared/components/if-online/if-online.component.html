@@ -1,0 +1,7 @@
+<ng-content *ngIf="online$ | async"></ng-content>
+
+<streat-full-screen-message
+        *ngIf="!(online$ | async)"
+        [title]="offlineTitle"
+        [text]="offlineText"
+></streat-full-screen-message>

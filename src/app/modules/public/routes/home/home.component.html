@@ -1,7 +1,7 @@
 <streat-toolbar
         title="Welcome to Streart"
         [showSearchButton]="true"
-        (searchChange)="search($event)"
+        (searchChange)="query = $event"
 ></streat-toolbar>
 
 
@@ -17,14 +17,6 @@
 
 <mat-divider></mat-divider>
 
-<streat-artist-preview *ngFor="let artist of (artists$ | async) || []" [artist]="artist">
-</streat-artist-preview>
-<div class="footerActions">
-    <streat-load-more-button
-    [noMoreToLoad]="noMoreToLoad$ | async"
-    (loadMore)="loadMoreArtists()"
-    ></streat-load-more-button>
-</div>
-<streat-loading-spinner *ngIf="loading$ | async"
-                     text="Chargement des artistes..."
-></streat-loading-spinner>
+<streat-if-online offlineText="Artists list needs an internet connexion to work.">
+    <streat-home-artists-list [query]="query"></streat-home-artists-list>
+</streat-if-online>

@@ -18,6 +18,7 @@ import {ComponentsLibraryModule} from '../components-library/components-library.
 import {FormsModule} from '@angular/forms';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {RouterModule} from '@angular/router';
+import { IfOnlineComponent } from './components/if-online/if-online.component';
 
 @NgModule({
     imports: [
@@ -42,6 +43,7 @@ import {RouterModule} from '@angular/router';
         FullScreenMessageComponent,
         LoadMoreButtonComponent,
         MapComponent,
+        IfOnlineComponent,
     ],
     exports: [
         ComponentsLibraryModule,
@@ -57,6 +59,7 @@ import {RouterModule} from '@angular/router';
         FullScreenMessageComponent,
         LoadMoreButtonComponent,
         MapComponent,
+        IfOnlineComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]

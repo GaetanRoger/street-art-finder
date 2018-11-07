@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 import {Observable} from 'rxjs';
-import {Artist} from '../../../shared/types/artist';
 import {UserService} from '../../../core/services/users/user/user.service';
 import {map} from 'rxjs/operators';
-import {Paginator} from '../../../core/services/algolia/paginator';
 
 @Component({
     selector: 'streat-home',
@@ -16,31 +14,13 @@ export class HomeComponent implements OnInit {
     primaryButtonRouterLink$: Observable<string>;
     loggedIn$: Observable<boolean>;
 
-    artists$: Observable<Artist[]>;
-    noMoreToLoad$: Observable<boolean>;
-    loading$: Observable<boolean>;
+    query: string;
 
-    private _paginator: Paginator<Artist>;
-
-    constructor(private readonly artistService: ArtistService,
-                private readonly userService: UserService) {
+    constructor(private readonly userService: UserService) {
     }
 
     ngOnInit() {
-        this._paginator = this.artistService.paginator();
-
-        this._setupPaginator();
         this._setupLoggedInObservables();
-        this.search();
-    }
-
-    search(query?: string): void {
-        this._paginator.setQuery(query || '');
-        this._paginator.reset();
-    }
-
-    loadMoreArtists() {
-        this._paginator.more();
     }
 
     private _setupLoggedInObservables() {
@@ -53,9 +33,4 @@ export class HomeComponent implements OnInit {
         );
     }
 
-    private _setupPaginator() {
-        this.artists$ = this._paginator.contentChanges;
-        this.noMoreToLoad$ = this._paginator.noMoreToLoad;
-        this.loading$ = this._paginator.loading;
-    }
 }
