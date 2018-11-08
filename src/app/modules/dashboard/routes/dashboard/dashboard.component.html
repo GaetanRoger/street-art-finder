@@ -17,7 +17,12 @@
         <streat-all [selected$]="mapTabBehaviourSubject"></streat-all>
     </mat-tab>
     <mat-tab label="DISCOVER">
-        <streat-discover [progressions]="progressions$"></streat-discover>
+        <streat-if-online
+            offlineTitle="You are offline"
+            offlineText="Sorry, the discover tab is only available online"
+        >
+            <streat-discover [progressions]="progressions$"></streat-discover>
+        </streat-if-online>
     </mat-tab>
 </mat-tab-group>
 

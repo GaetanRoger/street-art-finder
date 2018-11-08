@@ -5,7 +5,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {Geopoint} from '../../../../shared/types/geopoint';
 
 describe('Address From Geopoint Service', () => {
+    const AUVERGNE_RHONE_ALPES = 'Auvergne-Rhône-Alpes';
+    const FRANCE = 'France';
     let service: AddressFromGeopointService;
+
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -20,8 +23,8 @@ describe('Address From Geopoint Service', () => {
 
         const address = await service.get(geopoint);
 
-        expect(address.country).toEqual('France');
-        expect(address.state).toEqual('Auvergne-Rhône-Alpes');
+        expect(address.country).toEqual(FRANCE);
+        expect(address.state).toEqual(AUVERGNE_RHONE_ALPES);
         expect(address.city).toEqual('Lyon');
         expect(address.cityDistrict).toEqual('Lyon 5e Arrondissement');
         expect(address.postcode).toEqual('69005');
@@ -35,8 +38,8 @@ describe('Address From Geopoint Service', () => {
 
         const address = await service.get(geopoint);
 
-        expect(address.country).toEqual('France');
-        expect(address.state).toEqual('Auvergne-Rhône-Alpes');
+        expect(address.country).toEqual(FRANCE);
+        expect(address.state).toEqual(AUVERGNE_RHONE_ALPES);
         expect(address.city).toEqual('Villeurbanne');
         expect(address.cityDistrict).toBeUndefined();
         expect(address.postcode).toEqual('69100');
@@ -50,8 +53,8 @@ describe('Address From Geopoint Service', () => {
 
         const address = await service.get(geopoint);
 
-        expect(address.country).toEqual('France');
-        expect(address.state).toEqual('Auvergne-Rhône-Alpes');
+        expect(address.country).toEqual(FRANCE);
+        expect(address.state).toEqual(AUVERGNE_RHONE_ALPES);
         expect(address.city).toBeUndefined();
         expect(address.cityDistrict).toBeUndefined();
         expect(address.postcode).toEqual('42360');

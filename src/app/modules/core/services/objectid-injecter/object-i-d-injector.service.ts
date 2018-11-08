@@ -13,11 +13,11 @@ export class ObjectIDInjectorService {
         return s.map(ss => this.injectIntoCollectionEntry<T>(ss));
     }
 
-    injectIntoDoc<T extends ObjectIDable>(s: { payload: { id: string; data: () => T & any; exists: boolean } }): T {
+    injectIntoDoc<T extends ObjectIDable>(s: { payload: { id: string; data: () => object; exists: boolean } }): T {
         return {
             ...s.payload.data(),
             objectID: s.payload.id
-        };
+        } as T;
     }
 
     private injectIntoCollectionEntry<T extends ObjectIDable>(s: { payload: { doc: { id: string; data: () => any } } }): T {

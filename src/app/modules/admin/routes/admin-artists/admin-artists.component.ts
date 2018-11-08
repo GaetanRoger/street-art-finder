@@ -40,8 +40,7 @@ export class AdminArtistsComponent implements OnInit {
 
         console.log('TODO: artist deletion not implemented');
         // todo
-        // const deletion = this.selectedArtists.map(p => this.artistService.delete(p.objectID));
-        // await Promise.all(deletion);
+
 
         this.working$.next(false);
     }

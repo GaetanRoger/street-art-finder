@@ -2,6 +2,7 @@
 
 <streat-full-screen-message
         *ngIf="!(online$ | async)"
+        icon="cloud_off"
         [title]="offlineTitle"
         [text]="offlineText"
 ></streat-full-screen-message>

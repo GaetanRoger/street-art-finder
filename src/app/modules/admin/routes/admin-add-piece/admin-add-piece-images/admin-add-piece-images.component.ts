@@ -3,6 +3,7 @@ import {BehaviorSubject} from 'rxjs';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {CropperComponent} from 'angular-cropperjs';
 import Cropper from 'cropperjs';
+import DragMode = Cropper.DragMode;
 
 @Component({
     selector: 'streat-admin-add-piece-images',
@@ -16,11 +17,11 @@ export class AdminAddPieceImagesComponent implements OnInit {
     @Output() uploadImages: EventEmitter<boolean> = new EventEmitter();
 
     mainImageUrl$: BehaviorSubject<SafeUrl> = new BehaviorSubject(null);
-    readonly croppersOptions: Cropper.Options & any = {
+    readonly croppersOptions: Cropper.Options = {
         aspectRatio: 4 / 2,
         zoomable: true,
         movable: true,
-        dragMode: 'move'
+        dragMode: DragMode.Move
     };
     private _editingAndKeepingSameImages = false;
     private name: string;

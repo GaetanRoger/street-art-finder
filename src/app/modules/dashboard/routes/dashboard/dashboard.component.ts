@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
         this.progressions$ = combineLatest(user$, this.filter$)
             .pipe(
                 flatMap(([user, filt]) => this.userArtistProgression.findAll(user).pipe(map(uas => this.filterByArtistName(uas, filt)))),
-                map(uas => uas.sort((ua1, ua2) => ua1.score / ua1.maxScore - ua2.score / ua2.maxScore))
+                map(uas => [...uas].sort((ua1, ua2) => ua1.score / ua1.maxScore - ua2.score / ua2.maxScore))
             );
 
         user$.subscribe(u => {

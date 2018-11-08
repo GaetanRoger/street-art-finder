@@ -27,6 +27,9 @@ export class PieceService implements Findable<Piece>, Writable<Piece> {
     @AutoImplemented update: (document: Piece) => Observable<string>;
     @AutoImplemented delete: (id: string) => Observable<string>;
 
+    private readonly _ARTIST_OBJECT_ID = 'artist.objectID';
+
+
     constructor(private readonly algolia: AlgoliaService,
                 private readonly geolocation: UserGeolocationService,
                 private readonly storage: AngularFireStorage,
@@ -36,15 +39,16 @@ export class PieceService implements Findable<Piece>, Writable<Piece> {
     }
 
     paginator(artistId: string): Paginator<Piece> {
-        const filters = new FiltersBuilder('artist.objectID', artistId, !!artistId).build();
+        const filters = new FiltersBuilder(this._ARTIST_OBJECT_ID, artistId, !!artistId).build();
 
         return new Paginator<Piece>(this.collection, this.algolia, this.geolocation)
             .setHitsPerPage(5)
             .setFilters(filters);
     }
 
+
     search(artistId: string, query: string = '', page: number = 0, hitsPerPage: number = 10): Observable<Piece[]> {
-        const filters = new FiltersBuilder('artist.objectID', artistId, !!artistId).build();
+        const filters = new FiltersBuilder(this._ARTIST_OBJECT_ID, artistId, !!artistId).build();
 
         const baseParameters: QueryParameters = {
             query,
@@ -67,7 +71,7 @@ export class PieceService implements Findable<Piece>, Writable<Piece> {
 
     findAllVanished(artistId: string): Observable<Piece[]> {
         return this.finder.findFrom<Piece>(this.collection)
-            .where('artist.objectID', '==', artistId)
+            .where(this._ARTIST_OBJECT_ID, '==', artistId)
             .where('tags.vanished', '==', true)
             .run();
     }

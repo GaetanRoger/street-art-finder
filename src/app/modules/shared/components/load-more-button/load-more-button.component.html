@@ -1,6 +1,6 @@
 <div class="container">
     <button mat-raised-button
-            color="primary"
+            [color]="loadMoreButtonColor"
             (click)="loadMore.emit()"
             [disabled]="disabled"
             *ngIf="!noMoreToLoad"

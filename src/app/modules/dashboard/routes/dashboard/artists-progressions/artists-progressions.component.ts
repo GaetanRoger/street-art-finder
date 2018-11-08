@@ -23,7 +23,7 @@ export class ArtistsProgressionsComponent implements OnInit {
     }
 
     async removeProgression(progression: UserArtistProgression): Promise<void> {
-        await this.artistProgression.remove(progression.objectID);
+        await this.artistProgression.remove(progression.objectID).toPromise();
         this.artistWasRemoved.emit();
     }
 

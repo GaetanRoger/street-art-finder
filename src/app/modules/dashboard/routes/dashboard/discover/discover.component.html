@@ -1,4 +1,4 @@
-<div *ngIf="online.online">
+<div>
     <mat-expansion-panel>
         <mat-expansion-panel-header>Filters</mat-expansion-panel-header>
         <div [formGroup]="filterFormGroup">
@@ -26,9 +26,3 @@
             (actionClick)="addArtistToProgression(artist)"
     ></streat-artist-preview>
 </div>
-
-<streat-full-screen-message
-        *ngIf="!online.online"
-        title="You are offline"
-        text="Sorry, the discover tab is only available online"
-></streat-full-screen-message>

@@ -11,7 +11,6 @@ import {MatSnackBar} from '@angular/material';
 import {DiscoverArtistAddedSnackbarComponent} from './discover-artist-added-snackbar/discover-artist-added-snackbar.component';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {FacetQueryResponse} from '../../../../core/services/algolia/facet-query-response';
-import {OnlineService} from '../../../../core/services/online/online.service';
 
 @Component({
     selector: 'streat-discover',
@@ -32,8 +31,7 @@ export class DiscoverComponent implements OnInit {
                 private readonly artistService: ArtistService,
                 private readonly progressionService: UserArtistProgressionService,
                 private readonly snackbar: MatSnackBar,
-                private readonly fb: FormBuilder,
-                public readonly online: OnlineService) {
+                private readonly fb: FormBuilder) {
     }
 
     ngOnInit() {
@@ -46,11 +44,11 @@ export class DiscoverComponent implements OnInit {
 
         const artists$ = this.filterFormGroup.get('cities').valueChanges
             .pipe(
-                startWith(undefined),
+                startWith(null),
                 delay(0), // Fix for ExpressionChangedAfterItHasBeenCheckedError
-                tap(_ => this.filterLoad = true),
+                tap(() => this.filterLoad = true),
                 flatMap(c => this.artistService.search('', {city: c})),
-                tap(_ => this.filterLoad = false)
+                tap(() => this.filterLoad = false)
             );
 
         this.artists$ = combineLatest(artists$, this.progressions)
@@ -66,7 +64,7 @@ export class DiscoverComponent implements OnInit {
     }
 
     async addArtistToProgression(artist: Artist): Promise<void> {
-        await this.progressionService.addArtistProgression(this.user, artist);
+        await this.progressionService.addArtistProgression(this.user, artist).toPromise();
         this.snackbar.openFromComponent(DiscoverArtistAddedSnackbarComponent, {duration: 5000});
     }
 }

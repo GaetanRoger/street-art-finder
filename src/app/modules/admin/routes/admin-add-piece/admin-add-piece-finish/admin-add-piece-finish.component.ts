@@ -91,9 +91,9 @@ export class AdminAddPieceFinishComponent implements OnInit {
         const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, uploadedImageUrlLow, uploadedImageUrlNormal);
         if (this.editing) {
             piece.objectID = this.editingPieceId;
-            await this.pieceService.update(piece);
+            await this.pieceService.update(piece).toPromise();
         } else {
-            await this.pieceService.create(piece);
+            await this.pieceService.create(piece).toPromise();
         }
     }
 

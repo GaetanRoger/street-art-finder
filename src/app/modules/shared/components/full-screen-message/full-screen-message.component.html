@@ -1,12 +1,17 @@
 <div class="container">
-  <h1>{{title}}</h1>
-  <p>{{text}}</p>
-  <div class="buttons">
-    <button mat-raised-button
-            color="accent"
-            *ngIf="actionText"
-            (click)="action.emit()"
+    <mat-icon *ngIf="icon"
+              color="accent"
+    >{{icon}}
+    </mat-icon>
+    <h1>{{title}}</h1>
+    <p>{{text}}</p>
+    <div class="buttons">
+        <button mat-raised-button
+                color="accent"
+                *ngIf="actionText"
+                (click)="action.emit()"
 
-    >{{actionText}}</button>
-  </div>
+        >{{actionText}}
+        </button>
+    </div>
 </div>

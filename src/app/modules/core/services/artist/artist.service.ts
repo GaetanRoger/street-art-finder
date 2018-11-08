@@ -71,7 +71,7 @@ export class ArtistService implements Findable<Artist>, Listable<Artist>, Deleta
     getAvailableCities(sortByCount: boolean = false): Observable<FacetQueryResponse[]> {
         return this.algolia.facets(this.collection, 'cities')
             .pipe(
-                map(r => sortByCount ? r.sort((r1, r2) => r1.count - r2.count) : r)
+                map(r => sortByCount ? [...r].sort((r1, r2) => r1.count - r2.count) : r)
             );
     }
 
@@ -87,6 +87,6 @@ export class ArtistService implements Findable<Artist>, Listable<Artist>, Deleta
             .pipe(
                 map(p => p.filter((pp: Artist) => pp && pp.name)), // We check the piece exists
 
-            ) as Observable<Artist[]>;
+            );
     }
 }

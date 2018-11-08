@@ -89,7 +89,7 @@ export class DashboardArtistComponent implements OnInit {
                     })
                 ),
                 map(
-                    pp => pp.sort((p1, p2) => p1.piece.distance - p2.piece.distance)
+                    pp => [...pp].sort((p1, p2) => p1.piece.distance - p2.piece.distance)
                 )
             );
     }

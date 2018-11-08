@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ArtistService} from '../../../core/services/artist/artist.service';
 import {Observable} from 'rxjs';
 import {UserService} from '../../../core/services/users/user/user.service';
 import {map} from 'rxjs/operators';

@@ -11,10 +11,12 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {Icon, icon, Marker} from 'leaflet';
 import {OnlyAdminGuard} from './modules/core/guards/only-admin/only-admin.guard';
 import {AngularFireModule} from '@angular/fire';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule} from '@angular/service-worker';
 import {HttpClientModule} from '@angular/common/http';
 import {SharedModule} from './modules/shared/shared.module';
 import {ExtraModuleInjectorService} from './modules/core/extra-module-injector.service';
+import {MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material';
+import {OnlineService} from './modules/core/services/online/online.service';
 
 const routes: Route[] = [
     {
@@ -51,20 +53,46 @@ const routes: Route[] = [
         CoreModule,
         SharedModule,
         LeafletModule.forRoot(),
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
     providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
     // Override default Icons
-    private defaultIcon: Icon = icon({
+    private _defaultIcon: Icon = icon({
         iconUrl: 'assets/leaflet/marker-icon.png',
         shadowUrl: 'assets/leaflet/marker-shadow.png',
         iconAnchor: [12, 40]
     });
-    constructor(extraInjector: ExtraModuleInjectorService) {
-        Marker.prototype.options.icon = this.defaultIcon;
+
+    private _wasOnline = false;
+
+    constructor(private readonly extraInjector: ExtraModuleInjectorService,
+                private readonly snackbar: MatSnackBar,
+                private readonly online: OnlineService) {
+        Marker.prototype.options.icon = this._defaultIcon;
+        this.online
+            .onlineChanges
+            .subscribe(v => {
+                let openedSB: MatSnackBarRef<SimpleSnackBar>;
+                if (v && this._wasOnline) {
+                    openedSB = this.snackbar.open(
+                        '☀️ You are back online!',
+                        'YEH!',
+                        {duration: 2000}
+                    );
+                } else if (!v) {
+                    this._wasOnline = true;
+                    openedSB = this.snackbar.open(
+                        '☁️ You are offline; some features will be disabled.',
+                        'GOT IT',
+                        {duration: 5000}
+                    );
+                }
+
+                openedSB.dismissWithAction();
+            });
         // firebase.firestore.setLogLevel('debug');
     }
 }

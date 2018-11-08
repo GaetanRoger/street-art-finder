@@ -10,6 +10,8 @@ export class Paginator<T extends ObjectIDable> {
      */
     private readonly _content$: BehaviorSubject<T[]> = new BehaviorSubject([]);
 
+    private readonly _errors$: BehaviorSubject<any> = new BehaviorSubject(undefined);
+
     /**
      * @see {@link noMoreToLoad}
      */
@@ -81,6 +83,10 @@ export class Paginator<T extends ObjectIDable> {
      */
     get currentPage(): number {
         return this._currentPage;
+    }
+
+    get errors(): Observable<any> {
+        return this._errors$;
     }
 
     /**
@@ -180,10 +186,15 @@ export class Paginator<T extends ObjectIDable> {
             .setPage(page)
             .run()
             .subscribe(r => {
-                this._content$.next(r);
-                this._currentPage = page;
-                this._loading$.next(false);
-            });
+                    this._content$.next(r);
+                    this._currentPage = page;
+                    this._loading$.next(false);
+                },
+                err => {
+                    this._errors$.next(err);
+                    this._loading$.next(false);
+                }
+            );
     }
 
     /**
@@ -202,18 +213,23 @@ export class Paginator<T extends ObjectIDable> {
      */
     more(): void {
         this._loading$.next(true);
-        const newPage = this._currentPage + 1;
+        const newPage = (this._currentPage + 1) || 0;
         this._queryBuilder
             .setPage(newPage)
             .run()
             .subscribe(r => {
-                this._content$.next([...this._content$.value, ...r]);
-                this._currentPage = newPage;
+                    this._content$.next([...this._content$.value, ...r]);
+                    this._currentPage = newPage;
 
-                if (r.length < this._queryBuilder.build().hitsPerPage) {
-                    this._noMoreToLoad$.next(true);
+                    if (r.length < this._queryBuilder.build().hitsPerPage) {
+                        this._noMoreToLoad$.next(true);
+                    }
+                    this._loading$.next(false);
+                },
+                err => {
+                    this._errors$.next(err);
+                    this._loading$.next(false);
                 }
-                this._loading$.next(false);
-            });
+            );
     }
 }
