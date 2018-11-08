@@ -15,7 +15,7 @@ const testDialogDataComplete: ConfirmationDialogData = {
     submitActivationDelay: 3000
 };
 
-fdescribe('ConfirmationDialogComponent', () => {
+describe('ConfirmationDialogComponent', () => {
     let component: ConfirmationDialogComponent;
     let fixture: ComponentFixture<ConfirmationDialogComponent>;
     let element: HTMLElement;
