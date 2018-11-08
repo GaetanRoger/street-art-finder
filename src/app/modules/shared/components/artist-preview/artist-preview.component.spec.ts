@@ -40,7 +40,7 @@ const testActions: { text: string, id: number, disabled?: boolean }[] = [
     }
 ];
 
-fdescribe('ArtistPreviewComponent', () => {
+describe('ArtistPreviewComponent', () => {
     let component: ArtistPreviewComponent;
     let fixture: ComponentFixture<ArtistPreviewComponent>;
     let element: HTMLElement;

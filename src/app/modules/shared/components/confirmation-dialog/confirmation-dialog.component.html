@@ -3,10 +3,15 @@
     <p>{{data.text}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button [color]="data.mainButtonColor || 'accent'" (click)="close(true)"
+    <button mat-raised-button
+            class="yes-button"
+            [color]="data.mainButtonColor || 'accent'"
+            (click)="close(true)"
             [disabled]="mainButtonDisabled$ | async">
         <span *ngIf="!(mainButtonDisabled$ | async)">YES</span>
         <span *ngIf="mainButtonDisabled$ | async">{{countDown$ | async}} SEC...</span>
     </button>
-    <button mat-raised-button (click)="close(false)">NO</button>
+    <button mat-raised-button
+            class="no-button"
+            (click)="close(false)">NO</button>
 </mat-dialog-actions>

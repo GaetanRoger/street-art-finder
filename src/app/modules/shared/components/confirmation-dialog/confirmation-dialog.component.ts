@@ -37,6 +37,10 @@ export class ConfirmationDialogComponent implements OnInit {
     }
 
     private _reactivateConfirmButtonIn(ms: number = 0): void {
+        if (ms === 0) {
+            this.mainButtonDisabled$.next(false);
+            return;
+        }
         of(null)
             .pipe(delay(ms))
             .subscribe(() => this.mainButtonDisabled$.next(false));
