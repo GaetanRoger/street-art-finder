@@ -72,27 +72,29 @@ export class AppModule {
                 private readonly snackbar: MatSnackBar,
                 private readonly online: OnlineService) {
         Marker.prototype.options.icon = this._defaultIcon;
+        this._setUpOnlineStatusPopups();
+        // firebase.firestore.setLogLevel('debug');
+    }
+
+    private _setUpOnlineStatusPopups() {
         this.online
             .onlineChanges
             .subscribe(v => {
                 let openedSB: MatSnackBarRef<SimpleSnackBar>;
                 if (v && this._wasOnline) {
-                    openedSB = this.snackbar.open(
+                    this.snackbar.open(
                         '☀️ You are back online!',
                         'YEH!',
                         {duration: 2000}
                     );
                 } else if (!v) {
                     this._wasOnline = true;
-                    openedSB = this.snackbar.open(
+                    this.snackbar.open(
                         '☁️ You are offline; some features will be disabled.',
                         'GOT IT',
                         {duration: 5000}
                     );
                 }
-
-                openedSB.dismissWithAction();
             });
-        // firebase.firestore.setLogLevel('debug');
     }
 }
