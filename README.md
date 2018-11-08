@@ -18,10 +18,11 @@
 - [x] Allow users to delete all their data
 
 ### Priority 2
-- [ ] Use Cypress to test all processes (see how to mock data into/out of Firestore)
 - [ ] Allow users to reset their password
 - [ ] Better way to see vanished pieces
+- [ ] *[Technical]* Use Cypress to e2e test all processes (see how to mock data into/out of Firestore)
 - [ ] *[Technical]* Convert all interfaces default implements to the class format
+- [ ] *[Technical]* Unit test all components 
 - [x] *[Technical]* Check for un-unsubscribed observables in components
 - [x] Check if city found when entering geolocation
 - [x] Itineraries should go to randomized location when using circles.
