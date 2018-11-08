@@ -57,6 +57,7 @@ export class ArtistProgressionComponent implements OnInit {
             }
         ).afterClosed()
             .pipe(filter(result => result === true))
+            // No need to unsubscribe; only fired once after closed
             .subscribe(_ => {
                 this.removeProgression.emit();
                 this.removed = true;
@@ -75,6 +76,7 @@ export class ArtistProgressionComponent implements OnInit {
             }
         ).afterClosed()
             .pipe(filter(result => result === true))
+            // No need to unsubscribe; only fired once after closed
             .subscribe(_ => {
                 this.markAllAsFound.emit();
             });

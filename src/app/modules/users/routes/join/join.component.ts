@@ -20,6 +20,7 @@ export class JoinComponent implements OnInit {
     ngOnInit(): void {
         this.userService.isLoggedIn()
             .pipe(take(1))
+            // No need to unsubscribe; only take 1
             .subscribe(b => {
                 if (b) {
                     this.router.navigate(['/dashboard'], {skipLocationChange: true});

@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {PieceGroup} from './piece-group';
 import {ActivatedRoute} from '@angular/router';
 import {PieceService} from '../../../core/services/piece/piece.service';
 import {Piece} from '../../../shared/types/piece';
 import {ArtistService} from '../../../core/services/artist/artist.service';
-import {combineLatest, of} from 'rxjs';
+import {combineLatest, of, Subscription} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {Artist} from '../../../shared/types/artist';
 
@@ -14,12 +14,13 @@ import {Artist} from '../../../shared/types/artist';
     templateUrl: './admin-add-piece.component.html',
     styleUrls: ['./admin-add-piece.component.css']
 })
-export class AdminAddPieceComponent implements OnInit {
+export class AdminAddPieceComponent implements OnInit, OnDestroy {
     pieceFormGroup: FormGroup;
     mainImage: { blob: Blob; name: string };
     editing: boolean;
     uploadImages = true;
     editingPieceId: string;
+    private _pieceFindSubscription: Subscription;
 
     constructor(private readonly fb: FormBuilder,
                 private readonly route: ActivatedRoute,
@@ -38,12 +39,16 @@ export class AdminAddPieceComponent implements OnInit {
         if (this.editingPieceId) {
             this.editing = true;
             this.pieceFormGroup.disable();
-            this.pieceService.find(this.editingPieceId)
+            this._pieceFindSubscription = this.pieceService.find(this.editingPieceId)
                 .pipe(flatMap(p => combineLatest(of(p), this.artistService.find(p.artist.objectID))))
                 .subscribe(([p, a]) => this._populateForm(p, a));
         } else {
             this.editing = false;
         }
+    }
+
+    ngOnDestroy(): void {
+        this._pieceFindSubscription.unsubscribe();
     }
 
 

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Observable, Subscription} from 'rxjs';
 import {ObjectIDable} from '../../../shared/types/object-idable';
 import {MatDialog, MatSelectionList} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
@@ -11,7 +11,7 @@ import {ConfirmationDialogData} from '../../../shared/components/confirmation-di
     templateUrl: './selectable-list.component.html',
     styleUrls: ['./selectable-list.component.css']
 })
-export class SelectableListComponent<T extends ObjectIDable> implements OnInit {
+export class SelectableListComponent<T extends ObjectIDable> implements OnInit, OnDestroy {
     @Input() working$: Observable<boolean>;
     @Input() elements$: Observable<T>;
     @Input() mainText: (T) => string;
@@ -33,6 +33,8 @@ export class SelectableListComponent<T extends ObjectIDable> implements OnInit {
 
     enableButtons$: Observable<boolean>;
 
+    private _selectionChangedSubscription: Subscription;
+
     constructor(private readonly dialog: MatDialog) {
 
     }
@@ -44,9 +46,14 @@ export class SelectableListComponent<T extends ObjectIDable> implements OnInit {
     ngOnInit() {
         const selectionChanged$ = this.list.selectedOptions.changed;
 
-        selectionChanged$.subscribe(_ => this.selectionChanged.emit(this.selectedElements));
+        this._selectionChangedSubscription = selectionChanged$.subscribe(() => this.selectionChanged.emit(this.selectedElements));
         this.enableButtons$ = selectionChanged$.pipe(map(() => this.selectedElements.length > 0));
     }
+
+    ngOnDestroy(): void {
+        this._selectionChangedSubscription.unsubscribe();
+    }
+
 
     primaryButtonClicked(): void {
         if (!this.primaryButtonConfirmText) {
@@ -54,6 +61,8 @@ export class SelectableListComponent<T extends ObjectIDable> implements OnInit {
         }
 
         const data = this._createDialogData(this.primaryButtonConfirmText, this.primaryButtonConfirmDelayed);
+
+        // No need to unsubscribe: fired only once when closed
         this._openDialog(data).subscribe(() => this.primaryButtonClick.emit());
     }
 
@@ -63,6 +72,8 @@ export class SelectableListComponent<T extends ObjectIDable> implements OnInit {
         }
 
         const data = this._createDialogData(this.secondaryButtonConfirmText, this.secondaryButtonConfirmDelayed);
+
+        // No need to unsubscribe: fired only once when closed
         this._openDialog(data).subscribe(() => this.secondaryButtonClick.emit());
     }
 

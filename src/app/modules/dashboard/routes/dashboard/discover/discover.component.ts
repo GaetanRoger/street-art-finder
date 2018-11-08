@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {combineLatest, Observable} from 'rxjs';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {combineLatest, Observable, Subscription} from 'rxjs';
 import {UserArtistProgression} from '../../../../shared/types/user-artist-progression';
 import {ArtistService} from '../../../../core/services/artist/artist.service';
 import {Artist} from '../../../../shared/types/artist';
@@ -17,7 +17,7 @@ import {FacetQueryResponse} from '../../../../core/services/algolia/facet-query-
     templateUrl: './discover.component.html',
     styleUrls: ['./discover.component.css']
 })
-export class DiscoverComponent implements OnInit {
+export class DiscoverComponent implements OnInit, OnDestroy {
     @Input() progressions: Observable<UserArtistProgression[]>;
 
     artists$: Observable<(Artist & { known: boolean })[]>;
@@ -26,6 +26,7 @@ export class DiscoverComponent implements OnInit {
     private user: User;
     filterFormGroup: FormGroup;
     filterLoad = false;
+    private _userSubscribtion: Subscription;
 
     constructor(private readonly userService: UserService,
                 private readonly artistService: ArtistService,
@@ -40,7 +41,7 @@ export class DiscoverComponent implements OnInit {
         });
 
         this.cities$ = this.artistService.getAvailableCities(true);
-        this.userService.user().subscribe(u => this.user = u);
+        this._userSubscribtion = this.userService.user().subscribe(u => this.user = u);
 
         const artists$ = this.filterFormGroup.get('cities').valueChanges
             .pipe(
@@ -62,6 +63,12 @@ export class DiscoverComponent implements OnInit {
                 )
             );
     }
+
+    ngOnDestroy(): void {
+        this._userSubscribtion.unsubscribe();
+    }
+
+
 
     async addArtistToProgression(artist: Artist): Promise<void> {
         await this.progressionService.addArtistProgression(this.user, artist).toPromise();

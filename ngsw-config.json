@@ -1,7 +1,5 @@
 {
   "index": "/index.html",
-  "name": "Street Art Finder",
-  "short_name": "Art Finder",
   "assetGroups": [
     {
       "name": "app",

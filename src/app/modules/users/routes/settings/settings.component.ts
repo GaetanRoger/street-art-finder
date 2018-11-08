@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../../core/services/users/user/user.service';
 import {User} from '../../../shared/types/user';
@@ -10,17 +10,19 @@ import {ActivateGpsLocationDialogComponent} from './components/activate-gps-loca
 import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {filter} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'streat-settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
     settingsFormGroup: FormGroup;
     user: User;
     saving = false;
     errorMessage: string;
+    private _userSubscription: Subscription;
 
     constructor(private readonly fb: FormBuilder,
                 private readonly userService: UserService,
@@ -37,12 +39,17 @@ export class SettingsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.userService.user()
+        this._userSubscription = this.userService.user()
             .subscribe(u => {
                 this.user = u;
                 this.settingsFormGroup = this.createFormGroup(u);
             });
     }
+
+    ngOnDestroy(): void {
+        this._userSubscription.unsubscribe();
+    }
+
 
     save(): void {
         this.saving = true;
@@ -82,6 +89,7 @@ export class SettingsComponent implements OnInit {
             }
         }).afterClosed()
             .pipe(filter(v => v === true))
+            // No need to unsubscribe; only fired once after closed
             .subscribe(() => this.userService.delete().then(() => {
                 this.snackbar.open('Your account has been deleted.', null, {duration: 5000});
                 this.router.navigate(['/']);

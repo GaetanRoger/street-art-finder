@@ -1,31 +1,40 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserService} from '../../../core/services/users/user/user.service';
 import {Router} from '@angular/router';
 import {UserCredentials} from '../../../shared/types/user-credentials';
 import {environment} from '../../../../../environments/environment';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'streat-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
     login = false;
     loginFailedMessage: string;
     debug = !environment.production;
+    private _userSubscription: Subscription;
 
     constructor(private readonly userService: UserService,
                 private readonly router: Router) {
     }
 
     ngOnInit(): void {
-        this.userService.isLoggedIn()
+        this._userSubscription = this.userService.isLoggedIn()
             .subscribe(b => {
                 if (b) {
                     this.router.navigate(['/dashboard'], {skipLocationChange: true});
                 }
             });
     }
+
+    ngOnDestroy(): void {
+        this._userSubscription.unsubscribe();
+    }
+
+
+
 
 
     formSubmitted(value: UserCredentials): void {

@@ -22,6 +22,7 @@
 - [ ] Allow users to reset their password
 - [ ] Better way to see vanished pieces
 - [ ] *[Technical]* Convert all interfaces default implements to the class format
+- [x] *[Technical]* Check for un-unsubscribed observables in components
 - [x] Check if city found when entering geolocation
 - [x] Itineraries should go to randomized location when using circles.
 

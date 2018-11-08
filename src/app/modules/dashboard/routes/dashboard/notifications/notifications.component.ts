@@ -25,6 +25,7 @@ export class NotificationsComponent implements OnInit {
     openNotificationsDialog() {
         this.unreadNotifications$
             .pipe(take(1))
+            // No need to unsubscribe; only take 1
             .subscribe(notifs => {
                 const dialog = this.dialog.open(NotificationsDialogComponent, {
                     data: {
@@ -36,6 +37,7 @@ export class NotificationsComponent implements OnInit {
                 });
 
                 dialog.afterClosed()
+                    // No need to unsubscribe; only fired once after closed
                     .subscribe(v => this._updateReadNotifications(v));
             });
     }

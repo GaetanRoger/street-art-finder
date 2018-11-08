@@ -25,6 +25,7 @@ export class DashboardPieceProgressionComponent {
 
 
     showMapDialog() {
+        // No need to unsubscribe: only take 1
         this.pieceService
             .find(this.progression.piece.objectID)
             .pipe(filter(p => !!p.name), take(1))
@@ -32,8 +33,10 @@ export class DashboardPieceProgressionComponent {
     }
 
     showPicturesDialog() {
+        // No need to unsubscribe: only take 1
         this.pieceService
             .find(this.progression.piece.objectID)
+            .pipe(take(1))
             .subscribe(piece => this._openPicturesDialog(piece));
     }
 

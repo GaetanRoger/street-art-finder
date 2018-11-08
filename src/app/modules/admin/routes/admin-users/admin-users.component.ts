@@ -42,6 +42,7 @@ export class AdminUsersComponent implements OnInit {
             .pipe(
                 filter(result => result === true)
             )
+            // No need to unsubscribe: only fired once after closed
             .subscribe(_ => {
                 this.sendPasswordResetEmails();
             });

@@ -1,6 +1,6 @@
 {
-  "name": "street-art-finder",
-  "short_name": "street-art-finder",
+  "name": "Street Art Finder",
+  "short_name": "Art Finder",
   "theme_color": "#009688",
   "background_color": "#fafafa",
   "display": "standalone",
