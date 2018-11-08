@@ -37,7 +37,7 @@ export class NotificationsComponent implements OnInit {
                 });
 
                 dialog.afterClosed()
-                    // No need to unsubscribe; only fired once after closed
+                // No need to unsubscribe; only fired once after closed
                     .subscribe(v => this._updateReadNotifications(v));
             });
     }

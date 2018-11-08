@@ -6,21 +6,21 @@
 ></streat-admin-toolbar>
 
 <streat-selectable-list
-    [elements$]="pieces$"
-    [working$]="working$"
+        [elements$]="pieces$"
+        [working$]="working$"
 
-    [mainText]="mainText"
-    [subText]="subText"
+        [mainText]="mainText"
+        [subText]="subText"
 
-    primaryButton="DELETE"
-    primaryButtonConfirmText="All users' progressions will be lost and the piece gone forever!"
-    [primaryButtonConfirmDelayed]="true"
-    (primaryButtonClick)="deleteSelectedPieces()"
+        primaryButton="DELETE"
+        primaryButtonConfirmText="All users' progressions will be lost and the piece gone forever!"
+        [primaryButtonConfirmDelayed]="true"
+        (primaryButtonClick)="deleteSelectedPieces()"
 
-    secondaryButton="VANISH/UNVANISH"
-    secondaryButtonConfirmText="Everyone's progression will be lost!"
-    [secondaryButtonConfirmDelayed]="true"
-    (secondaryButtonClick)="markAsVanished()"
+        secondaryButton="VANISH/UNVANISH"
+        secondaryButtonConfirmText="Everyone's progression will be lost!"
+        [secondaryButtonConfirmDelayed]="true"
+        (secondaryButtonClick)="markAsVanished()"
 
-    (selectionChanged)="selectedPieces = $event"
+        (selectionChanged)="selectedPieces = $event"
 ></streat-selectable-list>

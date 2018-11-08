@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {AngularFirestore, CollectionReference, Query} from '@angular/fire/firestore';
 import {ObjectIDInjectorService} from '../../objectid-injecter/object-i-d-injector.service';
-import {map, tap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import {ObjectIDable} from '../../../../shared/types/object-idable';
 import {FirestoreWhere} from './firestore-where';
 import {FirestoreQueryBuilder} from '../firestore-cruder/firestore-query-builder';

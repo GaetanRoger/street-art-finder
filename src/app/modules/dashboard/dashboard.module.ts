@@ -17,7 +17,7 @@ import {DiscoverArtistAddedSnackbarComponent} from './routes/dashboard/discover/
 import {SharedModule} from '../shared/shared.module';
 import {NotificationsComponent} from './routes/dashboard/notifications/notifications.component';
 import {NotificationsDialogComponent} from './routes/dashboard/notifications/notifications-dialog/notifications-dialog.component';
-import { NotificationComponent } from './routes/dashboard/notifications/notifications-dialog/notification/notification.component';
+import {NotificationComponent} from './routes/dashboard/notifications/notifications-dialog/notification/notification.component';
 
 const routes: Route[] = [
     {

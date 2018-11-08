@@ -26,22 +26,26 @@
 .image, .not-found {
     margin-right: 20px;
 }
+
 .details {
     margin: 5px 10px;
     border-left: rgba(21, 21, 21, 0.1) 4px solid;
     padding: 0 10px;
 }
+
 .buttons {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
 }
+
 .not-found {
     font-size: 50px;
     width: 50px;
     height: 50px;
     opacity: 0.5;
 }
+
 .selected {
     background-color: rgba(21, 21, 21, 0.05);
 }
@@ -49,9 +53,11 @@
 mat-divider {
     margin: 0 10px;
 }
+
 mat-card-title {
     display: block;
 }
+
 small {
     opacity: 0.8;
 }

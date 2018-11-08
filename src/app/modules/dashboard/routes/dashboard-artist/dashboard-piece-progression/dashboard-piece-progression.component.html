@@ -1,19 +1,22 @@
 <div class="piece-card" (click)="opened= !opened" [ngClass]="{selected: opened}">
     <div class="left">
         <streat-image [src]="progression.piece.images.main.low"
-                   [round]="true"
-                   [imgHeight]="50"
-                   [imgWidth]="50"
-                   *ngIf="progression.found"
-                   class="image"></streat-image>
+                      [round]="true"
+                      [imgHeight]="50"
+                      [imgWidth]="50"
+                      *ngIf="progression.found"
+                      class="image"></streat-image>
         <mat-icon *ngIf="!progression.found" class="not-found">help_outline</mat-icon>
         <div>
             <mat-card-title>{{progression.piece.name}}</mat-card-title>
-            <small *ngIf="progression.piece.distance as distance">{{(distance / 1000)| number:'1.1-1'}} km from here</small>
-            <small *ngIf="progression.piece.distance === null">Please <a routerLink="/users/settings">enable</a> geolocation to view distances</small>
+            <small *ngIf="progression.piece.distance as distance">{{(distance / 1000)| number:'1.1-1'}} km from here
+            </small>
+            <small *ngIf="progression.piece.distance === null">Please <a routerLink="/users/settings">enable</a>
+                geolocation to view distances
+            </small>
         </div>
     </div>
-    <mat-chip-list >
+    <mat-chip-list>
         <mat-chip [selected]="true" *ngIf="progression.found" class="mat-elevation-z3">Found!</mat-chip>
     </mat-chip-list>
     <!--<span *ngIf="progression.found">Found!</span>-->

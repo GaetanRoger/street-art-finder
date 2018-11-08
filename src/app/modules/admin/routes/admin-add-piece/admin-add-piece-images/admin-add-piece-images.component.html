@@ -5,10 +5,14 @@
 <div *ngIf="!editing || !editingAndKeepingSameImages">
     <div class="main-buttons">
         <div>
-            <button type="button" [disabled]="mainImageUrl$.value" mat-raised-button (click)="mainImageInput.click()">Add main image</button>
+            <button type="button" [disabled]="mainImageUrl$.value" mat-raised-button (click)="mainImageInput.click()">
+                Add main image
+            </button>
             <input hidden type="file" #mainImageInput (change)="mainImageUploaded($event.target.files[0])"/>
         </div>
-        <button type="button" mat-flat-button [disabled]="!mainImageUrl$.value" color="warn" (click)="mainImageUrl$.next(null)">Remove main image</button>
+        <button type="button" mat-flat-button [disabled]="!mainImageUrl$.value" color="warn"
+                (click)="mainImageUrl$.next(null)">Remove main image
+        </button>
     </div>
 
 

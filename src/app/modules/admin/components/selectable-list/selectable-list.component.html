@@ -13,11 +13,13 @@
         <button mat-raised-button
                 (click)="secondaryButtonClicked()"
                 [disabled]="!(enableButtons$ | async)"
-        >{{secondaryButton}}</button>
+        >{{secondaryButton}}
+        </button>
         <button mat-raised-button
                 (click)="primaryButtonClicked()" color="accent"
                 [disabled]="!(enableButtons$ | async)"
-        >{{primaryButton}}</button>
+        >{{primaryButton}}
+        </button>
     </div>
 </div>
 

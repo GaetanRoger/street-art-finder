@@ -3,7 +3,8 @@
     <p>{{data.text}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button [color]="data.mainButtonColor || 'accent'" (click)="close(true)" [disabled]="mainButtonDisabled$ | async">
+    <button mat-raised-button [color]="data.mainButtonColor || 'accent'" (click)="close(true)"
+            [disabled]="mainButtonDisabled$ | async">
         <span *ngIf="!(mainButtonDisabled$ | async)">YES</span>
         <span *ngIf="mainButtonDisabled$ | async">{{countDown$ | async}} SEC...</span>
     </button>

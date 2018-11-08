@@ -1,6 +1,7 @@
 mat-form-field {
     width: 100%;
 }
+
 .submit-button-container {
     display: flex;
     flex-direction: row;
@@ -12,6 +13,7 @@ fieldset {
     padding: 0;
     border: 0;
 }
+
 .error-chip {
     margin-top: 5px;
     margin-bottom: 10px;

@@ -4,11 +4,11 @@
     overflow: hidden;
     margin-bottom: 5px;
 }
+
 ::ng-deep .image img {
     max-height: 200px;
     object-fit: cover;
 }
-
 
 .name-blur {
     background: rgba(21, 21, 21, 0.5);
@@ -20,6 +20,7 @@
     overflow: hidden;
     margin: -1px;
 }
+
 .name {
     color: white;
     height: 32px;
@@ -31,11 +32,13 @@
     align-items: center;
     width: 100%;
 }
+
 .name p {
     margin: 0;
     padding-left: 5px;
     font-size: 20px;
 }
+
 .name span {
     opacity: 0.7;
     font-size: 16px;

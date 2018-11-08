@@ -1,15 +1,15 @@
-import { TestBed, inject } from '@angular/core/testing';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { UserRolesService } from './user-roles.service';
+import {UserRolesService} from './user-roles.service';
 
 describe('UserRolesService', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [UserRolesService]
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            providers: [UserRolesService]
+        });
     });
-  });
 
-  it('should be created', inject([UserRolesService], (service: UserRolesService) => {
-    expect(service).toBeTruthy();
-  }));
+    it('should be created', inject([UserRolesService], (service: UserRolesService) => {
+        expect(service).toBeTruthy();
+    }));
 });

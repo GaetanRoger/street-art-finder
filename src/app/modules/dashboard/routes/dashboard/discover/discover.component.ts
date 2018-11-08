@@ -69,7 +69,6 @@ export class DiscoverComponent implements OnInit, OnDestroy {
     }
 
 
-
     async addArtistToProgression(artist: Artist): Promise<void> {
         await this.progressionService.addArtistProgression(this.user, artist).toPromise();
         this.snackbar.openFromComponent(DiscoverArtistAddedSnackbarComponent, {duration: 5000});

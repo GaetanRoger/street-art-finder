@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AggregatesService} from '../../../core/services/aggregates/aggregates.service';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Aggregates} from '../../../shared/types/aggregates';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import Cropper from 'cropperjs';
 
 @Component({
     selector: 'streat-admin-dashboard',

@@ -1,5 +1,5 @@
 import {BaseBuilder} from './base-builder';
-import {marker, Marker, MarkerOptions} from 'leaflet';
+import {Marker, MarkerOptions} from 'leaflet';
 
 export class MarkerBuilder extends BaseBuilder {
     private options: MarkerOptions = {};

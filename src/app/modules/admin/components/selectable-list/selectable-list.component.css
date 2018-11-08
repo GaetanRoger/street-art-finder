@@ -5,7 +5,7 @@ small {
 .footer {
     display: flex;
     justify-content: space-between;
-    align-items:flex-end;
+    align-items: flex-end;
     position: absolute;
     bottom: 10px;
     width: 94%;
@@ -17,6 +17,7 @@ small {
     display: flex;
     justify-content: right;
 }
+
 .buttons button {
     margin-left: 5px;
 }

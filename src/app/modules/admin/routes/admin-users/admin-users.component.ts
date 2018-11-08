@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {UserService} from '../../../core/services/users/user/user.service';
 import {Observable} from 'rxjs';
 import {User} from '../../../shared/types/user';
-import {filter, tap} from 'rxjs/operators';
+import {filter} from 'rxjs/operators';
 import {MatDialog, MatSelectionList, MatSnackBar} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 

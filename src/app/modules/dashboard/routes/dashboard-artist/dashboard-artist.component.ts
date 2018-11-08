@@ -74,8 +74,8 @@ export class DashboardArtistComponent implements OnInit {
                 flatMap(
                     ([artistId, hideFound]) => this.userPieceProgression
                         .piecesProgression(artistId, {
-                    onlyNotFound: hideFound
-                }))
+                            onlyNotFound: hideFound
+                        }))
             );
 
         return combineLatest(upp$, this.geolocation.currentGeolocation())

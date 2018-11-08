@@ -18,7 +18,7 @@
     <div *ngIf="pieces$ | async as pieces">
         <streat-piece *ngFor="let piece of pieces" [piece]="piece"></streat-piece>
         <div *ngIf="!(loading$ | async)">
-                <div *ngIf="pieces.length === 0 && !filter$.getValue()">
+            <div *ngIf="pieces.length === 0 && !filter$.getValue()">
                 No pieces were yet uploaded.
             </div>
             <div *ngIf="pieces.length === 0 && filter$.getValue()">

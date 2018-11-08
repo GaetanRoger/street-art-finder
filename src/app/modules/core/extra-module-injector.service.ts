@@ -1,7 +1,7 @@
 import {Injectable, Injector} from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ExtraModuleInjectorService {
     private static injector: Injector;

@@ -17,6 +17,7 @@
 
 <mat-divider></mat-divider>
 
-<streat-if-online offlineText="Sorry, you cannot browse artists while offline. But you can go to your dashboard for sure!">
+<streat-if-online
+        offlineText="Sorry, you cannot browse artists while offline. But you can go to your dashboard for sure!">
     <streat-home-artists-list [query]="query"></streat-home-artists-list>
 </streat-if-online>

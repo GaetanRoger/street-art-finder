@@ -2,14 +2,13 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HomeComponent} from './routes/home/home.component';
 import {Route, RouterModule} from '@angular/router';
-import {CoreModule} from '../core/core.module';
 import {NotFoundComponent} from './routes/not-found/not-found.component';
 import {ArtistComponent} from './routes/artist/artist.component';
 import {PieceComponent} from './routes/artist/piece/piece.component';
 import {LearnMoreComponent} from './routes/learn-more/learn-more.component';
 import {TempComponent} from './routes/temp/temp.component';
 import {SharedModule} from '../shared/shared.module';
-import { HomeArtistsListComponent } from './routes/home/home-artists-list/home-artists-list.component';
+import {HomeArtistsListComponent} from './routes/home/home-artists-list/home-artists-list.component';
 
 const routes: Route[] = [
     {

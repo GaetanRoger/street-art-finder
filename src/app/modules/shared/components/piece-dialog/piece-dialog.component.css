@@ -1,11 +1,13 @@
-.added-on{
+.added-on {
     opacity: 0.7;
     font-size: 14px;
 }
+
 mat-dialog-actions {
     display: flex;
     justify-content: space-between;
 }
+
 .map {
     height: 300px;
 }

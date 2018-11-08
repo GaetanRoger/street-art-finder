@@ -4,6 +4,7 @@ h1 {
     margin-top: 0;
     margin-bottom: 0;
 }
+
 .title {
     background-color: #f6f6f6;
     padding: 10px 5%;
@@ -15,6 +16,7 @@ h1 {
 .title .buttons {
     opacity: 0.8;
 }
+
 .title .buttons button {
     padding-right: 0;
     padding-left: 0;

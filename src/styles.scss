@@ -1,13 +1,20 @@
 @import 'theme/vars';
 
 /* Resetting CSS */
-html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto', sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
 
 /* Applying theme color globally */
 .primary-color {
   color: mat-color($primary);
 }
+
 .warn, .warn mat-icon {
   color: mat-color($warn);
 }
@@ -17,11 +24,11 @@ div.splash {
 
 }
 
-
 /* Other */
-.mat-tab-body-wrapper{
+.mat-tab-body-wrapper {
   flex-grow: 1;
 }
+
 .no-padding-on-dialog .mat-dialog-container {
   padding: 0;
 }

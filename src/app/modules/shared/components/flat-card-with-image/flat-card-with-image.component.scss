@@ -1,47 +1,47 @@
 $border-radius: 10px;
 
 .join-now-card {
-    background: #f6f6f6;
-    margin: 5px;
-    border-top-right-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+  background: #f6f6f6;
+  margin: 5px;
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
 
-    display: flex;
+  display: flex;
 }
 
 .join-now-card .left-image {
-    flex: 3;
-    background-size: cover;
-    border-top-left-radius: $border-radius;
-    border-bottom-left-radius: $border-radius;
+  flex: 3;
+  background-size: cover;
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
 
 }
 
 .join-now-card .right-text {
-    flex: 7;
-    padding: 5px;
-    margin-left: 10px;
-    font-size: 14px;
+  flex: 7;
+  padding: 5px;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 .join-now-card .right-text h4 {
-    font-weight: normal;
-    font-size: 170%;
-    opacity: 0.9;
-    margin: 5px 0 0;
+  font-weight: normal;
+  font-size: 170%;
+  opacity: 0.9;
+  margin: 5px 0 0;
 }
 
 .join-now-card .right-text p {
-    margin-top: 5px;
-    opacity: 0.6;
+  margin-top: 5px;
+  opacity: 0.6;
 }
 
 .join-now-card .right-text .buttons {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .join-now-card .right-text .buttons button {
-    font-size: 14px;
-    text-transform: uppercase;
+  font-size: 14px;
+  text-transform: uppercase;
 }

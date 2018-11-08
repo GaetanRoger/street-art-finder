@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {UserGeolocationService} from '../location/geolocation/user-geolocation.service';
 import {Observable} from 'rxjs';
-import {LatLng, Marker, Point, TileLayer, tileLayer} from 'leaflet';
+import {LatLng, Marker, TileLayer, tileLayer} from 'leaflet';
 import {map} from 'rxjs/operators';
 import {Geopoint} from '../../../shared/types/geopoint';
 import {UserService} from '../users/user/user.service';

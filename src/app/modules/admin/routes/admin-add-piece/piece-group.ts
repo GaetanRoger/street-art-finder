@@ -1,4 +1,4 @@
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {artistValidator} from './artist.validator';
 
 export class PieceGroup {

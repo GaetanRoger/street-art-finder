@@ -14,7 +14,7 @@
 </div>
 
 <streat-use-discover-tab *ngIf="(progressions | async)?.length === 0 && !isFiltered"
-                      (goToDiscover)="goToDiscover.emit()"
+                         (goToDiscover)="goToDiscover.emit()"
 ></streat-use-discover-tab>
 
 <streat-loading-spinner *ngIf="loading"></streat-loading-spinner>

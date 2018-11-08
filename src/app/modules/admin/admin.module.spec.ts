@@ -1,13 +1,13 @@
-import { AdminModule } from './admin.module';
+import {AdminModule} from './admin.module';
 
 describe('AdminModule', () => {
-  let adminModule: AdminModule;
+    let adminModule: AdminModule;
 
-  beforeEach(() => {
-    adminModule = new AdminModule();
-  });
+    beforeEach(() => {
+        adminModule = new AdminModule();
+    });
 
-  it('should create an instance', () => {
-    expect(adminModule).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(adminModule).toBeTruthy();
+    });
 });

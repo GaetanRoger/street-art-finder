@@ -1,7 +1,6 @@
-import { TimestampPipe } from './timestamp.pipe';
-import {DatePipe} from '@angular/common';
+import {TimestampPipe} from './timestamp.pipe';
 
 describe('TimestampPipe', () => {
-  it('create an instance', () => {
-  });
+    it('create an instance', () => {
+    });
 });

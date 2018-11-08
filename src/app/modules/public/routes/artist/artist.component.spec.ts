@@ -1,7 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ArtistComponent} from './artist.component';
-import {MatToolbarModule} from '@angular/material';
 import {ComponentsLibraryModule} from '../../../components-library/components-library.module';
 
 describe('ArtistComponent', () => {

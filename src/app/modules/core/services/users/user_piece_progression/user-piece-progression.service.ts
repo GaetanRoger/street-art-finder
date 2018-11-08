@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {ObjectIDInjectorService} from '../../objectid-injecter/object-i-d-injector.service';
 import {Observable, of} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {UserPieceProgression} from '../../../../shared/types/user-piece-progression';

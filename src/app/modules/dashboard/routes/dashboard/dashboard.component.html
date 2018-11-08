@@ -10,16 +10,16 @@
                [selectedIndex]="selectedIndex">
     <mat-tab label="PROGRESSION">
         <streat-artists-progressions [progressions]="progressions$"
-                                  [isFiltered]="!!(filter$ | async)"
-                                  (goToDiscover)="selectedIndex = 2"></streat-artists-progressions>
+                                     [isFiltered]="!!(filter$ | async)"
+                                     (goToDiscover)="selectedIndex = 2"></streat-artists-progressions>
     </mat-tab>
     <mat-tab label="ALL" *ngIf="(progressions$ | async) && (progressions$ | async)?.length > 0">
         <streat-all [selected$]="mapTabBehaviourSubject"></streat-all>
     </mat-tab>
     <mat-tab label="DISCOVER">
         <streat-if-online
-            offlineTitle="You are offline"
-            offlineText="Sorry, the discover tab is only available online"
+                offlineTitle="You are offline"
+                offlineText="Sorry, the discover tab is only available online"
         >
             <streat-discover [progressions]="progressions$"></streat-discover>
         </streat-if-online>

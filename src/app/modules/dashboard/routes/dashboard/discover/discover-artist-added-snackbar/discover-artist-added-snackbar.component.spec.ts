@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DiscoverArtistAddedSnackbarComponent } from './discover-artist-added-snackbar.component';
+import {DiscoverArtistAddedSnackbarComponent} from './discover-artist-added-snackbar.component';
 
 describe('DiscoverArtistAddedSnackbarComponent', () => {
-  let component: DiscoverArtistAddedSnackbarComponent;
-  let fixture: ComponentFixture<DiscoverArtistAddedSnackbarComponent>;
+    let component: DiscoverArtistAddedSnackbarComponent;
+    let fixture: ComponentFixture<DiscoverArtistAddedSnackbarComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ DiscoverArtistAddedSnackbarComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [DiscoverArtistAddedSnackbarComponent]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DiscoverArtistAddedSnackbarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(DiscoverArtistAddedSnackbarComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

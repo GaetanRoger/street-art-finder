@@ -5,7 +5,6 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {Ng2ImgMaxModule} from 'ng2-img-max';
-import {ExtraModuleInjectorService} from './extra-module-injector.service';
 
 @NgModule({
     imports: [

@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {MatDialog, MatSelectionList, MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import {delay, filter, flatMap, tap} from 'rxjs/operators';
-import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {Artist} from '../../../shared/types/artist';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 

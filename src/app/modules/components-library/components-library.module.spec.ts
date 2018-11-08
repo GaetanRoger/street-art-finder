@@ -1,13 +1,13 @@
-import { ComponentsLibraryModule } from './components-library.module';
+import {ComponentsLibraryModule} from './components-library.module';
 
 describe('ComponentsLibraryModule', () => {
-  let componentsLibraryModule: ComponentsLibraryModule;
+    let componentsLibraryModule: ComponentsLibraryModule;
 
-  beforeEach(() => {
-    componentsLibraryModule = new ComponentsLibraryModule();
-  });
+    beforeEach(() => {
+        componentsLibraryModule = new ComponentsLibraryModule();
+    });
 
-  it('should create an instance', () => {
-    expect(componentsLibraryModule).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(componentsLibraryModule).toBeTruthy();
+    });
 });

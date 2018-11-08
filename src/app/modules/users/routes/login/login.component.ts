@@ -34,9 +34,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
 
-
-
-
     formSubmitted(value: UserCredentials): void {
         this.login = true;
         this.loginFailedMessage = '';

@@ -3,12 +3,14 @@
     justify-content: space-evenly;
     margin-bottom: 10px;
 }
+
 .buttons {
     margin-top: 30px;
     display: flex;
     justify-content: space-evenly;
     text-align: center;
 }
+
 .keeping-image-checkbox {
     display: flex;
     justify-content: center;

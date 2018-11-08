@@ -1,13 +1,13 @@
-import { PublicModule } from './public.module';
+import {PublicModule} from './public.module';
 
 describe('PublicModule', () => {
-  let publicModule: PublicModule;
+    let publicModule: PublicModule;
 
-  beforeEach(() => {
-    publicModule = new PublicModule();
-  });
+    beforeEach(() => {
+        publicModule = new PublicModule();
+    });
 
-  it('should create an instance', () => {
-    expect(publicModule).toBeTruthy();
-  });
+    it('should create an instance', () => {
+        expect(publicModule).toBeTruthy();
+    });
 });

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Geopoint} from '../../../shared/types/geopoint';
 import {MapElementInput} from '../../../shared/components/map/map-element-input';
 import {circle, marker} from 'leaflet';
 

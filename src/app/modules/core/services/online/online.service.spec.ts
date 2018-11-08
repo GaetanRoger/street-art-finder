@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { OnlineService } from './online.service';
+import {OnlineService} from './online.service';
 
 describe('OnlineService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+    beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
-    const service: OnlineService = TestBed.get(OnlineService);
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        const service: OnlineService = TestBed.get(OnlineService);
+        expect(service).toBeTruthy();
+    });
 });

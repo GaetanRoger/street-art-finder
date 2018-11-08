@@ -5,20 +5,22 @@
 ></streat-toolbar>
 
 <div class="title">
-  <h1 class="primary-color">Welcome back</h1>
-  <p>Glad to see you here</p>
+    <h1 class="primary-color">Welcome back</h1>
+    <p>Glad to see you here</p>
 </div>
 <div class="form-container">
-  <streat-login-form
-          emailPlaceholder="Enter your e-mail address..."
-          passwordPlaceholder="Enter your password..."
-          secondaryButtonText="I don't have an account"
-          secondaryButtonRouterLink="/users/join"
-          class="form"
-          [disabled]="login"
-          [errorMessage]="loginFailedMessage"
-          (formSubmitted)="formSubmitted($event)"
-  ></streat-login-form>
+    <streat-login-form
+            emailPlaceholder="Enter your e-mail address..."
+            passwordPlaceholder="Enter your password..."
+            secondaryButtonText="I don't have an account"
+            secondaryButtonRouterLink="/users/join"
+            class="form"
+            [disabled]="login"
+            [errorMessage]="loginFailedMessage"
+            (formSubmitted)="formSubmitted($event)"
+    ></streat-login-form>
 
-  <button mat-raised-button *ngIf="debug" (click)="formSubmitted({email: 'test@test.com', password: 'testest'})">Debug login</button>
+    <button mat-raised-button *ngIf="debug" (click)="formSubmitted({email: 'test@test.com', password: 'testest'})">Debug
+        login
+    </button>
 </div>

@@ -18,8 +18,8 @@
 </div>
 
 <streat-dashboard-piece-progression *ngFor="let progression of progressions$ | async"
-                                 [progression]="progression"
-                                 (found)="markAsFound(progression.objectID, $event)"
+                                    [progression]="progression"
+                                    (found)="markAsFound(progression.objectID, $event)"
 ></streat-dashboard-piece-progression>
 
 <div class="footer">
