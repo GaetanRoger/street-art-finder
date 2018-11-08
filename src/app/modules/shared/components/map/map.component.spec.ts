@@ -3,8 +3,8 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {MapComponent} from './map.component';
 
 describe('MapComponent', () => {
-    let component: MapComponent;
-    let fixture: ComponentFixture<MapComponent>;
+    let component: MapComponent<any>;
+    let fixture: ComponentFixture<MapComponent<any>>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({

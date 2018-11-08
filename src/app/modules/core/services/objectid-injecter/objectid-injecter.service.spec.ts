@@ -1,11 +1,15 @@
 import {ObjectIDInjectorService} from './object-i-d-injector.service';
 
+interface TestType {
+    objectID?: string;
+    name: string;
+    age: number;
+}
+
 describe('ObjectIDInjectorService', () => {
-    let objectIdInjecter: ObjectIDInjectorService<{
-        objectID?: string;
-        name: string;
-        age: number;
-    }>;
+
+
+    let objectIdInjecter: ObjectIDInjectorService;
 
     beforeEach(() => {
         objectIdInjecter = new ObjectIDInjectorService();
@@ -19,7 +23,7 @@ describe('ObjectIDInjectorService', () => {
                 data: () => ({name: 'Foe', age: 20})
             }
         };
-        const injected = objectIdInjecter.injectIntoDoc(object);
+        const injected = objectIdInjecter.injectIntoDoc<TestType>(object);
 
         expect(injected.objectID).toEqual('testid');
         expect(injected.name).toEqual('Foe');
@@ -46,7 +50,7 @@ describe('ObjectIDInjectorService', () => {
             }
         ];
 
-        const injected = objectIdInjecter.injectIntoCollection(objects);
+        const injected = objectIdInjecter.injectIntoCollection<TestType>(objects);
 
         expect(injected.length).toBe(2);
         expect(injected[0].objectID).toEqual('id1');

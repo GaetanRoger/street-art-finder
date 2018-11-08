@@ -6,7 +6,7 @@ describe('FirestoreCruderService', () => {
     beforeEach(() => TestBed.configureTestingModule({}));
 
     it('should be created', () => {
-        const service: FirestoreCruderService = TestBed.get(FirestoreCruderService);
+        const service: FirestoreCruderService<any> = TestBed.get(FirestoreCruderService);
         expect(service).toBeTruthy();
     });
 });

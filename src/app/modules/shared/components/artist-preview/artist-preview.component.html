@@ -8,9 +8,7 @@
                     mat-raised-button
                     (click)="$event.stopPropagation(); actionClick.emit(action.id)"
                     [disabled]="action.disabled === true"
-            >
-                {{action.text}}
-            </button>
+            >{{action.text}}</button>
         </div>
     </div>
     <p>{{artist.text}}</p>

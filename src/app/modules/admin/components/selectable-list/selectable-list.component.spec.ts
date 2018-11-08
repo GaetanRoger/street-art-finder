@@ -4,7 +4,7 @@ import {SelectableListComponent} from './selectable-list.component';
 
 describe('SelectableListComponent', () => {
     let component: SelectableListComponent<any>;
-    let fixture: ComponentFixture<SelectableListComponent>;
+    let fixture: ComponentFixture<SelectableListComponent<any>>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
