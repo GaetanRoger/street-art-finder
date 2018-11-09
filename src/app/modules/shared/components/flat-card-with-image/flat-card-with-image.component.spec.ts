@@ -19,7 +19,7 @@ const inputData = {
     secondaryButtonExternalLink: 'http://example.com/secondary',
 };
 
-fdescribe('FlatCardWithImageComponent', () => {
+describe('FlatCardWithImageComponent', () => {
     let component: FlatCardWithImageComponent;
     let fixture: ComponentFixture<FlatCardWithImageComponent>;
     let element: HTMLElement;
