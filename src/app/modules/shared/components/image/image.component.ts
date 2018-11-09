@@ -12,7 +12,7 @@ export class ImageComponent {
     @Input() imgWidth: number;
     @Input() imgHeight: number;
     @Input() cover = true;
-    @Input() fit: boolean;
+    @Input() fit = false;
 
     @Output() error: EventEmitter<Event> = new EventEmitter();
 

@@ -12,7 +12,7 @@ describe('IfOnlineComponent', () => {
     let element: HTMLElement;
 
     const onlineBehaviour: BehaviorSubject<boolean> = new BehaviorSubject(true);
-    const mockOnlineService: OnlineService = {
+    const mockOnlineService: Partial<OnlineService> = {
         onlineChanges: onlineBehaviour,
         online: onlineBehaviour.value
     };
