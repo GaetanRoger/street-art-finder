@@ -11,7 +11,7 @@ const inputData = {
     actionText: 'Test action test'
 };
 
-fdescribe('FullScreenMessageComponent', () => {
+describe('FullScreenMessageComponent', () => {
     let component: FullScreenMessageComponent;
     let fixture: ComponentFixture<FullScreenMessageComponent>;
     let element: HTMLElement;

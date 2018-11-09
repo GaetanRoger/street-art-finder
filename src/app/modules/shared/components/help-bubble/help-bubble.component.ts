@@ -10,7 +10,7 @@ export class HelpBubbleComponent implements OnInit {
     @Input() uid: string;
     @Input() closable = true;
 
-    private readonly PREFIX = 'help.bubble.';
+    readonly PREFIX = 'help.bubble.';
 
     clickedOnce = false;
     hide = false;

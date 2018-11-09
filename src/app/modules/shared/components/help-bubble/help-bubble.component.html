@@ -1,4 +1,4 @@
-<div class="help-text mat-elevation-z1" [ngClass]="{hide: hide}" (click)="onClick()">
+<div class="help-text mat-elevation-z1" *ngIf="!hide" (click)="onClick()">
     <div class="text" *ngIf="text">{{text}}</div>
     <div class="text" *ngIf="!text">
         <ng-content></ng-content>
