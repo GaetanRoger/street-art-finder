@@ -6,11 +6,15 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     styleUrls: ['./load-more-button.component.css']
 })
 export class LoadMoreButtonComponent {
-    @Input() text = 'Load more';
-    @Input() noMoreText = 'No more to load';
+    readonly DEFAULT_TEXT = 'Load more';
+    readonly DEFAULT_NO_MORE_TEXT = 'No more to load';
+    readonly DEFAULT_LOAD_MORE_BUTTON_COLOR = 'primary';
+
+    @Input() text = this.DEFAULT_TEXT;
+    @Input() noMoreText = this.DEFAULT_NO_MORE_TEXT;
     @Input() noMoreToLoad = false;
     @Input() disabled = false;
-    @Input() loadMoreButtonColor = 'primary';
+    @Input() loadMoreButtonColor = this.DEFAULT_LOAD_MORE_BUTTON_COLOR;
 
     @Output() loadMore: EventEmitter<void> = new EventEmitter();
 }

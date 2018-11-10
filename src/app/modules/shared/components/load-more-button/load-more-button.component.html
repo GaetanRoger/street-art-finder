@@ -4,11 +4,10 @@
             (click)="loadMore.emit()"
             [disabled]="disabled"
             *ngIf="!noMoreToLoad"
-    >Load more
-    </button>
+    >{{text}}</button>
 
     <mat-chip-list *ngIf="noMoreToLoad">
-        <mat-chip>Nothing more to load</mat-chip>
+        <mat-chip>{{noMoreText}}</mat-chip>
     </mat-chip-list>
 
 </div>
