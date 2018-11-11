@@ -22,3 +22,7 @@ p {
     margin-bottom: 0;
 }
 
+div.my-data-container {
+    text-align: right;
+    margin-right: 10px;
+}

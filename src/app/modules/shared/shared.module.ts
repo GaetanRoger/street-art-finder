@@ -19,6 +19,7 @@ import {FormsModule} from '@angular/forms';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {RouterModule} from '@angular/router';
 import {IfOnlineComponent} from './components/if-online/if-online.component';
+import { MyDataLinkComponent } from './components/my-data-link/my-data-link.component';
 
 @NgModule({
     imports: [
@@ -44,6 +45,7 @@ import {IfOnlineComponent} from './components/if-online/if-online.component';
         LoadMoreButtonComponent,
         MapComponent,
         IfOnlineComponent,
+        MyDataLinkComponent,
     ],
     exports: [
         ComponentsLibraryModule,
@@ -59,7 +61,8 @@ import {IfOnlineComponent} from './components/if-online/if-online.component';
         FullScreenMessageComponent,
         LoadMoreButtonComponent,
         MapComponent,
-        IfOnlineComponent
+        IfOnlineComponent,
+        MyDataLinkComponent
     ],
     providers: [DatePipe],
     entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]

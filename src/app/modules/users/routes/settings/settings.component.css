@@ -42,3 +42,8 @@
 .bottom-buttons > button {
     margin-left: 5px;
 }
+
+
+div.my-data-container {
+    text-align: right;
+}

@@ -20,6 +20,7 @@
 ### Priority 2
 - [ ] Allow users to reset their password
 - [ ] Better way to see vanished pieces
+- [ ] More complete '/my-data' page, including speech about external services (Firebase, Algolia...)
 - [ ] *[Technical]* Use Cypress to e2e test all processes (see how to mock data into/out of Firestore)
 - [ ] *[Technical]* Convert all interfaces default implements to the class format
 - [ ] *[Technical]* Unit test all components 

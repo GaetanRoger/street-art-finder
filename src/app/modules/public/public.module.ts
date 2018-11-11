@@ -9,6 +9,7 @@ import {LearnMoreComponent} from './routes/learn-more/learn-more.component';
 import {TempComponent} from './routes/temp/temp.component';
 import {SharedModule} from '../shared/shared.module';
 import {HomeArtistsListComponent} from './routes/home/home-artists-list/home-artists-list.component';
+import { MyDataExplanationComponent } from './routes/my-data-explanation/my-data-explanation.component';
 
 const routes: Route[] = [
     {
@@ -24,8 +25,8 @@ const routes: Route[] = [
         component: LearnMoreComponent
     },
     {
-        path: 'temp',
-        component: TempComponent
+        path: 'my-data',
+        component: MyDataExplanationComponent
     },
     {
         path: '**',
@@ -46,7 +47,8 @@ const routes: Route[] = [
         PieceComponent,
         LearnMoreComponent,
         TempComponent,
-        HomeArtistsListComponent
+        HomeArtistsListComponent,
+        MyDataExplanationComponent
     ]
 })
 export class PublicModule {

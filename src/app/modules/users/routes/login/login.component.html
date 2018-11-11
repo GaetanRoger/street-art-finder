@@ -20,6 +20,7 @@
             (formSubmitted)="formSubmitted($event)"
     ></streat-login-form>
 
+
     <button mat-raised-button *ngIf="debug" (click)="formSubmitted({email: 'test@test.com', password: 'testest'})">Debug
         login
     </button>
