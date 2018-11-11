@@ -12,6 +12,8 @@ import {Findable} from '../../firestore/firestore-finder/interfaces/findable';
 import {FirestoreWhere} from '../../firestore/firestore-finder/firestore-where';
 import {Implements} from '../../../decorators/implements';
 import {AutoImplemented} from '../../../decorators/auto-implemented';
+import {AngularFireFunctions} from '@angular/fire/functions';
+import {AllUserData} from './all-user-data';
 
 @Injectable({
     providedIn: 'root'
@@ -28,7 +30,8 @@ export class UserService implements Findable<User> {
                 private readonly userSettings: UserSettingsService,
                 private readonly userRoles: UserRolesService,
                 private readonly finder: FirestoreFinderService,
-                private readonly cruder: FirestoreCruderService<User>) {
+                private readonly cruder: FirestoreCruderService<User>,
+                private readonly functions: AngularFireFunctions) {
         this.user$ = this.auth.authState
             .pipe(
                 switchMap(u => u ? this.find(u.uid) : of(null)),
@@ -74,6 +77,11 @@ export class UserService implements Findable<User> {
 
     delete(): Promise<void> {
         return this.auth.auth.currentUser.delete();
+    }
+
+    getAllUserData(): Observable<AllUserData> {
+        const getAllUserData = this.functions.httpsCallable('getAllUserDataF');
+        return getAllUserData({});
     }
 
     private _updateUserDataFromLogin(user: any): Observable<string> {

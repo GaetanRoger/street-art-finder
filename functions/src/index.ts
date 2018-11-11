@@ -19,6 +19,7 @@ import {firestoreUsersArtistsOnCreate} from './firestore/users_artists/onCreate'
 import {firestoreUsersArtistsOnDelete} from './firestore/users_artists/onDelete';
 import {firestoreUsersArtistsOnUpdate} from './firestore/users_artists/onUpdate';
 import {storageOnFinalize} from './storage/onFinalize';
+import {getAllUserData} from './callable/getAllUserData';
 
 
 /* **************************************************************
@@ -138,3 +139,7 @@ export const firestoreUsersArtistsOnDeleteF = usersArtistsDocument.onDelete(fire
  * ******************************************/
 
 export const storageOnFinalizeF = functions.storage.object().onFinalize(storageOnFinalize);
+
+
+// Callable
+export const getAllUserDataF = functions.https.onCall(getAllUserData);

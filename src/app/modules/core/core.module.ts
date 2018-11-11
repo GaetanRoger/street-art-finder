@@ -5,6 +5,7 @@ import {AngularFireAuthModule} from '@angular/fire/auth';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {Ng2ImgMaxModule} from 'ng2-img-max';
+import {AngularFireFunctionsModule} from '@angular/fire/functions';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import {Ng2ImgMaxModule} from 'ng2-img-max';
         AngularFireAuthModule,
         AngularFirestoreModule.enablePersistence({experimentalTabSynchronization: true}),
         AngularFireStorageModule,
+        AngularFireFunctionsModule,
         Ng2ImgMaxModule
     ],
     exports: [

@@ -17,6 +17,7 @@ import {SharedModule} from './modules/shared/shared.module';
 import {ExtraModuleInjectorService} from './modules/core/extra-module-injector.service';
 import {MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material';
 import {OnlineService} from './modules/core/services/online/online.service';
+import {FunctionsRegionToken} from '@angular/fire/functions';
 
 const routes: Route[] = [
     {
@@ -55,7 +56,9 @@ const routes: Route[] = [
         LeafletModule.forRoot(),
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
-    providers: [],
+    providers: [
+        { provide: FunctionsRegionToken, useValue: 'us-central1' }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

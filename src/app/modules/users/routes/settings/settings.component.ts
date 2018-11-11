@@ -11,6 +11,7 @@ import {ConfirmationDialogComponent} from '../../../shared/components/confirmati
 import {filter} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import * as FileSaver from 'file-saver';
 
 @Component({
     selector: 'streat-settings',
@@ -22,6 +23,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     user: User;
     saving = false;
     errorMessage: string;
+    generatingUserData = false;
     private _userSubscription: Subscription;
 
     constructor(private readonly fb: FormBuilder,
@@ -94,6 +96,29 @@ export class SettingsComponent implements OnInit, OnDestroy {
                 this.snackbar.open('Your account has been deleted.', null, {duration: 5000});
                 this.router.navigate(['/']);
             }));
+    }
+
+    askToDownloadUserData() {
+        this.dialog.open(ConfirmationDialogComponent, {
+            data: {
+                title: 'Download all your data?',
+                text: 'You are able to download everything Streart associate your account with. '
+                    + 'It will be extracted from our database so the format may be a little rough.',
+                submitActivationDelay: 5000,
+                mainButtonColor: 'warn'
+            }
+        }).afterClosed()
+            .pipe(filter(v => v === true))
+            // No need to unsubscribe; only fired once after closed
+            .subscribe(() => {
+                this.generatingUserData = true;
+                this.userService.getAllUserData()
+                    .subscribe(data => {
+                        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'text/json;charset=utf-8'});
+                        FileSaver.saveAs(blob, 'all-your-data.json');
+                        this.generatingUserData = false;
+                    });
+            });
     }
 
     private createFormGroup(u: User): FormGroup {

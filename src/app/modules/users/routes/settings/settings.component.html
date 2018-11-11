@@ -34,8 +34,20 @@
         </button>
     </div>
 </div>
-<div class="delete-account" (click)="askForAccountDeletion()">
-    <button mat-flat-button color="warn">DELETE ACCOUNT</button>
+
+<div class="bottom-buttons">
+    <button mat-raised-button
+            [disabled]="generatingUserData"
+            (click)="askToDownloadUserData()"
+    >
+        <span *ngIf="!generatingUserData">GET ALL MY DATA</span>
+        <span *ngIf="generatingUserData">DOWNLOADING...</span>
+    </button>
+
+    <button mat-raised-button
+            (click)="askForAccountDeletion()"
+            color="warn">DELETE ACCOUNT
+    </button>
 </div>
 <streat-loading-spinner
         *ngIf="!settingsFormGroup"
