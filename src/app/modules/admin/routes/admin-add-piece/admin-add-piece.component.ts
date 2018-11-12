@@ -53,7 +53,9 @@ export class AdminAddPieceComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-        this._pieceFindSubscription.unsubscribe();
+        if (this._pieceFindSubscription) {
+            this._pieceFindSubscription.unsubscribe();
+        }
     }
 
     setLocation(location: Geopoint): void {
