@@ -8,7 +8,6 @@ import {PieceService} from '../../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {PieceCreationState} from './piece-creation-state.enum';
 import {AddressFromGeopointService} from '../../../../core/services/location/address-from-geopoint/address-from-geopoint.service';
-import {ImageResizerService} from '../../../../core/services/image-resizer/image-resizer.service';
 
 @Component({
     selector: 'streat-admin-add-piece-finish',
@@ -30,8 +29,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
     constructor(private readonly storage: AngularFireStorage,
                 private readonly idGenerator: IdGeneratorService,
                 private readonly pieceService: PieceService,
-                private readonly addressService: AddressFromGeopointService,
-                private readonly resizer: ImageResizerService) {
+                private readonly addressService: AddressFromGeopointService,) {
     }
 
     ngOnInit() {

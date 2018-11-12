@@ -21,7 +21,7 @@ export class AdminAddPieceImagesComponent implements OnInit {
         aspectRatio: 4 / 2,
         zoomable: true,
         movable: true,
-        dragMode: DragMode.Move
+        dragMode: 'move' as DragMode
     };
     private _editingAndKeepingSameImages = false;
     private name: string;

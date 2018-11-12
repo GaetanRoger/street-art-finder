@@ -1,0 +1,8 @@
+<div class="map"
+     leaflet
+     [leafletOptions]="{zoom: 18}"
+     (leafletMapReady)="mapReady($event)"
+>
+    <div [leafletLayer]="tileLayer"></div>
+    <div *ngIf="marker" [leafletLayer]="marker"></div>
+</div>

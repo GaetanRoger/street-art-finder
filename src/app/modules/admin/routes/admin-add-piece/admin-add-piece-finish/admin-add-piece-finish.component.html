@@ -6,7 +6,8 @@
             [disabled]="creationLaunched"
     >
         <span *ngIf="!creationLaunched">Create the piece!</span>
-        <span *ngIf="creationLaunched && !errored && !done">Creation...</span>
+        <span *ngIf="uploading">Uploading images...</span>
+        <span *ngIf="creating">Creating in database...</span>
         <span *ngIf="done">Piece created!</span>
         <span *ngIf="errored">Error :(</span>
     </button>

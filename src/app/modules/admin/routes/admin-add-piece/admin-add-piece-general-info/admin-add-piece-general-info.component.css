@@ -36,3 +36,6 @@
 .more-info {
     opacity: 0.6;
 }
+.more-precise {
+    text-decoration: underline;
+}

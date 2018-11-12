@@ -16,6 +16,7 @@ export class AdminAddPieceGeneralInfoComponent implements OnInit {
     @Input() formGroup: FormGroup;
     artists$: Observable<Artist[]>;
     address: Address;
+    showLocationImprove = false;
 
     constructor(private readonly fb: FormBuilder,
                 private readonly artistService: ArtistService,

@@ -19,6 +19,13 @@
                    min="-90"
                    max="90"
                    formControlName="latitude">
+            <mat-hint *ngIf="address?.city"
+                      class="more-precise"
+                      (click)="showLocationImprove = !showLocationImprove"
+            >
+                <span *ngIf="!showLocationImprove">Need more precision?</span>
+                <span *ngIf="showLocationImprove">Hide map</span>
+            </mat-hint>
             <mat-error *ngIf="latitude.errors">Value must be between -90 and 90</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -38,6 +45,11 @@
             <span (click)="moreInfo()" class="more-info">(more info)</span>
         </div>
     </div>
+    <streat-admin-add-piece-location-improve
+            *ngIf="showLocationImprove"
+            [location]="location.value"
+            (newLocation)="location.setValue($event)"
+    ></streat-admin-add-piece-location-improve>
     <mat-form-field>
         <input type="text" placeholder="Artist" matInput formControlName="artist" [matAutocomplete]="auto">
         <mat-hint>Start typing their name then select one</mat-hint>

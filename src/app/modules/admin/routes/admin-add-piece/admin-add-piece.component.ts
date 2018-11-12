@@ -8,6 +8,7 @@ import {ArtistService} from '../../../core/services/artist/artist.service';
 import {combineLatest, of, Subscription} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
 import {Artist} from '../../../shared/types/artist';
+import {Geopoint} from '../../../shared/types/geopoint';
 
 @Component({
     selector: 'streat-admin-add-piece',
@@ -32,6 +33,10 @@ export class AdminAddPieceComponent implements OnInit, OnDestroy {
         return this.pieceFormGroup.get('general') as FormGroup;
     }
 
+    get location(): Geopoint {
+        return this.general.get('location').value;
+    }
+
     ngOnInit(): void {
         this.pieceFormGroup = this.fb.group(new PieceGroup());
         this.editingPieceId = this.route.snapshot.params.pieceId;
@@ -51,6 +56,9 @@ export class AdminAddPieceComponent implements OnInit, OnDestroy {
         this._pieceFindSubscription.unsubscribe();
     }
 
+    setLocation(location: Geopoint): void {
+        this.general.get('location').setValue(location);
+    }
 
     private _populateForm(p: Piece, a: Artist) {
         const general = this.pieceFormGroup.get('general') as FormGroup;
