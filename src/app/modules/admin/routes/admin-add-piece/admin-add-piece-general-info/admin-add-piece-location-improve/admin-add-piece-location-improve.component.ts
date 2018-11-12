@@ -21,7 +21,7 @@ export class AdminAddPieceLocationImproveComponent implements OnInit, OnChanges 
     }
 
     ngOnInit(): void {
-        this.tileLayer = this.mapHelper.tileLayer();
+        this.tileLayer = MapHelperService.tileLayer();
     }
 
 
@@ -30,7 +30,7 @@ export class AdminAddPieceLocationImproveComponent implements OnInit, OnChanges 
             return;
         }
 
-        const latLng = this.mapHelper.geopointToLatLng(this.location);
+        const latLng = MapHelperService.geopointToLatLng(this.location);
         const m = new Marker(latLng, {draggable: true});
         m.on('dragend', (e) => {
             const source = e.target as Marker;
@@ -55,7 +55,7 @@ export class AdminAddPieceLocationImproveComponent implements OnInit, OnChanges 
     }
 
     emitNewLoc(latLng: LatLng): void {
-        const newLoc = this.mapHelper.latLngToGeopoint(latLng);
+        const newLoc = MapHelperService.latLngToGeopoint(latLng);
         this.newLocation.emit(newLoc);
     }
 

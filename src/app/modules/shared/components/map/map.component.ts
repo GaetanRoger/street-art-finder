@@ -125,8 +125,12 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
             : this._markersLayer;
     }
 
+    get map(): Map {
+        return this._leafletMap;
+    }
+
     ngOnInit(): void {
-        this.tileLayer = this.mapHelper.tileLayer();
+        this.tileLayer = MapHelperService.tileLayer();
         this.userLayer$ = this.mapHelper.userMarker();
     }
 
@@ -199,9 +203,9 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
                 return circle;
             }
 
-            const location = this.mapHelper.latLngToGeopoint(circle.getLatLng());
+            const location = MapHelperService.latLngToGeopoint(circle.getLatLng());
             const randomLocation = this.mapHelper.randomizeCircleLocation(location, el.id, circle.getRadius());
-            return cloneLayer(circle).setLatLng(this.mapHelper.geopointToLatLng(randomLocation));
+            return cloneLayer(circle).setLatLng(MapHelperService.geopointToLatLng(randomLocation));
         }));
     }
 

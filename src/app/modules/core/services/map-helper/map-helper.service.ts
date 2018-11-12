@@ -14,7 +14,7 @@ import {CoordinatesCalculusService} from '../location/coordinates-calculus/coord
     providedIn: 'root'
 })
 export class MapHelperService {
-    readonly MAP_TILES_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    static readonly MAP_TILES_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
     constructor(private readonly userGeolocation: UserGeolocationService,
                 private readonly userService: UserService,
@@ -23,11 +23,26 @@ export class MapHelperService {
     }
 
     /**
+     * Transforms a Geopoint to a LatLng object.
+     * @param point Point to transform.
+     */
+    static geopointToLatLng(point: Geopoint): LatLng {
+        return new LatLng(point.latitude, point.longitude);
+    }
+
+    static latLngToGeopoint(point: LatLng): Geopoint {
+        return {
+            latitude: point.lat,
+            longitude: point.lng
+        };
+    }
+
+    /**
      * Creates a tile layer with tiles from open street map.
      * @param zoom
      */
-    tileLayer(): TileLayer {
-        return tileLayer(this.MAP_TILES_URL);
+    static tileLayer(): TileLayer {
+        return tileLayer(MapHelperService.MAP_TILES_URL);
     }
 
     /**
@@ -62,20 +77,7 @@ export class MapHelperService {
         return new CircleBuilder(location, this);
     }
 
-    /**
-     * Transforms a Geopoint to a LatLng object.
-     * @param point Point to transform.
-     */
-    geopointToLatLng(point: Geopoint): LatLng {
-        return new LatLng(point.latitude, point.longitude);
-    }
 
-    latLngToGeopoint(point: LatLng): Geopoint {
-        return {
-            latitude: point.lat,
-            longitude: point.lng
-        };
-    }
 
     randomizeCircleLocation(location: Geopoint, seed: number | string, radius: number): Geopoint {
         const randomNumber = this.random.generate(seed, true);
