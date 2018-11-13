@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Piece} from '../../../../../shared/types/piece';
 
 @Component({
-    selector: 'streat-piece-pictures-dialog',
+    selector: 'streart-piece-pictures-dialog',
     templateUrl: './piece-pictures-dialog.component.html',
     styleUrls: ['./piece-pictures-dialog.component.css']
 })

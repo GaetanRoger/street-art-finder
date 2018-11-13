@@ -3,7 +3,7 @@ import {UserService} from '../../../core/services/users/user/user.service';
 import {Router} from '@angular/router';
 
 @Component({
-    selector: 'streat-logout',
+    selector: 'streart-logout',
     templateUrl: './logout.component.html',
     styleUrls: ['./logout.component.css']
 })

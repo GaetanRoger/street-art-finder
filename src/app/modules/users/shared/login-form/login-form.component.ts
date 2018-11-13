@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserCredentials} from '../../../shared/types/user-credentials';
 
 @Component({
-    selector: 'streat-login-form',
+    selector: 'streart-login-form',
     templateUrl: './login-form.component.html',
     styleUrls: ['./login-form.component.css']
 })

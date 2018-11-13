@@ -12,17 +12,17 @@
                 </mat-form-field>
             </div>
             <div class="buttons">
-                <streat-small-horizontal-loader *ngIf="filterLoad"></streat-small-horizontal-loader>
+                <streart-small-horizontal-loader *ngIf="filterLoad"></streart-small-horizontal-loader>
                 <button mat-flat-button (click)="filterFormGroup.reset()">RESET FILTERS</button>
             </div>
         </div>
     </mat-expansion-panel>
 
-    <streat-artist-preview
+    <streart-artist-preview
 
             *ngFor="let artist of artists$ | async"
             [artist]="artist"
             [actions]="[{text: artist.known ? 'ADDED' : 'ADD', id: 1, disabled: artist.known}]"
             (actionClick)="addArtistToProgression(artist)"
-    ></streat-artist-preview>
+    ></streart-artist-preview>
 </div>

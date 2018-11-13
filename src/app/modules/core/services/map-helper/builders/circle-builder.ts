@@ -1,6 +1,6 @@
 import {Circle, CircleMarkerOptions} from 'leaflet';
 import {BaseBuilder} from './base-builder';
-import {MapHelperService} from '../map-helper.service';
+import {CoordsConverter} from '../coords-converter';
 
 export class CircleBuilder extends BaseBuilder {
     private radius: number;
@@ -21,7 +21,7 @@ export class CircleBuilder extends BaseBuilder {
             this.options = {...this.options, radius: this.radius};
         }
 
-        const circ = new Circle(MapHelperService.geopointToLatLng(this.location), this.options);
+        const circ = new Circle(CoordsConverter.geopointToLatLng(this.location), this.options);
 
         this._addPopupIfPopupContent(circ);
         this._addEventsIfEvents(circ);

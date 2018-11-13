@@ -5,11 +5,12 @@ import {MapHelperService} from '../../../core/services/map-helper/map-helper.ser
 import {ObjectIDable} from '../../types/object-idable';
 import {MapElementInput} from './map-element-input';
 import {filter} from 'rxjs/operators';
+import {CoordsConverter} from '../../../core/services/map-helper/coords-converter';
 
 const cloneLayer = require('leaflet-clonelayer');
 
 @Component({
-    selector: 'streat-map',
+    selector: 'streart-map',
     templateUrl: './map.component.html',
     styleUrls: ['./map.component.css']
 })
@@ -203,9 +204,9 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
                 return circle;
             }
 
-            const location = MapHelperService.latLngToGeopoint(circle.getLatLng());
+            const location = CoordsConverter.latLngToGeopoint(circle.getLatLng());
             const randomLocation = this.mapHelper.randomizeCircleLocation(location, el.id, circle.getRadius());
-            return cloneLayer(circle).setLatLng(MapHelperService.geopointToLatLng(randomLocation));
+            return cloneLayer(circle).setLatLng(CoordsConverter.geopointToLatLng(randomLocation));
         }));
     }
 

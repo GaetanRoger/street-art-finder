@@ -9,7 +9,7 @@ import {filter, take} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 
 @Component({
-    selector: 'streat-dashboard-piece-progression',
+    selector: 'streart-dashboard-piece-progression',
     templateUrl: './dashboard-piece-progression.component.html',
     styleUrls: ['./dashboard-piece-progression.component.css']
 })

@@ -1,11 +1,11 @@
-<streat-admin-toolbar
+<streart-admin-toolbar
         title="Pieces"
         [showSearchButton]="true"
         (searchChange)="filter$.next($event)"
 
-></streat-admin-toolbar>
+></streart-admin-toolbar>
 
-<streat-selectable-list
+<streart-selectable-list
         [elements$]="pieces$"
         [working$]="working$"
 
@@ -23,4 +23,4 @@
         (secondaryButtonClick)="markAsVanished()"
 
         (selectionChanged)="selectedPieces = $event"
-></streat-selectable-list>
+></streart-selectable-list>

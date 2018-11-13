@@ -4,7 +4,7 @@ import {MyDataExplanationComponent} from './my-data-explanation.component';
 import {Component, Input} from '@angular/core';
 
 @Component({
-    selector: 'streat-toolbar',
+    selector: 'streart-toolbar',
     template: ''
 })
 class MockToolbarComponent {
@@ -13,7 +13,7 @@ class MockToolbarComponent {
 }
 
 @Component({
-    selector: 'streat-flat-card-with-image',
+    selector: 'streart-flat-card-with-image',
     template: ''
 })
 class MockFlatCardWithComponent {

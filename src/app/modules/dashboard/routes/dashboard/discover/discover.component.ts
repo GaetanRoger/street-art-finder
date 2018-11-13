@@ -13,7 +13,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {FacetQueryResponse} from '../../../../core/services/algolia/facet-query-response';
 
 @Component({
-    selector: 'streat-discover',
+    selector: 'streart-discover',
     templateUrl: './discover.component.html',
     styleUrls: ['./discover.component.css']
 })

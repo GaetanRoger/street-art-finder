@@ -1,9 +1,9 @@
 <ng-content *ngIf="online$ | async"></ng-content>
 
-<streat-full-screen-message
+<streart-full-screen-message
         *ngIf="!(online$ | async)"
         icon="cloud_off"
         [title]="offlineTitle"
         [text]="offlineText"
         class="if-offline"
-></streat-full-screen-message>
+></streart-full-screen-message>

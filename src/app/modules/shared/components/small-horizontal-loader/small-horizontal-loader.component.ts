@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'streat-small-horizontal-loader',
+    selector: 'streart-small-horizontal-loader',
     templateUrl: './small-horizontal-loader.component.html',
     styleUrls: ['./small-horizontal-loader.component.css']
 })

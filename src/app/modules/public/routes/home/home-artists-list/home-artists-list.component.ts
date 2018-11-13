@@ -7,7 +7,7 @@ import {OnlineService} from '../../../../core/services/online/online.service';
 import {filter} from 'rxjs/operators';
 
 @Component({
-    selector: 'streat-home-artists-list',
+    selector: 'streart-home-artists-list',
     templateUrl: './home-artists-list.component.html',
     styleUrls: ['./home-artists-list.component.css']
 })

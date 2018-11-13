@@ -6,7 +6,7 @@ import {delay, filter, flatMap, tap} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material';
 
 @Component({
-    selector: 'streat-admin-pieces',
+    selector: 'streart-admin-pieces',
     templateUrl: './admin-pieces.component.html',
     styleUrls: ['./admin-pieces.component.css']
 })

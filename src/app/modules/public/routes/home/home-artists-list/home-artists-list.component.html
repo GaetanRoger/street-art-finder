@@ -1,12 +1,12 @@
-<streat-artist-preview *ngFor="let artist of (artists$ | async) || []" [artist]="artist">
-</streat-artist-preview>
+<streart-artist-preview *ngFor="let artist of (artists$ | async) || []" [artist]="artist">
+</streart-artist-preview>
 <div class="footerActions">
-    <streat-load-more-button
+    <streart-load-more-button
             [noMoreToLoad]="noMoreToLoad$ | async"
             loadMoreButtonColor="normal"
             (loadMore)="loadMoreArtists()"
-    ></streat-load-more-button>
+    ></streart-load-more-button>
 </div>
-<streat-loading-spinner *ngIf="loading$ | async"
+<streart-loading-spinner *ngIf="loading$ | async"
                         text="Chargement des artistes..."
-></streat-loading-spinner>
+></streart-loading-spinner>

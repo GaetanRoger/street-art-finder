@@ -6,7 +6,7 @@ import {environment} from '../../../../../environments/environment';
 import {Subscription} from 'rxjs';
 
 @Component({
-    selector: 'streat-login',
+    selector: 'streart-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })

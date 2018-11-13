@@ -10,7 +10,7 @@ import {PieceCreationState} from './piece-creation-state.enum';
 import {AddressFromGeopointService} from '../../../../core/services/location/address-from-geopoint/address-from-geopoint.service';
 
 @Component({
-    selector: 'streat-admin-add-piece-finish',
+    selector: 'streart-admin-add-piece-finish',
     templateUrl: './admin-add-piece-finish.component.html',
     styleUrls: ['./admin-add-piece-finish.component.css']
 })

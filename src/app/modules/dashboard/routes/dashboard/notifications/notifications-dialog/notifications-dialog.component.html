@@ -4,14 +4,14 @@
 
 >You got news!</h1>
 <mat-dialog-content>
-    <streat-help-bubble text="Swipe a notification when done reading"
+    <streart-help-bubble text="Swipe a notification when done reading"
                         uid="notifications.swipe"
-    ></streat-help-bubble>
+    ></streart-help-bubble>
     <div *ngFor="let notification of notifications">
         <mat-divider></mat-divider>
-        <streat-notification [notification]="notification"
+        <streart-notification [notification]="notification"
                              (markAsRead)="markAsRead(notification.objectID)"
-        ></streat-notification>
+        ></streart-notification>
     </div>
     <div class="up-to-date" *ngIf="unreadNotifications === 0">
         You're up to date! :)

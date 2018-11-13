@@ -1,28 +1,28 @@
-<streat-toolbar
+<streart-toolbar
         [title]="title | async"
         [showSearchButton]="true"
         [showBackButton]="true"
         (searchChange)="filterArtist($event)"
         [menuItems]="menuItems"
-></streat-toolbar>
-<streat-notifications></streat-notifications>
+></streart-toolbar>
+<streart-notifications></streart-notifications>
 <mat-tab-group mat-stretch-tabs [dynamicHeight]="true" (selectedTabChange)="tabChanged($event)"
                [selectedIndex]="selectedIndex">
     <mat-tab label="PROGRESSION">
-        <streat-artists-progressions [progressions]="progressions$"
+        <streart-artists-progressions [progressions]="progressions$"
                                      [isFiltered]="!!(filter$ | async)"
-                                     (goToDiscover)="selectedIndex = 2"></streat-artists-progressions>
+                                     (goToDiscover)="selectedIndex = 2"></streart-artists-progressions>
     </mat-tab>
     <mat-tab label="ALL" *ngIf="(progressions$ | async) && (progressions$ | async)?.length > 0">
-        <streat-all [selected$]="mapTabBehaviourSubject"></streat-all>
+        <streart-all [selected$]="mapTabBehaviourSubject"></streart-all>
     </mat-tab>
     <mat-tab label="DISCOVER">
-        <streat-if-online
+        <streart-if-online
                 offlineTitle="You are offline"
                 offlineText="Sorry, the discover tab is only available online"
         >
-            <streat-discover [progressions]="progressions$"></streat-discover>
-        </streat-if-online>
+            <streart-discover [progressions]="progressions$"></streart-discover>
+        </streart-if-online>
     </mat-tab>
 </mat-tab-group>
 

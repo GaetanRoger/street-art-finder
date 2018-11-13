@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs';
 import * as FileSaver from 'file-saver';
 
 @Component({
-    selector: 'streat-settings',
+    selector: 'streart-settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.css']
 })

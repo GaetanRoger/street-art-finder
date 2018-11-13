@@ -8,7 +8,7 @@ import {ToolbarMenuItem} from '../../../shared/components/toolbar/toolbar-menu-i
 import {flatMap, map} from 'rxjs/operators';
 
 @Component({
-    selector: 'streat-dashboard',
+    selector: 'streart-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })

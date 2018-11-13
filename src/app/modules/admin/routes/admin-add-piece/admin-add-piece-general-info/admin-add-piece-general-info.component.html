@@ -45,11 +45,11 @@
             <span (click)="moreInfo()" class="more-info">(more info)</span>
         </div>
     </div>
-    <streat-admin-add-piece-location-improve
+    <streart-admin-add-piece-location-improve
             *ngIf="showLocationImprove"
             [location]="location.value"
             (newLocation)="location.setValue($event)"
-    ></streat-admin-add-piece-location-improve>
+    ></streart-admin-add-piece-location-improve>
     <mat-form-field>
         <input type="text" placeholder="Artist" matInput formControlName="artist" [matAutocomplete]="auto">
         <mat-hint>Start typing their name then select one</mat-hint>

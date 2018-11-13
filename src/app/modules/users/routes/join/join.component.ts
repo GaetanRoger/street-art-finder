@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {take} from 'rxjs/operators';
 
 @Component({
-    selector: 'streat-join',
+    selector: 'streart-join',
     templateUrl: './join.component.html',
     styleUrls: ['./join.component.css']
 })

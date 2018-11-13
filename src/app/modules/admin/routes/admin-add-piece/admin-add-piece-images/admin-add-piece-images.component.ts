@@ -6,7 +6,7 @@ import Cropper from 'cropperjs';
 import DragMode = Cropper.DragMode;
 
 @Component({
-    selector: 'streat-admin-add-piece-images',
+    selector: 'streart-admin-add-piece-images',
     templateUrl: './admin-add-piece-images.component.html',
     styleUrls: ['./admin-add-piece-images.component.css']
 })

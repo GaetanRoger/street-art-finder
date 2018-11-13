@@ -7,7 +7,7 @@ import {MatDialog, MatSelectionList, MatSnackBar} from '@angular/material';
 import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-    selector: 'streat-admin-users',
+    selector: 'streart-admin-users',
     templateUrl: './admin-users.component.html',
     styleUrls: ['./admin-users.component.css']
 })

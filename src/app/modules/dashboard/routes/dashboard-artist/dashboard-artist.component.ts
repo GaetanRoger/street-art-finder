@@ -12,7 +12,7 @@ import {Artist} from '../../../shared/types/artist';
 import {UserGeolocationService} from '../../../core/services/location/geolocation/user-geolocation.service';
 
 @Component({
-    selector: 'streat-dashboard-artist',
+    selector: 'streart-dashboard-artist',
     templateUrl: './dashboard-artist.component.html',
     styleUrls: ['./dashboard-artist.component.css']
 })

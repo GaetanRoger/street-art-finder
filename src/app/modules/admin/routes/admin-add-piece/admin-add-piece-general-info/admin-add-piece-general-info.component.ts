@@ -8,7 +8,7 @@ import {AddressFromGeopointService} from '../../../../core/services/location/add
 import {Address} from '../../../../shared/types/address';
 
 @Component({
-    selector: 'streat-admin-add-piece-general-info',
+    selector: 'streart-admin-add-piece-general-info',
     templateUrl: './admin-add-piece-general-info.component.html',
     styleUrls: ['./admin-add-piece-general-info.component.css']
 })

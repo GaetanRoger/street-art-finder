@@ -1,15 +1,15 @@
-<streat-toolbar
+<streart-toolbar
         title="Settings"
         [showBackButton]="true"
         [showSearchButton]="false"
-></streat-toolbar>
+></streart-toolbar>
 
-<streat-help-bubble *ngIf="(geolocation.geolocationEnabled() | async) === false" [closable]="false">
+<streart-help-bubble *ngIf="(geolocation.geolocationEnabled() | async) === false" [closable]="false">
     <div class="help-content">
         <span>Please allow the app to access your GPS location for better experience.</span>
         <button mat-flat-button color="primary" (click)="howToAllowGpsLocation($event)">HOW TO</button>
     </div>
-</streat-help-bubble>
+</streart-help-bubble>
 
 <div [formGroup]="settingsFormGroup" *ngIf="settingsFormGroup" class="form">
     <div class="error-chip">
@@ -28,7 +28,7 @@
     </mat-form-field>
 
     <div class="my-data-container">
-        <streat-my-data-link></streat-my-data-link>
+        <streart-my-data-link></streart-my-data-link>
     </div>
 
     <div class="full-width buttons">
@@ -53,7 +53,7 @@
             color="warn">DELETE ACCOUNT
     </button>
 </div>
-<streat-loading-spinner
+<streart-loading-spinner
         *ngIf="!settingsFormGroup"
         text="Loading settings..."
-></streat-loading-spinner>
+></streart-loading-spinner>

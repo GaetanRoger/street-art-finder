@@ -3,7 +3,7 @@ import {Artist} from '../../types/artist';
 import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 
 @Component({
-    selector: 'streat-artist-preview',
+    selector: 'streart-artist-preview',
     templateUrl: './artist-preview.component.html',
     styleUrls: ['./artist-preview.component.css']
 })

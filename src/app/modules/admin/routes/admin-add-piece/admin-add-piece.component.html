@@ -1,25 +1,25 @@
-<streat-admin-toolbar
+<streart-admin-toolbar
         title="Add piece"
-></streat-admin-toolbar>
+></streart-admin-toolbar>
 
 <form [formGroup]="pieceFormGroup">
     <mat-horizontal-stepper [linear]="true">
         <mat-step [stepControl]="general" label="General">
-            <streat-admin-add-piece-general-info [formGroup]="general"></streat-admin-add-piece-general-info>
+            <streart-admin-add-piece-general-info [formGroup]="general"></streart-admin-add-piece-general-info>
         </mat-step>
         <mat-step label="Images">
-            <streat-admin-add-piece-images
+            <streart-admin-add-piece-images
                     [editing]="editing"
                     (mainImage)="mainImage = $event"
                     (uploadImages)="uploadImages = $event"
-            ></streat-admin-add-piece-images>
+            ></streart-admin-add-piece-images>
         </mat-step>
         <mat-step label="Finish">
-            <streat-admin-add-piece-finish [mainImage]="mainImage"
+            <streart-admin-add-piece-finish [mainImage]="mainImage"
                                            [editing]="editing"
                                            [editingPieceId]="editingPieceId"
                                            [uploadImages]="uploadImages"
-                                           [pieceFormGroup]="pieceFormGroup"></streat-admin-add-piece-finish>
+                                           [pieceFormGroup]="pieceFormGroup"></streart-admin-add-piece-finish>
 
         </mat-step>
     </mat-horizontal-stepper>

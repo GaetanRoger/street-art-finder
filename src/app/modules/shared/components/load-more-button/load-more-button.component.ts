@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-    selector: 'streat-load-more-button',
+    selector: 'streart-load-more-button',
     templateUrl: './load-more-button.component.html',
     styleUrls: ['./load-more-button.component.css']
 })

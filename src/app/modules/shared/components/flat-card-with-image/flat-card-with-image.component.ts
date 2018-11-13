@@ -2,7 +2,7 @@ import {Component, Input, OnChanges} from '@angular/core';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 
 @Component({
-    selector: 'streat-flat-card-with-image',
+    selector: 'streart-flat-card-with-image',
     templateUrl: './flat-card-with-image.component.html',
     styleUrls: ['./flat-card-with-image.component.scss']
 })

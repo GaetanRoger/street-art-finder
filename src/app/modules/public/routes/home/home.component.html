@@ -1,11 +1,11 @@
-<streat-toolbar
+<streart-toolbar
         title="Welcome to Streart"
         [showSearchButton]="true"
         (searchChange)="query = $event"
-></streat-toolbar>
+></streart-toolbar>
 
 
-<streat-flat-card-with-image
+<streart-flat-card-with-image
         title="See them for real"
         text="{{(loggedIn$ | async) ? 'Come here' : 'Sign up'}} to create your own unique route"
         [primaryButtonText]="primaryButtonText$|async"
@@ -13,11 +13,11 @@
         [secondaryButtonText]="(loggedIn$ | async) ? '' : 'Learn more'"
         secondaryButtonRouterLink="learn-more"
         image="/assets/images/paper-map-low.jpg"
-></streat-flat-card-with-image>
+></streart-flat-card-with-image>
 
 <mat-divider></mat-divider>
 
-<streat-if-online
+<streart-if-online
         offlineText="Sorry, you cannot browse artists while offline. But you can go to your dashboard for sure!">
-    <streat-home-artists-list [query]="query"></streat-home-artists-list>
-</streat-if-online>
+    <streart-home-artists-list [query]="query"></streart-home-artists-list>
+</streart-if-online>

@@ -7,7 +7,7 @@ import {take} from 'rxjs/operators';
 import {Notification} from '../../../../shared/types/notification';
 
 @Component({
-    selector: 'streat-notifications',
+    selector: 'streart-notifications',
     templateUrl: './notifications.component.html',
     styleUrls: ['./notifications.component.css']
 })

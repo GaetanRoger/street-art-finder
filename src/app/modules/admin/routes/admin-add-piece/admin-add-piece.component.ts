@@ -11,7 +11,7 @@ import {Artist} from '../../../shared/types/artist';
 import {Geopoint} from '../../../shared/types/geopoint';
 
 @Component({
-    selector: 'streat-admin-add-piece',
+    selector: 'streart-admin-add-piece',
     templateUrl: './admin-add-piece.component.html',
     styleUrls: ['./admin-add-piece.component.css']
 })

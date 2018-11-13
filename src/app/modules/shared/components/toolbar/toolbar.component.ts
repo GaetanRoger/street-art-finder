@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {ToolbarMenuItem} from './toolbar-menu-item';
 
 @Component({
-    selector: 'streat-toolbar',
+    selector: 'streart-toolbar',
     templateUrl: './toolbar.component.html',
     styleUrls: ['./toolbar.component.css']
 })

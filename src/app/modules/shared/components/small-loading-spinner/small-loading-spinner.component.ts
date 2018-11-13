@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'streat-small-loading-spinner',
+    selector: 'streart-small-loading-spinner',
     templateUrl: './small-loading-spinner.component.html',
     styleUrls: ['./small-loading-spinner.component.css']
 })

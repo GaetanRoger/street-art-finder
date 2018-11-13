@@ -8,7 +8,7 @@ import {PieceService} from '../../../core/services/piece/piece.service';
 import {Paginator} from '../../../core/services/algolia/paginator';
 
 @Component({
-    selector: 'streat-artist',
+    selector: 'streart-artist',
     templateUrl: './artist.component.html',
     styleUrls: ['./artist.component.css']
 })

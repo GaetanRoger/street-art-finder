@@ -1,22 +1,22 @@
 <div *ngIf="artist$ | async as artist">
-    <streat-toolbar
+    <streart-toolbar
             [title]="artist.name"
             [showSearchButton]="true"
             [showBackButton]="true"
             [image]="artist.images.horizontal.low"
             (searchChange)="search($event)"
-    ></streat-toolbar>
+    ></streart-toolbar>
 
-    <streat-flat-card-with-image
+    <streart-flat-card-with-image
             [title]="artist.name"
             [text]="artist.text"
             [image]="artist.images.vertical.low"
             secondaryButtonText="Visit website"
             [secondaryButtonExternalLink]="artist.website"
-    ></streat-flat-card-with-image>
+    ></streart-flat-card-with-image>
 
     <div *ngIf="pieces$ | async as pieces">
-        <streat-piece *ngFor="let piece of pieces" [piece]="piece"></streat-piece>
+        <streart-piece *ngFor="let piece of pieces" [piece]="piece"></streart-piece>
         <div *ngIf="!(loading$ | async)">
             <div *ngIf="pieces.length === 0 && !filter$.getValue()">
                 No pieces were yet uploaded.
@@ -27,18 +27,18 @@
         </div>
     </div>
 
-    <streat-load-more-button
+    <streart-load-more-button
             [noMoreToLoad]="noMoreToLoad$ | async"
             [disabled]="(loading$ | async) || (pieces$ | async)?.length === 0"
             (loadMore)="loadMore()"
-    ></streat-load-more-button>
+    ></streart-load-more-button>
 
 </div>
 <div *ngIf="!(artist$ | async)">
-    <streat-toolbar
+    <streart-toolbar
             title="Chargement"
             [showBackButton]="true"
-    ></streat-toolbar>
-    <streat-loading-spinner text="Chargement de l'artiste...">
-    </streat-loading-spinner>
+    ></streart-toolbar>
+    <streart-loading-spinner text="Chargement de l'artiste...">
+    </streart-loading-spinner>
 </div>

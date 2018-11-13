@@ -3,7 +3,7 @@ import {Notification} from '../../../../../../shared/types/notification';
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
-    selector: 'streat-notification',
+    selector: 'streart-notification',
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.css'],
     animations: [

@@ -9,9 +9,11 @@ import {MapElementInput} from '../map/map-element-input';
 import {MapHelperService} from '../../../core/services/map-helper/map-helper.service';
 import {User} from '../../types/user';
 import {Geopoint} from '../../types/geopoint';
+import {CircleBuilder} from '../../../core/services/map-helper/builders/circle-builder';
+import {MarkerBuilder} from '../../../core/services/map-helper/builders/marker-builder';
 
 @Component({
-    selector: 'streat-piece-dialog',
+    selector: 'streart-piece-dialog',
     templateUrl: './piece-dialog.component.html',
     styleUrls: ['./piece-dialog.component.css']
 })
@@ -107,13 +109,13 @@ export class PieceDialogComponent implements OnInit {
     }
 
     private _createCircleFromPiece(piece: Piece, radius: number): Circle {
-        return MapHelperService.circleBuilder(piece.location)
+        return new CircleBuilder(piece.location)
             .setRadius(radius)
             .build();
     }
 
     private _createMarkerFromPiece(piece: Piece): Marker {
-        return MapHelperService.markerBuilder(piece.location).build();
+        return new MarkerBuilder(piece.location).build();
     }
 
     private _shouldShowMarker() {

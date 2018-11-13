@@ -15,7 +15,7 @@ import {mockAdminUser, mockStandardUser} from './test-mocks/mock-users';
 import {User} from '../../types/user';
 
 @Component({
-    selector: 'streat-map',
+    selector: 'streart-map',
     template: ''
 })
 class MapComponent {

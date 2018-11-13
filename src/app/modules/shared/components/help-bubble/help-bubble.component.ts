@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'streat-help-bubble',
+    selector: 'streart-help-bubble',
     templateUrl: './help-bubble.component.html',
     styleUrls: ['./help-bubble.component.css']
 })

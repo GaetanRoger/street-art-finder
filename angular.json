@@ -7,7 +7,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "streat",
+      "prefix": "streart",
       "schematics": {},
       "architect": {
         "build": {

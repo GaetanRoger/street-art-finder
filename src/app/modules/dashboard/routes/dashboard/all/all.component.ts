@@ -9,9 +9,11 @@ import {Circle, Marker} from 'leaflet';
 import {User} from '../../../../shared/types/user';
 import {MapHelperService} from '../../../../core/services/map-helper/map-helper.service';
 import {MapElementInput} from '../../../../shared/components/map/map-element-input';
+import {CircleBuilder} from '../../../../core/services/map-helper/builders/circle-builder';
+import {MarkerBuilder} from '../../../../core/services/map-helper/builders/marker-builder';
 
 @Component({
-    selector: 'streat-all',
+    selector: 'streart-all',
     templateUrl: './all.component.html',
     styleUrls: ['./all.component.css']
 })
@@ -37,7 +39,7 @@ export class AllComponent implements OnInit {
     }
 
     private _createMarkerFromPiece(p: Piece): Marker {
-        return MapHelperService.markerBuilder(p.location)
+        return new MarkerBuilder(p.location)
             .setOptions({title: p.name, alt: `${p.name} marker`})
             .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
             .build();
@@ -64,8 +66,7 @@ export class AllComponent implements OnInit {
     }
 
     private _createCircleFromPiece(p: Piece, radius: number): Circle {
-        return MapHelperService
-            .circleBuilder(p.location)
+        return new CircleBuilder(p.location)
             .setRadius(radius)
             .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
             .build();

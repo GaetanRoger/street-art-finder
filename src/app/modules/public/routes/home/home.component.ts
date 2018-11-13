@@ -4,7 +4,7 @@ import {UserService} from '../../../core/services/users/user/user.service';
 import {map} from 'rxjs/operators';
 
 @Component({
-    selector: 'streat-home',
+    selector: 'streart-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.scss']
 })

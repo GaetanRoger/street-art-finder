@@ -4,7 +4,7 @@ import {BrowserInfo} from '../../../../../core/services/browser-detector/browser
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({
-    selector: 'streat-activate-gps-location-dialog',
+    selector: 'streart-activate-gps-location-dialog',
     templateUrl: './activate-gps-location-dialog.component.html',
     styleUrls: ['./activate-gps-location-dialog.component.css']
 })

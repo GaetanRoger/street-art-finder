@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>{{piece.name}}</h1>
 <mat-dialog-content>
     <div class="map" *ngIf="pieceMapInput$ | async">
-        <streat-map
+        <streart-map
                 [elements]="pieceMapInput$ | async"
                 [layerToShow]="(showMarker$ | async) ? 'marker' : 'circle'"
                 [zoom]="16"
-        ></streat-map>
+        ></streart-map>
     </div>
     <p class="added-on">
         Added on {{piece.addedOn | timestamp}}

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
-    selector: 'streat-image',
+    selector: 'streart-image',
     templateUrl: './image.component.html',
     styleUrls: ['./image.component.css']
 })

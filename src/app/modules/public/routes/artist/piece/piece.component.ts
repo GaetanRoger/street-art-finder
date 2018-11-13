@@ -4,7 +4,7 @@ import {PieceDialogComponent} from '../../../../shared/components/piece-dialog/p
 import {MatDialog} from '@angular/material';
 
 @Component({
-    selector: 'streat-piece',
+    selector: 'streart-piece',
     templateUrl: './piece.component.html',
     styleUrls: ['./piece.component.css']
 })

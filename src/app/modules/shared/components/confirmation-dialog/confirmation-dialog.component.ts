@@ -5,7 +5,7 @@ import {BehaviorSubject, interval, Observable, of} from 'rxjs';
 import {delay, map, startWith, take} from 'rxjs/operators';
 
 @Component({
-    selector: 'streat-confirmation-dialog',
+    selector: 'streart-confirmation-dialog',
     templateUrl: './confirmation-dialog.component.html',
     styleUrls: ['./confirmation-dialog.component.css']
 })

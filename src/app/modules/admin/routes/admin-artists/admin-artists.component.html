@@ -1,11 +1,11 @@
-<streat-admin-toolbar
+<streart-admin-toolbar
         title="Artists"
         [showSearchButton]="true"
         (searchChange)="filter$.next($event)"
 
-></streat-admin-toolbar>
+></streart-admin-toolbar>
 
-<streat-selectable-list
+<streart-selectable-list
         [elements$]="artists$"
         [working$]="working$"
         [mainText]="primaryText"
@@ -19,5 +19,5 @@
 
 
         (selectionChanged)="selectedArtists = $event"
-></streat-selectable-list>
+></streart-selectable-list>
 

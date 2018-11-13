@@ -4,7 +4,7 @@ import {UserArtistProgression} from '../../../../shared/types/user-artist-progre
 import {UserArtistProgressionService} from '../../../../core/services/users/user-artist-progression.service';
 
 @Component({
-    selector: 'streat-artists-progressions',
+    selector: 'streart-artists-progressions',
     templateUrl: './artists-progressions.component.html',
     styleUrls: ['./artists-progressions.component.css']
 })

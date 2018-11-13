@@ -6,7 +6,7 @@ import {Artist} from '../../../shared/types/artist';
 import {ArtistService} from '../../../core/services/artist/artist.service';
 
 @Component({
-    selector: 'streat-admin-artists',
+    selector: 'streart-admin-artists',
     templateUrl: './admin-artists.component.html',
     styleUrls: ['./admin-artists.component.css']
 })

@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {Aggregates} from '../../../shared/types/aggregates';
 
 @Component({
-    selector: 'streat-admin-dashboard',
+    selector: 'streart-admin-dashboard',
     templateUrl: './admin-dashboard.component.html',
     styleUrls: ['./admin-dashboard.component.css']
 })

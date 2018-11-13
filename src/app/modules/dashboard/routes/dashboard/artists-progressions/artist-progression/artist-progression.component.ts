@@ -6,7 +6,7 @@ import {ConfirmationDialogComponent} from '../../../../../shared/components/conf
 import {filter} from 'rxjs/operators';
 
 @Component({
-    selector: 'streat-artist-progression',
+    selector: 'streart-artist-progression',
     templateUrl: './artist-progression.component.html',
     styleUrls: ['./artist-progression.component.css']
 })

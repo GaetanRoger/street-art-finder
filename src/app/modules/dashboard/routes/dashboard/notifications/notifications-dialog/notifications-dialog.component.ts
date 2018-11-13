@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Notification} from '../../../../../shared/types/notification';
 
 @Component({
-    selector: 'streat-notifications-dialog',
+    selector: 'streart-notifications-dialog',
     templateUrl: './notifications-dialog.component.html',
     styleUrls: ['./notifications-dialog.component.css']
 })

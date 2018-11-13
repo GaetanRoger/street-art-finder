@@ -7,7 +7,7 @@ import {filter, map} from 'rxjs/operators';
 import {ConfirmationDialogData} from '../../../shared/components/confirmation-dialog/confirmation-dialog-data';
 
 @Component({
-    selector: 'streat-selectable-list',
+    selector: 'streart-selectable-list',
     templateUrl: './selectable-list.component.html',
     styleUrls: ['./selectable-list.component.css']
 })

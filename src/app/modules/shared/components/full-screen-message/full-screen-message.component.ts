@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
-    selector: 'streat-full-screen-message',
+    selector: 'streart-full-screen-message',
     templateUrl: './full-screen-message.component.html',
     styleUrls: ['./full-screen-message.component.css']
 })

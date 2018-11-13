@@ -2,9 +2,10 @@ import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Ou
 import {Geopoint} from '../../../../../shared/types/geopoint';
 import {LatLng, Map, Marker, TileLayer} from 'leaflet';
 import {MapHelperService} from '../../../../../core/services/map-helper/map-helper.service';
+import {CoordsConverter} from '../../../../../core/services/map-helper/coords-converter';
 
 @Component({
-    selector: 'streat-admin-add-piece-location-improve',
+    selector: 'streart-admin-add-piece-location-improve',
     templateUrl: './admin-add-piece-location-improve.component.html',
     styleUrls: ['./admin-add-piece-location-improve.component.css']
 })
@@ -30,7 +31,7 @@ export class AdminAddPieceLocationImproveComponent implements OnInit, OnChanges 
             return;
         }
 
-        const latLng = MapHelperService.geopointToLatLng(this.location);
+        const latLng = CoordsConverter.geopointToLatLng(this.location);
         const m = new Marker(latLng, {draggable: true});
         m.on('dragend', (e) => {
             const source = e.target as Marker;
@@ -55,7 +56,7 @@ export class AdminAddPieceLocationImproveComponent implements OnInit, OnChanges 
     }
 
     emitNewLoc(latLng: LatLng): void {
-        const newLoc = MapHelperService.latLngToGeopoint(latLng);
+        const newLoc = CoordsConverter.latLngToGeopoint(latLng);
         this.newLocation.emit(newLoc);
     }
 

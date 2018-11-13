@@ -3,7 +3,7 @@ import {OnlineService} from '../../../core/services/online/online.service';
 import {Observable} from 'rxjs';
 
 @Component({
-    selector: 'streat-if-online',
+    selector: 'streart-if-online',
     templateUrl: './if-online.component.html',
     styleUrls: ['./if-online.component.css']
 })
