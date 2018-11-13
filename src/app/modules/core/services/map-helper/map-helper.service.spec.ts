@@ -14,7 +14,7 @@ describe('MapHelperService', () => {
     it('should build a marker', () => {
         const service: MapHelperService = TestBed.get(MapHelperService);
         const onAddEvent = () => 1 + 1;
-        const mark = service.markerBuilder({latitude: 12, longitude: 13})
+        const mark = MapHelperService.markerBuilder({latitude: 12, longitude: 13})
             .setPopupContent('Popup content')
             .setEvents({onAdd: onAddEvent})
             .setOptions({title: 'title'})

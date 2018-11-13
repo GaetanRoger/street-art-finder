@@ -10,8 +10,7 @@ export class BaseBuilder {
     protected offset: Point = new Point(0, -40);
 
     constructor(
-        location: Geopoint,
-        protected readonly mapHelper: MapHelperService
+        location: Geopoint
     ) {
         this.location = location;
     }

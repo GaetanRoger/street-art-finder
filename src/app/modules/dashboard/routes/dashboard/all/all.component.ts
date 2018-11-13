@@ -37,7 +37,7 @@ export class AllComponent implements OnInit {
     }
 
     private _createMarkerFromPiece(p: Piece): Marker {
-        return this.mapHelper.markerBuilder(p.location)
+        return MapHelperService.markerBuilder(p.location)
             .setOptions({title: p.name, alt: `${p.name} marker`})
             .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
             .build();
@@ -64,7 +64,7 @@ export class AllComponent implements OnInit {
     }
 
     private _createCircleFromPiece(p: Piece, radius: number): Circle {
-        return this.mapHelper
+        return MapHelperService
             .circleBuilder(p.location)
             .setRadius(radius)
             .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)

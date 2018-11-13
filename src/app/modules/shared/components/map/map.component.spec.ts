@@ -17,9 +17,9 @@ describe('MapComponent', () => {
         return layers;
     };
 
-    const _getFeatureGroup = (): FeatureGroup => {
+    const _getFeatureGroup = (): FeatureGroup<any> => {
         const layers = _getLayers(component.map);
-        return layers.find(l => l instanceof FeatureGroup);
+        return layers.find(l => l instanceof FeatureGroup) as FeatureGroup<any>;
     };
 
     beforeEach(async(() => {

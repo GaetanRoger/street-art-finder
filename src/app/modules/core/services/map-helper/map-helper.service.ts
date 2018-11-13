@@ -46,6 +46,24 @@ export class MapHelperService {
     }
 
     /**
+     * Provides a new instance of `MarkerBuilder`.
+     * @param location
+     * @deprecated Use `new MarkerBuilder(loc)` instead.
+     */
+    static markerBuilder(location: Geopoint): MarkerBuilder {
+        return new MarkerBuilder(location);
+    }
+
+    /**
+     * Provided a new instance of `CircleBuilder`.
+     * @param location
+     * @deprecated Use `new CircleBuilder(loc)` instead.
+     */
+    static circleBuilder(location: Geopoint): CircleBuilder {
+        return new CircleBuilder(location);
+    }
+
+    /**
      * Returns a marker at user's geolocation,
      * or null if geolocation is unavailable.
      */
@@ -55,7 +73,7 @@ export class MapHelperService {
                 if (!g) {
                     return null;
                 }
-                return this.markerBuilder(g).setPopupContent(`<strong>You are here</strong>`).build();
+                return MapHelperService.markerBuilder(g).setPopupContent(`<strong>You are here</strong>`).build();
             })
         );
     }
@@ -68,15 +86,6 @@ export class MapHelperService {
             .user()
             .pipe(map(u => u.settings.locationApproximation === 0));
     }
-
-    markerBuilder(location: Geopoint): MarkerBuilder {
-        return new MarkerBuilder(location, this);
-    }
-
-    circleBuilder(location: Geopoint): CircleBuilder {
-        return new CircleBuilder(location, this);
-    }
-
 
 
     randomizeCircleLocation(location: Geopoint, seed: number | string, radius: number): Geopoint {

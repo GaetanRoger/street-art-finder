@@ -4,7 +4,7 @@ import {Piece} from '../../types/piece';
 import {UserService} from '../../../core/services/users/user/user.service';
 import {Circle, Marker} from 'leaflet';
 import {Observable, of} from 'rxjs';
-import {flatMap, map} from 'rxjs/operators';
+import {flatMap, map, tap} from 'rxjs/operators';
 import {MapElementInput} from '../map/map-element-input';
 import {MapHelperService} from '../../../core/services/map-helper/map-helper.service';
 import {User} from '../../types/user';
@@ -36,10 +36,11 @@ export class PieceDialogComponent implements OnInit {
      */
 
     readonly baseMapsUrl = 'https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=';
+    readonly RADIUS_IF_NO_USER = 50;
 
     showMarker$: Observable<boolean>;
     pieceMapInput$: Observable<MapElementInput[]>;
-    itinaryUrl$: Observable<string>;
+    itineraryUrl$: Observable<string>;
     piece: Piece;
     alwaysUseMarker: boolean;
     showAdminButton$: Observable<boolean>;
@@ -67,19 +68,20 @@ export class PieceDialogComponent implements OnInit {
                 @Inject(MAT_DIALOG_DATA) public readonly data: { piece: Piece; alwaysUseMarker: boolean },
                 private readonly userService: UserService,
                 private readonly mapHelper: MapHelperService) {
-        this.piece = this.data.piece;
-        this.alwaysUseMarker = this.data.alwaysUseMarker || false;
     }
 
     ngOnInit() {
-        if (!this.piece) {
+        if (!this.data.piece) {
             console.warn('A piece is needed.');
             return;
         }
 
+        this.piece = this.data.piece;
+        this.alwaysUseMarker = this.data.alwaysUseMarker || false;
+
         this.showMarker$ = this._shouldShowMarker();
         this.pieceMapInput$ = this._getPieceMapInput();
-        this.itinaryUrl$ = this._getItineraryUrl();
+        this.itineraryUrl$ = this._getItineraryUrl();
         this.showAdminButton$ = this._isUserAdmin();
     }
 
@@ -105,13 +107,13 @@ export class PieceDialogComponent implements OnInit {
     }
 
     private _createCircleFromPiece(piece: Piece, radius: number): Circle {
-        return this.mapHelper.circleBuilder(piece.location)
+        return MapHelperService.circleBuilder(piece.location)
             .setRadius(radius)
             .build();
     }
 
     private _createMarkerFromPiece(piece: Piece): Marker {
-        return this.mapHelper.markerBuilder(piece.location).build();
+        return MapHelperService.markerBuilder(piece.location).build();
     }
 
     private _shouldShowMarker() {
@@ -129,7 +131,7 @@ export class PieceDialogComponent implements OnInit {
     private _getCircleRadius() {
         return this.userService.user()
             .pipe(
-                map(u => u ? u.settings.locationApproximation : 50)
+                map(u => u ? u.settings.locationApproximation : this.RADIUS_IF_NO_USER)
             );
     }
 

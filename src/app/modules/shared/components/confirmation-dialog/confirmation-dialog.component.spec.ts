@@ -13,7 +13,7 @@ const testDialogDataComplete: ConfirmationDialogData = {
     ...testDialogDataSimple,
     mainButtonColor: 'warn',
     submitActivationDelay: 3000
-};
+} as ConfirmationDialogData;
 
 describe('ConfirmationDialogComponent', () => {
     let component: ConfirmationDialogComponent;
