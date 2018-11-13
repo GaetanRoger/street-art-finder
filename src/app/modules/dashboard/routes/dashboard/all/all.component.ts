@@ -32,7 +32,7 @@ export class AllComponent implements OnInit {
 
     ngOnInit() {
         this.user$ = this.userService.user();
-        this.showMarkers$ = this.mapHelper.showMarkers();
+        this.showMarkers$ = this.mapHelper.shouldShowMarkers();
         this.pieces$ = this._getPieces();
     }
 

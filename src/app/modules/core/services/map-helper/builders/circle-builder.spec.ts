@@ -7,7 +7,7 @@ const testLoc: Geopoint = {
 };
 
 
-fdescribe('Circle builder test', () => {
+describe('Circle builder test', () => {
     it('should build a simple circle with leaflet\'s default radius value if none provided', () => {
         const circle = new CircleBuilder(testLoc).build();
 

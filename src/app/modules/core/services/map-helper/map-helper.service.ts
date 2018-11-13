@@ -30,6 +30,10 @@ export class MapHelperService {
         return new LatLng(point.latitude, point.longitude);
     }
 
+    /**
+     * Transforms a LatLng object to a Geopoint.
+     * @param point LatLng to transform.
+     */
     static latLngToGeopoint(point: LatLng): Geopoint {
         return {
             latitude: point.lat,
@@ -39,7 +43,6 @@ export class MapHelperService {
 
     /**
      * Creates a tile layer with tiles from open street map.
-     * @param zoom
      */
     static tileLayer(): TileLayer {
         return tileLayer(MapHelperService.MAP_TILES_URL);
@@ -64,16 +67,14 @@ export class MapHelperService {
     }
 
     /**
-     * Returns a marker at user's geolocation,
-     * or null if geolocation is unavailable.
+     * Returns a marker at user's geolocation, or null if geolocation is unavailable.
      */
     userMarker(): Observable<Marker | null> {
         return this.userGeolocation.currentGeolocation().pipe(
             map(g => {
-                if (!g) {
-                    return null;
-                }
-                return MapHelperService.markerBuilder(g).setPopupContent(`<strong>You are here</strong>`).build();
+                return g
+                    ? new MarkerBuilder(g).setPopupContent(`<strong>You are here</strong>`).build()
+                    : null;
             })
         );
     }
@@ -81,12 +82,11 @@ export class MapHelperService {
     /**
      * Does the user wants to see markers at precise locations?
      */
-    showMarkers(): Observable<boolean> {
+    shouldShowMarkers(): Observable<boolean> {
         return this.userService
             .user()
             .pipe(map(u => u.settings.locationApproximation === 0));
     }
-
 
     randomizeCircleLocation(location: Geopoint, seed: number | string, radius: number): Geopoint {
         const randomNumber = this.random.generate(seed, true);
@@ -95,6 +95,5 @@ export class MapHelperService {
             latitude: this.coordinatesCalculus.addMetersToLatitude(location, randomNumber * delta),
             longitude: this.coordinatesCalculus.addMetersToLongitude(location, randomNumber * delta)
         };
-
     }
 }
