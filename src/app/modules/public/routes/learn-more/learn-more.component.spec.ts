@@ -26,7 +26,7 @@ class MockFlatCardWithComponent {
     @Input() titleClass: any;
 }
 
-fdescribe('LearnMoreComponent', () => {
+describe('LearnMoreComponent', () => {
     let component: LearnMoreComponent;
     let fixture: ComponentFixture<LearnMoreComponent>;
 
