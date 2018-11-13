@@ -1,6 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {SmallHorizontalLoaderComponent} from './small-horizontal-loader.component';
+import {ComponentsLibraryModule} from '../../../components-library/components-library.module';
 
 describe('SmallHorizontalLoaderComponent', () => {
     let component: SmallHorizontalLoaderComponent;
@@ -8,7 +9,8 @@ describe('SmallHorizontalLoaderComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [SmallHorizontalLoaderComponent]
+            declarations: [SmallHorizontalLoaderComponent],
+            imports: [ComponentsLibraryModule]
         })
             .compileComponents();
     }));

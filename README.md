@@ -34,5 +34,6 @@
 - [ ] Make the app core functionalities work offline (dashboard progression)
 - [ ] Make a nicer "Javascript is required" screen
 - [ ] Allow more precise piece geolocation placement using a map and a movable marker
+- [ ] Better not found page
 
 

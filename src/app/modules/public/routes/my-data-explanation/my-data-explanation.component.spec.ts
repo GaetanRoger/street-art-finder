@@ -1,25 +1,50 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MyDataExplanationComponent } from './my-data-explanation.component';
+import {MyDataExplanationComponent} from './my-data-explanation.component';
+import {Component, Input} from '@angular/core';
+
+@Component({
+    selector: 'streat-toolbar',
+    template: ''
+})
+class MockToolbarComponent {
+    @Input() title: any;
+    @Input() showBackButton: any;
+}
+
+@Component({
+    selector: 'streat-flat-card-with-image',
+    template: ''
+})
+class MockFlatCardWithComponent {
+    @Input() title: any;
+    @Input() text: any;
+    @Input() titleClass: any;
+}
 
 describe('MyDataExplanationComponent', () => {
-  let component: MyDataExplanationComponent;
-  let fixture: ComponentFixture<MyDataExplanationComponent>;
+    let component: MyDataExplanationComponent;
+    let fixture: ComponentFixture<MyDataExplanationComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MyDataExplanationComponent ]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [
+                MyDataExplanationComponent,
+                MockToolbarComponent,
+                MockFlatCardWithComponent
+            ]
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MyDataExplanationComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        })
+            .compileComponents();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(MyDataExplanationComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });
