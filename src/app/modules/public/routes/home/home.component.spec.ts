@@ -46,7 +46,7 @@ class MockHomeArtistListComponent {
     @Input() query: any;
 }
 
-fdescribe('HomeComponent', () => {
+describe('HomeComponent', () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
     let element: HTMLElement;
