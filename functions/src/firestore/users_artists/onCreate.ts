@@ -4,6 +4,7 @@ import * as admin from 'firebase-admin';
 import {Collections} from '../collections.enum';
 import {Helpers} from '../../helpers';
 import {algolia} from '../../initAlgolia';
+import {getFirestore} from '../../getFirestore';
 
 export function firestoreUsersArtistsOnCreate(snap: DocumentSnapshot, context: EventContext) {
     const userArtist = snap.data();
@@ -11,7 +12,8 @@ export function firestoreUsersArtistsOnCreate(snap: DocumentSnapshot, context: E
 
     return Promise.all([
         createUsersPiecesFromArtist(userArtist.artist.objectID, userArtist.user),
-        addAlgoliaObject(userArtist, id)
+        addAlgoliaObject(userArtist, id),
+        incrementArtistFollowersCount(userArtist.artist.objectID)
     ]);
 }
 
@@ -33,6 +35,14 @@ async function createUsersPiecesFromArtist(artistId: string, userId: string) {
         const userPiece = Helpers.pieceToUserPiece(pieceData, userId, false, pieceId);
         return firestore.collection(Collections.users_pieces).add(userPiece);
     });
+}
+
+function incrementArtistFollowersCount(artistId: string) {
+    const artistRef = getFirestore()
+        .collection(Collections.artists)
+        .doc(artistId);
+
+    return Helpers.increment(artistRef, 'followers', 1);
 }
 
 function addAlgoliaObject(userArtist, id: string) {

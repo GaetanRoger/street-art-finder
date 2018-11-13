@@ -17,7 +17,9 @@ export class AdminArtistsComponent implements OnInit {
     selectedArtists: Artist[] = [];
 
     readonly primaryText = a => a.name;
-    readonly secondaryText = a => `${a.published ? 'PUBLISHED' : 'NOT PUBLISHED'} | ${a.piecesCount} pieces`;
+    readonly secondaryText = a => {
+        return `${a.published ? '' : 'NOT PUBLISHED |'} ${a.followers} followers | ${a.piecesCount} pieces`;
+    };
 
     constructor(private readonly artistService: ArtistService,
                 private readonly snackbar: MatSnackBar) {

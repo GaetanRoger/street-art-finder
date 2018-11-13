@@ -3,6 +3,8 @@ import {EventContext} from 'firebase-functions';
 import {Collections} from '../collections.enum';
 import * as admin from 'firebase-admin';
 import {algolia} from '../../initAlgolia';
+import {getFirestore} from '../../getFirestore';
+import {Helpers} from '../../helpers';
 
 export function firestoreUsersArtistsOnDelete(snap: DocumentSnapshot, context: EventContext) {
     const userArtist = snap.data();
@@ -10,7 +12,8 @@ export function firestoreUsersArtistsOnDelete(snap: DocumentSnapshot, context: E
 
     return Promise.all([
         deleteUsersPiecesFromArtist(userArtist.user),
-        deleteAlgoliaObject(id)
+        deleteAlgoliaObject(id),
+        decrementArtistFollowersCount(userArtist.artist.objectID)
     ]);
 }
 
@@ -25,6 +28,14 @@ async function deleteUsersPiecesFromArtist(user: string) {
     await usersPieces.forEach(userPiece => batch.delete(userPiece.ref));
 
     return await batch.commit();
+}
+
+function decrementArtistFollowersCount(artistId: string) {
+    const artistRef = getFirestore()
+        .collection(Collections.artists)
+        .doc(artistId);
+
+    return Helpers.increment(artistRef, 'followers', -1);
 }
 
 function deleteAlgoliaObject(id: string) {
