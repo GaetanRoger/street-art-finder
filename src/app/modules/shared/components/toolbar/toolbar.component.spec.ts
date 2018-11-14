@@ -24,7 +24,7 @@ const mockMenuItems: ToolbarMenuItem[] = [
     }
 ];
 
-fdescribe('ToolbarComponent', () => {
+describe('ToolbarComponent', () => {
     let component: ToolbarComponent;
     let fixture: ComponentFixture<ToolbarComponent>;
     let element: HTMLElement;
