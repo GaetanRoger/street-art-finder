@@ -18,7 +18,7 @@ import {User} from '../../types/user';
     selector: 'streart-map',
     template: ''
 })
-class MapComponent {
+class MockMapComponent {
     @Input() elements: any;
     @Input() layerToShow: any;
     @Input() zoom: any;
@@ -42,7 +42,7 @@ describe('PieceDialogComponent', () => {
         TestBed.configureTestingModule({
             declarations: [
                 PieceDialogComponent,
-                MapComponent,
+                MockMapComponent,
                 TimestampPipe
             ],
             imports: [

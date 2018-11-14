@@ -23,7 +23,7 @@ class MockLoadMoreButtonComponent {
     @Output() loadMore: EventEmitter<any> = new EventEmitter();
 }
 
-fdescribe('HomeArtistsListComponent', () => {
+describe('HomeArtistsListComponent', () => {
     let component: HomeArtistsListComponent;
     let fixture: ComponentFixture<HomeArtistsListComponent>;
 

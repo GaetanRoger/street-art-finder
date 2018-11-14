@@ -14,6 +14,7 @@
 - [ ] Allow admins to add artists
 - [ ] Allow admins to remove artists
 - [ ] Allow admins to mark artists as published/unpublished
+- [ ] [Technical] Better CI/DC --> Travis, tests & deployment automation...
 - [x] User transactions and batches in functions to avoid data lose
 - [x] Allow users to delete all their data
 

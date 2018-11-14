@@ -15,6 +15,7 @@ const testArtist: Artist = {
     piecesCount: 4,
     published: true,
     pieces: [],
+    followers: 1,
     cities: ['Lyon', 'Strasbourg'],
     images: {
         horizontal: {

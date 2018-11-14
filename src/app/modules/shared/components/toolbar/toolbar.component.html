@@ -3,15 +3,17 @@
         <button mat-icon-button *ngIf="showBackButton" (click)="goBack()" class="back-arrow">
             <mat-icon>arrow_back</mat-icon>
         </button>
-        <span>{{title}}</span>
+        <span class="title">{{title}}</span>
         <span class="toolbar-spacer"></span>
-        <button mat-icon-button *ngIf="showSearchButton && !filter" (click)="toggleSearch()">
+        <button mat-icon-button *ngIf="showSearchButton && !filter" (click)="toggleSearch()" class="search-button">
             <mat-icon>search</mat-icon>
         </button>
         <button mat-icon-button *ngIf="showSearchButton && !!filter" (click)="emitSearchChange('')">
             <mat-icon>clear</mat-icon>
         </button>
-        <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="menuItems && menuItems.length > 0">
+        <button mat-icon-button [matMenuTriggerFor]="menu"
+                *ngIf="menuItems && menuItems.length > 0"
+                class="menu-button">
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">

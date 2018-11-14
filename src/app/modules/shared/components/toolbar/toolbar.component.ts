@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 import {Location} from '@angular/common';
 import {ToolbarMenuItem} from './toolbar-menu-item';
+import {MatMenu, MatMenuTrigger} from '@angular/material';
 
 @Component({
     selector: 'streart-toolbar',
@@ -54,6 +55,8 @@ export class ToolbarComponent implements OnChanges {
      */
     showSearchBar: boolean;
 
+    @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
+
     constructor(private readonly sanitizer: DomSanitizer,
                 private readonly location: Location) {
     }
@@ -75,7 +78,7 @@ export class ToolbarComponent implements OnChanges {
      */
     private generateBackground(): string {
         const linearGradient = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))';
-
+        console.log('generateBackground');
         return this.image
             ? `background-image: ${linearGradient}, url("${this.image}");`
             : `background-color: ${this.DEFAULT_BACKGROUND_COLOR};`;
