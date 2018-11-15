@@ -55,7 +55,7 @@ describe('Address From Geopoint Service', () => {
 
         expect(address.country).toEqual(FRANCE);
         expect(address.state).toEqual(AUVERGNE_RHONE_ALPES);
-        expect(address.city).toBeUndefined();
+        expect(address.city).toBe('Panissières');
         expect(address.cityDistrict).toBeUndefined();
         expect(address.postcode).toEqual('42360');
         expect(address.displayName).toEqual('Panissières, Montbrison, Loire, Auvergne-Rhône-Alpes, France métropolitaine, 42360, France');

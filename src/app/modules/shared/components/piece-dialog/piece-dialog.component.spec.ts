@@ -10,7 +10,7 @@ import {UserService} from '../../../core/services/users/user/user.service';
 import {of} from 'rxjs';
 import {MapHelperService} from '../../../core/services/map-helper/map-helper.service';
 import {DatePipe} from '@angular/common';
-import {mockPiece} from './test-mocks/mock-piece';
+import {mockPiece} from '../../../../../mocks/data/mock-piece';
 import {mockAdminUser, mockStandardUser} from './test-mocks/mock-users';
 import {User} from '../../types/user';
 

@@ -54,7 +54,7 @@ describe('PieceComponent', () => {
 
     beforeEach(async(() => {
         const mockMatDialog: SpyObj<MatDialog> = jasmine.createSpyObj(MatDialog.name, ['open']);
-        mockMatDialog.open.and.returnValue({} as MatDialogRef);
+        mockMatDialog.open.and.returnValue({} as MatDialogRef<any, any>);
 
         TestBed.configureTestingModule({
             declarations: [PieceComponent, MockImageComponent],

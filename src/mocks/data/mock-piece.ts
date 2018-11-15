@@ -1,8 +1,8 @@
-import {Image} from '../../../types/image';
-import {ArtistPreview} from '../../../types/artist';
-import {Geopoint} from '../../../types/geopoint';
-import {PieceTags} from '../../../types/piece-tags';
-import {Piece} from '../../../types/piece';
+import {Image} from '../../app/modules/shared/types/image';
+import {ArtistPreview} from '../../app/modules/shared/types/artist';
+import {Geopoint} from '../../app/modules/shared/types/geopoint';
+import {PieceTags} from '../../app/modules/shared/types/piece-tags';
+import {Piece} from '../../app/modules/shared/types/piece';
 
 const image: Image = {
     low: 'https://via.placeholder.com/500x300',

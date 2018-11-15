@@ -4,26 +4,8 @@ import {ArtistPreviewComponent} from './artist-preview.component';
 import {ComponentsLibraryModule} from '../../../components-library/components-library.module';
 import {CoreModule} from '../../../core/core.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Artist} from '../../types/artist';
 import {Location} from '@angular/common';
-
-const testArtist: Artist = {
-    objectID: '123456',
-    name: 'Test Artist',
-    text: 'A test artist.',
-    website: 'http://example.com',
-    piecesCount: 4,
-    published: true,
-    pieces: [],
-    followers: 1,
-    cities: ['Lyon', 'Strasbourg'],
-    images: {
-        horizontal: {
-            low: 'https://via.placeholder.com/500x300',
-            normal: 'https://via.placeholder.com/5000x3000'
-        }
-    }
-};
+import {mockArtist} from '../../../../../mocks/data/mock-artist';
 
 const testActions: { text: string, id: number, disabled?: boolean }[] = [
     {
@@ -69,7 +51,7 @@ describe('ArtistPreviewComponent', () => {
         component = fixture.componentInstance;
         element = fixture.nativeElement;
 
-        component.artist = testArtist;
+        component.artist = mockArtist;
         fixture.detectChanges();
     });
 
@@ -81,8 +63,8 @@ describe('ArtistPreviewComponent', () => {
         const h4Text = element.querySelector('h4').textContent;
         const pText = element.querySelector('p').textContent;
 
-        expect(h4Text).toEqual(testArtist.name);
-        expect(pText).toEqual(testArtist.text);
+        expect(h4Text).toEqual(mockArtist.name);
+        expect(pText).toEqual(mockArtist.text);
     });
 
     it('should contain a button if an action is provided', () => {
@@ -137,7 +119,7 @@ describe('ArtistPreviewComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should navigate to artist page on click if goToArtistPageOnClick is true', fakeAsync (() => {
+    it('should navigate to artist page on click if goToArtistPageOnClick is true', fakeAsync(() => {
         component.goToArtistPageOnClick = true;
         fixture.detectChanges();
 
@@ -146,7 +128,7 @@ describe('ArtistPreviewComponent', () => {
 
         tick();
 
-        expect(location.path()).toEqual(`/artist/${testArtist.objectID}`);
+        expect(location.path()).toEqual(`/artist/${mockArtist.objectID}`);
     }));
 
 });
