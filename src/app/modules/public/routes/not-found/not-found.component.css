@@ -1,0 +1,13 @@
+.not-found {
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    font-size: 160%;
+    text-shadow: 0 0 5px rgba(33, 33, 33, 0.35);
+}
+
+.go-home {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
