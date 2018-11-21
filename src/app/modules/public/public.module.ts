@@ -10,6 +10,7 @@ import {SharedModule} from '../shared/shared.module';
 import {HomeArtistsListComponent} from './routes/home/home-artists-list/home-artists-list.component';
 import {MyDataExplanationComponent} from './routes/my-data-explanation/my-data-explanation.component';
 import {icon, Icon, Marker} from 'leaflet';
+import {ComponentsLibraryModule} from '../components-library/components-library.module';
 
 const routes: Route[] = [
     {
@@ -39,6 +40,7 @@ const routes: Route[] = [
         CommonModule,
         RouterModule.forChild(routes),
         SharedModule,
+        ComponentsLibraryModule
     ],
     declarations: [
         HomeComponent,

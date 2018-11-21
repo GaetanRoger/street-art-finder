@@ -10,6 +10,7 @@ import {SettingsComponent} from './routes/settings/settings.component';
 import {ActivateGpsLocationDialogComponent} from './routes/settings/components/activate-gps-location-dialog/activate-gps-location-dialog.component';
 import {AuthGuard} from '../core/guards/auth/auth.guard';
 import {SharedModule} from '../shared/shared.module';
+import {ComponentsLibraryModule} from '../components-library/components-library.module';
 
 const routes: Route[] = [
     {
@@ -37,7 +38,8 @@ const routes: Route[] = [
         CommonModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
-        SharedModule
+        SharedModule,
+        ComponentsLibraryModule
     ],
     declarations: [
         JoinComponent,

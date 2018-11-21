@@ -17,6 +17,7 @@ import {SelectableListComponent} from './components/selectable-list/selectable-l
 import {SharedModule} from '../shared/shared.module';
 import { AdminAddPieceLocationImproveComponent } from './routes/admin-add-piece/admin-add-piece-general-info/admin-add-piece-location-improve/admin-add-piece-location-improve.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
+import {ComponentsLibraryModule} from '../components-library/components-library.module';
 
 const routes: Route[] = [
     {
@@ -53,7 +54,8 @@ const routes: Route[] = [
         RouterModule.forChild(routes),
         SharedModule,
         AngularCropperjsModule,
-        LeafletModule
+        LeafletModule,
+        ComponentsLibraryModule
     ],
     declarations: [
         AdminDashboardComponent,

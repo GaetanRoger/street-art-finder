@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod && sh ./get_total_bundles_size.sh",
+    "size": "sh ./get_total_bundles_size.sh",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "cypress open"

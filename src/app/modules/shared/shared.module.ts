@@ -26,8 +26,8 @@ import {MyDataLinkComponent} from './components/my-data-link/my-data-link.compon
         CommonModule,
         FormsModule,
         ComponentsLibraryModule,
-        LeafletModule,
         RouterModule,
+        LeafletModule
     ],
     declarations: [
         FlatCardWithImageComponent,
@@ -48,7 +48,6 @@ import {MyDataLinkComponent} from './components/my-data-link/my-data-link.compon
         MyDataLinkComponent,
     ],
     exports: [
-        ComponentsLibraryModule,
         FlatCardWithImageComponent,
         ArtistPreviewComponent,
         ToolbarComponent,
