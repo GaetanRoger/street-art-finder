@@ -19,7 +19,7 @@ import {FormsModule} from '@angular/forms';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {RouterModule} from '@angular/router';
 import {IfOnlineComponent} from './components/if-online/if-online.component';
-import { MyDataLinkComponent } from './components/my-data-link/my-data-link.component';
+import {MyDataLinkComponent} from './components/my-data-link/my-data-link.component';
 
 @NgModule({
     imports: [

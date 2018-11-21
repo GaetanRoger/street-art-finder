@@ -34,6 +34,8 @@
               },
               "./node_modules/cropperjs/dist/cropper.min.css",
               "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/material-icons/iconfont/material-icons.css",
+              "src/assets/css/roboto.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -91,6 +93,8 @@
               },
               "./node_modules/cropperjs/dist/cropper.min.css",
               "./node_modules/leaflet/dist/leaflet.css",
+              "./node_modules/material-icons/iconfont/material-icons.css",
+              "src/assets/css/roboto.css",
               "src/styles.scss"
             ],
             "scripts": [

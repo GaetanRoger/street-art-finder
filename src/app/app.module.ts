@@ -7,15 +7,11 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {environment} from '../environments/environment';
 import {AuthGuard} from './modules/core/guards/auth/auth.guard';
 import {CoreModule} from './modules/core/core.module';
-import {LeafletModule} from '@asymmetrik/ngx-leaflet';
-import {Icon, icon, Marker} from 'leaflet';
 import {OnlyAdminGuard} from './modules/core/guards/only-admin/only-admin.guard';
 import {AngularFireModule} from '@angular/fire';
 import {ServiceWorkerModule} from '@angular/service-worker';
-import {HttpClientModule} from '@angular/common/http';
-import {SharedModule} from './modules/shared/shared.module';
 import {ExtraModuleInjectorService} from './modules/core/extra-module-injector.service';
-import {MatSnackBar, MatSnackBarRef, SimpleSnackBar} from '@angular/material';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material';
 import {OnlineService} from './modules/core/services/online/online.service';
 import {FunctionsRegionToken} from '@angular/fire/functions';
 
@@ -47,34 +43,25 @@ const routes: Route[] = [
     ],
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routes),
-        HttpClientModule,
         BrowserAnimationsModule,
+        RouterModule.forRoot(routes),
         AngularFireModule.initializeApp(environment.firebase),
         CoreModule,
-        SharedModule,
-        LeafletModule.forRoot(),
+        MatSnackBarModule,
+        // LeafletModule.forRoot(),
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
     providers: [
-        { provide: FunctionsRegionToken, useValue: 'us-central1' }
+        {provide: FunctionsRegionToken, useValue: 'us-central1'}
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    // Override default Icons
-    private _defaultIcon: Icon = icon({
-        iconUrl: 'assets/leaflet/marker-icon.png',
-        shadowUrl: 'assets/leaflet/marker-shadow.png',
-        iconAnchor: [12, 40]
-    });
-
     private _wasOnline = false;
 
     constructor(private readonly extraInjector: ExtraModuleInjectorService,
                 private readonly snackbar: MatSnackBar,
                 private readonly online: OnlineService) {
-        Marker.prototype.options.icon = this._defaultIcon;
         this._setUpOnlineStatusPopups();
         // firebase.firestore.setLogLevel('debug');
     }
@@ -83,7 +70,6 @@ export class AppModule {
         this.online
             .onlineChanges
             .subscribe(v => {
-                let openedSB: MatSnackBarRef<SimpleSnackBar>;
                 if (v && this._wasOnline) {
                     this.snackbar.open(
                         '☀️ You are back online!',

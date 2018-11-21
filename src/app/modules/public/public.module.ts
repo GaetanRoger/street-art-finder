@@ -9,6 +9,7 @@ import {LearnMoreComponent} from './routes/learn-more/learn-more.component';
 import {SharedModule} from '../shared/shared.module';
 import {HomeArtistsListComponent} from './routes/home/home-artists-list/home-artists-list.component';
 import {MyDataExplanationComponent} from './routes/my-data-explanation/my-data-explanation.component';
+import {icon, Icon, Marker} from 'leaflet';
 
 const routes: Route[] = [
     {
@@ -50,4 +51,14 @@ const routes: Route[] = [
     ]
 })
 export class PublicModule {
+    // Override default Icons
+    private _defaultIcon: Icon = icon({
+        iconUrl: 'assets/leaflet/marker-icon.png',
+        shadowUrl: 'assets/leaflet/marker-shadow.png',
+        iconAnchor: [12, 40]
+    });
+
+    constructor() {
+        Marker.prototype.options.icon = this._defaultIcon;
+    }
 }
