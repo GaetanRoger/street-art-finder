@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod && sh ./get_total_bundles_size.sh",
-    "size": "sh ./get_total_bundles_size.sh",
+    "build": "ng build --prod && sh ./resources/scripts/get_total_bundles_size.sh",
+    "size": "sh ./resources/scripts/get_total_bundles_size.sh",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "cypress open"
@@ -40,6 +40,7 @@
     "hammerjs": "^2.0.8",
     "leaflet": "^1.3.4",
     "leaflet-clonelayer": "^1.0.7",
+    "leaflet-easybutton": "^2.3.0",
     "material-icons": "^0.2.3",
     "ng2-img-max": "^2.1.18",
     "rxjs": "^6.3.3",

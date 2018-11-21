@@ -3,5 +3,7 @@
             [elements]="pieces$ | async"
             [layerToShow]="(showMarkers$ | async) ? 'marker' : 'circle'"
             [refresh]="selected$"
+            [showCurrentPositionButton]="true"
+            [showUserMarker]="true"
     ></streart-map>
 </div>
