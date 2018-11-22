@@ -4,6 +4,30 @@
   width: 100%;
   border-radius: 5px;
   margin-top: 5px;
+  outline: none;
+}
+
+.artist-card:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px 1px rgba(100, 100, 100, 0.75);
+  outline: none;
+}
+
+.artist-card:active {
+  box-shadow: 0 5px 8px 2px rgba(100, 100, 100, 0.75);
+  outline: none;
+}
+
+@media screen and (min-width: $bigScreenSize){
+  .artist-card {
+    width: 400px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .name-actions {
+    height: 82px;
+  }
 }
 
 .name-actions {
@@ -11,13 +35,14 @@
   padding: 5px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: self-start;
 }
 
 .name-actions-left {
-/*  display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;*/
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .artist-card h4 {
@@ -34,6 +59,8 @@
   }
   .big-artist-text {
     opacity: 0.9;
+    max-height: 40px;
+    overflow: hidden;
   }
 }
 

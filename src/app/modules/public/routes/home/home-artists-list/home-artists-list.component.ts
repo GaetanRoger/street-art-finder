@@ -9,7 +9,7 @@ import {filter} from 'rxjs/operators';
 @Component({
     selector: 'streart-home-artists-list',
     templateUrl: './home-artists-list.component.html',
-    styleUrls: ['./home-artists-list.component.css']
+    styleUrls: ['./home-artists-list.component.scss']
 })
 export class HomeArtistsListComponent implements OnInit, OnChanges, OnDestroy {
     @Input() query = '';

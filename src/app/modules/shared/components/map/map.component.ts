@@ -69,7 +69,7 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
 
   @Input() showCurrentPositionButton = true;
 
-  @Input() buttons: LeafletButton[];
+  @Input() buttons: LeafletButton[] = [];
 
 
   /*

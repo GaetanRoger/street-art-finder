@@ -2,7 +2,7 @@
     <!--<img [src]="piece.images.main.low" class="image">-->
     <streart-image [src]="piece.images.main.low" class="image"></streart-image>
     <div class="name-blur"></div>
-    <div class="name">
+    <div class="name" [ngStyle]="{background: color + 'CC'}">
         <p>{{ piece.name}}</p>
         <span *ngIf="piece.distance" class="distance">{{piece.distance / 1000 | number:'.1-1'}} km from here</span>
     </div>

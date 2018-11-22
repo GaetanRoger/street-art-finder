@@ -35,7 +35,7 @@ export class ArtistService implements Findable<Artist>, Listable<Artist>, Deleta
 
     paginator(): Paginator<Artist> {
         return new Paginator<Artist>(this.collection, this.algolia)
-            .setHitsPerPage(5);
+            .setHitsPerPage(8);
     }
 
     search(query: string = '', params?: { city?: string; limit?: number; published?: boolean }): Observable<Artist[]> {

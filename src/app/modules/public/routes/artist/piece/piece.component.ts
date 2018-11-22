@@ -10,6 +10,7 @@ import {MatDialog} from '@angular/material';
 })
 export class PieceComponent implements OnInit {
     @Input() piece: Piece;
+    @Input() color: string;
 
     constructor(private readonly dialog: MatDialog) {
     }

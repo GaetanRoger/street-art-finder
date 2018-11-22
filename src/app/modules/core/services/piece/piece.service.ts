@@ -42,7 +42,7 @@ export class PieceService implements Findable<Piece>, Writable<Piece> {
         const filters = new FiltersBuilder(this._ARTIST_OBJECT_ID, artistId, !!artistId).build();
 
         return new Paginator<Piece>(this.collection, this.algolia, this.geolocation)
-            .setHitsPerPage(5)
+            .setHitsPerPage(10)
             .setFilters(filters);
     }
 

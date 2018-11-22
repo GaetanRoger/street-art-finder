@@ -3,7 +3,7 @@
             [title]="artist.name"
             [showSearchButton]="true"
             [showBackButton]="true"
-            [image]="artist.images.horizontal.low"
+            [image]="artist.images.horizontal"
             (searchChange)="search($event)"
     ></streart-toolbar>
 
@@ -15,8 +15,8 @@
             [secondaryButtonExternalLink]="artist.website"
     ></streart-flat-card-with-image>
 
-    <div *ngIf="pieces$ | async as pieces">
-        <streart-piece *ngFor="let piece of pieces" [piece]="piece"></streart-piece>
+    <div *ngIf="pieces$ | async as pieces" class="pieces">
+        <streart-piece *ngFor="let piece of pieces" [piece]="piece" [color]="artist.color"></streart-piece>
         <div *ngIf="!(loading$ | async)">
             <div *ngIf="pieces.length === 0 && !filter$.getValue()">
                 No pieces were yet uploaded.

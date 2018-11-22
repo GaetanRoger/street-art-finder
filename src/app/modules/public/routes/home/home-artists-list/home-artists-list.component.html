@@ -1,5 +1,7 @@
-<streart-artist-preview *ngFor="let artist of (artists$ | async) || []" [artist]="artist">
-</streart-artist-preview>
+<div class="previews">
+  <streart-artist-preview *ngFor="let artist of (artists$ | async) || []" [artist]="artist">
+  </streart-artist-preview>
+</div>
 <div class="footerActions">
     <streart-load-more-button
             [noMoreToLoad]="noMoreToLoad$ | async"

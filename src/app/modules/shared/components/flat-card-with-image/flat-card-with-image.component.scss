@@ -9,17 +9,10 @@ $border-radius: 10px;
   display: flex;
 }
 
-@media screen and (min-width: $bigScreenSize){
-  .join-now-card {
-    margin-left: 10%;
-    margin-right: 10%;
-    box-shadow: 0 0 5px rgba(100, 100, 100, 0.5);
-  }
-}
-
 .join-now-card .left-image {
   flex: 3;
   background-size: cover;
+  background-position: center;
   border-top-left-radius: $border-radius;
   border-bottom-left-radius: $border-radius;
 
@@ -30,6 +23,18 @@ $border-radius: 10px;
   padding: 5px;
   margin-left: 10px;
   font-size: 14px;
+}
+
+@media screen and (min-width: $bigScreenSize){
+  .join-now-card .right-text {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+
+  .join-now-card .right-text .buttons {
+    margin-left: 50px;
+  }
 }
 
 .join-now-card .right-text h4 {

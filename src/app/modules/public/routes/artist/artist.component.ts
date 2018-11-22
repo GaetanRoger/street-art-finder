@@ -10,7 +10,7 @@ import {Paginator} from '../../../core/services/algolia/paginator';
 @Component({
     selector: 'streart-artist',
     templateUrl: './artist.component.html',
-    styleUrls: ['./artist.component.css']
+    styleUrls: ['./artist.component.scss']
 })
 export class ArtistComponent implements OnInit {
     artist$: Observable<Artist>;
