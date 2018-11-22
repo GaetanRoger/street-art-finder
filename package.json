@@ -4,8 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod && sh ./resources/scripts/get_total_bundles_size.sh",
-    "size": "sh ./resources/scripts/get_total_bundles_size.sh",
+    "build": "ng build --prod && sh ./resources/scripts/log_bundles_size.sh",
+    "build:no-log": "ng build --prod && sh ./resources/scripts/log_bundles_size.sh --output",
+    "size": "sh ./resources/scripts/log_bundles_size.sh --output",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "cypress open"

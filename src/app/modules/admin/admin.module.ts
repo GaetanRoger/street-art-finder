@@ -15,62 +15,70 @@ import {AdminPiecesComponent} from './routes/admin-pieces/admin-pieces.component
 import {AdminArtistsComponent} from './routes/admin-artists/admin-artists.component';
 import {SelectableListComponent} from './components/selectable-list/selectable-list.component';
 import {SharedModule} from '../shared/shared.module';
-import { AdminAddPieceLocationImproveComponent } from './routes/admin-add-piece/admin-add-piece-general-info/admin-add-piece-location-improve/admin-add-piece-location-improve.component';
+import {AdminAddPieceLocationImproveComponent} from './routes/admin-add-piece/admin-add-piece-general-info/admin-add-piece-location-improve/admin-add-piece-location-improve.component';
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
+import {AggregatesService} from './services/aggregates/aggregates.service';
+import {ImageResizerService} from '../core/services/image-resizer/image-resizer.service';
+import {IdGeneratorService} from './services/id-generator/id-generator.service';
 
 const routes: Route[] = [
-    {
-        path: 'users',
-        component: AdminUsersComponent,
-    },
-    {
-        path: 'artists',
-        component: AdminArtistsComponent
-    },
-    {
-        path: 'pieces',
-        component: AdminPiecesComponent
-    },
-    {
-        path: 'add-piece',
-        component: AdminAddPieceComponent
-    },
-    {
-        path: 'add-piece/:pieceId',
-        component: AdminAddPieceComponent
-    },
-    {
-        path: '',
-        component: AdminDashboardComponent
-    }
+  {
+    path: 'users',
+    component: AdminUsersComponent,
+  },
+  {
+    path: 'artists',
+    component: AdminArtistsComponent
+  },
+  {
+    path: 'pieces',
+    component: AdminPiecesComponent
+  },
+  {
+    path: 'add-piece',
+    component: AdminAddPieceComponent
+  },
+  {
+    path: 'add-piece/:pieceId',
+    component: AdminAddPieceComponent
+  },
+  {
+    path: '',
+    component: AdminDashboardComponent
+  }
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        RouterModule.forChild(routes),
-        SharedModule,
-        AngularCropperjsModule,
-        LeafletModule,
-        ComponentsLibraryModule
-    ],
-    declarations: [
-        AdminDashboardComponent,
-        AdminUsersComponent,
-        AdminToolbarComponent,
-        AdminAddPieceComponent,
-        AdminAddPieceGeneralInfoComponent,
-        AdminAddPieceImagesComponent,
-        AdminAddPieceFinishComponent,
-        AdminPiecesComponent,
-        AdminArtistsComponent,
-        SelectableListComponent,
-        AdminAddPieceLocationImproveComponent,
-    ],
-    providers: [TimestampPipe]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    AngularCropperjsModule,
+    LeafletModule,
+    ComponentsLibraryModule,
+  ],
+  declarations: [
+    AdminDashboardComponent,
+    AdminUsersComponent,
+    AdminToolbarComponent,
+    AdminAddPieceComponent,
+    AdminAddPieceGeneralInfoComponent,
+    AdminAddPieceImagesComponent,
+    AdminAddPieceFinishComponent,
+    AdminPiecesComponent,
+    AdminArtistsComponent,
+    SelectableListComponent,
+    AdminAddPieceLocationImproveComponent,
+  ],
+  providers: [
+    TimestampPipe,
+    AggregatesService,
+    ImageResizerService,
+    IdGeneratorService
+  ]
 })
 export class AdminModule {
 }

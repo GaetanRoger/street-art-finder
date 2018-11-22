@@ -19,7 +19,6 @@
     </mat-expansion-panel>
 
     <streart-artist-preview
-
             *ngFor="let artist of artists$ | async"
             [artist]="artist"
             [actions]="[{text: artist.known ? 'ADDED' : 'ADD', id: 1, disabled: artist.known}]"

@@ -3,7 +3,7 @@ import {FormGroup} from '@angular/forms';
 import {Artist} from '../../../../shared/types/artist';
 import {Piece} from '../../../../shared/types/piece';
 import {AngularFireStorage} from '@angular/fire/storage';
-import {IdGeneratorService} from '../../../../core/services/random/id-generator/id-generator.service';
+import {IdGeneratorService} from '../../../services/id-generator/id-generator.service';
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {PieceCreationState} from './piece-creation-state.enum';

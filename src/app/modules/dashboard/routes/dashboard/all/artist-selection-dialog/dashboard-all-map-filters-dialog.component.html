@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Filters</h2>
+
+<mat-dialog-content>
+  <mat-select [(value)]="selectedArtistId" placeholder="No filter">
+    <mat-option [value]="null">No filter</mat-option>
+    <mat-optgroup label="Artists">
+      <mat-option *ngFor="let artist of artists" [value]="artist.objectID">
+        {{artist.name}}
+      </mat-option>
+    </mat-optgroup>
+  </mat-select>
+
+  <mat-checkbox [(ngModel)]="onlyNotFound">Only not found pieces</mat-checkbox>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button color="accent" (click)="sendResponse()">OK</button>
+  <button mat-raised-button mat-dialog-close>CANCEL</button>
+</mat-dialog-actions>

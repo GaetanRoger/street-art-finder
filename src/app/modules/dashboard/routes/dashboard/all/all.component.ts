@@ -1,9 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {UserArtistProgressionService} from '../../../../core/services/users/user-artist-progression.service';
 import {UserService} from '../../../../core/services/users/user/user.service';
-import {flatMap, map} from 'rxjs/operators';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {Piece} from '../../../../shared/types/piece';
+import {filter, flatMap, map, take} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable, of} from 'rxjs';
 import {PieceService} from '../../../../core/services/piece/piece.service';
 import {Circle, Marker} from 'leaflet';
 import {User} from '../../../../shared/types/user';
@@ -11,64 +10,121 @@ import {MapHelperService} from '../../../../core/services/map-helper/map-helper.
 import {MapElementInput} from '../../../../shared/components/map/map-element-input';
 import {CircleBuilder} from '../../../../core/services/map-helper/builders/circle-builder';
 import {MarkerBuilder} from '../../../../core/services/map-helper/builders/marker-builder';
+import {UserPieceProgressionService} from '../../../../core/services/users/user_piece_progression/user-piece-progression.service';
+import {UserPieceProgression} from '../../../../shared/types/user-piece-progression';
+import {LeafletButton} from '../../../../shared/components/map/leaflet-button';
+import {MatDialog} from '@angular/material';
+import {DashboardAllMapFiltersDialogComponent} from './artist-selection-dialog/dashboard-all-map-filters-dialog.component';
+import {ArtistPreview} from '../../../../shared/types/artist';
+import {DashboardAllMapFiltersDialogResponse} from './artist-selection-dialog/dashboard-all-map-filters-dialog-response';
 
 @Component({
-    selector: 'streart-all',
-    templateUrl: './all.component.html',
-    styleUrls: ['./all.component.css']
+  selector: 'streart-all',
+  templateUrl: './all.component.html',
+  styleUrls: ['./all.component.css']
 })
 export class AllComponent implements OnInit {
-    @Input() selected$: BehaviorSubject<boolean>;
+  @Input() selected$: BehaviorSubject<boolean>;
 
-    private user$: Observable<User>;
+  pieces$: Observable<MapElementInput[]>;
+  showMarkers$: Observable<boolean>;
+  selectedArtist$: BehaviorSubject<string> = new BehaviorSubject(null);
+  onlyNotFound$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  selectArtistButton: LeafletButton;
 
-    pieces$: Observable<MapElementInput[]>;
+  private _user$: Observable<User>;
 
-    showMarkers$: Observable<boolean>;
+  constructor(private readonly progression: UserArtistProgressionService,
+              private readonly userService: UserService,
+              private readonly userPieceProgression: UserPieceProgressionService,
+              private readonly pieceService: PieceService,
+              private readonly mapHelper: MapHelperService,
+              private readonly dialog: MatDialog,
+              private readonly detector: ChangeDetectorRef) {
+  }
 
-    constructor(private readonly progression: UserArtistProgressionService,
-                private readonly userService: UserService,
-                private readonly pieceService: PieceService,
-                private readonly mapHelper: MapHelperService) {
+  ngOnInit() {
+    this._user$ = this.userService.user();
+    this.showMarkers$ = this.mapHelper.shouldShowMarkers();
+    this.pieces$ = this._getPieces();
+    this.selectArtistButton = this._createArtistSelectionButton();
+  }
+
+  private _getPieces(): Observable<MapElementInput[]> {
+    return this.userPieceProgression.findAll(this._user$.pipe(map(u => u.objectID)))
+      .pipe(
+        flatMap(pieces => combineLatest(of(pieces), this._user$, this.selectedArtist$, this.onlyNotFound$)),
+        map(this._filterSelectedArtist),
+        map(([ps, u]) => ps.map(p => ({
+          id: p.piece.objectID,
+          circle: this._createCircleFromPieceProgression(p, u.settings.locationApproximation),
+          marker: this._createMarkerFromPieceProgression(p)
+        })))
+      );
+  }
+
+  private _createMarkerFromPieceProgression(p: UserPieceProgression): Marker {
+    return new MarkerBuilder(p.piece.location)
+      .setOptions({title: p.piece.name, alt: `${p.piece.name} marker`})
+      .setPopupContent(`<strong>${p.piece.name}</strong>, by ${p.artist.name}`)
+      .build();
+  }
+
+  private _createCircleFromPieceProgression(p: UserPieceProgression, radius: number): Circle {
+    return new CircleBuilder(p.piece.location)
+      .setRadius(radius)
+      .setPopupContent(`<strong>${p.piece.name}</strong>, by ${p.artist.name}`)
+      .build();
+  }
+
+  private _filterSelectedArtist(
+    [pieces, user, selectedArtistId, onlyNotFound]: [UserPieceProgression[], User, string, boolean]
+  ): [UserPieceProgression[], User] {
+    if (!selectedArtistId) {
+      return [pieces, user];
     }
 
-    ngOnInit() {
-        this.user$ = this.userService.user();
-        this.showMarkers$ = this.mapHelper.shouldShowMarkers();
-        this.pieces$ = this._getPieces();
-    }
+    return [
+      pieces.filter(p => p.artist.objectID === selectedArtistId)
+        .filter(p => !onlyNotFound || !p.found),
+      user
+    ];
+  }
 
-    private _createMarkerFromPiece(p: Piece): Marker {
-        return new MarkerBuilder(p.location)
-            .setOptions({title: p.name, alt: `${p.name} marker`})
-            .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
-            .build();
-    }
+  private _createArtistSelectionButton(): LeafletButton {
+    return {
+      icon: '<div style="font-size: 150%;display: flex;justify-content: center;align-items: center;">&rtriltri;</div>',
+      title: 'Filter artist',
+      onClick: this._selectArtist.bind(this)
+    };
 
-    private _getPieces(): Observable<MapElementInput[]> {
-        return this.progression.findAll(this.user$)
-            .pipe(
-                map(uas => uas.map(ua => ua.artist.objectID)),
-                map(ids => this._getPiecesByArtistsIds(ids)),
-                flatMap(pieces$ => combineLatest(pieces$, this.user$)),
-                map(([ps, u]) => ps.map(p => ({
-                    id: p.objectID,
-                    circle: this._createCircleFromPiece(p, u.settings.locationApproximation),
-                    marker: this._createMarkerFromPiece(p)
-                })))
-            );
-    }
+  }
 
-    private _getPiecesByArtistsIds(artistsIds: string[]): Observable<Piece[]> {
-        const piecesByArtist$ = artistsIds.map(id => this.pieceService.search(id));
-        return combineLatest(piecesByArtist$)
-            .pipe(flatMap(p => p));
-    }
+  private _selectArtist(): void {
+    this.detector.detectChanges();
 
-    private _createCircleFromPiece(p: Piece, radius: number): Circle {
-        return new CircleBuilder(p.location)
-            .setRadius(radius)
-            .setPopupContent(`<strong>${p.name}</strong>, by ${p.artist.name}`)
-            .build();
-    }
+    this.progression.findAll(this._user$)
+      .pipe(
+        take(1),
+        map(p => p.map(pp => pp.artist))
+      )
+      .subscribe(a => this._selectArtistOpenDialog(a));
+  }
+
+  private _selectArtistOpenDialog(artists: ArtistPreview[]) {
+    const dialogRef = this.dialog.open(DashboardAllMapFiltersDialogComponent, {
+      data: {
+        artists,
+        onlyNotFound: this.onlyNotFound$.value,
+        selectedArtistId: this.selectedArtist$.value
+      }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(filter(v => v !== undefined))
+      .subscribe((v: DashboardAllMapFiltersDialogResponse) => {
+        this.selectedArtist$.next(v.selectedArtist);
+        this.onlyNotFound$.next(v.onlyNotFound);
+      });
+  }
 }

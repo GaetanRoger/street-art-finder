@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {Geopoint} from '../../../shared/types/geopoint';
 import {UserService} from '../users/user/user.service';
 import {MarkerBuilder} from './builders/marker-builder';
-import {SeededRandomGeneratorService} from '../random/seeded-random-generator/seeded-random-generator.service';
+import {SeededRandomGeneratorService} from '../seeded-random-generator/seeded-random-generator.service';
 import {CoordinatesCalculusService} from '../location/coordinates-calculus/coordinates-calculus.service';
 
 @Injectable({

@@ -1,15 +1,25 @@
 <div class="artist-card" [routerLink]="goToArtistPageOnClick ? ['/artist', artist.objectID] : null">
-    <div class="image" [style]="image">
+  <div class="image" [style]="image">
+  </div>
+  <div class="name-actions" [ngStyle]="{background: artist.color}">
+    <div class="name-actions-left">
+      <h4>{{artist.name}}</h4>
+      <span *ngIf="responsive.isBigScreen() | async" class="big-artist-text">{{artist.text}}</span>
     </div>
-    <div class="name-actions">
-        <h4>{{artist.name}}</h4>
-        <div class="actions">
-            <button *ngFor="let action of actions"
-                    mat-raised-button
-                    (click)="$event.stopPropagation(); actionClick.emit(action.id)"
-                    [disabled]="action.disabled === true"
-            >{{action.text}}</button>
-        </div>
+    <div class="actions">
+      <button *ngFor="let action of actions"
+              mat-raised-button
+              (click)="$event.stopPropagation(); actionClick.emit(action.id)"
+              [disabled]="action.disabled === true"
+      >{{action.text}}</button>
     </div>
+  </div>
+  <div *ngIf="!(responsive.isBigScreen() | async)"
+       style="display: flex; justify-content: space-between; align-items: flex-start">
     <p>{{artist.text}}</p>
+    <streart-start-counter *ngIf="artist.followers && artist.followers > 0"
+                           [value]="artist.followers"
+                           title="People following this artist"
+    ></streart-start-counter>
+  </div>
 </div>

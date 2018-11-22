@@ -9,61 +9,77 @@ import {FirestoreFinderService} from '../../firestore/firestore-finder/firestore
 import {FirestoreCruderService} from '../../firestore/firestore-cruder/firestore-cruder.service';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UserPieceProgressionService {
-    private readonly COLLECTION = 'users_pieces';
-    private readonly DEFAULT_OPTIONS: PiecesProgressionOptions = {
-        notFoundFirst: true,
-        onlyFound: false,
-        onlyNotFound: false
-    };
+  private readonly COLLECTION = 'users_pieces';
+  private readonly DEFAULT_OPTIONS: PiecesProgressionOptions = {
+    notFoundFirst: true,
+    onlyFound: false,
+    onlyNotFound: false
+  };
 
-    constructor(private readonly firestore: AngularFirestore,
-                private readonly userService: UserService,
-                private readonly finder: FirestoreFinderService,
-                private readonly cruder: FirestoreCruderService<UserPieceProgression>) {
-    }
+  constructor(private readonly firestore: AngularFirestore,
+              private readonly userService: UserService,
+              private readonly finder: FirestoreFinderService,
+              private readonly cruder: FirestoreCruderService<UserPieceProgression>) {
+  }
 
-    piecesProgression(artistId: string, options: PiecesProgressionOptions): Observable<UserPieceProgression[]> {
-        const opt = options || this.DEFAULT_OPTIONS;
+  findAll(userId: string | Observable<string>): Observable<UserPieceProgression[]> {
+    const userId$: Observable<string> = typeof userId === 'string'
+      ? of(userId)
+      : userId;
 
-        return this.userService.user().pipe(
-            flatMap(u => u ? this.artistsProgressionFromUserId(artistId, u.objectID, opt) : of([])),
-        );
-    }
+    return userId$
+      .pipe(flatMap(u => this._getFirestoreCollectionFromUserId(null, u)));
+  }
 
-    artistsProgressionFromUserId(
-        artistId: string,
-        userId: string,
-        options: PiecesProgressionOptions = {}
-    ): Observable<UserPieceProgression[]> {
-        const opt = options || this.DEFAULT_OPTIONS;
+  piecesProgression(artistId: string, options: PiecesProgressionOptions): Observable<UserPieceProgression[]> {
+    const opt = options || this.DEFAULT_OPTIONS;
 
-        return this._getFirestoreCollectionFromUserId(artistId, userId, opt);
-    }
+    return this.userService.user().pipe(
+      flatMap(u => u ? this.artistsProgressionFromUserId(artistId, u.objectID, opt) : of([])),
+    );
+  }
 
-    toggleFound(progressionId: string, value: boolean): Observable<string> {
-        return this.cruder.update(this.COLLECTION, progressionId, {found: value});
-    }
+  artistsProgressionFromUserId(
+    artistId: string,
+    userId: string,
+    options: PiecesProgressionOptions = {}
+  ): Observable<UserPieceProgression[]> {
+    const opt = options || this.DEFAULT_OPTIONS;
 
-    toggleMultipleFounds(progessionIds: string[], value: boolean) {
-        const batch = this.firestore.firestore.batch();
+    return this._getFirestoreCollectionFromUserId(artistId, userId, opt);
+  }
 
-        progessionIds
-            .map(pId => this.firestore.doc(`${this.COLLECTION}/${pId}`).ref)
-            .forEach(ref => batch.update(ref, {found: value}));
+  toggleFound(progressionId: string, value: boolean): Observable<string> {
+    return this.cruder.update(this.COLLECTION, progressionId, {found: value});
+  }
 
-        return batch.commit();
-    }
+  toggleMultipleFounds(progessionIds: string[], value: boolean) {
+    const batch = this.firestore.firestore.batch();
 
-    private _getFirestoreCollectionFromUserId(artistId: string, userId: string, options: PiecesProgressionOptions = {}) {
-        return this.finder.findFrom<UserPieceProgression>(this.COLLECTION)
-            .where('user', '==', userId)
-            .where('artist.objectID', '==', artistId)
-            .if(options.onlyFound).where('found', '==', true)
-            .if(options.onlyNotFound).where('found', '==', false)
-            .if(options.notFoundFirst).orderBy('found', 'asc')
-            .run();
-    }
+    progessionIds
+      .map(pId => this.firestore.doc(`${this.COLLECTION}/${pId}`).ref)
+      .forEach(ref => batch.update(ref, {found: value}));
+
+    return batch.commit();
+  }
+
+  /**
+   * @fixme Better artistId optional parameter
+   * @param artistId
+   * @param userId
+   * @param options
+   * @private
+   */
+  private _getFirestoreCollectionFromUserId(artistId: string, userId: string, options: PiecesProgressionOptions = {}) {
+    return this.finder.findFrom<UserPieceProgression>(this.COLLECTION)
+      .where('user', '==', userId)
+      .if(!!artistId).where('artist.objectID', '==', artistId)
+      .if(options.onlyFound).where('found', '==', true)
+      .if(options.onlyNotFound).where('found', '==', false)
+      .if(options.notFoundFirst).orderBy('found', 'asc')
+      .run();
+  }
 }

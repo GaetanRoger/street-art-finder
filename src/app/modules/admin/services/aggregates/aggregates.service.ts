@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Aggregates} from '../../../shared/types/aggregates';
-import {FirestoreFinderService} from '../firestore/firestore-finder/firestore-finder.service';
+import {FirestoreFinderService} from '../../../core/services/firestore/firestore-finder/firestore-finder.service';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class AggregatesService {
     private readonly COLLECTION = 'aggregates';
     private readonly MAIN_DOC = 'main';

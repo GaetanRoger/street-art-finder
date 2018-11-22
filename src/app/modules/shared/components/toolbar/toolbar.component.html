@@ -1,4 +1,4 @@
-<mat-toolbar class="mat-elevation-z2 toolbar" [style]="backgroundImage">
+<mat-toolbar class="mat-elevation-z2 toolbar" [style]="backgroundImage$ | async">
     <mat-toolbar-row *ngIf="!showSearchBar">
         <button mat-icon-button *ngIf="showBackButton" (click)="goBack()" class="back-arrow">
             <mat-icon>arrow_back</mat-icon>

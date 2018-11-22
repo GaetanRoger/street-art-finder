@@ -1,0 +1,7 @@
+<span [matTooltip]="title"
+      (click)="$event.stopPropagation(); $event.preventDefault(); tooltip.show();"
+      matTooltipPosition="left"
+      #tooltip="matTooltip"
+>{{value}}
+  <mat-icon>star</mat-icon>
+</span>

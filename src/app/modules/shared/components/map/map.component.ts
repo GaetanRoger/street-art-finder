@@ -9,8 +9,11 @@ import {filter} from 'rxjs/operators';
 import {CoordsConverter} from '../../../core/services/map-helper/coords-converter';
 import {UserGeolocationService} from '../../../core/services/location/geolocation/user-geolocation.service';
 import 'leaflet-easybutton';
+import {Geopoint} from '../../types/geopoint';
+import {LeafletButton} from './leaflet-button';
 
 const cloneLayer = require('leaflet-clonelayer');
+
 
 @Component({
   selector: 'streart-map',
@@ -66,6 +69,8 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
 
   @Input() showCurrentPositionButton = true;
 
+  @Input() buttons: LeafletButton[];
+
 
   /*
    *   ___      _    _ _
@@ -100,6 +105,8 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
    */
   private _leafletMap: Map;
   private _currentPositionButton: any;
+  private _currentPosition$: Observable<Geopoint>;
+  private _leafletButtons: any[];
 
 
   /* ***************************************** *
@@ -159,7 +166,9 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
   ngOnInit(): void {
     this.tileLayer = MapHelperService.tileLayer();
     this.userLayer$ = this.mapHelper.userMarker();
+    this._currentPosition$ = this.userLocation.currentGeolocation();
     this._currentPositionButton = this._createCurrentPositionButton();
+    this._leafletButtons = this._createButtons();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -187,6 +196,7 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
 
     this._updateFitBounds();
     this._showOrHideCurrentPositionButton();
+    this._leafletButtons.forEach(b => b.addTo(map));
   }
 
   /*
@@ -205,8 +215,8 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
           title: 'Zoom on your location',
           icon: '<div style="font-size: 150%;display: flex;justify-content: center;align-items: center;">⌾</div>',
           onClick: (btn, map) => {
-            this.userLocation
-              .currentGeolocation()
+            this._currentPosition$
+              .pipe(filter(l => !!l))
               .subscribe(l => map.panTo(
                 CoordsConverter.geopointToLatLng(l),
                 {animate: true, duration: 1}
@@ -246,10 +256,14 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
    * Update fitBounds on map.
    * This method assumes _leafletMap and _markersLayer are not undefined.
    * @private
+   * @fixme smooth fit bounds not working
    */
   private _updateFitBounds() {
     if (this._leafletMap && this._markersLayer.getLayers().length > 1) {
-      this._leafletMap.fitBounds(this._markersLayer.getBounds());
+      this._leafletMap.fitBounds(
+        this._markersLayer.getBounds(),
+        {animate: true, duration: 5, easeLinearity: 1}
+        );
     } else if (this._markersLayer.getLayers().length === 1) {
       this._leafletMap.setView(this._markersLayer.getBounds().getCenter(), this.zoom);
     }
@@ -265,10 +279,27 @@ export class MapComponent<T extends ObjectIDable> implements OnInit, OnChanges {
   private _showOrHideCurrentPositionButton() {
     if (this._leafletMap) {
       if (this.showCurrentPositionButton) {
-        this._currentPositionButton.addTo(this._leafletMap);
+        this._currentPosition$
+          .pipe(filter(l => !!l))
+          .subscribe(() => this._currentPositionButton.addTo(this._leafletMap));
       } else {
         this._currentPositionButton.remove();
       }
     }
+  }
+
+  private _createButtons(): any[] {
+    return this.buttons.map(b => {
+      return L.easyButton(
+        {
+          position: b.position || 'bottomleft',
+          states: [{
+            stateName: 'default',
+            title: b.title,
+            icon: b.icon,
+            onClick: b.onClick
+          }]
+        });
+    });
   }
 }

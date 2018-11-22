@@ -5,7 +5,7 @@ import {User} from '../../../shared/types/user';
 import {UserSettingsService} from '../../../core/services/users/user-settings/user-settings.service';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {UserGeolocationService} from '../../../core/services/location/geolocation/user-geolocation.service';
-import {BrowserDetectorService} from '../../../core/services/browser-detector/browser-detector.service';
+import {BrowserDetectorService} from '../../services/browser-detector/browser-detector.service';
 import {ActivateGpsLocationDialogComponent} from './components/activate-gps-location-dialog/activate-gps-location-dialog.component';
 import {ConfirmationDialogComponent} from '../../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {filter} from 'rxjs/operators';

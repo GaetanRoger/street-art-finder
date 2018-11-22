@@ -11,6 +11,7 @@ import {ActivateGpsLocationDialogComponent} from './routes/settings/components/a
 import {AuthGuard} from '../core/guards/auth/auth.guard';
 import {SharedModule} from '../shared/shared.module';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
+import {BrowserDetectorService} from './services/browser-detector/browser-detector.service';
 
 const routes: Route[] = [
     {
@@ -49,7 +50,9 @@ const routes: Route[] = [
         SettingsComponent,
         ActivateGpsLocationDialogComponent
     ],
-    providers: [],
+    providers: [
+      BrowserDetectorService
+    ],
     entryComponents: [ActivateGpsLocationDialogComponent]
 })
 export class UsersModule {

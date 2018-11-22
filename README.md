@@ -1,6 +1,8 @@
 # Streart
-
-
+Streart is a project about Street Art.
+If all goes well, it should become an app everyone can use to find art pieces in their city, and check them
+as they get found. A feature can also be used to not be given the exact coordinates for the pieces finding
+to feel more like a game (inspired by Geocaching). 
 
 ## TODO (checked are done/fixed)
 ### Known bugs 
@@ -11,6 +13,7 @@
 - [x] Leaflet "Cannot remove of undefined" occurring randomly (fixed by refactoring maps more cleanly)
 
 ### Priority 1
+- [ ] Make the app website compatible
 - [ ] Allow admins to add artists
 - [ ] Allow admins to remove artists
 - [ ] Allow admins to mark artists as published/unpublished

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {Route, RouterModule} from '@angular/router';
 import {DashboardComponent} from './routes/dashboard/dashboard.component';
 import {ArtistProgressionComponent} from './routes/dashboard/artists-progressions/artist-progression/artist-progression.component';
@@ -18,48 +18,52 @@ import {NotificationsComponent} from './routes/dashboard/notifications/notificat
 import {NotificationsDialogComponent} from './routes/dashboard/notifications/notifications-dialog/notifications-dialog.component';
 import {NotificationComponent} from './routes/dashboard/notifications/notifications-dialog/notification/notification.component';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
+import {DashboardAllMapFiltersDialogComponent} from './routes/dashboard/all/artist-selection-dialog/dashboard-all-map-filters-dialog.component';
 
 const routes: Route[] = [
-    {
-        path: 'artist/:id',
-        component: DashboardArtistComponent
-    },
-    {
-        path: '',
-        component: DashboardComponent
-    }
+  {
+    path: 'artist/:id',
+    component: DashboardArtistComponent
+  },
+  {
+    path: '',
+    component: DashboardComponent
+  }
 ];
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        RouterModule.forChild(routes),
-        SharedModule,
-        ComponentsLibraryModule
-    ],
-    declarations: [
-        DashboardComponent,
-        ArtistProgressionComponent,
-        AllComponent,
-        DiscoverComponent,
-        ArtistsProgressionsComponent,
-        UseDiscoverTabComponent,
-        DashboardArtistComponent,
-        DashboardPieceProgressionComponent,
-        PiecePicturesDialogComponent,
-        DiscoverArtistAddedSnackbarComponent,
-        NotificationsComponent,
-        NotificationsDialogComponent,
-        NotificationComponent
-    ],
-    entryComponents: [
-        PieceDialogComponent,
-        PiecePicturesDialogComponent,
-        DiscoverArtistAddedSnackbarComponent,
-        NotificationsDialogComponent
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    ComponentsLibraryModule
+  ],
+  declarations: [
+    DashboardComponent,
+    ArtistProgressionComponent,
+    AllComponent,
+    DiscoverComponent,
+    ArtistsProgressionsComponent,
+    UseDiscoverTabComponent,
+    DashboardArtistComponent,
+    DashboardPieceProgressionComponent,
+    PiecePicturesDialogComponent,
+    DiscoverArtistAddedSnackbarComponent,
+    NotificationsComponent,
+    NotificationsDialogComponent,
+    NotificationComponent,
+    DashboardAllMapFiltersDialogComponent
+  ],
+  entryComponents: [
+    PieceDialogComponent,
+    PiecePicturesDialogComponent,
+    DiscoverArtistAddedSnackbarComponent,
+    NotificationsDialogComponent,
+    DashboardAllMapFiltersDialogComponent
+  ]
 })
 export class DashboardModule {
 }

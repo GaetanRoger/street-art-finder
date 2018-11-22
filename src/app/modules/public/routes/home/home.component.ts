@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {UserService} from '../../../core/services/users/user/user.service';
 import {map} from 'rxjs/operators';
+import {ResponsiveService} from '../../../core/services/responsive.service';
 
 @Component({
     selector: 'streart-home',
@@ -20,7 +21,8 @@ export class HomeComponent implements OnInit {
 
     query: string;
 
-    constructor(private readonly userService: UserService) {
+    constructor(private readonly userService: UserService,
+                public readonly responsive: ResponsiveService) {
     }
 
     ngOnInit() {

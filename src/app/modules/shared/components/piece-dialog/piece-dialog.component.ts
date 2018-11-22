@@ -109,9 +109,9 @@ export class PieceDialogComponent implements OnInit {
     }
 
     private _createCircleFromPiece(piece: Piece, radius: number): Circle {
-        return new CircleBuilder(piece.location)
-            .setRadius(radius)
-            .build();
+      return new CircleBuilder(piece.location)
+        .setRadius(radius)
+        .build();
     }
 
     private _createMarkerFromPiece(piece: Piece): Marker {

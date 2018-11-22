@@ -1,0 +1,11 @@
+@import "src/theme/vars";
+
+span {
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+}
+
+mat-icon {
+  color: $yellow;
+}

@@ -3,7 +3,7 @@ import {Ng2ImgMaxService} from 'ng2-img-max';
 import {take} from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ImageResizerService {
 

@@ -1,4 +1,5 @@
 export interface Image {
-    normal: string;
-    low: string;
+  big?: string;
+  normal: string;
+  low: string;
 }

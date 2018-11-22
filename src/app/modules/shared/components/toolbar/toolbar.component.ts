@@ -2,90 +2,114 @@ import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from '@ang
 import {DomSanitizer, SafeValue} from '@angular/platform-browser';
 import {Location} from '@angular/common';
 import {ToolbarMenuItem} from './toolbar-menu-item';
-import {MatMenu, MatMenuTrigger} from '@angular/material';
+import {MatMenuTrigger} from '@angular/material';
+import {Image} from '../../types/image';
+import {Observable, of} from 'rxjs';
+import {ResponsiveService} from '../../../core/services/responsive.service';
+import {map} from 'rxjs/operators';
 
 @Component({
-    selector: 'streart-toolbar',
-    templateUrl: './toolbar.component.html',
-    styleUrls: ['./toolbar.component.css']
+  selector: 'streart-toolbar',
+  templateUrl: './toolbar.component.html',
+  styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnChanges {
-    /**
-     * Title to be displayed in the toolbar.
-     */
-    @Input() title: string;
+  /**
+   * Title to be displayed in the toolbar.
+   */
+  @Input() title: string;
 
-    /**
-     * Background image to use for background. It will be darken by 50 %.
-     * If none or null is provided, see DEFAULT_BACKGROUND_COLOR for the color that will be used.
-     */
-    @Input() image = '/assets/images/toolbar-background-low.jpg';
+  /**
+   * Background image to use for background. It will be darken by 50 %.
+   * If none or null is provided, see DEFAULT_BACKGROUND_COLOR for the color that will be used.
+   */
+  @Input() image: string | Image = {
+    low: '/assets/images/toolbar-background-low.jpg',
+    normal: '/assets/images/toolbar-background.jpg'
+  };
 
-    /**
-     * Should the search icon button be displayed.
-     */
-    @Input() showSearchButton = false;
+  /**
+   * Should the search icon button be displayed.
+   */
+  @Input() showSearchButton = false;
 
-    /**
-     * Should the back icon button be displayed. If true, clicking it will go back one route.
-     */
-    @Input() showBackButton = false;
+  /**
+   * Should the back icon button be displayed. If true, clicking it will go back one route.
+   */
+  @Input() showBackButton = false;
 
-    @Input() menuItems: ToolbarMenuItem[] = [];
+  @Input() menuItems: ToolbarMenuItem[] = [];
 
-    @Output() searchChange: EventEmitter<string> = new EventEmitter();
+  @Output() searchChange: EventEmitter<string> = new EventEmitter();
 
-    @Output() searchKeyDown: EventEmitter<KeyboardEvent> = new EventEmitter();
+  @Output() searchKeyDown: EventEmitter<KeyboardEvent> = new EventEmitter();
 
-    @Output() searchKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter();
+  @Output() searchKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter();
 
-    filter: string;
+  filter: string;
 
-    /**
-     * Default color to be used if no background image is supplied.
-     */
-    public readonly DEFAULT_BACKGROUND_COLOR = '#212121';
+  /**
+   * Default color to be used if no background image is supplied.
+   */
+  public readonly DEFAULT_BACKGROUND_COLOR = '#212121';
 
-    /**
-     * Safe value of the CSS property to display the provided background image or color.
-     */
-    backgroundImage: SafeValue;
-    /**
-     * True to display search text box, false to hide it.
-     */
-    showSearchBar: boolean;
+  /**
+   * Safe value of the CSS property to display the provided background image or color.
+   */
+  backgroundImage$: Observable<SafeValue>;
+  /**
+   * True to display search text box, false to hide it.
+   */
+  showSearchBar: boolean;
 
-    @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
 
-    constructor(private readonly sanitizer: DomSanitizer,
-                private readonly location: Location) {
+  constructor(private readonly sanitizer: DomSanitizer,
+              private readonly location: Location,
+              private readonly responsive: ResponsiveService) {
+  }
+
+  ngOnChanges(): void {
+    this.backgroundImage$ = this._generateBackground();
+  }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  toggleSearch(): void {
+    this.showSearchBar = !this.showSearchBar;
+  }
+
+  emitSearchChange(event: string) {
+    this.searchChange.emit(event);
+    this.filter = event;
+  }
+
+  /**
+   * Generate the background CSS property with the image or the default color.
+   */
+  private _generateBackground(): Observable<SafeValue> {
+    const linearGradient = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))';
+
+    if (!this.image) {
+      return of(this._sanatizeStyle(`background-color: ${this.DEFAULT_BACKGROUND_COLOR};`));
     }
 
-    ngOnChanges(): void {
-        this.backgroundImage = this.sanitizer.bypassSecurityTrustStyle(this.generateBackground());
+    if (typeof this.image !== 'string' && this.image.normal && this.image.low) {
+      const img = this.image as Image;
+      return this.responsive.isBigScreen()
+        .pipe(
+          map(bigScreen => bigScreen ? img.normal : img.low),
+          map(url => `background-image: ${linearGradient}, url("${url}");`),
+          map(css => this._sanatizeStyle(css))
+        );
     }
 
-    goBack(): void {
-        this.location.back();
-    }
+    return of(this._sanatizeStyle(`background-image: ${linearGradient}, url("${this.image}");`));
+  }
 
-    toggleSearch(): void {
-        this.showSearchBar = !this.showSearchBar;
-    }
-
-    /**
-     * Generate the background CSS property with the image or the default color.
-     */
-    private generateBackground(): string {
-        const linearGradient = 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))';
-        console.log('generateBackground');
-        return this.image
-            ? `background-image: ${linearGradient}, url("${this.image}");`
-            : `background-color: ${this.DEFAULT_BACKGROUND_COLOR};`;
-    }
-
-    emitSearchChange(event: string) {
-        this.searchChange.emit(event);
-        this.filter = event;
-    }
+  private _sanatizeStyle(style: string): SafeValue {
+    return this.sanitizer.bypassSecurityTrustStyle(style);
+  }
 }

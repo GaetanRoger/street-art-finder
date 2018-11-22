@@ -20,51 +20,60 @@ import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {RouterModule} from '@angular/router';
 import {IfOnlineComponent} from './components/if-online/if-online.component';
 import {MyDataLinkComponent} from './components/my-data-link/my-data-link.component';
+import {BodyContainerComponent} from './components/body-container/body-container.component';
+import {StartCounterComponent} from './components/start-counter/start-counter.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ComponentsLibraryModule,
-        RouterModule,
-        LeafletModule
-    ],
-    declarations: [
-        FlatCardWithImageComponent,
-        ArtistPreviewComponent,
-        ToolbarComponent,
-        LoadingSpinnerComponent,
-        TimestampPipe,
-        ConfirmationDialogComponent,
-        SmallLoadingSpinnerComponent,
-        ImageComponent,
-        PieceDialogComponent,
-        HelpBubbleComponent,
-        SmallHorizontalLoaderComponent,
-        FullScreenMessageComponent,
-        LoadMoreButtonComponent,
-        MapComponent,
-        IfOnlineComponent,
-        MyDataLinkComponent,
-    ],
-    exports: [
-        FlatCardWithImageComponent,
-        ArtistPreviewComponent,
-        ToolbarComponent,
-        LoadingSpinnerComponent,
-        TimestampPipe,
-        SmallLoadingSpinnerComponent,
-        ImageComponent,
-        HelpBubbleComponent,
-        SmallHorizontalLoaderComponent,
-        FullScreenMessageComponent,
-        LoadMoreButtonComponent,
-        MapComponent,
-        IfOnlineComponent,
-        MyDataLinkComponent
-    ],
-    providers: [DatePipe],
-    entryComponents: [ConfirmationDialogComponent, PieceDialogComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ComponentsLibraryModule,
+    RouterModule,
+    LeafletModule
+  ],
+  declarations: [
+    FlatCardWithImageComponent,
+    ArtistPreviewComponent,
+    ToolbarComponent,
+    LoadingSpinnerComponent,
+    TimestampPipe,
+    ConfirmationDialogComponent,
+    SmallLoadingSpinnerComponent,
+    ImageComponent,
+    PieceDialogComponent,
+    HelpBubbleComponent,
+    SmallHorizontalLoaderComponent,
+    FullScreenMessageComponent,
+    LoadMoreButtonComponent,
+    MapComponent,
+    IfOnlineComponent,
+    MyDataLinkComponent,
+    BodyContainerComponent,
+    StartCounterComponent,
+  ],
+  exports: [
+    FlatCardWithImageComponent,
+    ArtistPreviewComponent,
+    ToolbarComponent,
+    LoadingSpinnerComponent,
+    TimestampPipe,
+    SmallLoadingSpinnerComponent,
+    ImageComponent,
+    HelpBubbleComponent,
+    SmallHorizontalLoaderComponent,
+    FullScreenMessageComponent,
+    LoadMoreButtonComponent,
+    MapComponent,
+    IfOnlineComponent,
+    MyDataLinkComponent,
+    BodyContainerComponent,
+    StartCounterComponent
+  ],
+  providers: [DatePipe],
+  entryComponents: [
+    ConfirmationDialogComponent,
+    PieceDialogComponent,
+  ]
 })
 export class SharedModule {
 }

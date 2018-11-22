@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AggregatesService} from '../../../core/services/aggregates/aggregates.service';
+import {AggregatesService} from '../../services/aggregates/aggregates.service';
 import {Observable} from 'rxjs';
 import {Aggregates} from '../../../shared/types/aggregates';
 

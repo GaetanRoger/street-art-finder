@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class IdGeneratorService {
 
     constructor(private readonly firestore: AngularFirestore) {

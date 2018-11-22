@@ -1,0 +1,60 @@
+@import "src/theme/vars";
+
+.artist-card {
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.name-actions {
+  color: white;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name-actions-left {
+/*  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;*/
+}
+
+.artist-card h4 {
+  font-weight: normal;
+  font-size: 24px;
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+@media screen and (min-width: $bigScreenSize) {
+  .artist-card h4 {
+    font-size: 36px;
+  }
+  .big-artist-text {
+    opacity: 0.9;
+  }
+}
+
+p {
+  margin-top: 5px;
+  font-size: 14px;
+  padding-left: 5%;
+  padding-right: 5%;
+  color: #212121;
+  opacity: 0.9;
+}
+
+.image {
+  height: 100px;
+  background-position: center;
+  background-size: cover;
+}
+
+@media screen and (min-width: $bigScreenSize) {
+  .image {
+    height: 300px;
+  }
+}
+

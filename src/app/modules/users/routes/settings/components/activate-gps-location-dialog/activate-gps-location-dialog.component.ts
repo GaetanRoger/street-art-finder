@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {BrowserInfo} from '../../../../../core/services/browser-detector/browser-info';
+import {BrowserInfo} from '../../../../services/browser-detector/browser-info';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
 @Component({

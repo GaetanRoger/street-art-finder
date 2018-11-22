@@ -1,12 +1,20 @@
+@import "src/theme/vars";
 $border-radius: 10px;
 
 .join-now-card {
   background: #f6f6f6;
   margin: 5px;
-  border-top-right-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
+  border-radius: $border-radius;
 
   display: flex;
+}
+
+@media screen and (min-width: $bigScreenSize){
+  .join-now-card {
+    margin-left: 10%;
+    margin-right: 10%;
+    box-shadow: 0 0 5px rgba(100, 100, 100, 0.5);
+  }
 }
 
 .join-now-card .left-image {

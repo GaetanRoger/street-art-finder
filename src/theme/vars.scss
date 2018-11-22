@@ -5,3 +5,6 @@ $accent: mat-palette($mat-orange, 800);
 
 // The warn palette is optional (defaults to red).
 $warn: mat-palette($mat-red);
+$yellow: mat-color(mat-palette($mat-yellow, 700));
+
+$bigScreenSize: 799px;
