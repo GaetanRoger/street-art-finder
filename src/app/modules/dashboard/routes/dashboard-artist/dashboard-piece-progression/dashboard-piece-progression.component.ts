@@ -7,6 +7,7 @@ import {Piece} from '../../../../shared/types/piece';
 import {PiecePicturesDialogComponent} from './piece-pictures-dialog/piece-pictures-dialog.component';
 import {filter, take} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {ResponsiveService} from '../../../../core/services/responsive.service';
 
 @Component({
     selector: 'streart-dashboard-piece-progression',
@@ -20,7 +21,8 @@ export class DashboardPieceProgressionComponent {
     opened: boolean;
 
     constructor(private readonly dialog: MatDialog,
-                private readonly pieceService: PieceService) {
+                private readonly pieceService: PieceService,
+                public readonly responsive: ResponsiveService) {
     }
 
 

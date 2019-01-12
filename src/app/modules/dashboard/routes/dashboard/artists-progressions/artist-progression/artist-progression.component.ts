@@ -8,7 +8,7 @@ import {filter} from 'rxjs/operators';
 @Component({
     selector: 'streart-artist-progression',
     templateUrl: './artist-progression.component.html',
-    styleUrls: ['./artist-progression.component.css']
+    styleUrls: ['./artist-progression.component.scss']
 })
 export class ArtistProgressionComponent implements OnInit {
     @Input() progression: UserArtistProgression;

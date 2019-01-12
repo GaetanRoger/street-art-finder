@@ -1,6 +1,6 @@
 <div class="piece-card" (click)="opened= !opened" [ngClass]="{selected: opened}">
     <div class="left">
-        <streart-image [src]="progression.piece.images.main.low"
+        <streart-image [src]="(responsive.isBigScreen() | async) ? progression.piece.images.main.normal : progression.piece.images.main.low"
                       [round]="true"
                       [imgHeight]="50"
                       [imgWidth]="50"

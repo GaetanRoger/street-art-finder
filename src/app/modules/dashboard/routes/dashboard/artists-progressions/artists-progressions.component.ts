@@ -6,7 +6,7 @@ import {UserArtistProgressionService} from '../../../../core/services/users/user
 @Component({
     selector: 'streart-artists-progressions',
     templateUrl: './artists-progressions.component.html',
-    styleUrls: ['./artists-progressions.component.css']
+    styleUrls: ['./artists-progressions.component.scss']
 })
 export class ArtistsProgressionsComponent implements OnInit {
     @Input() progressions: Observable<UserArtistProgression[]>;
