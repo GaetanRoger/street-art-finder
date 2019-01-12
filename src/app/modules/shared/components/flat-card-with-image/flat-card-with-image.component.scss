@@ -1,12 +1,15 @@
 @import "src/theme/vars";
+@import 'node_modules/@angular/material/theming';
 $border-radius: 10px;
 
 .join-now-card {
-  background: #f6f6f6;
-  margin: 5px;
+  margin: 10px 5px 20px;
   border-radius: $border-radius;
-
   display: flex;
+
+  @media screen and (min-width: $bigScreenSize) {
+    background: transparent;
+  }
 }
 
 .join-now-card .left-image {
@@ -16,6 +19,10 @@ $border-radius: 10px;
   border-top-left-radius: $border-radius;
   border-bottom-left-radius: $border-radius;
 
+  @media screen and (min-width: $bigScreenSize) {
+    display: none;
+  }
+
 }
 
 .join-now-card .right-text {
@@ -23,17 +30,10 @@ $border-radius: 10px;
   padding: 5px;
   margin-left: 10px;
   font-size: 14px;
-}
 
-@media screen and (min-width: $bigScreenSize){
-  .join-now-card .right-text {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-  }
-
-  .join-now-card .right-text .buttons {
-    margin-left: 50px;
+  @media screen and (min-width: $bigScreenSize) {
+    font-size: 30px;
+    text-align: center;
   }
 }
 
@@ -42,6 +42,7 @@ $border-radius: 10px;
   font-size: 170%;
   opacity: 0.9;
   margin: 5px 0 0;
+  color: mat-color($primary);
 }
 
 .join-now-card .right-text p {
@@ -51,7 +52,8 @@ $border-radius: 10px;
 
 .join-now-card .right-text .buttons {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  margin-top: 3%;
 }
 
 .join-now-card .right-text .buttons button {

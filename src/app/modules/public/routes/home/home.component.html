@@ -6,16 +6,16 @@
 
 <streart-body-container>
   <streart-flat-card-with-image
-    title="See them for real"
-    text="{{(loggedIn$ | async) ? 'Come here' : 'Sign up'}} to create your own unique route"
+    title="{{(loggedIn$ | async) ? 'Nice to see you back' : 'Beautiful art just meters away'}}"
+    text="{{(loggedIn$ | async) ? 'Have you discovered everything yet?' : 'Awesome artists are creating amazing pieces in your city'}}"
     [primaryButtonText]="primaryButtonText$|async"
     [primaryButtonRouterLink]="primaryButtonRouterLink$|async"
     [secondaryButtonText]="(loggedIn$ | async) ? '' : 'Learn more'"
     secondaryButtonRouterLink="learn-more"
-    [image]="responsive.isBigScreen() ? '/assets/images/paper-map.jpg' : '/assets/images/paper-map-low.jpg'"
   ></streart-flat-card-with-image>
 
-  <mat-divider></mat-divider>
+  <!--     [image]="responsive.isBigScreen() ? '/assets/images/paper-map.jpg' : '/assets/images/paper-map-low.jpg'" -->
+
 
   <streart-if-online
     offlineText="Sorry, you cannot browse artists while offline. But you can go to your dashboard for sure!">

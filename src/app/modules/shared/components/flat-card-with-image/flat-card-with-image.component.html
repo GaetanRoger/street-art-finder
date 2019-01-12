@@ -1,50 +1,55 @@
-<div class="join-now-card">
-    <div class="left-image" [style]="backgroundImageProperty" *ngIf="image">
+<div class="join-now-card" [ngStyle]="{'text-align': image ? 'left' : 'center'}">
+  <div class="left-image" [style]="backgroundImageProperty" *ngIf="image">
+  </div>
+  <div class="right-text">
+    <div>
+      <h4 [class]="titleClass">{{title}}</h4>
+      <p>{{text}}</p>
     </div>
-    <div class="right-text">
-      <div>
-        <h4 [class]="titleClass">{{title}}</h4>
-        <p>{{text}}</p>
+    <div class="buttons">
+      <!-- IF a text is provided for the primary button -->
+      <div *ngIf="primaryButtonText">
+        <!-- IF the primary button is a router link -->
+        <button
+          *ngIf="primaryButtonRouterLink"
+          mat-raised-button
+          color="primary"
+          [routerLink]="primaryButtonRouterLink"
+          [ngStyle]="bigButtonStyling">
+          {{primaryButtonText}}
+        </button>
+        <!-- ELSE IF the primary button is an external link -->
+        <a mat-raised-button
+           color="primary"
+           [href]="primaryButtonExternalLink"
+           *ngIf="primaryButtonExternalLink"
+           [ngStyle]="bigButtonStyling"
+        >
+          {{primaryButtonText}}
+        </a>
       </div>
-        <div class="buttons">
-            <!-- IF a text is provided for the primary button -->
-            <div *ngIf="primaryButtonText">
-                <!-- IF the primary button is a router link -->
-                <button
-                        *ngIf="primaryButtonRouterLink"
-                        mat-raised-button
-                        color="primary"
-                        [routerLink]="primaryButtonRouterLink">
-                    {{primaryButtonText}}
-                </button>
-                <!-- ELSE IF the primary button is an external link -->
-                <a mat-raised-button
-                   color="primary"
-                   [href]="primaryButtonExternalLink"
-                   *ngIf="primaryButtonExternalLink"
-                >
-                    {{primaryButtonText}}
-                </a>
-            </div>
-            <!-- IF a text is provided for the secondary button -->
-            <div *ngIf="secondaryButtonText">
-                <!-- IF the secondary button is a router link -->
-                <button
-                        *ngIf="secondaryButtonRouterLink"
-                        mat-button
-                        color="primary"
-                        [routerLink]="secondaryButtonRouterLink">
-                    {{secondaryButtonText}}
-                </button>
-                <!-- ELSE IF the secondary button is an external link -->
-                <a mat-button
-                   color="primary"
-                   [href]="secondaryButtonExternalLink"
-                   *ngIf="secondaryButtonExternalLink"
-                >
-                    {{secondaryButtonText}}
-                </a>
-            </div>
-        </div>
+      <!-- IF a text is provided for the secondary button -->
+      <div *ngIf="secondaryButtonText">
+        <!-- IF the secondary button is a router link -->
+        <button
+          *ngIf="secondaryButtonRouterLink"
+          mat-button
+          color="primary"
+          [routerLink]="secondaryButtonRouterLink"
+          [ngStyle]="bigButtonStyling">
+          {{secondaryButtonText}}
+
+        </button>
+        <!-- ELSE IF the secondary button is an external link -->
+        <a mat-button
+           color="primary"
+           [href]="secondaryButtonExternalLink"
+           *ngIf="secondaryButtonExternalLink"
+           [ngStyle]="bigButtonStyling"
+        >
+          {{secondaryButtonText}}
+        </a>
+      </div>
     </div>
+  </div>
 </div>

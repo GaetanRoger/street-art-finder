@@ -7,6 +7,7 @@
             [noMoreToLoad]="noMoreToLoad$ | async"
             loadMoreButtonColor="normal"
             (loadMore)="loadMoreArtists()"
+            *ngIf="artists$ | async"
     ></streart-load-more-button>
 </div>
 <streart-loading-spinner *ngIf="loading$ | async"
