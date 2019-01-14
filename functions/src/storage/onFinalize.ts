@@ -1,9 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as functions from 'firebase-functions';
 import {StorageHelpers} from './storage-helpers';
 import {ImageData} from './ImageData';
 import {ObjectMetadata} from 'firebase-functions/lib/providers/storage';
+import * as admin from 'firebase-admin';
+
+const imagemin = require('imagemin');
+const imageminWebp = require('imagemin-webp');
 
 
 const {Storage} = require('@google-cloud/storage');
@@ -11,46 +14,94 @@ const gcs = new Storage();
 
 
 export async function storageOnFinalize(object: ObjectMetadata) {
-    const image = new ImageData(object);
+  const image = new ImageData(object);
+  const pieceId = StorageHelpers.getPieceId(image.filePath);
 
-    if (image.isMarkedAsProcessed()) {
-        console.log(`File ${image.fileName} already processed; exiting function.`);
-        return false;
-    }
+  if (image.isMarkedAsProcessed()) {
+    console.log(`File ${image.fileName} already processed; exiting function.`);
+    return false;
+  }
 
-    if (StorageHelpers.isAPieceImage(image.filePath)) {
-        return await compressPieceImage(image);
-    }
+  if (StorageHelpers.isAPieceImage(image.filePath)) {
+    return await compressPieceImageAndUpdateFirestoreEntry(image, pieceId);
+  }
 
-
-    console.log(`File ${image.fileName} does not meet any criteria; existing function.`);
-    return null;
+  console.log(`File ${image.filePath} does not meet any criteria; existing function.`);
+  return null;
 }
 
-async function compressPieceImage(image: ImageData) {
-    if (functions.config().tinify.enabled === 'false') {
-        console.log('Tinify en var is not enabled; not compressing anything.');
-        return null;
-    }
+async function compressToWebpAndUpload(
+  tempInputFilePath: string,
+  image: ImageData,
+  bucket,
+  quality: number
+): Promise<string> {
+  // Temp dir making
+  const outputDir = await StorageHelpers.makeTempDir(`output-${quality}`);
 
-    const bucket = image.getBucket(gcs);
-    const inputDir = StorageHelpers.tempDir('input');
-    const outputDir = StorageHelpers.tempDir('output');
-    const tempInputFilePath = path.join(inputDir, image.fileName);
-    const tempOutputFilePath = path.join(outputDir, image.fileName);
+  // Compression
+  const results = await compressToWebp(tempInputFilePath, outputDir, quality);
 
-    await fs.ensureDir(inputDir);
-    await fs.ensureDir(outputDir);
+  // Renaming and upload preps
+  const newFilePath = StorageHelpers.replaceNameInPath(image.filePath, `img-${quality}.webp`);
+  const uploadOptions = {destination: newFilePath, metadata: image.metadata};
 
-    // Download files locally
-    await bucket.file(image.filePath).download({destination: tempInputFilePath});
+  // Upload
+  await bucket.upload(results[0].path, uploadOptions);
+  return newFilePath;
+}
 
-    // Optimize image
-    await StorageHelpers.compressImage(tempInputFilePath, tempOutputFilePath);
+async function compressPieceImageAndUpdateFirestoreEntry(image: ImageData, pieceId: string) {
+  const filePaths = await compressPieceImageAndUploadItToStorage(image);
+  const pieceDoc = admin.firestore().collection('pieces').doc(pieceId);
 
-    image.addProcessedMetadata();
-    const newFilePath = path.join(path.dirname(image.filePath), image.fileName);
-    const uploadOptions = {destination: newFilePath, metadata: image.metadata};
+  return admin.firestore().runTransaction(async t => {
+    const piece = await t.get(pieceDoc);
+    const bucket = admin.storage().bucket();
 
-    return await bucket.upload(tempOutputFilePath, uploadOptions);
+    const downloadConfig = {
+      action: 'read',
+      expires: '03-09-2491'
+    };
+
+    const lowDownloadUrl = await bucket.file(filePaths.low).getSignedUrl(downloadConfig as any);
+    const normalDownloadUrl = await bucket.file(filePaths.normal).getSignedUrl(downloadConfig as any);
+
+    return await t.update(piece.ref, {
+      images: {
+        main: {
+          low: lowDownloadUrl[0],
+          normal: normalDownloadUrl[0]
+        },
+        others: piece.data().images.others
+      }
+    });
+  });
+
+}
+
+async function compressPieceImageAndUploadItToStorage(image: ImageData): Promise<{ low: string, normal: string }> {
+  const bucket = image.getBucket(gcs);
+  const inputDir = StorageHelpers.getTempDirName('input');
+  const tempInputFilePath = path.join(inputDir, image.fileName);
+
+  await fs.ensureDir(inputDir);
+
+  // Download files locally
+  await bucket.file(image.filePath).download({destination: tempInputFilePath});
+
+  image.addProcessedMetadata();
+
+  return {
+    low: await compressToWebpAndUpload(tempInputFilePath, image, bucket, 20),
+    normal: await compressToWebpAndUpload(tempInputFilePath, image, bucket, 80)
+  };
+}
+
+async function compressToWebp(inpuFilePath: string, outputDirPath: string, quality: number) {
+  return await imagemin([inpuFilePath], outputDirPath, {
+    use: [
+      imageminWebp({quality})
+    ]
+  });
 }

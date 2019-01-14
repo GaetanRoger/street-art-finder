@@ -21,15 +21,14 @@ export class AdminAddPieceFinishComponent implements OnInit {
     @Input() mainImage: { blob: Blob; name: string };
     @Input() editingPieceId: string;
 
-    lowUploadedPercentage$: Observable<number | undefined>;
-    normalUploadedPercentage$: Observable<number | undefined>;
+    imageUploadPercentage$: Observable<number | undefined>;
     state$: BehaviorSubject<PieceCreationState> = new BehaviorSubject(PieceCreationState.None);
 
 
     constructor(private readonly storage: AngularFireStorage,
                 private readonly idGenerator: IdGeneratorService,
                 private readonly pieceService: PieceService,
-                private readonly addressService: AddressFromGeopointService,) {
+                private readonly addressService: AddressFromGeopointService) {
     }
 
     ngOnInit() {
@@ -68,13 +67,11 @@ export class AdminAddPieceFinishComponent implements OnInit {
         const artist: Artist = pieceData.artist;
         const id = this.idGenerator.generateId();
 
-        const urls = this.uploadImages ?
-            await this._uploadImages(artist, id)
-            : {low: undefined, normal: undefined};
+        const imgUrl = this.uploadImages ? await this._uploadImage(artist, id) : undefined;
 
         this.state$.next(PieceCreationState.Creating);
 
-        await this._createPiece(id, pieceData, artist, urls.low, urls.normal);
+        await this._createPiece(id, pieceData, artist, imgUrl);
 
         this.state$.next(PieceCreationState.Done);
     }
@@ -83,10 +80,9 @@ export class AdminAddPieceFinishComponent implements OnInit {
         id: string,
         pieceData,
         artist: Artist,
-        uploadedImageUrlLow: string,
-        uploadedImageUrlNormal: string
+        imageUrl: string
     ) {
-        const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, uploadedImageUrlLow, uploadedImageUrlNormal);
+        const piece: Piece = await this._getPieceFromForm(id, pieceData, artist, imageUrl);
         if (this.editing) {
             piece.objectID = this.editingPieceId;
             await this.pieceService.update(piece).toPromise();
@@ -99,8 +95,7 @@ export class AdminAddPieceFinishComponent implements OnInit {
         id: string,
         pieceData,
         artist: Artist,
-        lowImageUrl: string,
-        normalImageUrl: string
+        imageUrl: string,
     ): Promise<any> {
         const obj = {
             objectID: id,
@@ -123,11 +118,11 @@ export class AdminAddPieceFinishComponent implements OnInit {
             addedOn: Date.now(),
         };
 
-        if (lowImageUrl && normalImageUrl) {
+        if (imageUrl) {
             obj['images'] = {
                 main: {
-                    low: lowImageUrl,
-                    normal: normalImageUrl
+                    low: imageUrl,
+                    normal: imageUrl
                 },
                 others: []
             };
@@ -136,23 +131,17 @@ export class AdminAddPieceFinishComponent implements OnInit {
         return obj;
     }
 
-    private async _uploadImages(artist: Artist, pieceId: string): Promise<{ low: string; normal: string; }> {
-        const uploads = await this.pieceService.uploadImages(
+    private async _uploadImage(artist: Artist, pieceId: string): Promise<string> {
+        const upload = this.pieceService.uploadImage(
             this.mainImage.blob,
             this.mainImage.name,
             artist.objectID,
             pieceId
         );
 
-        this.normalUploadedPercentage$ = uploads.normal.percentageChanges();
-        this.lowUploadedPercentage$ = uploads.low.percentageChanges();
+        this.imageUploadPercentage$ = upload.percentageChanges();
+        const uploaded = await upload;
 
-        const uploadedLow = await uploads.low;
-        const uploadedNormal = await uploads.normal;
-
-        return {
-            low: await uploadedLow.ref.getDownloadURL(),
-            normal: await uploadedNormal.ref.getDownloadURL(),
-        };
+        return uploaded.ref.getDownloadURL();
     }
 }

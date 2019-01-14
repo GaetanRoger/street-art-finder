@@ -1,6 +1,5 @@
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-const tinify = require("tinify");
 const env = functions.config();
 
 import {Collections} from './firestore/collections.enum';
@@ -35,8 +34,6 @@ import {getAllUserData} from './callable/getAllUserData';
 admin.initializeApp();
 const auth = functions.auth;
 const firestore = functions.firestore;
-
-tinify.key = env.tinify.key;
 
 
 /* *****************************
