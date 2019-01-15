@@ -3,6 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {AdminUsersComponent} from './admin-users.component';
 import {SharedModule} from '../../../shared/shared.module';
 import {AdminToolbarComponent} from '../../components/admin-toolbar/admin-toolbar.component';
+import {ComponentsLibraryModule} from '../../../components-library/components-library.module';
 
 describe('AdminUsersComponent', () => {
     let component: AdminUsersComponent;
@@ -10,8 +11,8 @@ describe('AdminUsersComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [AdminUsersComponent, AdminToolbarComponent],
-            imports: [SharedModule]
+          imports: [SharedModule, ComponentsLibraryModule],
+          declarations: [AdminUsersComponent, AdminToolbarComponent]
         })
             .compileComponents();
     }));

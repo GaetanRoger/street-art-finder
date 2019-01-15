@@ -6,9 +6,7 @@ import {BehaviorSubject, fromEvent, Observable} from 'rxjs';
 })
 export class OnlineService {
     private readonly _onlineObservable: BehaviorSubject<boolean>;
-    private _lastValue = this.online;
-
-    constructor() {
+  constructor() {
         this._onlineObservable = new BehaviorSubject(this.online);
         fromEvent(window, 'online')
             .subscribe(() => this._onlineObservable.next(true));

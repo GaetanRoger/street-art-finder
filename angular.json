@@ -88,6 +88,16 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/leaflet/dist/images/",
+                "output": "./assets/leaflet/"
+              },
+              "src/manifest.json"
+            ],
             "styles": [
               {
                 "input": "src/theme/theme.scss"
@@ -95,17 +105,12 @@
               "./node_modules/cropperjs/dist/cropper.min.css",
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/material-icons/iconfont/material-icons.css",
-              "./node_modules/leaflet-easybutton/src/easy-buttons.css",
+              "./node_modules/leaflet-easybutton/src/easy-button.css",
               "src/assets/css/roboto.css",
               "src/styles.scss"
             ],
             "scripts": [
               "./node_modules/cropperjs/dist/cropper.js"
-            ],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/manifest.json"
             ]
           }
         },

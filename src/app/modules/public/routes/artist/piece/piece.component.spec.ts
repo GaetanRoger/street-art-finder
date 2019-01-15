@@ -83,7 +83,7 @@ describe('PieceComponent', () => {
         component.piece = mockPieceWithoutDistance;
         fixture.detectChanges();
 
-        const pName = element.querySelector<HTMLParagraphElement>('.name p');
+        const pName = element.querySelector<HTMLSpanElement>('.name .name-text');
 
         expect(pName.innerText).toBe(mockPieceWithoutDistance.name);
     });

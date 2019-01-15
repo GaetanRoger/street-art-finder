@@ -1,25 +1,28 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {AdminAddPieceImagesComponent} from './admin-add-piece-images.component';
+import {ComponentsLibraryModule} from '../../../../components-library/components-library.module';
+import {FormsModule} from '@angular/forms';
 
 describe('AdminAddPieceImagesComponent', () => {
-    let component: AdminAddPieceImagesComponent;
-    let fixture: ComponentFixture<AdminAddPieceImagesComponent>;
+  let component: AdminAddPieceImagesComponent;
+  let fixture: ComponentFixture<AdminAddPieceImagesComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [AdminAddPieceImagesComponent]
-        })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [ComponentsLibraryModule, FormsModule],
+      declarations: [AdminAddPieceImagesComponent]
+    })
+      .compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(AdminAddPieceImagesComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AdminAddPieceImagesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -7,8 +7,6 @@ import {Geopoint} from '../../../../shared/types/geopoint';
     providedIn: 'root'
 })
 export class UserGeolocationService {
-    private _geolocation$: BehaviorSubject<Geopoint> = new BehaviorSubject(undefined);
-    private _geolocationEnabled$: BehaviorSubject<boolean> = new BehaviorSubject(undefined);
 
     constructor() {
         this._ifNavigatorSupportsGeolocation(() => {
@@ -17,6 +15,27 @@ export class UserGeolocationService {
                 err => this._permissionDeniedOrTimeout(err) ? this._geolocationEnabled$.next(false) : null
             );
         });
+    }
+    private _geolocation$: BehaviorSubject<Geopoint> = new BehaviorSubject(undefined);
+    private _geolocationEnabled$: BehaviorSubject<boolean> = new BehaviorSubject(undefined);
+
+    static distance(from: Geopoint, to: Geopoint, addUnit: boolean = false): number | string {
+        const f = {latitude: from.latitude, longitude: from.longitude};
+        const t = {latitude: to.latitude, longitude: to.longitude};
+
+        const distanceInMeters = geolib.getDistance(f, t);
+
+        if (!addUnit) {
+            return distanceInMeters;
+        }
+
+        if (distanceInMeters < 1_000) {
+            return distanceInMeters + ' m';
+        } else if (distanceInMeters < 1_000_000) {
+            return (distanceInMeters / 1000).toFixed(1) + ' km';
+        } else {
+            return (distanceInMeters / 1000).toFixed(0) + ' km';
+        }
     }
 
     currentGeolocation(): Observable<Geopoint> {
@@ -34,25 +53,6 @@ export class UserGeolocationService {
 
     geolocationEnabled(): Observable<boolean> {
         return this._geolocationEnabled$;
-    }
-
-    distance(from: Geopoint, to: Geopoint, addUnit: boolean = false): number | string {
-        const f = {latitude: from.latitude, longitude: from.longitude};
-        const t = {latitude: to.latitude, longitude: to.longitude};
-
-        const distanceInMeters = geolib.getDistance(f, t);
-
-        if (!addUnit) {
-            return distanceInMeters;
-        }
-
-        if (distanceInMeters < 1_000) {
-            return distanceInMeters + ' m';
-        } else if (distanceInMeters < 1_000_000) {
-            return (distanceInMeters / 1000).toFixed(1) + ' km';
-        } else {
-            return (distanceInMeters / 1000).toFixed(0) + ' km';
-        }
     }
 
     private _positionToGeopoint(position: Position): Geopoint {

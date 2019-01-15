@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DashboardAllMapFiltersDialogComponent } from './dashboard-all-map-filters-dialog.component';
+import {DashboardAllMapFiltersDialogComponent} from './dashboard-all-map-filters-dialog.component';
+import {ComponentsLibraryModule} from '../../../../../components-library/components-library.module';
+import {FormsModule} from '@angular/forms';
 
 describe('DashboardAllMapFiltersDialogComponent', () => {
   let component: DashboardAllMapFiltersDialogComponent;
@@ -8,9 +10,10 @@ describe('DashboardAllMapFiltersDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardAllMapFiltersDialogComponent ]
+      imports: [ComponentsLibraryModule, FormsModule],
+      declarations: [DashboardAllMapFiltersDialogComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

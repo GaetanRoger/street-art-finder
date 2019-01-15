@@ -21,7 +21,7 @@ import {RouterModule} from '@angular/router';
 import {IfOnlineComponent} from './components/if-online/if-online.component';
 import {MyDataLinkComponent} from './components/my-data-link/my-data-link.component';
 import {BodyContainerComponent} from './components/body-container/body-container.component';
-import {StartCounterComponent} from './components/start-counter/start-counter.component';
+import {StarCounterComponent} from './components/start-counter/star-counter.component';
 
 @NgModule({
   imports: [
@@ -49,7 +49,7 @@ import {StartCounterComponent} from './components/start-counter/start-counter.co
     IfOnlineComponent,
     MyDataLinkComponent,
     BodyContainerComponent,
-    StartCounterComponent,
+    StarCounterComponent,
   ],
   exports: [
     FlatCardWithImageComponent,
@@ -67,7 +67,7 @@ import {StartCounterComponent} from './components/start-counter/start-counter.co
     IfOnlineComponent,
     MyDataLinkComponent,
     BodyContainerComponent,
-    StartCounterComponent
+    StarCounterComponent
   ],
   providers: [DatePipe],
   entryComponents: [

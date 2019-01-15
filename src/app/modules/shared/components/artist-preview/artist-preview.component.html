@@ -7,10 +7,10 @@
         <h4>{{artist.name}}</h4>
         <div *ngIf="responsive.isBigScreen() | async" class="big-artist-text">{{artist.text}}</div>
       </div>
-      <streart-start-counter *ngIf="(responsive.isBigScreen() | async) && artist.followers && artist.followers > 0"
-                             [value]="artist.followers"
-                             title="People following this artist"
-      ></streart-start-counter>
+      <streart-star-counter *ngIf="(responsive.isBigScreen() | async) && artist.followers && artist.followers > 0"
+                            [value]="artist.followers"
+                            title="People following this artist"
+      ></streart-star-counter>
     </div>
     <div class="actions">
       <button *ngFor="let action of actions"
@@ -23,9 +23,9 @@
   <div *ngIf="!(responsive.isBigScreen() | async)"
        style="display: flex; justify-content: space-between; align-items: flex-start">
     <p>{{artist.text}}</p>
-    <streart-start-counter *ngIf="artist.followers && artist.followers > 0"
-                           [value]="artist.followers"
-                           title="People following this artist"
-    ></streart-start-counter>
+    <streart-star-counter *ngIf="artist.followers && artist.followers > 0"
+                          [value]="artist.followers"
+                          title="People following this artist"
+    ></streart-star-counter>
   </div>
 </div>

@@ -82,8 +82,8 @@ export class DashboardArtistComponent implements OnInit {
             .pipe(
                 map(
                     ([pp, g]) => pp.map(p => {
-                        p.piece.distance = g
-                            ? this.geolocation.distance(g, p.piece.location) as number
+                      p.piece.distance = g
+                            ? UserGeolocationService.distance(g, p.piece.location) as number
                             : null;
                         return p;
                     })

@@ -14,7 +14,7 @@ export class OnlyAdminGuard implements CanActivate {
 
     canActivate(
         next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+        state: RouterStateSnapshot): Observable<boolean> {
         return this.userService.user().pipe(
             take(1),
             map(user => {

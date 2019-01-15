@@ -19,7 +19,6 @@ import {AdminAddPieceLocationImproveComponent} from './routes/admin-add-piece/ad
 import {LeafletModule} from '@asymmetrik/ngx-leaflet';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
 import {AggregatesService} from './services/aggregates/aggregates.service';
-import {ImageResizerService} from '../core/services/image-resizer/image-resizer.service';
 import {IdGeneratorService} from './services/id-generator/id-generator.service';
 
 const routes: Route[] = [
@@ -76,7 +75,6 @@ const routes: Route[] = [
   providers: [
     TimestampPipe,
     AggregatesService,
-    ImageResizerService,
     IdGeneratorService
   ]
 })

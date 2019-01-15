@@ -23,14 +23,6 @@ export class NotificationsService {
             .pipe(flatMap(user => this._findUnreadOfUser(user)));
     }
 
-    private _findUnreadOfUser(user: User): Observable<Notification[]> {
-        return this.finder.findFrom<Notification>(this.COLLECTION)
-            .where('user', '==', user.objectID)
-            .where('read', '==', false)
-            .orderBy('date', 'desc')
-            .run();
-    }
-
     markAsRead(notifications: Notification[]): Promise<void> {
         const batch = this.firestore.firestore.batch();
 
@@ -43,4 +35,12 @@ export class NotificationsService {
 
         return batch.commit();
     }
+
+  private _findUnreadOfUser(user: User): Observable<Notification[]> {
+    return this.finder.findFrom<Notification>(this.COLLECTION)
+      .where('user', '==', user.objectID)
+      .where('read', '==', false)
+      .orderBy('date', 'desc')
+      .run();
+  }
 }

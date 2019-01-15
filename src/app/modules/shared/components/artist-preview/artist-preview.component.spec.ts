@@ -6,6 +6,7 @@ import {CoreModule} from '../../../core/core.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {Location} from '@angular/common';
 import {mockArtist} from '../../../../../mocks/data/mock-artist';
+import {StarCounterComponent} from '../start-counter/star-counter.component';
 
 const testActions: { text: string, id: number, disabled?: boolean }[] = [
     {
@@ -31,7 +32,7 @@ describe('ArtistPreviewComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ArtistPreviewComponent],
+            declarations: [ArtistPreviewComponent, StarCounterComponent],
             imports: [
                 CoreModule,
                 RouterTestingModule.withRoutes([{
@@ -61,7 +62,7 @@ describe('ArtistPreviewComponent', () => {
 
     it('should contain artist name and text', () => {
         const h4Text = element.querySelector('h4').textContent;
-        const pText = element.querySelector('p').textContent;
+        const pText = element.querySelector('.big-artist-text').textContent;
 
         expect(h4Text).toEqual(mockArtist.name);
         expect(pText).toEqual(mockArtist.text);
