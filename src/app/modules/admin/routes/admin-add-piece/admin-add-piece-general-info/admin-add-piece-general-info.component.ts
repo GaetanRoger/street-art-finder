@@ -54,7 +54,7 @@ export class AdminAddPieceGeneralInfoComponent implements OnInit {
     ngOnInit() {
         this.artists$ = this.artist.valueChanges
             .pipe(
-                flatMap(query => this.artistService.search(query))
+                flatMap(query => this.artistService.search(query, {unpublished: true}))
             );
         this._retrieveInfoFromGeopoint();
     }

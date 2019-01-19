@@ -39,7 +39,7 @@ async function createUsersPiecesFromArtist(artistId: string, userId: string) {
 
 function incrementArtistFollowersCount(artistId: string) {
     const artistRef = getFirestore()
-        .collection(Collections.artists)
+        .collection(Collections.published_artists)
         .doc(artistId);
 
     return Helpers.increment(artistRef, 'followers', 1);

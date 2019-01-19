@@ -43,7 +43,7 @@ async function incrementMaxScoreOnUsersArtists(artistId: string, vanished: boole
 
 async function incrementPieceCountAndUpdateCitiesOnArtist(piece) {
     const artistQuery: DocumentReference = await getFirestore()
-        .doc(`${Collections.artists}/${piece.artist.objectID}`);
+        .doc(`${Collections.published_artists}/${piece.artist.objectID}`);
 
     return getFirestore().runTransaction(async t => {
         const artist = await t.get(artistQuery);
@@ -51,14 +51,17 @@ async function incrementPieceCountAndUpdateCitiesOnArtist(piece) {
         const data = artist.data();
         const ref = artist.ref;
 
-        const cities = data.cities || [];
-
-        if (piece.address.city && !cities.includes(piece.address.city))
-            cities.push(piece.address.city);
+        const city = piece.address.city || 'Other';
+        const cities = data.cities || {};
+        const cityCount = cities[city] || 0;
+        const incrementedCityCount = cityCount + 1;
 
         t.update(ref, {
             piecesCount: data.piecesCount + 1,
-            cities: cities
+            cities: {
+              ...cities,
+              [city]: incrementedCityCount
+            }
         });
     });
 }

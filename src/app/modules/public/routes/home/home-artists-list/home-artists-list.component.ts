@@ -42,7 +42,6 @@ export class HomeArtistsListComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     search(query?: string): void {
-        console.log('search');
         this._paginator.setQuery(query || '');
         this._paginator.reset();
     }

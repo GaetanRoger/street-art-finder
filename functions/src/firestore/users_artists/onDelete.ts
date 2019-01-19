@@ -33,7 +33,7 @@ async function deleteUsersPiecesFromArtist(user: string, artistId: string) {
 
 function decrementArtistFollowersCount(artistId: string) {
   const artistRef = getFirestore()
-    .collection(Collections.artists)
+    .collection(Collections.published_artists)
     .doc(artistId);
 
   return Helpers.increment(artistRef, 'followers', -1);
