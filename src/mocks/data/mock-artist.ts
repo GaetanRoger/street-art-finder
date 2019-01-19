@@ -9,7 +9,10 @@ export const mockArtist: Artist = {
     published: true,
     pieces: [],
     followers: 1,
-    cities: ['Lyon', 'Strasbourg'],
+    cities: {
+      Lyon: 3,
+      Strasbourg: 1
+    },
     images: {
         horizontal: {
             low: 'https://via.placeholder.com/500x300',
@@ -21,3 +24,4 @@ export const mockArtist: Artist = {
         }
     }
 };
+

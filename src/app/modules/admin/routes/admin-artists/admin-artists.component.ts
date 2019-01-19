@@ -30,7 +30,7 @@ export class AdminArtistsComponent implements OnInit {
             .pipe(
                 delay(0), // Fix for ExpressionChangedAfterItHasBeenCheckedError (don't ask why)
                 tap(_ => this.working$.next(true)),
-                flatMap(f => this.artistService.findAllAndSubscribe(f)),
+                flatMap(f => this.artistService.findAllAndSubscribe(f, {unpublished: true})),
                 filter(p => !!p),
                 tap(_ => this.working$.next(false))
             );

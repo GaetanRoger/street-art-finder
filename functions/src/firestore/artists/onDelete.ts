@@ -17,7 +17,7 @@ export function firestoreArtistsOnDelete(snap: DocumentSnapshot, context: EventC
 }
 
 function deleteAlgoliaObject(id: string): Promise<Task> {
-    const client = algolia.initIndex(Collections.artists);
+    const client = algolia.initIndex(Collections.published_artists);
     return client.deleteObject(id);
 }
 

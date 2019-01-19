@@ -8,33 +8,32 @@ import DocumentSnapshot = FirebaseFirestore.DocumentSnapshot;
 import DocumentReference = FirebaseFirestore.DocumentReference;
 
 export function firestoreArtistsOnCreate(snap: DocumentSnapshot, context: EventContext) {
-    const artist = snap.data();
-    const id = snap.id;
+  const artist = snap.data();
+  const id = snap.id;
 
-    return Promise.all([
-        incrementArtistsCountInAggregatesDocument(),
-        createAlgoliaObject(id, artist)
-    ]);
+  return Promise.all([
+    incrementArtistsCountInAggregatesDocument(),
+    createAlgoliaObject(id, artist)
+  ]);
 }
 
 /**
  * Increment the value of `artistsCount` in the `aggregates` document.
  */
 async function incrementArtistsCountInAggregatesDocument() {
-    const aggregatesQuery: DocumentReference = await getFirestore()
-        .doc(`${Collections.aggregates}/main`);
+  const aggregatesQuery: DocumentReference = await getFirestore()
+    .doc(`${Collections.aggregates}/main`);
 
-    return Helpers.increment(aggregatesQuery, 'artistsCount', 1);
+  return Helpers.increment(aggregatesQuery, 'artistsCount', 1);
 }
 
 /**
  * Create an entry in the `artists` Algolia index.
  */
 function createAlgoliaObject(objectID: string, artist): Promise<Task> {
-    const client = algolia.initIndex(Collections.artists);
+  const client = algolia.initIndex(Collections.published_artists);
 
-    return client.addObject({
-        objectID,
-        ...artist
-    });
+  return client.addObject(
+    Helpers.artistToAlgoliaObject(artist, objectID)
+  );
 }

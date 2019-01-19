@@ -67,7 +67,7 @@ export const authOnDeleteF = auth.user().onDelete(authOnDelete);
  *
  */
 
-const artistsDocument = firestore.document(`${Collections.artists}/{artistId}`);
+const artistsDocument = firestore.document(`${Collections.published_artists}/{artistId}`);
 
 export const firestoreArtistsOnCreateF = artistsDocument.onCreate(firestoreArtistsOnCreate);
 export const firestoreArtistsOnUpdateF = artistsDocument.onUpdate(firestoreArtistsOnUpdate);
