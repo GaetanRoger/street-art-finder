@@ -4,6 +4,7 @@ import {Helpers} from '../../helpers';
 import {algolia} from '../../initAlgolia';
 import {Collections} from '../collections.enum';
 import * as admin from 'firebase-admin';
+import {getFirestore} from '../../getFirestore';
 
 export function firestoreArtistsOnUpdate(change: Change<DocumentSnapshot>, context: EventContext) {
   const artistBefore = change.before.data();
@@ -16,7 +17,7 @@ export function firestoreArtistsOnUpdate(change: Change<DocumentSnapshot>, conte
   return Promise.all([
     updateAlgoliaObjectAndManagePublishedOrNotPublished(id, artistAfter),
     updateArtistPreviewOnUsersArtistsEntries(id, artistBefore, artistAfter),
-    updateArtistNameOnPiecesEntries(id, artistBefore, artistAfter)
+    updateArtistPreviewOnPiecesEntries(id, artistBefore, artistAfter)
   ]);
 }
 
@@ -61,7 +62,7 @@ async function updateArtistPreviewOnUsersArtistsEntries(id: string, artistBefore
   if (Helpers.areObjectsTheSame(artistBeforePreview, artistAfterPreview))
     return null;
 
-  const usersArtists = await admin.firestore()
+  const usersArtists = await getFirestore()
     .collection(Collections.users_artists)
     .where('artist.objectID', '==', id)
     .get();
@@ -77,8 +78,11 @@ async function updateArtistPreviewOnUsersArtistsEntries(id: string, artistBefore
   return await batch.commit();
 }
 
-async function updateArtistNameOnPiecesEntries(id: string, artistBefore, artistAfter) {
-  if (artistBefore.name === artistAfter.name)
+async function updateArtistPreviewOnPiecesEntries(id: string, artistBefore, artistAfter) {
+  const artistBeforePreview = Helpers.artistToArtistPreview(artistBefore, id);
+  const artistAfterPreview = Helpers.artistToArtistPreview(artistAfter, id);
+
+  if (Helpers.areObjectsTheSame(artistBeforePreview, artistAfterPreview))
     return null;
 
   const pieces = await admin.firestore()
@@ -89,7 +93,9 @@ async function updateArtistNameOnPiecesEntries(id: string, artistBefore, artistA
   const batch = admin.firestore().batch();
 
   pieces.forEach(ua => {
-    batch.update(ua.ref, {['artist.name']: artistAfter.name});
+    batch.update(ua.ref, {
+      artist: artistAfterPreview
+    });
   });
 
   return await batch.commit();

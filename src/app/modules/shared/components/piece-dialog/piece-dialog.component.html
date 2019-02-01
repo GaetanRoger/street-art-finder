@@ -10,6 +10,12 @@
     <p class="added-on">
         Added on {{piece.addedOn | timestamp}}
     </p>
+  <p class="vanished warn" *ngIf="piece.tags.vanished"
+     matTooltip="Unfortunately, you will not find anything if you go there." #tooltip="matTooltip"
+    (click)="tooltip.show()"
+  >
+    This piece does not exist anymore.
+  </p>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-raised-button mat-dialog-close>Close</button>

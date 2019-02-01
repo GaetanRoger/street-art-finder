@@ -1,6 +1,10 @@
-.added-on {
+.added-on, .vanished {
     opacity: 0.7;
     font-size: 14px;
+}
+
+.vanished {
+  text-align: center;
 }
 
 mat-dialog-actions {
