@@ -23,11 +23,11 @@ to feel more like a game (inspired by Geocaching).
 
 ### Priority 2
 - [ ] Allow users to reset their password
-- [ ] Better way to see vanished pieces
 - [ ] More complete '/my-data' page, including speech about external services (Firebase, Algolia...)
 - [ ] *[Technical]* Use Cypress to e2e test all processes (see how to mock data into/out of Firestore)
 - [ ] *[Technical]* Convert all interfaces default implements to the class format
 - [ ] *[Technical]* Unit test all components 
+- [x] Better way to see vanished pieces
 - [x] *[Technical]* Check for un-unsubscribed observables in components
 - [x] Check if city found when entering geolocation
 - [x] Itineraries should go to randomized location when using circles.
