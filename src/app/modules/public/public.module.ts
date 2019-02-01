@@ -11,56 +11,62 @@ import {HomeArtistsListComponent} from './routes/home/home-artists-list/home-art
 import {MyDataExplanationComponent} from './routes/my-data-explanation/my-data-explanation.component';
 import {icon, Icon, Marker} from 'leaflet';
 import {ComponentsLibraryModule} from '../components-library/components-library.module';
+import {VanishedPiecesComponent} from './routes/vanished-pieces/vanished-pieces.component';
 
 const routes: Route[] = [
-    {
-        path: '',
-        component: HomeComponent
-    },
-    {
-        path: 'artist/:id',
-        component: ArtistComponent
-    },
-    {
-        path: 'learn-more',
-        component: LearnMoreComponent
-    },
-    {
-        path: 'my-data',
-        component: MyDataExplanationComponent
-    },
-    {
-        path: '**',
-        component: NotFoundComponent
-    }
+  {
+    path: '',
+    component: HomeComponent
+  },
+  {
+    path: 'artist/:id',
+    component: ArtistComponent
+  },
+  {
+    path: 'learn-more',
+    component: LearnMoreComponent
+  },
+  {
+    path: 'my-data',
+    component: MyDataExplanationComponent
+  },
+  {
+    path: 'vanished-pieces/:id',
+    component: VanishedPiecesComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        SharedModule,
-        ComponentsLibraryModule
-    ],
-    declarations: [
-        HomeComponent,
-        NotFoundComponent,
-        ArtistComponent,
-        PieceComponent,
-        LearnMoreComponent,
-        HomeArtistsListComponent,
-        MyDataExplanationComponent
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    ComponentsLibraryModule
+  ],
+  declarations: [
+    HomeComponent,
+    NotFoundComponent,
+    ArtistComponent,
+    PieceComponent,
+    LearnMoreComponent,
+    HomeArtistsListComponent,
+    MyDataExplanationComponent,
+    VanishedPiecesComponent
+  ]
 })
 export class PublicModule {
-    // Override default Icons
-    private _defaultIcon: Icon = icon({
-        iconUrl: 'assets/leaflet/marker-icon.png',
-        shadowUrl: 'assets/leaflet/marker-shadow.png',
-        iconAnchor: [12, 40]
-    });
+  // Override default Icons
+  private _defaultIcon: Icon = icon({
+    iconUrl: 'assets/leaflet/marker-icon.png',
+    shadowUrl: 'assets/leaflet/marker-shadow.png',
+    iconAnchor: [12, 40]
+  });
 
-    constructor() {
-        Marker.prototype.options.icon = this._defaultIcon;
-    }
+  constructor() {
+    Marker.prototype.options.icon = this._defaultIcon;
+  }
 }

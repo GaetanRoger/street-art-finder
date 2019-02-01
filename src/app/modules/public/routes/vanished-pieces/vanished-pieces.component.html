@@ -1,0 +1,21 @@
+<streart-toolbar
+  [title]="title$ | async"
+  [showBackButton]="true"
+></streart-toolbar>
+
+<streart-flat-card-with-image
+  title="These pieces do not exist anymore"
+  text="Street art is all temporary. Just like us all."
+></streart-flat-card-with-image>
+
+<streart-piece *ngFor="let piece of vanishedPieces$ | async"
+               [piece]="piece" [color]="piece.artist.color"
+               [alwaysUseMarker]="true"
+></streart-piece>
+
+<div *ngIf="vanishedPieces$ | async as vanishedPieces">
+  <div *ngIf="vanishedPieces && vanishedPieces.length === 0">
+    No vanished pieces for this artist!
+  </div>
+</div>
+

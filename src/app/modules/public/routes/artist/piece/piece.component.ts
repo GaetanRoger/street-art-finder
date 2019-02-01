@@ -11,6 +11,7 @@ import {MatDialog} from '@angular/material';
 export class PieceComponent implements OnInit {
     @Input() piece: Piece;
     @Input() color: string;
+    @Input() alwaysUseMarker = false;
 
     constructor(private readonly dialog: MatDialog) {
     }
@@ -24,7 +25,7 @@ export class PieceComponent implements OnInit {
         }
         this.dialog.open(PieceDialogComponent, {
             autoFocus: false,
-            data: {piece},
+            data: {piece, alwaysUseMarker: this.alwaysUseMarker},
             maxWidth: '96vw',
             minWidth: '96vw'
         });

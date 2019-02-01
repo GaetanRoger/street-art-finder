@@ -4,6 +4,7 @@ import {Image} from './image';
 
 export interface ArtistPreview extends ObjectIDable {
   name: string;
+  color?: string;
   images?: {
     horizontal: Image;
     vertical?: Image;
@@ -12,7 +13,6 @@ export interface ArtistPreview extends ObjectIDable {
 
 export interface Artist extends ArtistPreview {
   text: string;
-  color?: string;
   website: string;
   pieces: Piece[];
   piecesCount: number;

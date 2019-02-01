@@ -22,13 +22,8 @@
                                     (found)="markAsFound(progression.objectID, $event)"
 ></streart-dashboard-piece-progression>
 
-<div class="footer">
-    <button mat-button *ngIf="!(showVanishedPieces$ | async)" (click)="seeVanishedPieces()">See vanished pieces</button>
-    <button mat-button *ngIf="showVanishedPieces$ | async" (click)="hideVanishedPieces()">Hide vanished pieces</button>
-</div>
 
-<div *ngIf="showVanishedPieces$ | async">
-    <div *ngFor="let vanishedPiece of vanishedPieces$ | async">
-        {{vanishedPiece.name}}
-    </div>
+
+<div class="footer" *ngIf="artist$ | async as artist">
+    <button mat-button routerLink="/vanished-pieces/{{artist.objectID}}">See vanished pieces</button>
 </div>

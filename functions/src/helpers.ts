@@ -10,7 +10,8 @@ export class Helpers {
     return {
       objectID: artistId || artist.objectID,
       name: artist.name,
-      images: artist.images
+      images: artist.images,
+      color: artist.color
     };
   }
 

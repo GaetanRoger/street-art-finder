@@ -19,8 +19,6 @@ import {UserGeolocationService} from '../../../core/services/location/geolocatio
 export class DashboardArtistComponent implements OnInit {
     private artistId$: Observable<string>;
     progressions$: Observable<UserPieceProgression[]>;
-    vanishedPieces$: Observable<Piece[]>;
-    showVanishedPieces$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     artist$: Observable<Artist>;
 
     hideFound: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -54,18 +52,6 @@ export class DashboardArtistComponent implements OnInit {
 
     markAsFound(progressionid: string, value: boolean): void {
         this.userPieceProgression.toggleFound(progressionid, value);
-    }
-
-    seeVanishedPieces() {
-        if (!this.vanishedPieces$) {
-            this.vanishedPieces$ = this.artistId$.pipe(flatMap(id => this.pieceService.findAllVanished(id)));
-        }
-
-        this.showVanishedPieces$.next(true);
-    }
-
-    hideVanishedPieces() {
-        this.showVanishedPieces$.next(false);
     }
 
     private _getUserPiecesProgressions() {
