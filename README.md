@@ -6,6 +6,7 @@ to feel more like a game (inspired by Geocaching).
 
 ## TODO (checked are done/fixed)
 ### Known bugs 
+- [ ] [Technical] Some functions are not idempotent
 - [ ] Popups are not shown when clicking on circles on map
 - [x] Adding or removing lots of pieces screw up the maxscore count on artists progression
 - [x] Marking all pieces of an artist as found does not update score correctly (fixed using transaction)
